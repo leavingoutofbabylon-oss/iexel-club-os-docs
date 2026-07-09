@@ -1,0 +1,12 @@
+{
+  "name": "iexel/club-os",
+  "description": "IEXEL Club OS - Football club management platform for WordPress.",
+  "type": "wordpress-plugin",
+  "license": "proprietary",
+  "autoload": {
+    "psr-4": {
+      "IEXEL\\ClubOS\\": "app/"
+    }
+  },
+  "require": {}
+}
