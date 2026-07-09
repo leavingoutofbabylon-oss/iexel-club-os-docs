@@ -1,1 +1,73 @@
+# Component Library
 
+This document tracks reusable UI components used across IEXEL Club OS.
+
+---
+
+## Common Components
+
+| Component | Status | Purpose |
+|---|---|---|
+| Button | Complete | Standard Club OS action buttons |
+| Badge | Complete | Status labels and small UI labels |
+| StatCard | Complete | Dashboard and event statistics |
+| SectionCard | Complete | Reusable content section wrapper |
+| SummaryCard | Legacy | Earlier summary component |
+| CountdownCard | Complete | Countdown display component |
+
+---
+
+## Layout Components
+
+| Component | Status | Purpose |
+|---|---|---|
+| TwoColumnLayout | Complete | Main content and sidebar layout |
+| SidebarStackLayout | Complete | Stacked sidebar cards |
+| MetricGrid | Complete | Responsive metric/stat layout |
+| DashboardSection | Legacy | Replaced by SectionCard in newer UI |
+
+---
+
+## Event Components
+
+| Component | Status | Purpose |
+|---|---|---|
+| EventHeroCard | Complete | Main event header |
+| EventInfoGrid | Complete | Date, time, team, venue and type |
+| EventResponseActionsCard | Complete | RSVP response actions |
+| CoachActionsCard | In Progress | Coach tools for event management |
+| EventCountdownCard | Complete | Sidebar event countdown |
+| EventWeatherCard | In Progress | Weather display |
+| EventNotesCard | Complete | Event notes display |
+| AvailabilityPanel | Complete | Available/unavailable response lists |
+| AttendanceSummaryCard | In Progress | Attendance summary on Event Hub |
+| AttendanceHeroCard | Complete | Matchday Register hero |
+| AttendanceProgressCard | Complete | Live attendance totals |
+| AttendancePlayerCard | Complete | Player attendance input card |
+| AttendanceActionBar | Complete | Sticky attendance save bar |
+| AttendanceBulkActionsCard | Complete | Bulk attendance controls |
+| EventChecklistCard | In Progress | Matchday checklist |
+| EventVenueCard | Planned | Venue and map information |
+| EventStatusCard | Planned | Event lifecycle status |
+| EventTimelineCard | Planned | Matchday/session timeline |
+| EventRewardsCard | Planned | Rewards summary |
+
+---
+
+## Portal Components
+
+| Component | Status | Purpose |
+|---|---|---|
+| MemberHeroCard | Complete | Member portal header |
+| MemberQuickActionsCard | Complete | Portal quick links |
+| UpcomingEventsCard | Complete | Upcoming events list |
+| EventCard | Complete | Event preview card |
+| PortalActionCard | Complete | Portal action tile |
+
+---
+
+## Design Rule
+
+Before creating a new component, check this library first.
+
+If a similar component already exists, upgrade the existing component rather than creating a duplicate.
