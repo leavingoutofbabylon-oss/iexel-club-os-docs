@@ -67,49 +67,72 @@ New Event Components
 ---
 
 # Sprint 18
-## Coach Workspace
+## Coach Hub Foundation
 
-**Status:** 🚧 In Progress
+**Status:** ✅ Complete
 
-### Completed
+### Major Features
 
-- Coach Workspace route
-- Coach Workspace page
-- Coach Workspace Hero
-- Coach Workspace architecture
-- Responsive workspace layout
+- Coach Hub
+- Dedicated Coach Landing Page
+- Role-aware Portal Navigation
+- Automatic Coach Redirect
+- Coach Breadcrumbs
+- Coach Workspace Layout
+- Upcoming Sessions Widget
+- 7-Day Upcoming Events Service
 
 ### Components
 
 - CoachWorkspaceHero
-- CoachTodayCard
+- CoachUpcomingEventsCard
 - CoachStatsCard
 - CoachActivityCard
 
-### Next
+### Architecture
 
-- Live Today Card
-- Coach Statistics
-- Recent Activity Feed
-- Quick Actions
+New Services
+
+- upcoming_events_for_days()
+
+Portal Improvements
+
+- Coach Hub navigation
+- Coach Hub landing page
+- Role-aware dashboard routing
+- Coach-specific breadcrumbs
+
+### Improvements
+
+- Coaches now have their own dedicated workspace
+- Navigation adapts to user role
+- Live event data displayed inside Coach Hub
+- Shared portal architecture expanded
+- Foundation laid for Team Workspace
+
+---
+
+# Sprint 19
+
+## Team Workspace
+
+**Status:** 🚧 In Progress
+
+### Planned
+
+- Coach Teams Widget
 - Assigned Teams
+- Team Workspace
+- Squad Overview
+- Team Statistics
+- Team Activity Feed
+- Quick Actions
 - Upcoming Fixtures
+- Team Management
 
 ---
 
 # Planned Roadmap
-
-## Sprint 19
-
-### Team Hub 2.0
-
-- Squad Overview
-- Player Profiles
-- Player Development
-- Team Statistics
-- Awards
-
----
 
 ## Sprint 20
 
