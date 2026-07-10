@@ -1,25 +1,68 @@
 # IEXEL Club OS Blueprint
 
-## Vision
+> The complete vision for Club OS.
 
-Build the most configurable football club operating system for grassroots, academy and professional football.
+This document defines every planned module, workflow and feature for the operating system.
 
-Club OS should manage every aspect of running a football club through modular features.
+---
+
+# Vision
+
+Build the world's most configurable football club operating system.
+
+Club OS should replace multiple disconnected systems by bringing every club process into one modern platform.
+
+Supported organisations:
+
+- Grassroots Clubs
+- Academies
+- Semi Professional Clubs
+- Professional Clubs
+
+---
+
+# Guiding Principles
+
+- Mobile First
+- Component Driven
+- Configurable
+- Secure
+- Fast
+- AI Assisted
+- Role Based
+- Modular
 
 ---
 
 # User Types
 
+## Website Administrator
+
+Responsibilities
+
+- Website
+- Plugin Updates
+- Security
+- Backups
+
+Uses WordPress Dashboard.
+
+---
+
 ## Club Administrator
 
 Responsibilities
 
-- Club setup
-- Teams
+- Club Settings
 - People
-- Permissions
+- Teams
+- Events
 - Finance
+- Rewards
+- Communications
 - Reports
+
+Uses Club OS Portal.
 
 ---
 
@@ -28,10 +71,13 @@ Responsibilities
 Responsibilities
 
 - Team Hub
+- Events
+- Matchday
 - Attendance
-- Fixtures
+- Availability
 - Team Selection
-- Statistics
+- Match Statistics
+- Player Development
 - Rewards
 
 ---
@@ -40,11 +86,12 @@ Responsibilities
 
 Responsibilities
 
-- Player Availability
+- Availability
 - Payments
 - Messages
 - Registration
 - Rewards
+- Documents
 
 ---
 
@@ -57,62 +104,238 @@ Responsibilities
 - Rewards
 - Statistics
 - Development
+- Challenges
 
 ---
 
-# Main Modules
+## Committee
 
-Core
+Responsibilities
 
-People
-Teams
-Assignments
-Settings
+- Club Reports
+- Volunteers
+- Fundraising
+- Events
+- Governance
 
-Football
+---
 
-Attendance
-Training
-Fixtures
-Matchday
-Statistics
+## Volunteer
 
-Communication
+Responsibilities
 
-Announcements
-Messaging
-Notifications
+- Assigned Tasks
+- Events
+- Communication
 
-Business
+---
 
-Finance
-Membership
-Shop
-Sponsors
+# Core Modules
 
-Welfare
+## Core
 
-Medical
-Emergency Contacts
-Documents
-Safeguarding
+- Settings
+- Permissions
+- Branding
+- Notifications
+- Activity Log
+- Feature Flags
+
+---
+
+## People
+
+- Members
+- Coaches
+- Parents
+- Volunteers
+- Staff
+- Relationships
+- User Linking
+
+---
+
+## Teams
+
+- Teams
+- Team Profiles
+- Coaches
+- Staff
+- Squad Lists
+
+---
+
+## Events
+
+- Training
+- Fixtures
+- Friendlies
+- Tournaments
+- Meetings
+- Presentations
+
+---
+
+## Matchday
+
+- Attendance Register
+- Availability
+- Team Selection
+- Match Timeline
+- Goals
+- Assists
+- Cards
+- Injuries
+- Manager Awards
+- Player Ratings
+
+---
+
+## Rewards
+
+- Reward Points
+- Shop
+- Challenges
+- Achievements
+- Leaderboards
+- Prize Draws
+
+---
+
+## Finance
+
+- Membership Fees
+- Invoices
+- Payments
+- Stripe
+- GoCardless
+- Xero
+- QuickBooks
+
+---
+
+## Communications
+
+- Email
+- Notifications
+- Team News
+- WhatsApp Workflows
+- SMS
+
+---
+
+## Welfare
+
+- Medical Records
+- Emergency Contacts
+- Documents
+- Consent Forms
+- Safeguarding
+
+---
+
+## AI
+
+Future AI capabilities.
+
+Examples
+
+- AI Coach
+- AI Parent Assistant
+- Match Report Writer
+- Training Planner
+- Attendance Insights
+- Club Health Dashboard
 
 ---
 
 # Dashboard Philosophy
 
-Every user should have their own dashboard.
+Every role has its own workspace.
 
-Administrator Dashboard
+Website Admin
 
-Coach Dashboard
+↓
 
-Parent Dashboard
+Club Administrator
 
-Player Dashboard
+↓
+
+Coach
+
+↓
+
+Parent
+
+↓
+
+Player
+
+↓
+
+Committee
+
+↓
+
+Volunteer
+
+No one except Website Administrators should need the WordPress dashboard.
+
+---
+
+# Portal Philosophy
+
+The Club OS Portal becomes the operating system.
+
+Everything should happen inside:
+
+```
+/club-os/
+```
+
+including
+
+- Dashboards
+- Events
+- Attendance
+- Team Hub
+- Finance
+- Rewards
+- Messages
+
+---
+
+# Planned Integrations
+
+- Stripe
+- GoCardless
+- Xero
+- QuickBooks
+- Veo
+- Pixellot
+- FA Full Time
+- Selkent
+- Calendar Sync
+- Email Providers
+
+---
+
+# Mobile First
+
+Every page must work perfectly on phones before desktop.
+
+The majority of coaches and parents will use Club OS on mobile devices.
 
 ---
 
 # Long-Term Goal
 
-Club OS should eventually become a complete operating system capable of replacing multiple separate football club platforms.
+Club OS should become the complete operating system for football clubs.
+
+One login.
+
+One platform.
+
+One source of truth.
+
+Everything connected.
