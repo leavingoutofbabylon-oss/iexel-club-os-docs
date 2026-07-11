@@ -8,68 +8,134 @@ This project follows a sprint-based development process with milestone releases.
 
 # Unreleased
 
-## Sprint 15 — Premium Matchday Experience (In Progress)
+## Sprint 19 — Team Workspace Foundation ✅
 
 ### Added
 
-- Attendance Hero Card
-- Attendance Progress Card
-- Attendance Player Cards
-- Attendance Action Bar
-- Attendance Bulk Actions Card
-- Attendance JavaScript module
-- Club OS JavaScript architecture
-- Live attendance progress updates
-- Sticky Matchday action bar
+- Team Workspace
+- Team Workspace Hero
+- Secondary Team Navigation
+- Team Overview Dashboard
+- Team Next Event Card
+- Team Squad Summary Card
+- Team Availability Summary Card
+- Team Season Statistics Card
+- Team Quick Actions Card
+- Team Upcoming Events Card
+- Team-specific event repository methods
+
+### Security
+
+- Team-level coach authorisation
+- Active assignment validation
+- Administrator bypass permissions
+- Portal-based access control
 
 ### Improved
 
-- Attendance Register redesigned using Club OS components.
-- Coaches remain inside Club OS rather than being redirected to the WordPress dashboard.
-- Matchday interface optimised for mobile-first use.
-- Bulk attendance actions introduced.
+- Coaches remain inside Club OS
+- Removed Team Workspace dependency on WordPress admin
+- Team navigation architecture
+- Responsive Team Workspace layout
+- Squad overview
+- Live availability summary
+- Live team event summary
 
-### Planned
+### Added Placeholder Workflows
 
-- Auto Save
-- Player status badges
-- Player photos
-- Live progress bar
-- Match timeline
+- Team Events
+- Team Attendance
+- Team Availability
+- Club OS Add Event workflow
+
+### Planned Next
+
+- Portal Event Builder
+- Team Event Management
+- Team Attendance Dashboard
+- Team Availability Dashboard
 
 ---
 
-# Sprint 14 — Matchday Register
+## Sprint 18 — Coach Workspace ✅
 
 ### Added
 
-- Attendance Repository
-- Attendance Register
-- Coach Attendance workflow
-- Attendance Summary Card
-- Coach-only permissions
-- Attendance routing
-- Event Attendance page
-- Attendance counts
-- Attendance persistence
+- Coach Workspace
+- Coach Workspace Hero
+- Coach Dashboard
+- Upcoming Sessions
+- Coach Statistics Card
+- Coach Activity Card
+- Coach Quick Actions
+- Coach Workspace routing
 
 ### Improved
 
-- Event Audience integration
-- Coach Actions
-- Event Detail workflow
-- Permission architecture
+- Coach Hub navigation
+- Live upcoming event summaries
+- Coach landing experience
+- Portal architecture
+
+### Planned Next
+
+- Live coach statistics
+- Notifications
+- Team shortcuts
+
+---
+
+## Sprint 17 — Portal Shell & Matchday Portal ✅
+
+### Added
+
+- Portal Shell Layout
+- Portal Top Bar
+- Global Navigation
+- Dynamic Breadcrumbs
+- Shared Portal Layout
+- Matchday Attendance Register
+- Attendance Hero Card
+- Attendance Progress Card
+- Attendance Player Cards
+- Attendance Bulk Actions
+- Attendance Save Bar
+
+### Improved
+
+- Coaches remain inside Club OS
+- Shared application layout
+- Responsive portal architecture
+- Event detail experience
 
 ### Fixed
 
 - Attendance permissions
+- Attendance routing
 - Rewrite rules
 - Event audience loading
-- Attendance saving
+- Attendance persistence
 
 ---
 
-# Sprint 13 — Event Portal
+## Sprint 16 — RSVP Engine ✅
+
+### Added
+
+- Availability Repository
+- RSVP responses
+- Availability statistics
+- Response tracking
+- Response highlighting
+
+### Improved
+
+- Event cards
+- Member event experience
+
+---
+
+## Sprint 15 — Event Portal ✅
 
 ### Added
 
@@ -91,37 +157,7 @@ This project follows a sprint-based development process with milestone releases.
 
 ---
 
-# Sprint 12 — RSVP Engine
-
-### Added
-
-- Availability Repository
-- RSVP responses
-- Availability statistics
-- Player response tracking
-- Response highlighting
-
-### Improved
-
-- Event cards
-- Member event experience
-
----
-
-# Sprint 11 — Club Portal
-
-### Added
-
-- Member Dashboard
-- Dashboard Cards
-- Quick Actions
-- Upcoming Events
-- Portal Router
-- Portal navigation
-
----
-
-# Sprint 10 — Events
+## Sprint 14 — Events Module
 
 ### Added
 
@@ -133,88 +169,134 @@ This project follows a sprint-based development process with milestone releases.
 
 ---
 
-# Sprint 9 — Teams
+## Sprint 13 — Club Portal
+
+### Added
+
+- Member Dashboard
+- Dashboard Cards
+- Quick Actions
+- Upcoming Events
+- Portal Router
+- Portal Navigation
+
+---
+
+## Sprint 12 — Teams
 
 ### Added
 
 - Teams Directory
 - Team Profiles
 - Team Assignments
-- Coach assignments
+- Coach Assignments
 
 ---
 
-# Sprint 8 — People
+## Sprint 11 — People
 
 ### Added
 
 - People Directory
 - Person Profiles
-- Parent relationships
+- Parent Relationships
 - Member Linking
-- User linking
+- User Linking
 
 ---
 
-# Sprint 7 — Foundation
+## Sprint 10 — Core Platform
 
 ### Added
 
-- Core Kernel
+- Kernel
 - Dependency Injection
 - Routing
+- Repository Pattern
 - Component Library
 - Design Tokens
 - Permission System
 - Settings
 - Database Migrations
-- Repository pattern
 
 ---
 
-# Milestones
+# MVP Progress
 
-## Version 1.0
+Current Estimated Progress
 
-Current development.
-
-Primary focus:
-
-- Core Platform
-- Events
-- Matchday
-- People
-- Teams
-
-Estimated completion:
-
-**65–70%**
+| Area | Progress |
+|------|---------:|
+| Core Platform | 96% |
+| People | 90% |
+| Teams | 92% |
+| Events | 92% |
+| Matchday | 92% |
+| Coach Hub | 95% |
+| Team Workspace | 90% |
+| Rewards Lite | 15% |
+| Finance Lite | 10% |
+| Communications Lite | 10% |
 
 ---
 
-## Version 1.1 (Planned)
+# IEXEL Club OS MVP
 
-- Rewards
-- Communications
+**Current Progress:** ~84%
+
+Current Priority:
+
+- Portal Event Builder
+- Team Event Management
+- Parent Hub
+- Finance Lite
+- Rewards Lite
+- Communications Lite
+
+---
+
+# Planned Releases
+
+## Club OS MVP v1.0
+
+Target:
+
+- Complete Coach Hub
+- Complete Team Workspace
+- Parent Hub
+- Finance Lite
+- Rewards Lite
+- Communications Lite
+
+Estimated Progress:
+
+**~84% Complete**
+
+---
+
+## Club OS v1.1
+
 - Match Statistics
-- Coach Dashboard
-
----
-
-## Version 1.2 (Planned)
-
-- Finance
-- Stripe
-- GoCardless
-- Xero
+- Rewards Expansion
+- Communications Expansion
 - Reports
 
 ---
 
-## Version 2.0 (Vision)
+## Club OS v1.2
+
+- Stripe
+- GoCardless
+- Xero
+- Advanced Finance
+- Club Reports
+
+---
+
+## Club OS v2.0
 
 - AI Coach
 - AI Parent
-- AI Club Insights
+- AI Club Assistant
 - Automation Engine
-- Advanced Analytics
+- Predictive Analytics
