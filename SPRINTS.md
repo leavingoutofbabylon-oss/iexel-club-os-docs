@@ -116,7 +116,7 @@ Portal Improvements
 
 ## Team Workspace
 
-**Status:** 🚧 In Progress
+**Status:** ✅ Complete
 
 ### Planned
 
