@@ -49,8 +49,42 @@ This document tracks reusable UI components used across IEXEL Club OS.
 | EventChecklistCard | In Progress | Matchday checklist |
 | EventVenueCard | Planned | Venue and map information |
 | EventStatusCard | Planned | Event lifecycle status |
-| EventTimelineCard | Planned | Matchday/session timeline |
+| EventTimelineCard | Planned | General event/session timeline outside Match Mode |
 | EventRewardsCard | Planned | Rewards summary |
+
+---
+
+## Matchday Components
+
+| Component | Status | Purpose |
+|---|---|---|
+| MatchdayHeroCard | Complete | Matchday Hub identity and primary status |
+| MatchReadinessCard | Complete | Dynamic preparation and live-match readiness |
+| MatchdayAttendanceCard | Complete | Attendance summary and action |
+| MatchdayChecklistCard | Complete | Match preparation checklist |
+| MatchdayQuickActionsCard | Complete | State-aware Matchday Hub actions |
+| MatchdayTimelineCard | Complete | Matchday status and activity summary |
+| MatchdayVenueCard | Complete | Match venue information |
+
+---
+
+## Match Mode Components
+
+| Component | Status | Purpose |
+|---|---|---|
+| MatchModeHeroCard | Complete | Live match identity and state |
+| MatchModeScoreCard | Complete | Current projected score |
+| MatchLiveControlsCard | Complete | State progression, full-time and reopen controls |
+| MatchLineupForm | Complete | Pre-match starters, substitutes, captain and goalkeeper |
+| MatchModeLineupCard | Complete | Read-only saved lineup summary |
+| MatchGoalAttributionFormCard | Complete | Goal mode, scorer, assist, penalty and opponent attribution |
+| MatchGoalControlsCard | Complete | Goal entry and Undo Last Goal actions |
+| MatchSubstitutionFormCard | Complete | Rolling Substitution entry using current pitch state |
+| MatchSubstitutionControlsCard | Complete | Substitution actions and Undo Last Substitution |
+| MatchIncidentTimelineCard | Complete | Ordered goal and substitution incident timeline |
+| MatchModeQuickActionsCard | Complete | Contextual match actions |
+| MatchModeSquadCard | Complete | Current On Pitch and Available Bench summaries |
+| MatchModeStaffCard | Complete | Active team staff summary |
 
 ---
 

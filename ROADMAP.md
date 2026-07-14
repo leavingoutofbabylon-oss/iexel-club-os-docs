@@ -1,300 +1,83 @@
 # IEXEL Club OS Roadmap
 
-> **Version:** 1.0 Development  
-> **Status:** In Active Development  
-> **Last Updated:** 10th July 2026
+> **Status:** Active development
+> **Last updated:** 14 July 2026
+
+IEXEL Club OS is a portal-first operating system for grassroots football clubs. This roadmap distinguishes shipped capabilities from planned work; a checked item means the current MVP implementation exists, not that the area will receive no further refinement.
+
+---
+
+# Completed
+
+## Core and Club Management
+
+- [x] Core platform, routing, repositories, permissions and reusable UI foundations.
+- [x] People and person profiles.
+- [x] Teams and team assignments.
+- [x] Events and venues.
+- [x] Event audience, RSVP and availability.
+- [x] Attendance and Team Attendance Workspace.
+
+## Match Operations
+
+- [x] Matchday Hub.
+- [x] Match Details.
+- [x] Match Mode foundation.
+- [x] Match Lineup Builder.
+- [x] Live score and match-state engine.
+- [x] Goal Attribution.
+- [x] Rolling Substitutions.
+- [x] Match Readiness Dashboard.
+
+See [MATCH-OPERATIONS.md](MATCH-OPERATIONS.md) for the implemented workflow.
+
+---
+
+# In Progress
+
+- [ ] Cross-module product polish, accessibility and regression coverage.
+- [ ] Wider club MVP integration beyond football operations.
+
+---
+
+# Next
+
+- [ ] Match Reports.
+- [ ] Player Ratings.
+- [ ] Player of the Match.
+
+---
+
+# Later
+
+## Match and Performance
+
+- [ ] Cards.
+- [ ] Injuries.
+- [ ] Extra time.
+- [ ] Penalty shootout.
+- [ ] Match clock.
+- [ ] Player statistics engine.
+- [ ] Season analytics.
+
+## Club Operations
+
+- [ ] Communications and notifications.
+- [ ] Rewards expansion.
+- [ ] Finance and accounting integrations.
+- [ ] Reporting and exports, including PDF output.
 
 ---
 
 # Vision
 
-IEXEL Club OS is a complete Football Club Operating System built specifically for grassroots football clubs.
-
-Rather than simply extending WordPress, Club OS provides a complete football management platform where coaches, parents, players, committee members and administrators complete their daily tasks without needing to use the WordPress dashboard.
-
-WordPress is used for:
-
-- Authentication
-- Content Management
-- Website Pages
-- Plugin Framework
-
-Club OS provides everything else.
+- AI-assisted coaching and club administration.
+- AI-supported match report drafting and analytics.
+- Automation and predictive club insights.
+- Broader third-party football, communications and finance integrations.
 
 ---
 
-# Club OS Architecture
+# Current MVP Position
 
-```
-Core Platform
-│
-├── Dashboard
-├── People
-├── Teams
-├── Events
-├── Matchday
-├── Rewards
-├── Finance
-├── Communications
-├── AI
-└── Settings
-```
-
-Every module communicates with the others through the Core.
-
----
-
-# Club OS 1.0 Progress
-
-## Core Platform
-
-### Completed
-
-- [x] Kernel
-- [x] Dependency Injection
-- [x] Routing
-- [x] Portal Router
-- [x] Component Library
-- [x] Design Tokens
-- [x] Permissions
-- [x] JavaScript Architecture
-- [x] Portal Layout
-- [x] Sidebar Layout
-- [x] Dashboard Sections
-
-### Remaining
-
-- [ ] Notifications
-- [ ] Background Jobs
-- [ ] Audit Logging
-- [ ] API Authentication
-
-**Progress:** 95%
-
----
-
-## People Module
-
-### Completed
-
-- [x] People Directory
-- [x] Person Profiles
-- [x] Team Assignments
-- [x] Parent Relationships
-- [x] Member Linking
-
-### Remaining
-
-- [ ] Medical Information
-- [ ] Emergency Contacts
-- [ ] Documents
-- [ ] Consent Forms
-- [ ] Registration History
-
-**Progress:** 90%
-
----
-
-## Teams Module
-
-### Completed
-
-- [x] Teams
-- [x] Coach Assignments
-- [x] Team Management
-
-### Remaining
-
-- [ ] Assistant Coaches
-- [ ] Team Staff
-- [ ] Team Notes
-- [ ] Team Archive
-
-**Progress:** 85%
-
----
-
-## Events Module
-
-### Completed
-
-- [x] Event Creation
-- [x] Venues
-- [x] Event Audience
-- [x] RSVP
-- [x] Availability Tracking
-- [x] Event Portal
-- [x] Event Detail
-- [x] Event Hero
-- [x] Countdown
-- [x] Weather
-- [x] Coach Tools
-
-### Matchday Register
-
-Completed
-
-- [x] Attendance Repository
-- [x] Attendance Register
-- [x] Attendance Hero
-- [x] Attendance Progress
-- [x] Attendance Player Cards
-- [x] Attendance Action Bar
-- [x] Bulk Actions
-- [x] Live Progress Updates
-
-Remaining
-
-- [ ] Auto Save
-- [ ] Match Timeline
-- [ ] Player Ratings
-- [ ] Goals
-- [ ] Assists
-- [ ] Cards
-- [ ] Injuries
-- [ ] Match Officials
-- [ ] Manager Awards
-
-**Progress:** 90%
-
----
-
-## Rewards Module
-
-Current Status
-
-Planning
-
-Planned Features
-
-- [ ] Reward Points
-- [ ] Redeem Shop
-- [ ] Badges
-- [ ] Achievements
-- [ ] Challenges
-- [ ] Leaderboards
-
----
-
-## Finance Module
-
-Current Status
-
-Planning
-
-Planned Features
-
-- [ ] Membership Fees
-- [ ] Stripe
-- [ ] GoCardless
-- [ ] Xero
-- [ ] QuickBooks
-- [ ] Invoices
-- [ ] Payment Dashboard
-
----
-
-## Communications Module
-
-Current Status
-
-Planning
-
-Planned Features
-
-- [ ] Emails
-- [ ] Push Notifications
-- [ ] Team News
-- [ ] Announcements
-- [ ] WhatsApp Integration
-- [ ] SMS
-
----
-
-## AI Module
-
-Current Status
-
-Research
-
-Planned Features
-
-- [ ] AI Coach Assistant
-- [ ] AI Parent Assistant
-- [ ] Match Reports
-- [ ] Attendance Insights
-- [ ] Reward Recommendations
-- [ ] Club Health Dashboard
-
----
-
-# Mobile First
-
-Every screen within Club OS is designed mobile-first.
-
-Primary users include:
-
-- Coaches
-- Parents
-- Committee Members
-
-The interface should feel like a native mobile application.
-
----
-
-# Current Overall Progress
-
-| Module | Progress |
-|---------|---------:|
-| Core | 95% |
-| People | 90% |
-| Teams | 85% |
-| Events | 90% |
-| Matchday | 90% |
-| Rewards | 15% |
-| Finance | 10% |
-| Communications | 10% |
-| AI | 5% |
-
----
-
-# Estimated Club OS 1.0 Completion
-
-**Approximately 65–70% Complete**
-
----
-
-# Current Sprint
-
-## Sprint 15 — Premium Matchday Experience
-
-Current Focus
-
-- Attendance Register UI
-- Matchday UX
-- Bulk Actions
-- Live Progress
-- Auto Save (Next)
-
----
-
-# Future Releases
-
-## Version 1.1
-
-- Rewards Engine
-- Match Statistics
-- Communications
-
-## Version 1.2
-
-- Finance
-- Integrations
-- Reports
-
-## Version 2.0
-
-- AI Coach
-- AI Parent
-- AI Club Insights
-- Automation
+**Approximately 83% complete.** Football operations are substantially complete, while communications, finance, rewards, reporting and final polish remain necessary for the full club-wide MVP. See [FEATURE_STATUS.md](FEATURE_STATUS.md).

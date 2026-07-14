@@ -1,128 +1,29 @@
 # IEXEL Club OS MVP v1.0
 
-> **Mission**
->
-> Launch a stable football club operating system that allows IEXEL FC to operate day-to-day entirely within Club OS.
+The MVP goal is a stable Club OS that supports the club's routine football and administrative work without fragmented systems.
 
----
+## Completed Foundation
 
-# Development Principle
+- [x] Portal, navigation, authentication and team permissions.
+- [x] People, teams, relationships and assignments.
+- [x] Events, venues, audience, RSVP, availability and attendance.
+- [x] Team Workspace, Team Attendance Workspace and Matchday Hub.
+- [x] Match Details, Match Mode and Match Readiness Dashboard.
+- [x] Match lineup, live state/score, Goal Attribution, Rolling Substitutions, timeline, undo and reopen.
 
-Every development decision must answer one question:
+## Next Football Operations Work
 
-> **Does this help IEXEL FC operate more effectively this season?**
+- [ ] Match Reports.
+- [ ] Player Ratings.
+- [ ] Player of the Match.
 
-If YES → MVP
+## Wider MVP Work
 
-If NO → Future Release
+- [ ] Communications suitable for club and team use.
+- [ ] Rewards workflows beyond the current partial foundations.
+- [ ] Finance workflows suitable for routine club administration.
+- [ ] Reporting, exports and final product polish.
 
-The priority is always to deliver a stable, usable operating system before expanding the feature set.
+## Status
 
----
-
-# MVP Success Criteria
-
-The club should be able to operate entirely inside Club OS.
-
-No spreadsheets.
-
-No WhatsApp attendance.
-
-No separate registration systems.
-
-No separate payment tracking spreadsheets.
-
----
-
-# MVP Modules
-
-## Core Platform
-
-- [x] Portal
-- [x] Navigation
-- [x] Authentication
-- [x] Permissions
-
----
-
-## People
-
-- [x] Players
-- [x] Parents
-- [x] Coaches
-- [x] Teams
-- [x] Assignments
-
-Remaining
-
-- [ ] Emergency Contacts
-- [ ] Registration History
-
----
-
-## Football Operations
-
-- [x] Events
-- [x] Availability
-- [x] Attendance
-
-Remaining
-
-- [ ] Team Workspace
-- [ ] Team Statistics
-
----
-
-## Finance Lite
-
-- [ ] Monthly Fee Rules
-- [ ] Age Group Pricing
-- [ ] Sibling Discounts
-- [ ] Automatic Monthly Charges
-- [ ] Manual Payment Recording
-- [ ] Parent Account Statement
-- [ ] Committee Finance Dashboard
-
----
-
-## Rewards Lite
-
-- [ ] Reward Points
-- [ ] Award Points
-- [ ] Reward Shop
-- [ ] Parent Reward Balance
-
----
-
-## Communications Lite
-
-- [ ] Club Announcements
-- [ ] Team Announcements
-- [ ] Event Reminders
-- [ ] Email Notifications
-
----
-
-## Parent Hub
-
-- [ ] Children
-- [ ] Upcoming Events
-- [ ] Availability
-- [ ] Finance
-- [ ] Rewards
-
----
-
-## Coach Hub
-
-- [x] Coach Hub
-- [ ] Team Workspace
-- [ ] Quick Actions
-- [ ] Team Statistics
-- [ ] Activity Feed
-
----
-
-# Definition of Done
-
-Club OS MVP is complete when IEXEL FC can operate the club entirely inside Club OS throughout a normal season.
+**Approximately 83% complete.** The football operations workflow is substantially complete, but this does not represent completion of the full club-wide MVP. Detailed estimates are maintained in [FEATURE_STATUS.md](FEATURE_STATUS.md).

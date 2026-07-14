@@ -1,89 +1,33 @@
 # IEXEL Club OS Documentation
 
-Welcome to the official documentation repository for **IEXEL Club OS**.
+IEXEL Club OS is a modular, portal-first football club operating system built on WordPress. The current implementation covers the core platform, people, teams, events, venues, audience, RSVP, attendance and the Match Operations MVP.
 
----
+## Implemented Modules
 
-## Vision
+- Core platform and role-aware Club OS portal.
+- People, teams and team assignments.
+- Events, venues, audience, availability and attendance.
+- Team Attendance Workspace and Matchday Hub.
+- Match Details, Match Mode and Match Readiness Dashboard.
+- Match Lineup Builder, live state/score controls, Goal Attribution, Rolling Substitutions, timeline, undo and reopen workflows.
 
-IEXEL Club OS is a modern football club operating system designed to bring every aspect of club management into one professional platform.
+## MVP Status
 
-Rather than functioning as a traditional WordPress plugin, Club OS is being built as a modular application with reusable components, clean architecture and a premium user experience.
+The overall IEXEL Club OS MVP is estimated at **approximately 83% complete**. Football operations are substantially complete; communications, finance, rewards, reporting and final polish remain.
 
----
+## Current Development Focus
 
-## Core Modules
+- Match Reports.
+- Player Ratings.
+- Player of the Match.
 
-- People
-- Teams
-- Events
-- Attendance
-- Rewards
-- Finance
-- Communications
-- Documents
-- Media
-- AI Assistant
-- Integrations
+## Documentation
 
----
-
-## Technology
-
-- PHP 8+
-- WordPress
-- Custom Plugin Architecture
-- Repository Pattern
-- Service Container
-- Modular UI Components
-- Midnight Blue & Gold Design System
-
----
-
-## Current Version
-
-Alpha
-
-Current Development Sprint:
-
-**Event Module Refactor & UI Framework**
-
----
-
-## Documentation Structure
-
-Architecture/
-
-Database/
-
-Developer Guides/
-
-Integrations/
-
-Product Specification/
-
-Release Notes/
-
-Roadmap/
-
-Sprints/
-
-UI-UX/
-
-User Guides/
-
----
-
-## Philosophy
-
-Reusable Components
-
-Reusable Layouts
-
-Reusable Services
-
-Reusable Modules
-
-Build once.
-
-Use everywhere.
+- [Roadmap](ROADMAP.md)
+- [Sprint history](SPRINTS.md)
+- [Architecture](ARCHITECTURE.md)
+- [Match Operations](MATCH-OPERATIONS.md)
+- [Database](DATABASE.md)
+- [Security](SECURITY.md)
+- [Feature status](FEATURE_STATUS.md)
+- [Changelog](CHANGELOG.md)

@@ -1,212 +1,319 @@
 # IEXEL Club OS Sprint Releases
 
-This document tracks the major development milestones of IEXEL Club OS.
-
-Each sprint represents a stable, tested feature set that has been merged into the main branch.
+This document tracks the major development milestones of IEXEL Club OS. Completed entries describe stable feature sets merged into the plugin's main branch.
 
 ---
 
 # Sprint 17
-## Matchday Portal & Global Navigation
 
-**Status:** ✅ Complete
+## Matchday Portal and Global Navigation
 
-### Major Features
+**Status:** Complete
 
-- Portal Shell Layout
-- Portal Top Bar
-- Global Navigation
-- Dynamic Breadcrumb System
-- Active Navigation States
-- Shared Application Layout
+**Goal:** Provide a portal-first attendance register within the shared Club OS shell.
 
-### Matchday Portal
+### Delivered
 
-- Coach-only attendance register
-- Portal attendance route
-- Attendance Hero
-- Attendance Progress
-- Attendance Player Cards
-- Attendance Save Bar
-- Bulk Attendance Actions
-- Live Attendance Counters
+- Global portal navigation, breadcrumbs and shared layouts.
+- Matchday attendance register, progress, player cards, bulk actions and save bar.
 
-### Architecture
+### Security/Data Integrity
 
-New Components
+- Coach-only attendance access and persisted event audience records.
 
-- PortalTopBar
-- PortalNavigation
-- PortalBreadcrumb
+### Validation
 
-New Layout
+- Attendance permissions, routing, persistence, responsive layout and event detail integration were exercised during delivery.
 
-- PortalShellLayout
+### Deferred
 
-New Pages
-
-- EventAttendancePage
-
-New Event Components
-
-- AttendanceHeroCard
-- AttendanceProgressCard
-- AttendancePlayerCard
-- AttendanceBulkActionsCard
-- AttendanceSaveBar
-
-### Improvements
-
-- Coaches remain inside Club OS
-- WordPress admin no longer required for attendance
-- Shared application shell introduced
-- Dynamic event breadcrumbs
-- Cleaner application navigation
-- Reusable UI architecture
+- Match statistics and richer live-match workflows.
 
 ---
 
 # Sprint 18
+
 ## Coach Hub Foundation
 
-**Status:** ✅ Complete
+**Status:** Complete
 
-### Major Features
+**Goal:** Give coaches a dedicated, role-aware Club OS workspace.
 
-- Coach Hub
-- Dedicated Coach Landing Page
-- Role-aware Portal Navigation
-- Automatic Coach Redirect
-- Coach Breadcrumbs
-- Coach Workspace Layout
-- Upcoming Sessions Widget
-- 7-Day Upcoming Events Service
+### Delivered
 
-### Components
+- Coach Hub, automatic coach routing, breadcrumbs, upcoming sessions, statistics and activity components.
 
-- CoachWorkspaceHero
-- CoachUpcomingEventsCard
-- CoachStatsCard
-- CoachActivityCard
+### Security/Data Integrity
 
-### Architecture
+- Role-aware portal navigation and coach-specific workspace access.
 
-New Services
+### Validation
 
-- upcoming_events_for_days()
+- Coach routing, upcoming event summaries and shared portal layouts were validated.
 
-Portal Improvements
+### Deferred
 
-- Coach Hub navigation
-- Coach Hub landing page
-- Role-aware dashboard routing
-- Coach-specific breadcrumbs
-
-### Improvements
-
-- Coaches now have their own dedicated workspace
-- Navigation adapts to user role
-- Live event data displayed inside Coach Hub
-- Shared portal architecture expanded
-- Foundation laid for Team Workspace
+- Notifications and deeper team statistics.
 
 ---
 
 # Sprint 19
 
-## Team Workspace
+## Team Workspace Foundation
 
-**Status:** ✅ Complete
+**Status:** Complete
 
-### Planned
+**Goal:** Provide a secure workspace for each team managed by a coach.
 
-- Coach Teams Widget
-- Assigned Teams
-- Team Workspace
-- Squad Overview
-- Team Statistics
-- Team Activity Feed
-- Quick Actions
-- Upcoming Fixtures
-- Team Management
+### Delivered
 
----
+- Team overview, squad and availability summaries, season statistics, quick actions and upcoming events.
 
-# Planned Roadmap
+### Security/Data Integrity
 
-## Sprint 20
+- Active coach assignment checks and administrator override through `can_manage_team()`.
 
-### Communications
+### Validation
 
-- Messages
-- Announcements
-- Push Notifications
-- Email Centre
+- Assigned-team access, team summaries, navigation and responsive layouts were validated.
+
+### Deferred
+
+- Advanced team statistics and messaging.
 
 ---
 
-## Sprint 21
+# Sprint 20
 
-### Finance
+## Secure Portal Event Builder
 
-- Memberships
-- Payments
-- Invoices
-- Reporting
+**Status:** Complete
 
----
+**Goal:** Let authorised coaches create and manage team events without leaving Club OS.
 
-## Sprint 22
+### Delivered
 
-### Rewards
+- Portal event creation and editing for team events, venues, audience and match details.
 
-- Rewards Engine
-- Redeemables
-- Leaderboards
-- Achievements
+### Security/Data Integrity
 
----
+- Stored-team authorisation, team-scoped nonces, server-side validation and transactional event/audience updates.
 
-## Sprint 23
+### Validation
 
-### Club Shop
+- Creation, editing, event type, venue, audience and direct-route access paths were validated.
 
-- Products
-- Orders
-- Teamwear
-- Printing
+### Deferred
+
+- Messaging and automated event notifications.
 
 ---
 
-## Sprint 24
+# Sprint 21
 
-### Reports & Analytics
+## Team Attendance Workspace
 
-- Attendance Reports
-- Team Reports
-- Finance Reports
-- Club Reports
+**Status:** Complete
+
+**Goal:** Consolidate RSVP, audience and attendance management for a team event.
+
+### Delivered
+
+- Team Attendance Workspace, audience management, RSVP summaries and attendance register integration.
+- PRG submissions for RSVP and attendance.
+
+### Security/Data Integrity
+
+- Event visibility rules, audience eligibility, stored-event team checks and unique event/person records.
+
+### Validation
+
+- Coach and participant visibility, RSVP, attendance saves, redirects and repeated saves were validated.
+
+### Deferred
+
+- Attendance reports, exports and messaging.
 
 ---
 
-## Sprint 25
+# Sprint 22
 
-### AI Platform
+## Matchday Hub
 
-- Coach AI
-- Club AI
-- Registration AI
-- Reporting AI
+**Status:** Complete
+
+**Goal:** Bring match preparation into one secure workspace.
+
+### Delivered
+
+- Matchday Hub with match details, attendance, availability and preparation actions.
+
+### Security/Data Integrity
+
+- Stored-event team authorisation and direct-ID route protection.
+
+### Validation
+
+- Fixture/friendly eligibility, team isolation, navigation and mobile rendering were validated.
+
+### Deferred
+
+- Match Reports, Player Ratings and PDF export.
 
 ---
 
-## Sprint 26
+# Sprint 23
 
-# Club OS v1.0
+## Match Mode Foundation
 
-### Production Release
+**Status:** Complete
 
-- Complete Club Management Platform
-- Grassroots Ready
-- Academy Ready
-- Professional Club Ready
+**Goal:** Establish secure Match Mode routes, state and live-match presentation.
+
+### Delivered
+
+- Match Mode workspace, Match Details, state progression and transactional score projection.
+
+### Security/Data Integrity
+
+- Server-derived team identity, event/action-scoped nonces, row locking and authorised state transitions.
+
+### Validation
+
+- Supported state transitions, invalid transitions, terminal states and direct-route access were validated.
+
+### Deferred
+
+- Browser timer, extra time and penalty shootout.
+
+---
+
+# Sprint 24
+
+## Match Lineup Builder
+
+**Status:** Complete
+
+**Goal:** Store a reliable pre-match lineup baseline.
+
+### Delivered
+
+- Starters and substitutes, captain and goalkeeper selection, positions, ordering and shirt-number snapshots.
+
+### Security/Data Integrity
+
+- Server-side eligible-player allowlist, unique event/person selection and post-kickoff mutation lock.
+
+### Validation
+
+- Duplicate players, audience membership, active assignments, captain/goalkeeper rules and read-only state were validated.
+
+### Deferred
+
+- Formations and tactical diagrams.
+
+---
+
+# Sprint 25
+
+## Live Match Controls
+
+**Status:** Complete
+
+**Goal:** Support the core match lifecycle safely from a mobile-first interface.
+
+### Delivered
+
+- Kickoff, half-time, second half, full-time, reopen and supported terminal-state controls.
+- Live score and match-state display.
+
+### Security/Data Integrity
+
+- Transactional transitions, locked event and match-detail rows, and audit metadata.
+
+### Validation
+
+- Transition order, repeat submissions, reopen behaviour and event-status synchronisation were validated.
+
+### Deferred
+
+- Match clock, extra time, penalty shootout, AJAX and WebSockets.
+
+---
+
+# Sprint 26
+
+## Goal Attribution
+
+**Status:** Complete
+
+**Goal:** Record realistic goal events while preserving a consistent score projection.
+
+### Delivered
+
+- Club and opponent goals, both own-goal directions, penalties, assists, optional opponent names, timeline and Undo Last Goal.
+
+### Security/Data Integrity
+
+- Append-only incidents, idempotent request keys, stored-lineup allowlists, row locking and transactional score updates/undo.
+
+### Validation
+
+- Goal modes, score direction, scorer/assist eligibility, duplicate requests and repeated undo were validated.
+
+### Deferred
+
+- Cards, injuries and player statistics aggregation.
+
+---
+
+# Sprint 27
+
+## Rolling Match Substitutions
+
+**Status:** Complete
+
+**Goal:** Support grassroots roll-on/roll-off substitutions and reliable player re-entry.
+
+### Delivered
+
+- Current On Pitch, Available Bench, substitution timeline, player re-entry and Undo Last Substitution.
+
+### Security/Data Integrity
+
+- Pitch state derived by replaying active incidents; action-request ledger and transactions protect substitutions and undo.
+
+### Validation
+
+- On-pitch/bench eligibility, replay order, re-entry, duplicate requests and repeated undo were validated.
+
+### Deferred
+
+- Formation-aware positions, AJAX/WebSockets and player statistics aggregation.
+
+---
+
+# Sprint 28
+
+## Match Readiness Dashboard
+
+**Status:** Complete
+
+**Goal:** Make preparation and live status visible from Matchday Hub.
+
+### Delivered
+
+- Dynamic readiness from Match Details, lineup, availability, attendance and match state.
+- Integrated preparation, live-match and completed-match actions.
+
+### Security/Data Integrity
+
+- Readiness uses the authorised stored event and existing authoritative repositories.
+
+### Validation
+
+- Empty, partial, ready, live and full-time states were validated across mobile and desktop layouts.
+
+### Deferred
+
+- Match Reports, Player Ratings, Player of the Match, PDF export and messaging.

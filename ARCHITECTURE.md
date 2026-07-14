@@ -2,438 +2,107 @@
 
 ## Purpose
 
-IEXEL Club OS is a modular WordPress-based football club operating
-system.
-
-It is designed for grassroots clubs first, while remaining scalable for
-academies, semi-professional clubs and professional organisations.
-
-WordPress provides:
-
--   Authentication
--   Website content management
--   Plugin hosting
--   User accounts
--   Administrative infrastructure
-
-Club OS provides:
-
--   Football operations
--   People and team management
--   Events and matchday
--   Rewards
--   Finance
--   Communications
--   Analytics
--   Integrations
--   AI-assisted workflows
-
-------------------------------------------------------------------------
+IEXEL Club OS is a modular WordPress-based football club operating system. WordPress supplies authentication, user accounts, plugin runtime and website content; Club OS supplies portal-first club and football operations.
 
 ## Core Principles
 
--   Modular features
--   Clean separation of responsibilities
--   Reusable components
--   Configurable club settings
--   Feature toggles for advanced functionality
--   Repository-based database access
--   Page classes for complete screens
--   One source of truth for club data
--   Mobile-first user experience
--   Role-based permissions
--   Portal-first access for non-administrators
--   Upgrade existing components before creating duplicates
+- Repository-based data access and service-based business rules.
+- Stored records, rather than route or form input, determine security scope.
+- UI components contain presentation logic and no direct SQL.
+- Pages compose components and delegate mutations to services.
+- Transactions, row locks, uniqueness constraints and idempotency protect live match operations.
+- Portal interfaces are responsive and touch-friendly.
 
-------------------------------------------------------------------------
+## Platform Layers
 
-## High-Level Architecture
-
-``` text
-WordPress
-│
-├── Authentication
-├── User Accounts
-├── Plugin Runtime
-└── Website Content
-    │
-    ▼
-IEXEL Club OS
-│
-├── Core
-├── Business Engines
-├── Portal
-├── UI Framework
-├── Repositories
-├── Services
-├── Modules
-└── Integrations
+```text
+WordPress authentication and runtime
+  → Club OS routes and permission boundary
+  → Pages and reusable UI components
+  → Domain services
+  → Repositories
+  → Club OS database tables
 ```
 
-------------------------------------------------------------------------
+Core platform services include the application/kernel, service container, database manager, settings, modules, activity logging and portal permissions. Domain repositories cover people, teams, assignments, events, venues, audience, availability, attendance and Match Operations.
 
-## Core Platform
+## Match Operations Services
 
-### Application
+| Service | Responsibility |
+|---|---|
+| `MatchModeService` | Builds the authorised Match Mode workspace from event, details, lineup, availability, attendance and incident data. |
+| `MatchReadinessService` | Calculates preparation and live-status summaries for Matchday Hub. |
+| `MatchEligiblePlayerService` | Builds the server-side eligible-player allowlist from active team assignments and event audience membership. |
+| `MatchLineupSubmissionService` | Validates and stores the pre-match lineup, captain, goalkeeper and shirt-number snapshots. |
+| `MatchPitchStateService` | Replays active substitution incidents over the saved lineup to derive Current On Pitch and Available Bench. |
+| `MatchStateService` | Enforces match-state transitions, full-time completion and reopen behaviour. |
+| `MatchGoalService` | Validates Goal Attribution and writes the goal incident and score projection transactionally. |
+| `MatchSubstitutionService` | Validates and records Rolling Substitutions against the current derived pitch state. |
+| `MatchIncidentUndoService` | Voids the most recent expected goal and reverses its score projection transactionally. |
+| `MatchSubstitutionUndoService` | Voids the most recent expected substitution and protects repeated undo requests. |
 
-Bootstraps Club OS and registers services, routes, permissions and
-modules.
+Supporting services include match detail submission, score projection, state normalisation and shirt-number resolution.
 
-### Kernel
+## Match Operations Repositories
 
-Provides central access to repositories and services such as:
+- `MatchDetailsRepository` owns the one-per-event match configuration and projected score/state row.
+- `MatchSelectionRepository` owns the saved pre-match lineup baseline.
+- `MatchIncidentRepository` owns the append-only goal/substitution ledger and action-request claims.
+- Existing event, attendance, availability and event-audience repositories supply the surrounding matchday context.
 
--   People
--   Teams
--   Team Assignments
--   Events
--   Venues
--   Event Audience
--   Availability
--   Attendance
--   Weather
--   Branding
--   Permissions
--   Portal services
+Database access remains inside repositories. Transaction-owning domain services coordinate repository calls but UI pages and components do not execute SQL.
 
-### Container
+## Authoritative Data Rules
 
-Manages shared application services.
+- The stored event is authoritative for identity, event type, date, time, venue and team.
+- Match Details stores opponent, competition, home/away/neutral location, projected score and match state.
+- Match selections store the immutable pre-match baseline after kickoff, including role, order, position, captain, goalkeeper and shirt-number snapshots.
+- Active match incidents are the authoritative live ledger for goals and substitutions.
+- Score columns in Match Details are projections maintained transactionally from goal actions and undo.
+- Current on-pitch and bench state is derived by replaying active substitution incidents over the saved lineup.
+- The activity log is audit-only and is not used to reconstruct match state.
+- A mutation requires authorisation against the team on the stored event.
+- Posted event, team, person and role values are treated as requests and validated against stored allowlists and current state.
 
-### DatabaseManager
+## Request Lifecycle
 
-Creates and upgrades Club OS database tables.
-
-### SettingsManager
-
-Provides configurable club settings and defaults.
-
-### ModuleManager
-
-Registers and boots optional Club OS modules.
-
-### ActivityLogger
-
-Records important system actions.
-
-### PermissionManager and Roles
-
-Controls access for:
-
--   Website Administrator
--   Club Administrator
--   Coach
--   Parent / Guardian
--   Player
--   Committee Member
--   Volunteer
-
-------------------------------------------------------------------------
-
-## Business Engines
-
-### People Engine
-
-Handles:
-
--   Members
--   Players
--   Coaches
--   Parents
--   Volunteers
--   Staff
--   Relationships
--   WordPress user linking
-
-### Teams Engine
-
-Handles:
-
--   Teams
--   Age groups
--   Team formats
--   Team colours
--   Team profiles
--   Coach assignments
--   Player assignments
-
-### Events Engine
-
-Handles:
-
--   Training
--   Fixtures
--   Friendlies
--   Tournaments
--   Meetings
--   Presentations
--   Trials
--   Venues
--   Event audiences
--   Event status
-
-### Availability Engine
-
-Handles pre-event RSVP responses:
-
--   Available
--   Unavailable
--   Pending
-
-Availability is separate from attendance.
-
-### Attendance Engine
-
-Handles what happened at the event:
-
--   Present
--   Late
--   Absent
--   Excused
--   Notes
--   Checked by
--   Checked at
-
-### Matchday Engine
-
-Uses events, audience, availability and attendance to provide:
-
--   Matchday Register
--   Bulk attendance actions
--   Live progress
--   Coach tools
--   Future player ratings
--   Goals and assists
--   Cards
--   Injuries
--   Match timeline
-
-### Rewards Engine
-
-Planned responsibilities:
-
--   Reward points
--   Achievements
--   Challenges
--   Leaderboards
--   Redemptions
-
-### Finance Engine
-
-Planned responsibilities:
-
--   Membership fees
--   Invoices
--   Payments
--   Payment status
--   Accounting integrations
-
-### Communications Engine
-
-Planned responsibilities:
-
--   Announcements
--   Team messages
--   Email
--   Push notifications
--   SMS
--   WhatsApp-related workflows
-
-------------------------------------------------------------------------
-
-## Portal Architecture
-
-All non-administrative users should work inside Club OS rather than the
-WordPress dashboard.
-
-### Portal Routes
-
-``` text
-/club-os/
-/club-os/events/
-/club-os/events/{event_id}/
-/club-os/events/{event_id}/attendance/
+```text
+Route event ID
+  → load stored event
+  → derive stored team
+  → authorise
+  → validate event/action-scoped nonce
+  → lock rows
+  → validate current state and allowlists
+  → mutate transactionally
+  → write audit metadata
+  → commit
+  → PRG redirect
 ```
 
-### Portal Users
+Read routes first apply event visibility rules. Write routes additionally require `can_manage_team()` for the stored event team. Administrator capability provides the deliberate club-wide override.
 
--   Coaches
--   Parents
--   Players
--   Committee members
--   Volunteers
+## Match State and Projections
 
-Only website administrators should normally require access to
-`wp-admin`.
+The normal live progression is:
 
-------------------------------------------------------------------------
-
-## UI Architecture
-
-Club OS uses a reusable component-based UI framework.
-
-### Common Components
-
--   Button
--   Badge
--   StatCard
--   SummaryCard
--   SectionCard
--   CountdownCard
-
-### Layout Components
-
--   TwoColumnLayout
--   SidebarStackLayout
--   MetricGrid
--   DashboardSection
-
-### Event Components
-
--   EventHeroCard
--   EventInfoGrid
--   EventResponseActionsCard
--   CoachActionsCard
--   EventCountdownCard
--   EventWeatherCard
--   EventNotesCard
--   AvailabilityPanel
--   AttendanceSummaryCard
--   AttendanceHeroCard
--   AttendanceProgressCard
--   AttendancePlayerCard
--   AttendanceActionBar
--   AttendanceBulkActionsCard
-
-### UI Rules
-
--   Reuse components instead of duplicating HTML.
--   Page classes compose components.
--   Components should contain presentation logic only.
--   Business logic belongs in repositories or services.
--   Midnight blue is the primary visual foundation.
--   Gold is reserved for important actions and emphasis.
--   Interfaces must be responsive and touch-friendly.
-
-------------------------------------------------------------------------
-
-## JavaScript Architecture
-
-Current structure:
-
-``` text
-assets/js/
-├── app.js
-└── attendance.js
+```text
+Not Started → First Half → Half-Time → Second Half → Full-Time
 ```
 
--   `app.js` initialises Club OS JavaScript modules.
--   `attendance.js` handles bulk attendance actions and live progress
-    updates.
+Supported terminal alternatives include abandoned, postponed and cancelled where allowed by the state rules. Reopen Match changes Full-Time back to Second Half and clears the finished timestamp. Extra time and penalty shootout states are not part of the current MVP.
 
-Future JavaScript should follow the same modular pattern.
+Goal and substitution requests use stable request keys. Incidents are never deleted during ordinary operation; undo marks an incident void and preserves its identity and audit metadata. The action-request ledger separately protects undo and substitution actions from being applied twice.
 
-------------------------------------------------------------------------
+## Portal and UI Architecture
 
-## Data Flow
+Club OS uses route-specific page classes and reusable components inside the shared portal shell. Matchday Hub presents readiness and preparation; Match Mode prioritises state, score, Goal Attribution, Rolling Substitutions and timeline actions. Match Details are reused across Event Detail, Events listing, Matchday Hub and Match Mode.
 
-``` text
-Person
-  ↓
-Team Assignment
-  ↓
-Event Audience
-  ↓
-Availability / RSVP
-  ↓
-Attendance
-  ↓
-Statistics
-  ↓
-Rewards
-  ↓
-Dashboards
-  ↓
-AI Insights
-```
+All times shown to users use `HH:MM`. Mutating form workflows use PRG so refreshes do not repeat successful actions or leave stale form warnings.
 
-------------------------------------------------------------------------
+## Related Documentation
 
-## Database Responsibility
-
-Database operations must remain inside repository classes.
-
-Examples:
-
--   PeopleRepository
--   TeamRepository
--   TeamAssignmentRepository
--   EventRepository
--   EventAudienceRepository
--   AvailabilityRepository
--   AttendanceRepository
--   VenueRepository
-
-Pages and UI components should not execute direct database queries.
-
-------------------------------------------------------------------------
-
-## Development Rules
-
--   One feature per branch.
--   Commit after each stable milestone.
--   Open a pull request before merging into `main`.
--   Test before merging.
--   Delete completed feature branches after merge.
--   Avoid adding large methods to `AdminUI.php`.
--   Move full screens into `Pages`.
--   Move reusable presentation into `Components`.
--   Keep database access inside repositories.
--   Use services for reusable business logic.
--   Use `SettingsManager` for configurable behaviour.
--   Update the docs repository after each completed feature branch.
--   Check the Component Library before creating a new component.
-
-------------------------------------------------------------------------
-
-## Documentation Workflow
-
-1.  Merge the code branch.
-2.  Update `CHANGELOG.md`.
-3.  Update `Roadmap.md`.
-4.  Update `UI-UX/ComponentLibrary.md`.
-5.  Update `Architecture.md` if responsibilities changed.
-6.  Commit and push the docs repository.
-
-------------------------------------------------------------------------
-
-## Current Architectural Focus
-
-The current focus is the Matchday Register and Attendance Engine.
-
-Current completed flow:
-
-``` text
-Create Event
-  ↓
-Build Event Audience
-  ↓
-Player RSVP
-  ↓
-Coach Opens Matchday Register
-  ↓
-Mark Attendance
-  ↓
-Save Attendance
-  ↓
-Live Progress and Event Summary
-```
-
-### Next Priorities
-
--   Auto-save
--   Custom permission management
--   Match statistics
--   Coach workspace
--   Parent workspace
--   Rewards integration
+- [Match Operations](MATCH-OPERATIONS.md)
+- [Database](DATABASE.md)
+- [Security](SECURITY.md)
+- [Roadmap](ROADMAP.md)
