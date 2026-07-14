@@ -8,295 +8,99 @@ This project follows a sprint-based development process with milestone releases.
 
 # Unreleased
 
-## Sprint 19 — Team Workspace Foundation ✅
+## Match Operations MVP
 
 ### Added
 
-- Team Workspace
-- Team Workspace Hero
-- Secondary Team Navigation
-- Team Overview Dashboard
-- Team Next Event Card
-- Team Squad Summary Card
-- Team Availability Summary Card
-- Team Season Statistics Card
-- Team Quick Actions Card
-- Team Upcoming Events Card
-- Team-specific event repository methods
+- Match Readiness Dashboard with dynamic preparation and live-match status.
+- Match Details configuration for opponent, competition and home, away or neutral status.
+- Secure Match Mode routes within Club OS.
+- Match Lineup Builder with starters, substitutes, captain and goalkeeper selection.
+- Match shirt-number snapshots stored with the pre-match selection.
+- Live match progression through first half, half-time, second half and full-time, plus supported terminal states.
+- Transactionally maintained live score projection.
+- Goal Attribution for club goals, opponent goals, club own goals and opponent own goals.
+- Penalty and assist attribution where applicable, with optional opponent player names.
+- Match incident timeline backed by stable incident identities.
+- Durable Undo Last Goal and Reopen Match workflows.
+- Grassroots Rolling Substitutions with player re-entry.
+- Current On Pitch and Available Bench views derived from the saved lineup and active substitutions.
+- Undo Last Substitution.
+- Match action request ledger for repeat-safe undo and substitution actions.
+- Matchday Hub integration for match preparation and live actions.
+
+### Improved
+
+- Matchday Hub readiness is calculated from current match details, lineup, availability, attendance and match state.
+- Saved lineups become read-only after kickoff.
+- Match Mode prioritises the actions relevant to the current live state.
+- Match Details appear consistently across Event Detail, the Events listing, Matchday Hub and Match Mode.
+- Times are presented in `HH:MM` format.
+- Match navigation remains inside Club OS.
+- RSVP and attendance submissions use Post/Redirect/Get (PRG).
+- Mobile Match Mode and substitution controls are touch-friendly and responsive.
 
 ### Security
 
-- Team-level coach authorisation
-- Active assignment validation
-- Administrator bypass permissions
-- Portal-based access control
-
-### Improved
-
-- Coaches remain inside Club OS
-- Removed Team Workspace dependency on WordPress admin
-- Team navigation architecture
-- Responsive Team Workspace layout
-- Squad overview
-- Live availability summary
-- Live team event summary
-
-### Added Placeholder Workflows
-
-- Team Events
-- Team Attendance
-- Team Availability
-- Club OS Add Event workflow
-
-### Planned Next
-
-- Portal Event Builder
-- Team Event Management
-- Team Attendance Dashboard
-- Team Availability Dashboard
-
----
-
-## Sprint 18 — Coach Workspace ✅
-
-### Added
-
-- Coach Workspace
-- Coach Workspace Hero
-- Coach Dashboard
-- Upcoming Sessions
-- Coach Statistics Card
-- Coach Activity Card
-- Coach Quick Actions
-- Coach Workspace routing
-
-### Improved
-
-- Coach Hub navigation
-- Live upcoming event summaries
-- Coach landing experience
-- Portal architecture
-
-### Planned Next
-
-- Live coach statistics
-- Notifications
-- Team shortcuts
-
----
-
-## Sprint 17 — Portal Shell & Matchday Portal ✅
-
-### Added
-
-- Portal Shell Layout
-- Portal Top Bar
-- Global Navigation
-- Dynamic Breadcrumbs
-- Shared Portal Layout
-- Matchday Attendance Register
-- Attendance Hero Card
-- Attendance Progress Card
-- Attendance Player Cards
-- Attendance Bulk Actions
-- Attendance Save Bar
-
-### Improved
-
-- Coaches remain inside Club OS
-- Shared application layout
-- Responsive portal architecture
-- Event detail experience
+- Stored-event team authorisation for match reads and mutations.
+- Server-derived team identity; posted team identifiers are not trusted.
+- Event- and action-scoped nonces.
+- Idempotent request keys for incident and action requests.
+- Transactional score, goal, substitution and undo operations with row locking.
+- Direct event-route access protection and distinct read/write permission checks.
+- Event audience and eligible-player allowlists.
+- Lineup eligibility enforcement, including active assignment and audience membership checks.
+- Database uniqueness constraints for event-scoped selections, incidents and action requests.
 
 ### Fixed
 
-- Attendance permissions
-- Attendance routing
-- Rewrite rules
-- Event audience loading
-- Attendance persistence
+- Repeated undo requests can no longer affect earlier goals.
+- Coaches cannot access unrelated event details by changing route identifiers.
+- The Events listing no longer exposes unrelated team events.
+- Event Detail RSVP uses the compatible event-scoped nonce.
+- Attendance saves no longer leave header warnings after redirects.
+- Event times are normalised correctly.
+- Opponent goals no longer require an IEXEL player.
+- Goal forms no longer show fields irrelevant to the selected goal mode.
+- Notice and destructive-action contrast has been improved.
 
 ---
 
-## Sprint 16 — RSVP Engine ✅
+## Sprint 19 — Team Workspace Foundation
 
 ### Added
 
-- Availability Repository
-- RSVP responses
-- Availability statistics
-- Response tracking
-- Response highlighting
+- Team Workspace, team navigation, squad summaries, availability summaries, season statistics, quick actions and upcoming events.
+- Team-specific event repository methods.
+
+### Security
+
+- Team-level coach authorisation, active assignment validation, administrator override and portal-based access control.
 
 ### Improved
 
-- Event cards
-- Member event experience
+- Coaches remain inside Club OS for team navigation and squad/event summaries.
 
 ---
 
-## Sprint 15 — Event Portal ✅
+## Earlier Completed Foundations
 
-### Added
+- Sprint 18 — Coach Workspace.
+- Sprint 17 — Portal Shell and Matchday Portal.
+- Sprint 16 — RSVP Engine.
+- Sprint 15 — Event Portal.
+- Sprint 14 — Events Module.
+- Sprint 13 — Club Portal.
+- Sprint 12 — Teams.
+- Sprint 11 — People.
+- Sprint 10 — Core Platform.
 
-- Event Hero Card
-- Event Detail Page
-- Countdown Card
-- Event Weather
-- Coach Actions
-- Event Summary
-- Sidebar Layout
-- Dashboard Sections
-- Event Portal UI
-
-### Improved
-
-- Midnight Blue design system
-- Responsive layouts
-- Component architecture
-
----
-
-## Sprint 14 — Events Module
-
-### Added
-
-- Events module
-- Event creation
-- Venues
-- Event Audience
-- Team event assignment
-
----
-
-## Sprint 13 — Club Portal
-
-### Added
-
-- Member Dashboard
-- Dashboard Cards
-- Quick Actions
-- Upcoming Events
-- Portal Router
-- Portal Navigation
-
----
-
-## Sprint 12 — Teams
-
-### Added
-
-- Teams Directory
-- Team Profiles
-- Team Assignments
-- Coach Assignments
-
----
-
-## Sprint 11 — People
-
-### Added
-
-- People Directory
-- Person Profiles
-- Parent Relationships
-- Member Linking
-- User Linking
-
----
-
-## Sprint 10 — Core Platform
-
-### Added
-
-- Kernel
-- Dependency Injection
-- Routing
-- Repository Pattern
-- Component Library
-- Design Tokens
-- Permission System
-- Settings
-- Database Migrations
+See [SPRINTS.md](SPRINTS.md) for delivery and validation detail.
 
 ---
 
 # MVP Progress
 
-Current Estimated Progress
+**Current estimated overall progress: approximately 83%.**
 
-| Area | Progress |
-|------|---------:|
-| Core Platform | 96% |
-| People | 90% |
-| Teams | 92% |
-| Events | 92% |
-| Matchday | 92% |
-| Coach Hub | 95% |
-| Team Workspace | 90% |
-| Rewards Lite | 15% |
-| Finance Lite | 10% |
-| Communications Lite | 10% |
-
----
-
-# IEXEL Club OS MVP
-
-**Current Progress:** ~84%
-
-Current Priority:
-
-- Portal Event Builder
-- Team Event Management
-- Parent Hub
-- Finance Lite
-- Rewards Lite
-- Communications Lite
-
----
-
-# Planned Releases
-
-## Club OS MVP v1.0
-
-Target:
-
-- Complete Coach Hub
-- Complete Team Workspace
-- Parent Hub
-- Finance Lite
-- Rewards Lite
-- Communications Lite
-
-Estimated Progress:
-
-**~84% Complete**
-
----
-
-## Club OS v1.1
-
-- Match Statistics
-- Rewards Expansion
-- Communications Expansion
-- Reports
-
----
-
-## Club OS v1.2
-
-- Stripe
-- GoCardless
-- Xero
-- Advanced Finance
-- Club Reports
-
----
-
-## Club OS v2.0
-
-- AI Coach
-- AI Parent
-- AI Club Assistant
-- Automation Engine
-- Predictive Analytics
+Football operations are substantially complete for the Match Operations MVP. The wider club MVP still requires communications, finance, rewards, reporting and final product polish. See [FEATURE_STATUS.md](FEATURE_STATUS.md) and [ROADMAP.md](ROADMAP.md).
