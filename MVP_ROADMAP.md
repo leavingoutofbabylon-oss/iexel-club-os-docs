@@ -20,8 +20,13 @@ The MVP goal is a stable Club OS that supports the club's routine football and a
 - [x] Goal attribution.
 - [x] Rolling substitutions.
 - [x] Goalkeeper changes.
-- [x] Timeline.
+- [x] Match incident timeline.
 - [x] Undo and match reopen.
+- [x] Match Reports.
+- [x] Player Ratings.
+- [x] Player of the Match.
+- [x] Team Statistics.
+- [x] Player Statistics.
 - [x] Statistics foundations.
 - [x] Team Workspace navigation context preservation.
 - [x] Multi-season navigation consistency.
@@ -32,14 +37,13 @@ The MVP goal is a stable Club OS that supports the club's routine football and a
 
 # ⚽ Remaining Football Operations
 
-- [ ] Match Reports.
-- [ ] Player Ratings.
-- [ ] Player of the Match.
-- [ ] Yellow Cards.
-- [ ] Red Cards.
-- [ ] Sin Bin.
-- [ ] Injury Tracking.
-- [ ] Water Breaks.
+- [ ] Complete Match Report polish
+    - [ ] Sin Bin support.
+    - [ ] Injury tracking.
+    - [ ] Water break events.
+    - [ ] Timeline enrichment.
+    - [ ] Final report validation.
+    - [ ] Match report UX polish.
 
 ---
 
@@ -59,6 +63,7 @@ The MVP goal is a stable Club OS that supports the club's routine football and a
 - [ ] Final responsive polish.
 - [ ] Accessibility review.
 - [ ] Performance optimisation.
+- [ ] End-to-end workflow testing.
 - [ ] Release Candidate testing.
 - [ ] MVP v1.0 release.
 
@@ -66,15 +71,15 @@ The MVP goal is a stable Club OS that supports the club's routine football and a
 
 # Status
 
-**Approximately 89% complete.**
+**Approximately 91% complete.**
 
-The core architecture, football platform and Team Workspace are now feature-complete and release hardened.
+The core architecture, football platform, Match Reports, Statistics, and Team Workspace are feature-complete and release hardened.
 
 The remaining work is focused on:
 
-- completing the final football operations workflow,
-- finishing club administration modules,
-- polishing the user experience,
+- completing the final football workflow refinements,
+- delivering the remaining club administration modules,
+- polishing the overall user experience,
 - preparing for the MVP v1.0 Release Candidate.
 
 See **FEATURE_STATUS.md** for detailed module progress.
