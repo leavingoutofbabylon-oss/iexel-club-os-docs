@@ -4,9 +4,9 @@ The MVP goal is a stable Club OS that supports the club's routine football and a
 
 ---
 
-# ✅ Completed Foundation
+# Completed Foundation
 
-- [x] Portal, authentication, navigation and role-based team permissions.
+- [x] Portal, authentication, navigation and role-based workspaces.
 - [x] People, teams, relationships and assignments.
 - [x] Seasons and multi-season support.
 - [x] Events, venues, audiences, RSVP, availability and attendance.
@@ -43,44 +43,69 @@ The MVP goal is a stable Club OS that supports the club's routine football and a
 
 ---
 
-# 🏛️ Remaining Club Operations
+# Remaining Club Operations
 
-- [ ] Complete Committee Dashboard.
-    - [ ] Registration overview and review actions.
-    - [ ] Team and squad readiness overview.
-    - [ ] Upcoming fixtures and major events.
-    - [ ] Outstanding attendance and availability actions.
-    - [ ] Incomplete Match Report alerts.
-    - [ ] Finance warnings and overdue account summaries.
-    - [ ] Communications status and failed delivery alerts.
-    - [ ] Operational alerts and recent activity.
-    - [ ] Committee quick actions.
+## Committee Dashboard
+
+- [ ] Club health overview.
+- [ ] Registration progress.
+- [ ] Team and squad readiness.
+- [ ] Major club events.
+- [ ] Fundraising campaigns.
+- [ ] Sponsorship overview.
+- [ ] Committee meetings.
+- [ ] Club projects.
+- [ ] Volunteer overview.
+- [ ] Operational alerts.
+- [ ] Recent activity.
+- [ ] Committee quick actions.
+
+## Welfare Dashboard
+
+- [ ] Safeguarding overview.
+- [ ] DBS and qualification reminders.
+- [ ] Welfare concerns and incident tracking.
+- [ ] Medical and emergency information overview.
+- [ ] Compliance reminders.
+- [ ] Welfare alerts and actions.
+
+## Player Dashboard v2
+
+- [ ] Dedicated My Stats experience (Player Performance Centre).
+- [ ] Improved My Team workspace.
+- [ ] Improved My Events workspace.
+- [ ] Club News experience.
+- [ ] Achievements and rewards integration.
+
+## Rewards
 
 - [ ] Complete rewards workflows beyond the existing foundations.
 
-- [ ] Complete reporting and exports.
-    - [ ] Attendance exports.
-    - [ ] Registration exports.
-    - [ ] Finance exports.
-    - [ ] Player and team statistics exports.
-    - [ ] Consolidated club reports.
+## Reporting & Exports
+
+- [ ] Attendance exports.
+- [ ] Registration exports.
+- [ ] Finance exports.
+- [ ] Team statistics exports.
+- [ ] Player statistics exports.
+- [ ] Consolidated club reports.
 
 ---
 
-# 🎨 MVP Polish
+# MVP Polish
 
-- [ ] Final responsive polish across portal, committee and administrative pages.
+- [ ] Final responsive polish across all dashboards.
 - [ ] Accessibility review.
 - [ ] Performance optimisation.
 - [ ] End-to-end workflow testing.
-- [ ] Permissions and role-access verification.
-- [ ] Final data-quality and source-warning review.
+- [ ] Permissions and role verification.
+- [ ] Data-quality and source-warning review.
 - [ ] Release Candidate testing.
 - [ ] MVP v1.0 release.
 
 ---
 
-# 🔮 Post-MVP Enhancements
+# Post-MVP Enhancements
 
 - [ ] Sin Bin support.
 - [ ] Injury tracking.
@@ -88,23 +113,25 @@ The MVP goal is a stable Club OS that supports the club's routine football and a
 - [ ] Advanced incident timeline.
 - [ ] Advanced football analytics.
 - [ ] Extended Match Report enhancements.
+- [ ] Additional integrations and third-party services.
 
 ---
 
 # Status
 
-**Approximately 95% complete.**
+**Approximately 94–95% complete.**
 
-The core architecture, football operations, Match Reports, Statistics, Communications, Finance, Treasurer workflows, Team Workspace and Executive Dashboard are implemented and substantially operational.
+The core platform is now feature-complete across football operations, communications, finance, statistics, team management and executive administration.
 
-The main remaining functional milestone is completing the Committee Dashboard so committee members have a focused operational workspace for registrations, events, finance, communications and outstanding actions.
+The remaining MVP work is focused on completing the final role-based experiences and polishing the platform for release.
 
-The remaining MVP work is focused on:
+## Remaining milestones
 
-- completing the Committee Dashboard,
-- finishing rewards and administrative exports,
-- carrying out final responsive, accessibility and performance improvements,
-- completing end-to-end release testing,
-- preparing the MVP v1.0 Release Candidate.
+- Complete the Committee Dashboard (Club Leadership Dashboard).
+- Build the Welfare Dashboard.
+- Refresh the Player Dashboard into a dedicated Player Performance Centre.
+- Complete rewards and reporting/export workflows.
+- Carry out final responsive, accessibility and performance improvements.
+- Complete end-to-end workflow testing and Release Candidate validation.
 
 See **FEATURE_STATUS.md** for detailed module progress.
