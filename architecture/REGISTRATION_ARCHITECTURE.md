@@ -47,8 +47,8 @@ The Registrations module manages the player registration workflow for both admin
 
 1. Parent navigates to `/club-os/register` or clicks "Register a player" in their dashboard.
 2. `PortalRegistrationWizardPage` renders a multi-step registration form.
-3. Autosave is supported via `iexel_registration_autosave` wp_ajax action.
-4. On submission, `RegistrationPortalRequestHandler` processes the form and creates a `PlayerRegistration` record with status `submitted`.
+3. Autosave is supported via the `iexel_registration_autosave` wp_ajax action, processed by `RegistrationPortalRequestHandler`.
+4. On submission (both save draft and final submit), `PortalRegistrationWizardPage::handle_request()` processes the normal portal POST flow and updates the `PlayerRegistration` record.
 5. Administrator reviews the submission in the Review Queue admin page.
 6. Administrator approves or rejects the registration.
 

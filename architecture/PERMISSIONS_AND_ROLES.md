@@ -27,7 +27,7 @@ Capabilities and roles are registered in two places:
 ```
 iexel_manage_club_os          ← Top-level administration
 ├── iexel_manage_people       ← People management
-├── iexel_manage_teams        ← Team administration
+├── iexel_manage_teams        ← Team administration (declared, not enforced)
 ├── iexel_manage_events       ← Event management
 ├── iexel_manage_communications ← Communications
 ├── iexel_view_audit_log      ← Audit log

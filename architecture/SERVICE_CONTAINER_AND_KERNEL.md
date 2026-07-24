@@ -144,7 +144,7 @@ The following table lists every public accessor method on `Kernel` as of version
 | `team_statistics()` | `TeamStatisticsService` | Statistics |
 | `finance_repository()` | `FinanceRepository` | Finance |
 | `finance_validator()` | `FinanceValidator` | Finance |
-| `finance_service()` | `FinanceService` | Finance |
+| `finance()` | `FinanceService` | Finance |
 | `recurring_billing_repository()` | `RecurringBillingRepository` | Finance |
 | `recurring_billing()` | `RecurringBillingService` | Finance |
 | `communication_repository()` | `CommunicationRepository` | Communications |
@@ -193,6 +193,6 @@ See [`decisions/ADR-003-REPOSITORY-SERVICE-SEPARATION.md`](../decisions/ADR-003-
 The key properties of this design are:
 
 1. **Lazy initialisation** — Services are only instantiated when first accessed, reducing memory usage for requests that only touch a subset of modules.
-2. **Handler isolation** — Each request handler has its own `Kernel`, so a service cached in one handler cannot leak state to another.
+2. **Contextual Kernel Sharing** — Kernels are shared within specific contexts to enable service reuse and caching. The shared billing Kernel is used by `FinanceAdminRequestHandler`, `TeamAssignmentAdminRequestHandler`, `ClubProjectAdminRequestHandler`, and the billing cron closure. The shared communication Kernel is used by `CommunicationAdminRequestHandler` and the communication cron closure.
 3. **No global state** — There is no static service registry. All service resolution flows through `Kernel` instances.
 4. **Testability** — `Kernel` can be subclassed or mocked in tests to override specific services.

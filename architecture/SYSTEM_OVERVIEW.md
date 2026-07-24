@@ -114,7 +114,7 @@ Club OS uses two complementary dependency injection patterns:
 
 ### 1. Application Container (`Container`)
 
-A minimal singleton DI container used by `Application` to manage the five core infrastructure services: `SettingsManager`, `ActivityLogger`, `DatabaseManager`, `PermissionManager`, `ModuleManager` and `AdminUI`. These services are shared across the entire request.
+A minimal singleton DI container used by `Application` to manage the six core infrastructure services: `SettingsManager`, `ActivityLogger`, `DatabaseManager`, `PermissionManager`, `ModuleManager` and `AdminUI`. These services are shared across the entire request.
 
 ### 2. Kernel (Service Locator)
 

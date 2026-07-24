@@ -58,10 +58,13 @@ The Match Mode module provides live match operations:
 | `MatchLineupSubmissionService` | Submit and validate match lineup |
 | `MatchGoalService` | Record and undo goals |
 | `MatchSubstitutionService` | Record and undo substitutions |
+| `MatchSubstitutionUndoService` | Undo the last substitution incident |
 | `MatchGoalkeeperChangeService` | Record goalkeeper changes |
+| `MatchGoalkeeperStateService` | Determine goalkeeper at specific sequences or minutes |
 | `MatchIncidentRepository` | Store all match incidents (goals, cards, substitutions) |
 | `MatchIncidentUndoService` | Undo the last incident |
 | `MatchPitchStateService` | Track current pitch state (players on pitch, positions) |
+| `MatchEligiblePlayerService` | Resolve eligible players for an event |
 | `MatchReadinessService` | Pre-match readiness checks |
 | `MatchReportService` | Post-match report and player ratings |
 | `MatchDetailsSubmissionService` | Submit match details (score, result) |

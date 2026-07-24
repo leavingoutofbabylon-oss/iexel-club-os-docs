@@ -7,7 +7,7 @@
 
 ## Overview
 
-Club OS uses a CSS custom property-based design system. All colours, spacing, typography and component styles are defined as CSS variables prefixed `--iexel-`.
+Club OS uses a CSS custom property-based design system. All colours, border radii and shadows are defined as CSS variables prefixed `--iexel-`. Spacing and typography values are generally hard-coded in the CSS rather than tokenised.
 
 ---
 
@@ -19,55 +19,51 @@ The following CSS custom properties are defined in `:root` in `assets/css/public
 
 | Token | Default value | Purpose |
 |---|---|---|
-| `--iexel-primary` | `#1a56db` | Primary brand colour (overridden by club branding) |
-| `--iexel-primary-dark` | `#1e429f` | Dark variant of primary |
-| `--iexel-primary-light` | `#e8f0fe` | Light variant of primary |
-| `--iexel-secondary` | `#6b7280` | Secondary / neutral |
-| `--iexel-success` | `#057a55` | Success state |
-| `--iexel-warning` | `#c27803` | Warning state |
-| `--iexel-danger` | `#e02424` | Danger / error state |
-| `--iexel-surface` | `#ffffff` | Card / surface background |
-| `--iexel-background` | `#f9fafb` | Page background |
-| `--iexel-border` | `#e5e7eb` | Border colour |
-| `--iexel-text-primary` | `#111827` | Primary text |
-| `--iexel-text-secondary` | `#6b7280` | Secondary / muted text |
+| `--iexel-midnight` | `#06142f` | Darkest background / base |
+| `--iexel-midnight-2` | `#0a1f49` | Elevated dark background |
+| `--iexel-navy` | `#071d49` | Primary theme background |
+| `--iexel-gold` | `#cba135` | Primary theme accent |
+| `--iexel-gold-bright` | `#f2b31b` | Bright accent / interactive |
+| `--iexel-white` | `#ffffff` | Pure white |
+| `--iexel-text` | `#f8fafc` | Primary text |
+| `--iexel-muted` | `#94a3b8` | Secondary / muted text |
+| `--iexel-border` | `rgba(203, 161, 53, 0.35)` | Standard border |
+| `--iexel-card` | `rgba(7, 29, 73, 0.92)` | Card background |
+| `--iexel-success` | `#22c55e` | Success state |
+| `--iexel-danger` | `#ef4444` | Danger / error state |
+| `--iexel-warning` | `#f59e0b` | Warning state |
 
-### Typography
+### Border Radius & Shadows
 
-| Token | Default value | Purpose |
-|---|---|---|
-| `--iexel-font-family` | `'Inter', system-ui, sans-serif` | Body font |
-| `--iexel-font-size-base` | `1rem` | Base font size |
-| `--iexel-font-size-sm` | `0.875rem` | Small text |
-| `--iexel-font-size-lg` | `1.125rem` | Large text |
-| `--iexel-font-weight-normal` | `400` | Normal weight |
-| `--iexel-font-weight-medium` | `500` | Medium weight |
-| `--iexel-font-weight-bold` | `700` | Bold weight |
+The `DesignTokens` PHP class (`app/core/UI/Design/DesignTokens.php`) defines the following constants used in PHP view files:
 
-### Spacing
-
-| Token | Default value | Purpose |
-|---|---|---|
-| `--iexel-spacing-xs` | `0.25rem` | Extra small spacing |
-| `--iexel-spacing-sm` | `0.5rem` | Small spacing |
-| `--iexel-spacing-md` | `1rem` | Medium spacing |
-| `--iexel-spacing-lg` | `1.5rem` | Large spacing |
-| `--iexel-spacing-xl` | `2rem` | Extra large spacing |
-
-### Border Radius
-
-| Token | Default value | Purpose |
-|---|---|---|
-| `--iexel-radius-sm` | `0.25rem` | Small radius |
-| `--iexel-radius-md` | `0.5rem` | Medium radius |
-| `--iexel-radius-lg` | `1rem` | Large radius |
-| `--iexel-radius-full` | `9999px` | Pill / badge |
+| Constant | Value |
+|---|---|
+| `DesignTokens::RADIUS_SMALL` | `10px` |
+| `DesignTokens::RADIUS_MEDIUM` | `16px` |
+| `DesignTokens::RADIUS_LARGE` | `20px` |
+| `DesignTokens::SHADOW_SMALL` | `0 6px 18px rgba(0,0,0,.18)` |
+| `DesignTokens::SHADOW_MEDIUM` | `0 18px 45px rgba(0,0,0,.25)` |
+| `DesignTokens::SHADOW_LARGE` | `0 24px 60px rgba(0,0,0,.35)` |
 
 ---
 
 ## Club Branding Override
 
-The `BrandingService` injects a `<style>` block into the portal `<head>` that overrides `--iexel-primary`, `--iexel-primary-dark` and `--iexel-primary-light` with the club's configured brand colour. This allows each club to customise the portal colour scheme without modifying CSS files.
+The `BrandingService::css_variables()` method injects a `<style>` block into the portal `<head>` that maps the club's configured brand palette to `--iexel-brand-*` tokens:
+
+- `--iexel-brand-primary`
+- `--iexel-brand-secondary`
+- `--iexel-brand-accent`
+- `--iexel-brand-page`
+- `--iexel-brand-card`
+- `--iexel-brand-text`
+- `--iexel-brand-muted`
+- `--iexel-brand-success`
+- `--iexel-brand-warning`
+- `--iexel-brand-danger`
+
+This allows each club to customise the portal colour scheme without modifying CSS files.
 
 ---
 
@@ -77,24 +73,21 @@ The following CSS component classes are defined in `assets/css/public.css`:
 
 | Class | Purpose |
 |---|---|
-| `.iexel-card` | Standard card container |
-| `.iexel-btn` | Base button |
-| `.iexel-btn--primary` | Primary action button |
-| `.iexel-btn--secondary` | Secondary action button |
-| `.iexel-btn--danger` | Destructive action button |
+| `.iexel-button` | Base button |
+| `.iexel-button-primary` | Primary action button |
+| `.iexel-button-secondary` | Secondary action button |
+| `.iexel-button-active` | Active state button |
+| `.iexel-button-danger-active` | Active danger button |
 | `.iexel-badge` | Status badge |
-| `.iexel-badge--success` | Success badge |
-| `.iexel-badge--warning` | Warning badge |
-| `.iexel-badge--danger` | Danger badge |
-| `.iexel-table` | Data table |
-| `.iexel-form-group` | Form field group |
-| `.iexel-form-label` | Form label |
-| `.iexel-form-input` | Text input |
-| `.iexel-form-select` | Select input |
-| `.iexel-alert` | Alert / notice block |
-| `.iexel-alert--success` | Success alert |
-| `.iexel-alert--warning` | Warning alert |
-| `.iexel-alert--danger` | Danger alert |
+| `.iexel-badge-success` | Success badge |
+| `.iexel-badge-warning` | Warning badge |
+| `.iexel-badge-danger` | Danger badge |
+| `.iexel-badge-info` | Info badge |
+| `.iexel-badge-gold` | Gold badge |
+| `.iexel-avatar` | Person avatar |
+| `.iexel-breadcrumb` | Breadcrumb navigation |
+| `.iexel-breadcrumb-item` | Breadcrumb item |
+| `.iexel-breadcrumb-separator` | Breadcrumb separator |
 
 ---
 
@@ -112,7 +105,7 @@ The Match Mode live surface uses `assets/css/match-mode.css`. This stylesheet is
 
 ## Do Not
 
-- Do not use hardcoded colour values in PHP view files
+- Do not use hardcoded colour values in PHP view files; use CSS variables or `DesignTokens` constants
 - Do not use inline `style` attributes
 - Do not add new CSS files without updating the enqueue list in `AdminUI` or the portal page class
 - Do not modify `--iexel-*` token values in component CSS; override at the `:root` level only

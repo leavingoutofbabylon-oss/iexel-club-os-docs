@@ -13,6 +13,15 @@ Items marked **P1** should be addressed before Release 1.0. Items marked **P2** 
 
 ---
 
+## Release Readiness Risks
+
+| Item | Priority | Description |
+|---|---|---|
+| Empty module registry (`medium.module-registry-empty`) | P2 | The `ModuleManager` fires lifecycle actions but no concrete class registers a `ModuleInterface` implementation. Domain areas resolve through `Kernel` instead. Target release: Post-1.0. |
+| Audit coverage inconsistent (`medium.audit-coverage-inconsistent`) | P2 | Communications, Finance and Match operations maintain timelines, while several direct administrator-page mutations do not demonstrate equivalent audit records. Direct People, Team, Venue, user-link and some Event mutations do not consistently call `ActivityLogger`. Target release: Post-1.0. |
+
+---
+
 ## Capability Inconsistencies
 
 | Item | Priority | Description |

@@ -9,7 +9,7 @@
 
 Club OS is organised into 20 functional modules. Each module is a directory under `app/core/` containing all PHP classes for that domain. Modules do not have explicit module manifest files; the `ReleaseModuleInventory` class provides the canonical module list.
 
-The `ModuleManager` provides an extension point for third-party modules via the `iexel_club_os_modules_booting` action hook, but no external modules are currently shipped.
+The `ModuleManager` provides an extension point for third-party modules via the `iexel_club_os_modules_booting` action hook. Currently, no external modules are shipped, and no internal domain areas register a `ModuleInterface` implementation. Domain areas resolve through `Kernel` instead.
 
 ---
 
@@ -57,7 +57,7 @@ app/
 │   ├── Container/                 ← Minimal DI container
 │   ├── Dashboard/                 ← DashboardService and committee data providers
 │   ├── Database/                  ← DatabaseManager (schema owner)
-│   ├── EntityAudience/            ← EventAudienceBuilder, EventAudienceRepository
+│   ├── EventAudience/            ← EventAudienceBuilder, EventAudienceRepository
 │   ├── EntityLifecycle/           ← EntityLifecycleService, EntityDependencyInspector
 │   ├── EventProgress/             ← EventProgressManager
 │   ├── Events/                    ← Event entity, repository, workspace service

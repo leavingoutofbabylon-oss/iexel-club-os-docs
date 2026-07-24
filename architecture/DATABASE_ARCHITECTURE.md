@@ -75,48 +75,10 @@ Current upgrade steps (as of 0.2.10-dev):
 
 | Step ID | Kind | Description |
 |---|---|---|
-| `2026_07_legacy_audience_attendance` | data | Deduplicate legacy audience and attendance rows |
-| `2026_07_canonical_schema` | schema | Install or reconcile all canonical Club OS tables |
-| `2026_07_compatibility_schema` | schema | Repair historical columns, indexes and signed finance fields |
-| `2026_07_legacy_data` | data | Normalise supported legacy match data |
-| `2026_07_formation_templates_and_lineup_refactor` | schema | Create formation templates, refactor match lineup |
-| `2026_07_seed_formation_templates` | data | Seed system formation templates (7v7, 9v9, 11v11) |
-| `2026_07_seed_5v5_formation_templates` | data | Seed 5v5 system formation templates |
-
----
-
-## Schema Design Principles
-
-1. **All IDs are `BIGINT UNSIGNED NOT NULL AUTO_INCREMENT`** — consistent with WordPress conventions.
-2. **All timestamps are `DATETIME` columns** — stored in UTC, named `created_at` and `updated_at`.
-3. **Status columns use `VARCHAR(50)`** — with `CHECK` constraints or application-level validation.
-4. **No foreign key constraints** — referential integrity is enforced at the application layer to avoid MySQL FK lock contention on WordPress shared hosting.
-5. **All monetary amounts are `DECIMAL(10,2) UNSIGNED`** — after the compatibility schema step repairs any signed columns from earlier versions.
-6. **JSON metadata columns use `LONGTEXT`** — not MySQL `JSON` type, for maximum hosting compatibility.
-
----
-
-## WordPress Options Used
-
-| Option key | Purpose |
-|---|---|
-| `iexel_club_os_version` | Installed plugin version |
-| `iexel_club_os_schema_version` | Current schema version |
-| `iexel_club_os_data_version` | Current data version |
-| `iexel_club_os_upgrade_state` | Upgrade runner state (status, steps, errors) |
-| `iexel_club_os_rewrite_schema` | Portal rewrite rule version stamp |
-| `iexel_club_os_last_cron_cleanup` | Deactivation cron cleanup evidence |
-| `iexel_club_os_season_plans` | Serialised season plan store (object cache) |
-| `iexel_club_os_settings` | Plugin settings array |
-
----
-
-## Transient Keys
-
-| Key pattern | Scope | TTL |
-|---|---|---|
-| `iexel_exp_{context-hash}` | Per-user experience context | 60 seconds |
-| `iexel_club_os_executive_dashboard` | Administrator dashboard aggregate | 60 seconds |
-| `iexel_weather_{postcode-hash}` | Postcode forecast placeholder | 1 hour |
-| `iexel_*_flash_{user-id}` | Per-user admin notices | 1–30 minutes |
-| `iexel_communication_confirm_{user-id}_{id}` | Per-user send confirmation | 5 minutes |
+| `2026_07_legacy_unique_preflight` | data | Remove duplicate legacy audience and attendance rows before unique indexes are reconciled. |
+| `2026_07_canonical_schema` | schema | Install or reconcile all canonical Club OS tables. |
+| `2026_07_compatibility_schema` | schema | Repair known historical columns, indexes and signed finance fields. |
+| `2026_07_legacy_data` | data | Normalise supported legacy match data after schema reconciliation. |
+| `2026_07_formation_templates_and_lineup_refactor` | schema | Create formation templates, refactor match lineup to metadata-only, extend match selections with formation data. |
+| `2026_07_seed_formation_templates` | data | Seed system formation templates (7v7, 9v9, 11v11) into the database. |
+| `2026_07_seed_5v5_formation_templates` | data | Seed 5v5 system formation templates (1-2-1, 2-1-1, 1-1-2) into the database. |

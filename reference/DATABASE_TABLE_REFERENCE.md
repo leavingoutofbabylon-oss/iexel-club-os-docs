@@ -50,18 +50,27 @@ Core person records for all club members.
 | Column | Type | Description |
 |---|---|---|
 | `id` | BIGINT UNSIGNED AUTO_INCREMENT | Primary key |
-| `club_id` | VARCHAR(50) | Club-assigned ID (e.g. `IEXEL-001`) |
-| `display_name` | VARCHAR(255) | Full display name |
-| `first_name` | VARCHAR(100) | First name |
-| `last_name` | VARCHAR(100) | Last name |
-| `email` | VARCHAR(255) | Email address |
-| `phone` | VARCHAR(50) | Phone number |
-| `date_of_birth` | DATE | Date of birth |
-| `status` | VARCHAR(50) | `active`, `inactive`, `suspended` |
-| `wp_user_id` | BIGINT UNSIGNED | Linked WordPress user ID (nullable) |
-| `metadata` | LONGTEXT | JSON metadata |
-| `created_at` | DATETIME | UTC timestamp |
-| `updated_at` | DATETIME | UTC timestamp |
+| `club_id` | VARCHAR(50) | Club-assigned ID (e.g. `IEXEL-001`), NOT NULL, UNIQUE |
+| `wp_user_id` | BIGINT UNSIGNED | Linked WordPress user ID, DEFAULT 0 |
+| `first_name` | VARCHAR(100) | First name, NOT NULL |
+| `last_name` | VARCHAR(100) | Last name, NOT NULL |
+| `display_name` | VARCHAR(191) | Full display name, DEFAULT '' |
+| `date_of_birth` | DATE | Date of birth, NULL |
+| `email` | VARCHAR(191) | Email address, DEFAULT '' |
+| `phone` | VARCHAR(100) | Phone number, DEFAULT '' |
+| `address` | TEXT | Physical address, NULL |
+| `profile_attachment_id` | BIGINT UNSIGNED | Profile photo attachment ID, NULL |
+| `profile_focal_position` | VARCHAR(20) | Profile photo focal position, NOT NULL DEFAULT '50% 50%' |
+| `status` | VARCHAR(50) | `active`, `inactive`, `suspended`, DEFAULT 'active' |
+| `created_at` | DATETIME | UTC timestamp, NOT NULL |
+| `updated_at` | DATETIME | UTC timestamp, NULL |
+
+**Indexes:**
+- `PRIMARY KEY (id)`
+- `UNIQUE KEY club_id (club_id)`
+- `KEY wp_user_id (wp_user_id)`
+- `KEY email (email)`
+- `KEY status (status)`
 
 ### `person_roles`
 
@@ -182,18 +191,35 @@ Event records (training, matches, tournaments).
 | Column | Type | Description |
 |---|---|---|
 | `id` | BIGINT UNSIGNED AUTO_INCREMENT | Primary key |
-| `team_id` | BIGINT UNSIGNED | FK to `teams.id` |
-| `season_id` | BIGINT UNSIGNED | FK to `seasons.id` (nullable) |
-| `venue_id` | BIGINT UNSIGNED | FK to `venues.id` (nullable) |
-| `type` | VARCHAR(50) | `match`, `friendly`, `training`, `tournament` |
-| `title` | VARCHAR(255) | Event title |
-| `event_date` | DATE | Event date |
-| `start_time` | TIME | Start time |
-| `end_time` | TIME | End time (nullable) |
-| `status` | VARCHAR(50) | `scheduled`, `cancelled`, `completed` |
-| `metadata` | LONGTEXT | JSON metadata |
-| `created_at` | DATETIME | UTC timestamp |
-| `updated_at` | DATETIME | UTC timestamp |
+| `title` | VARCHAR(191) | Event title, NOT NULL |
+| `type` | VARCHAR(50) | `match`, `friendly`, `training`, `tournament`, NOT NULL DEFAULT 'training' |
+| `team_id` | BIGINT UNSIGNED | FK to `teams.id`, NOT NULL DEFAULT 0 |
+| `season_id` | BIGINT UNSIGNED | FK to `seasons.id`, NULL |
+| `team_season_id` | BIGINT UNSIGNED | FK to `team_seasons.id`, NULL |
+| `venue_id` | BIGINT UNSIGNED | FK to `venues.id`, NOT NULL DEFAULT 0 |
+| `venue_name` | VARCHAR(191) | Venue name override, NOT NULL DEFAULT '' |
+| `venue_address` | TEXT | Venue address override, NULL |
+| `venue_postcode` | VARCHAR(20) | Venue postcode override, NOT NULL DEFAULT '' |
+| `event_date` | DATE | Event date, NOT NULL |
+| `start_time` | TIME | Start time, NULL |
+| `end_time` | TIME | End time, NULL |
+| `description` | TEXT | Event description, NULL |
+| `banner_attachment_id` | BIGINT UNSIGNED | Event banner image, NULL |
+| `banner_focal_position` | VARCHAR(20) | Banner focal position, NOT NULL DEFAULT '50% 50%' |
+| `banner_responsive_media` | LONGTEXT | Responsive banner config, NULL |
+| `status` | VARCHAR(50) | `scheduled`, `cancelled`, `completed`, NOT NULL DEFAULT 'scheduled' |
+| `created_at` | DATETIME | UTC timestamp, NOT NULL |
+| `updated_at` | DATETIME | UTC timestamp, NULL |
+
+**Indexes:**
+- `PRIMARY KEY (id)`
+- `KEY type (type)`
+- `KEY team_id (team_id)`
+- `KEY venue_id (venue_id)`
+- `KEY event_date (event_date)`
+- `KEY status (status)`
+- `KEY season_date_type (season_id, event_date, type, status)`
+- `KEY team_season_date (team_season_id, event_date, status)`
 
 ### `event_audience`
 

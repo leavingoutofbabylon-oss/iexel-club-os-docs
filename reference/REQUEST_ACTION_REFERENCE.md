@@ -96,6 +96,14 @@ All Club Projects actions use the pattern `admin_post_iexel_club_project_{action
 
 ---
 
+## Match Mode Actions
+
+| Handler | Invocation | Capability |
+|---|---|---|
+| `MatchModeRequestHandler` | Invoked directly by `PortalRouter::render()` for portal POST requests on match event pages (not registered through `admin_post_*` hooks) | Authenticated (Event-level permissions) |
+
+---
+
 ## Member Experience Actions
 
 | Hook | Handler | Capability |
