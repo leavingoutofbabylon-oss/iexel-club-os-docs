@@ -4,6 +4,26 @@ This document tracks the major development milestones of IEXEL Club OS. Complete
 
 ---
 
+# Sprint Summary
+
+| Sprint | Feature | Status |
+|---|---|---|
+| 17 | Matchday Portal and Global Navigation | ✅ Complete |
+| 18 | Coach Hub Foundation | ✅ Complete |
+| 19 | Team Workspace Foundation | ✅ Complete |
+| 20 | Secure Portal Event Builder | ✅ Complete |
+| 21 | Team Attendance Workspace | ✅ Complete |
+| 22 | Matchday Hub | ✅ Complete |
+| 23 | Match Mode Foundation | ✅ Complete |
+| 24 | Match Lineup Builder | ✅ Complete |
+| 25 | Live Match Controls | ✅ Complete |
+| 26 | Goal Attribution | ✅ Complete |
+| 27 | Rolling Match Substitutions | ✅ Complete |
+| 28 | Match Readiness Dashboard | ✅ Complete |
+| 29 | Welfare Experience Foundation | 🚧 Planned |
+
+---
+
 # Sprint 17
 
 ## Matchday Portal and Global Navigation
@@ -317,3 +337,60 @@ This document tracks the major development milestones of IEXEL Club OS. Complete
 ### Deferred
 
 - Match Reports, Player Ratings, Player of the Match, PDF export and messaging.
+
+---
+
+# Sprint 29
+
+## Welfare Experience Foundation
+
+**Status:** Planned
+
+**Goal:** Provide authorised Welfare Officers and Club Administrators with a secure, role-aware safeguarding workspace within Club OS.
+
+### Planned
+
+- Welfare Dashboard.
+- Welfare navigation.
+- Welfare Workspace.
+- Concern recording.
+- Concern status tracking.
+- Priority management.
+- Linked member and person records.
+- Welfare case timeline.
+- Secure welfare notes.
+- Follow-up actions.
+- Welfare summary statistics.
+
+### Security/Data Integrity
+
+- Welfare Officer and Administrator access only.
+- Server-side permission validation.
+- Direct-route protection.
+- Record-level authorisation.
+- Activity logging for all welfare actions.
+- Nonce protection for all state-changing actions.
+- Reuse existing People, Permissions, Activity Log and Notification systems.
+- Prevent welfare data appearing within coach, player or parent experiences.
+
+### Validation
+
+- Welfare Officer access.
+- Administrator access.
+- Denied access for coaches, parents and players.
+- Concern creation.
+- Concern editing.
+- Member linking.
+- Status and priority updates.
+- Timeline ordering.
+- Follow-up action persistence.
+- Activity logging.
+- Mobile and desktop responsiveness.
+
+### Deferred
+
+- Secure document uploads.
+- External safeguarding referrals.
+- Automated safeguarding reminders.
+- AI-assisted safeguarding summaries.
+- Advanced welfare reporting.
