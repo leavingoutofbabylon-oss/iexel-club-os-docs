@@ -1,134 +1,208 @@
 # Master Developer Guide
 
-**Last verified:** 2026-07-24
+**Version:** 1.0  
+**Last Verified:** 2026-07-24  
+**Applies To:** Operational MVP
 
 ---
 
-## Overview
+# Overview
 
-This guide is the primary entry point for developers working on Club OS. It covers environment setup, the development workflow, and pointers to all detailed documentation.
+This guide is the primary entry point for all developers and AI assistants working on Club OS.
 
----
+It explains how Club OS is engineered, how development is organised, and where to find detailed technical documentation.
 
-## Prerequisites
-
-| Tool | Required version |
-|---|---|
-| PHP | 8.1 or higher |
-| Composer | 2.x |
-| WordPress | 6.4 or higher |
-| MySQL / MariaDB | 8.0 / 10.6 or higher |
-| Node.js | 18 or higher (for frontend tooling) |
-| WP-CLI | 2.x (recommended) |
+Every contributor should read this guide before making architectural or implementation changes.
 
 ---
 
-## Repository Setup
+# Project Status at a Glance
 
-```bash
-# Clone the source repository (read-only reference)
-git clone https://github.com/leavingoutofbabylon-oss/iexel-club-os.git
+### Current Phase
 
-# Clone the documentation repository
-git clone https://github.com/leavingoutofbabylon-oss/iexel-club-os-docs.git
+**Operational MVP**
 
-# Install PHP dependencies
-cd iexel-club-os
-composer install
+### Current Priority
 
-# Symlink or copy the plugin into a local WordPress installation
-ln -s $(pwd) /path/to/wordpress/wp-content/plugins/iexel-club-os
-```
+Complete all remaining operational experiences before Release Readiness.
 
----
+### Recently Completed
 
-## Activation
+- ✅ AI Workspace and routing
+- ✅ People and Teams
+- ✅ Events and Attendance
+- ✅ Matchday Experience
+- ✅ Lineup Builder
+- ✅ Reusable Custom Formation Templates
 
-Activate the plugin via WP-CLI or the WordPress admin:
+### Current Focus
 
-```bash
-wp plugin activate iexel-club-os
-```
+- Welfare Experience
+- End-to-end workflow validation
+- Internal club MVP testing
 
-On activation, `Activator::activate()` runs:
+### Next Milestones
 
-1. Registers capabilities and roles via `PermissionManager`
-2. Runs `UpgradeRunner` to install all database tables
-3. Registers portal rewrite rules and flushes them
-4. Sets the `iexel_club_os_activated` flag
+1. Operational MVP Complete
+2. Internal Club Testing
+3. Release Readiness
+4. Club OS v1.0
 
----
+### Before Starting Any New Feature
 
-## Development Workflow
+Ask yourself:
 
-See [BRANCHING_AND_GIT_WORKFLOW.md](BRANCHING_AND_GIT_WORKFLOW.md) for the full branching strategy.
-
-The short version:
-
-1. Create a feature branch from `main`: `feature/{ticket-id}-{description}`
-2. Write code following the standards in `standards/`
-3. Write or update tests
-4. Open a pull request against `main`
-5. Pass code review using the [CODE_REVIEW_CHECKLIST.md](CODE_REVIEW_CHECKLIST.md)
-6. Merge after approval
+- Does this help complete the Operational MVP?
+- Can I reuse an existing component?
+- Does this introduce unnecessary technical debt?
+- Does it follow the Club OS Engineering Rules?
 
 ---
 
-## Key Architecture Documents
+# First Day on Club OS
 
-| Document | Purpose |
-|---|---|
-| [SYSTEM_OVERVIEW.md](../architecture/SYSTEM_OVERVIEW.md) | High-level architecture |
-| [MODULE_MAP.md](../architecture/MODULE_MAP.md) | All modules and their responsibilities |
-| [SERVICE_CONTAINER_AND_KERNEL.md](../architecture/SERVICE_CONTAINER_AND_KERNEL.md) | DI container and Kernel |
-| [DATABASE_ARCHITECTURE.md](../architecture/DATABASE_ARCHITECTURE.md) | Database design and schema |
-| [PERMISSIONS_AND_ROLES.md](../architecture/PERMISSIONS_AND_ROLES.md) | Capabilities and roles |
-| [PORTAL_ARCHITECTURE.md](../architecture/PORTAL_ARCHITECTURE.md) | Member Portal design |
-| [ROUTES_AND_ENTRY_POINTS.md](../architecture/ROUTES_AND_ENTRY_POINTS.md) | All entry points |
-| [APPLICATION_LIFECYCLE.md](../architecture/APPLICATION_LIFECYCLE.md) | Boot, activation, upgrade |
+Before writing any code:
 
----
+- Read this guide from start to finish.
+- Review the current Project Status.
+- Read the Architecture documents relevant to your feature.
+- Confirm the current MVP priorities.
+- Create or switch to the correct feature branch.
+- Ensure your work does not duplicate an existing component.
+- Ask before introducing new architecture if unsure.
 
-## Key Reference Documents
+While developing:
 
-| Document | Purpose |
-|---|---|
-| [CAPABILITY_REFERENCE.md](../reference/CAPABILITY_REFERENCE.md) | All 26 capabilities |
-| [ADMIN_MENU_REFERENCE.md](../reference/ADMIN_MENU_REFERENCE.md) | All admin pages |
-| [PORTAL_ROUTE_REFERENCE.md](../reference/PORTAL_ROUTE_REFERENCE.md) | All portal routes |
-| [REQUEST_ACTION_REFERENCE.md](../reference/REQUEST_ACTION_REFERENCE.md) | All admin_post actions |
-| [DATABASE_TABLE_REFERENCE.md](../reference/DATABASE_TABLE_REFERENCE.md) | All database tables |
-| [MODULE_STATUS.md](../reference/MODULE_STATUS.md) | Module implementation status |
-| [TECHNICAL_DEBT_REGISTER.md](../reference/TECHNICAL_DEBT_REGISTER.md) | Known technical debt |
-| [GLOSSARY.md](../reference/GLOSSARY.md) | Domain terminology |
+- Keep changes focused on a single feature.
+- Reuse existing Services, Repositories and Components.
+- Follow the Club OS Engineering Rules.
+- Update documentation if architecture changes.
+- Test locally before requesting review.
 
----
+Before completing a feature:
 
-## Adding a New Module
-
-1. Create a directory under `app/core/{ModuleName}/`
-2. Create a `{ModuleName}Service.php` and `{ModuleName}Repository.php`
-3. Register the service in `Kernel.php`
-4. Add the module to `ReleaseModuleInventory.php`
-5. Register any new capabilities in `ClubRoleCapabilityRegistrar.php` and `ReleaseCapabilityInventory.php`
-6. Register any new admin pages in `AdminUI.php` and `ReleaseRouteInventory.php`
-7. Register any new portal routes in `PortalRouter.php` and `ReleaseRouteInventory.php`
-8. Register any new request handlers in `Application.php`
-9. Add any new database tables to `DatabaseManager.php` and `ReleaseSchemaInventory.php`
-10. Write an upgrade step in `UpgradeRunner.php`
-11. Update `MODULE_STATUS.md` and `DATABASE_TABLE_REFERENCE.md`
+- Review your own changes.
+- Check against the Code Review Checklist.
+- Verify that no unrelated files were modified.
+- Ensure the feature supports the current MVP goals.
 
 ---
 
-## Running Tests
+# Club OS Engineering Principles
 
-```bash
-cd iexel-club-os
-./vendor/bin/phpunit
-```
+## Project Vision
+
+Club OS is being developed as a premium football club operating system rather than a traditional WordPress plugin.
+
+The objective is to provide a scalable, modular and maintainable platform capable of supporting football clubs of all sizes while delivering a modern, professional user experience.
+
+Every architectural decision should favour long-term maintainability over short-term convenience.
 
 ---
 
-## Release Readiness Check
+## Development Philosophy
 
-The Release Readiness page (`/wp-admin/admin.php?page=iexel-club-os-release-readiness`) checks all modules, capabilities, routes and schema against their inventories. Run this check before every release.
+The project follows a number of core engineering principles:
+
+- Build reusable systems before individual features.
+- Extend existing components before creating new ones.
+- Keep business logic inside Services and Repositories.
+- Keep UI components focused on presentation.
+- Maintain strict separation between Admin and Portal experiences.
+- Security and permissions are mandatory, never optional.
+- Database changes must always be handled through controlled upgrade routines.
+- Every new feature should improve the platform rather than increase technical debt.
+
+---
+
+## Current Development Phase
+
+The current objective is Operational MVP completion.
+
+Current priorities are:
+
+1. Complete all operational experiences.
+2. Validate end-to-end workflows.
+3. Prepare for internal club testing.
+4. Complete Release Readiness.
+5. Release Club OS v1.0.
+
+Visual refinements and advanced features should not delay MVP completion unless they significantly improve usability or operational workflows.
+
+---
+
+# Club OS Engineering Rules
+
+These rules apply to every feature, module and pull request.
+
+### Architecture
+
+- Always extend the existing architecture before introducing a new one.
+- Reuse existing Services, Repositories and Components wherever possible.
+- Avoid duplicate business logic.
+- Keep modules loosely coupled and highly cohesive.
+- Prefer composition over duplication.
+
+### Database
+
+- Never modify database tables directly.
+- All schema changes must go through UpgradeRunner.
+- Preserve backwards compatibility wherever possible.
+- Never delete production data during upgrades.
+
+### User Interface
+
+- Reuse existing UI Components before creating new ones.
+- Follow the Club OS Design System and Design Tokens.
+- Build mobile-first.
+- Keep Admin and Portal experiences separate.
+- Prioritise usability over visual complexity.
+
+### Security
+
+- Every action must be authorised.
+- Validate and sanitise all user input.
+- Escape all output.
+- Never trust request data.
+- Default to the least privilege required.
+
+### Development Workflow
+
+- One feature branch per feature.
+- Keep pull requests focused.
+- Do not mix unrelated changes.
+- Review all AI-generated code before merging.
+- Test locally before creating a pull request.
+
+### Documentation
+
+- Update documentation when architecture changes.
+- Update references when adding modules.
+- Record significant architectural decisions as ADRs where appropriate.
+- Keep documentation aligned with the implementation.
+
+### MVP Principle
+
+Before adding new functionality always ask:
+
+> Does this help complete the Operational MVP?
+
+If the answer is **No**, the work should normally be scheduled after MVP unless it fixes a defect or significantly improves usability.
+
+---
+
+# Prerequisites
+
+---
+
+# Where to Go Next
+
+After reading this guide, developers should continue with:
+
+1. BRANCHING_AND_GIT_WORKFLOW.md
+2. SYSTEM_OVERVIEW.md
+3. MODULE_MAP.md
+4. CODE_REVIEW_CHECKLIST.md
+5. AI_DEVELOPER_GUIDE.md (when working on AI features)
+
+These documents expand on the standards introduced in this guide and should be treated as the authoritative references for their respective areas.
