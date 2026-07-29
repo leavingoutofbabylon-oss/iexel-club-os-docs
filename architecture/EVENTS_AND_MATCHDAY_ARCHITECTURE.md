@@ -1,7 +1,7 @@
 # Events and Matchday Architecture
 
-**Source of truth:** `app/core/Events/`, `app/core/Attendance/`, `app/core/MatchMode/`
-**Last verified:** 2026-07-24
+**Source of truth:** `app/core/Events/`, `app/core/Attendance/`, `app/core/MatchMode/`, `app/core/Registrations/`
+**Last verified:** 2026-07-29
 
 ---
 
@@ -25,8 +25,8 @@ The Events module manages the full lifecycle of club events (training sessions, 
 
 Events have a `type` field. The following types unlock match-specific operations:
 
-- `match` — Full match with lineup, live mode, incidents and report
-- `friendly` — Friendly match (same operations as `match`)
+- `fixture` — Full match with lineup, live mode, incidents and report
+- `friendly` — Friendly match (same operations as `fixture`)
 - `training` — Training session (attendance only, no match operations)
 - `tournament` — Tournament event
 
@@ -87,6 +87,34 @@ System formation templates are seeded during the upgrade pipeline:
 
 ---
 
+## Matchday Saved-Squad and Emergency-Contact Projection
+
+`MatchdayHubPage` builds one event-scoped Match Mode workspace and reuses its saved `starters`, saved `substitutes` and `eligible_players`. The selected-squad card shows the saved pre-match lineup before kickoff and the derived on-pitch/bench projection during or after play. The emergency-contact projection always remains based on the saved selected squad rather than live substitution state.
+
+The emergency-contact dependency flow is:
+
+```text
+PlayerRegistrationRepository
+  → EmergencyContactService
+  → MatchdayEmergencyContactsProvider
+  → MatchdayEmergencyContactsCard
+  → MatchdayHubPage
+```
+
+| Boundary | Responsibility |
+|---|---|
+| `PlayerRegistrationRepository` | Return bounded, minimal candidates for the exact player and exact event season, limited to caller-supplied lifecycle statuses. |
+| `EmergencyContactService` | Accept only `registered` or `approved`, reject ambiguity, normalize the optional name and callable telephone, and return an internal typed resolution. |
+| `MatchdayEmergencyContactsProvider` | Validate fixture/friendly scope, re-authorise against the stored event team, intersect saved starters/substitutes with eligible active People, and emit a UI-safe projection. |
+| `MatchdayEmergencyContactsCard` | Render escaped HTML only, including `tel:` links only when a callable telephone is available. |
+| `PortalRouter` | Protect every Matchday response as private, non-cacheable and non-indexable before authentication or page rendering. |
+
+The MVP reads one emergency contact from the exact-season player registration. It does not fall back to parent, guardian, billing contact, People email/telephone, another season, or Welfare/medical providers. Duplicate eligible registrations fail closed. Internal statuses, registration identifiers, medical data and Welfare data do not enter the UI projection.
+
+No contact data is transported through JavaScript, REST, AJAX, logs, snapshots or transients. The feature required no schema change.
+
+---
+
 ## Portal Routes for Events
 
 | Route | Purpose | Access |
@@ -107,4 +135,4 @@ System formation templates are seeded during the upgrade pipeline:
 
 ## Status
 
-**MVP Complete.** Full event lifecycle, audience, attendance, match mode, lineup, goals, substitutions, goalkeeper changes, incidents, undo, match state, match report and player ratings are implemented.
+**MVP Complete.** Full event lifecycle, audience, attendance, saved starter/substitute selection, Matchday emergency contacts, match mode, goals, substitutions, goalkeeper changes, incidents, undo, match state, match report and player ratings are implemented.

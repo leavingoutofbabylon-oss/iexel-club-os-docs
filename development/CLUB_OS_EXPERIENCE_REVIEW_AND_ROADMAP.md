@@ -38,9 +38,9 @@ Club OS has reached the stage where the core architecture is strong and the main
 - **Committee:** Improve registration summary metrics with total registrations, registered this month, awaiting approval and outstanding actions.
 - **Committee:** Provide operational create/edit/archive flows for club events, communications and projects because committee users cannot use wp-admin.
 - **Coach:** Capture opponent, competition and match location during match-event creation.
-- **Coach:** Show authorised emergency contacts in Matchday Hub.
+- **Coach — complete:** Show authorised emergency contacts in Matchday Hub.
 - **Coach:** Open Directions in a new tab without replacing Club OS.
-- **Coach:** Allow bench/substitute selection in Lineup Builder and persist it into Matchday Hub and substitution controls.
+- **Coach — complete:** Allow bench/substitute selection in Lineup Builder and persist it into Matchday Hub and substitution controls.
 - **Parent:** Fix selected-child context so an U8 child cannot see an U7 next event.
 - **Parent:** Improve Team Hub text contrast.
 - **Parent:** Provide a real Finance page with invoice detail and payment history.
@@ -68,11 +68,11 @@ Club OS has reached the stage where the core architecture is strong and the main
 | OS-011 | Welfare | Strengthen concern detail hierarchy | Visual/UX | Medium | Polish |
 | OS-012 | Welfare | Make directory filters more compact | Visual | Low | Post-MVP |
 | OS-016 | Coach | Capture match configuration during event creation | Workflow | High | MVP |
-| OS-017 | Coach | Emergency contacts missing from Matchday Hub | Bug/Missing data | Critical | MVP |
+| OS-017 | Coach | Emergency contacts missing from Matchday Hub — exact-season authorised projection delivered | Resolved gap | Complete | MVP Experience Polish |
 | OS-018 | Coach | Directions opens in same browser tab | Bug | High | MVP |
 | OS-019 | Coach | Some pages use different visual language | Consistency | Medium | Polish |
 | OS-020 | Coach | Priority alerts dominate dashboard | UX | Medium | Polish |
-| OS-025 | Coach | Bench players cannot be selected or shown in Matchday Hub | Functional bug | Critical | MVP blocker |
+| OS-025 | Coach | Bench players could not be selected or shown in Matchday Hub — saved substitute flow delivered | Resolved bug | Complete | MVP Experience Polish |
 | OS-027 | Parent | Dates displayed in ISO format | Consistency | Medium | MVP |
 | OS-028 | Parent | Selected child sees event from wrong team | Functional bug | Critical | MVP blocker |
 | OS-029 | Parent | Team Hub has blue-on-blue text | Accessibility | High | MVP |
@@ -116,9 +116,20 @@ Club OS has reached the stage where the core architecture is strong and the main
 ### Coach Workspace
 
 - Preserve the Matchday Hub, Team Workspace, statistics and lineup builder design.
-- Fix match setup during event creation, emergency-contact projection, external directions and bench selection.
+- Emergency-contact projection and bench selection are complete; match setup during event creation and external directions remain open.
 - Use the Coach dashboard as the reference pattern for Quick Actions placement.
 - Do not redesign the immersive dark team and match workspaces merely to make every page identical.
+
+### Next approved audit candidate — Front-end Player Profile Workspace
+
+This is a future read-only architecture and security audit, not an implemented feature. It will assess role-aware **View Player** routing; reuse of the existing WordPress admin Person Profile; assigned Coach/Manager front-end access; player identity and squad details; parent/guardian contact sources; emergency-contact reuse; attendance and statistics reuse; the operational medical-alert boundary; strict separation from Welfare/safeguarding; sensitive-response protection; and a mobile-first profile design.
+
+- Administrators may continue using the existing WordPress admin Person Profile.
+- Coaches must not be sent into WordPress admin.
+- “Club member” access is too broad.
+- Access must require an active role, active team assignment and explicit capability.
+- Full medical and Welfare exposure is not approved.
+- No route, page, provider, card or button implementation may begin before a separate audit and product/security approval.
 
 ### Parent Workspace
 

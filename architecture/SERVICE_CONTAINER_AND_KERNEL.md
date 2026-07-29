@@ -1,7 +1,7 @@
 # Service Container and Kernel
 
 **Source of truth:** `app/core/Container/Container.php` and `app/core/Kernel.php`
-**Last verified:** 2026-07-24
+**Last verified:** 2026-07-29
 
 ---
 
@@ -86,6 +86,8 @@ The following table lists every public accessor method on `Kernel` as of version
 | `season_plan_transaction()` | `WordPressSeasonPlanTransaction` | Season Planning |
 | `season_plan_execution()` | `SeasonPlanExecutionService` | Season Planning |
 | `player_registrations()` | `PlayerRegistrationRepository` | Registrations |
+| `emergency_contacts()` | `EmergencyContactService` | Registrations |
+| `matchday_emergency_contacts()` | `MatchdayEmergencyContactsProvider` | Match Mode |
 | `player_registration_validator()` | `PlayerRegistrationValidator` | Registrations |
 | `player_registration_service()` | `PlayerRegistrationService` | Registrations |
 | `parent_registration_portal()` | `ParentRegistrationPortalService` | Registrations |

@@ -43,6 +43,28 @@ Core platform services include the application/kernel, service container, databa
 
 Supporting services include match detail submission, score projection, state normalisation and shirt-number resolution.
 
+## Matchday Emergency-Contact Projection
+
+The canonical read-only flow is:
+
+```text
+PlayerRegistrationRepository
+  → EmergencyContactService
+  → MatchdayEmergencyContactsProvider
+  → MatchdayEmergencyContactsCard
+  → MatchdayHubPage
+```
+
+Responsibilities remain deliberately narrow:
+
+- `PlayerRegistrationRepository` returns at most two minimal exact-season candidates so ambiguity can be detected.
+- `EmergencyContactService` applies eligible lifecycle, ambiguity and telephone-normalisation policy and exposes a typed resolution.
+- `MatchdayEmergencyContactsProvider` re-authorises the stored event team, limits the projection to saved starters and substitutes that remain eligible and active, and strips internal resolution details.
+- `MatchdayEmergencyContactsCard` renders escaped presentation only; it does not query data or expose it to JavaScript.
+- `PortalRouter` applies private, non-cacheable and non-indexable response protection before Matchday authentication and rendering.
+
+The MVP supports one registration-sourced emergency contact per selected player. Parent, guardian, billing-contact, People contact-field, cross-season registration, and Welfare/medical-provider fallbacks are prohibited. Medical and Welfare data are outside the Coach projection.
+
 ## Match Operations Repositories
 
 - `MatchDetailsRepository` owns the one-per-event match configuration and projected score/state row.

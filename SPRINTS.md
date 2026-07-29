@@ -20,7 +20,7 @@ This document tracks the major development milestones of IEXEL Club OS. Complete
 | 26 | Goal Attribution | ✅ Complete |
 | 27 | Rolling Match Substitutions | ✅ Complete |
 | 28 | Match Readiness Dashboard | ✅ Complete |
-| 29 | Welfare Experience Foundation | 🚧 Planned |
+| 29 | Welfare Experience Foundation | ✅ Complete |
 
 ---
 
@@ -344,23 +344,18 @@ This document tracks the major development milestones of IEXEL Club OS. Complete
 
 ## Welfare Experience Foundation
 
-**Status:** Planned
+**Status:** Complete
 
-**Goal:** Provide authorised Welfare Officers and Club Administrators with a secure, role-aware safeguarding workspace within Club OS.
+**Goal delivered:** Authorised Welfare Officers and Club Administrators have a secure, role-aware safeguarding workspace within Club OS.
 
-### Planned
+### Delivered
 
-- Welfare Dashboard.
-- Welfare navigation.
-- Welfare Workspace.
-- Concern recording.
-- Concern status tracking.
-- Priority management.
-- Linked member and person records.
-- Welfare case timeline.
-- Secure welfare notes.
-- Follow-up actions.
-- Welfare summary statistics.
+- Admin and front-end Welfare dashboards and navigation.
+- Authorised concern directory, detail and create/edit workflows.
+- Concern category, priority, assignment and controlled lifecycle status updates.
+- Linked member, reporter and assignee records using existing People data.
+- Activity-backed concern timeline and Welfare summary statistics.
+- Responsive portal and WordPress admin presentation.
 
 ### Security/Data Integrity
 
@@ -368,29 +363,33 @@ This document tracks the major development milestones of IEXEL Club OS. Complete
 - Server-side permission validation.
 - Direct-route protection.
 - Record-level authorisation.
-- Activity logging for all welfare actions.
+- Activity logging for concern creation and workflow changes.
 - Nonce protection for all state-changing actions.
-- Reuse existing People, Permissions, Activity Log and Notification systems.
+- Revision checks and transactional writes for concern workflow changes.
+- Reuse existing People, Permissions and Activity Log systems.
 - Prevent welfare data appearing within coach, player or parent experiences.
-
-### Validation
-
-- Welfare Officer access.
-- Administrator access.
-- Denied access for coaches, parents and players.
-- Concern creation.
-- Concern editing.
-- Member linking.
-- Status and priority updates.
-- Timeline ordering.
-- Follow-up action persistence.
-- Activity logging.
-- Mobile and desktop responsiveness.
 
 ### Deferred
 
+- Secure welfare notes.
+- Follow-up actions and reminders.
 - Secure document uploads.
 - External safeguarding referrals.
-- Automated safeguarding reminders.
 - AI-assisted safeguarding summaries.
 - Advanced welfare reporting.
+
+---
+
+# MVP Experience Polish
+
+**Status:** Complete
+
+### Delivered
+
+- Lineup Builder substitute/bench interaction with saved starters and substitutes projected into Matchday Hub.
+- An exact-season emergency-contact resolver limited to eligible `registered` or `approved` player registrations; ambiguity and invalid scope fail closed.
+- An authorised Matchday provider limited to saved starters/substitutes that remain eligible and active.
+- A presentation-only Emergency Contacts card with escaped output, mobile-safe wrapping and callable telephone links where normalization succeeds.
+- Private, non-cacheable and non-indexable response protection for Matchday Hub.
+- No schema change: the feature reuses the existing registration emergency-contact fields.
+- No medical, Welfare, registration-status or internal-resolution data is exposed to Coaches.
