@@ -1,3 +1,16 @@
+# AI Entry Point
+
+If you are an AI coding agent, read AGENTS.md first.
+
+AGENTS.md defines:
+
+- repository workflow
+- engineering standards
+- review process
+- reporting expectations
+
+This document remains the authoritative source for Club OS architecture.
+
 # Master Developer Guide
 
 **Version:** 1.0  
