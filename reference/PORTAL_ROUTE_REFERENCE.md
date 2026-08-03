@@ -17,6 +17,8 @@ All portal routes are prefixed `/club-os/`. Routes are registered as WordPress r
 |---|---|---|
 | `^club-os/login/?$` | Branded Club OS login | Public; WordPress authentication with nonce-protected POST mutations |
 | `^club-os/?$` | Portal dashboard | Authenticated linked person and active experience role |
+| `^club-os/player/stats/?$` | Player My Stats | Authenticated Player resolved from canonical experience context; request identity selectors are ignored |
+| `^club-os/parent/stats/?$` | Parent preview My Stats | Authenticated Parent with an approved `preview_player_id` linked-child preview |
 | `^club-os/([^/]+)/?$` | Portal section (generic) | Section-specific role, family, Team or audience boundary |
 | `^club-os/coach/?$` | Coach experience | Active Coach role |
 | `^club-os/treasurer/?$` | Treasurer dashboard | Linked Treasurer Person role plus `iexel_view_finance` |
