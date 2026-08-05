@@ -153,6 +153,14 @@ This is a future read-only architecture and security audit, not an implemented f
 - Expand My Season with attendance, form, progress bars, milestones and next achievement.
 - Add lightweight challenges or competitions before MVP where feasible.
 - Post-MVP, add rewards, XP, coach pointers, league tables, development journeys and team challenges.
+- **Player Communications & Safeguarding Roadmap:**
+  - Player Messages / Club News is part of the intended Player Experience; activation is gated by safeguarding controls.
+  - Youth players may receive appropriate Club OS communications with linked guardian visibility/oversight supported.
+  - Adult/senior players receive normal player communications without inheriting youth guardian rules.
+  - Retain one canonical `Player` role with age/safeguarding classification beneath it (`Known Youth`, `Known Adult`, `Age Unknown`).
+  - `Age Unknown` receives safeguarding-restricted behaviour until DOB/classification is resolved.
+  - Club OS Communications are recipient-neutral and reusable across authorized experiences.
+  - Support for adult/senior players and grassroots/semi-pro adult clubs remains part of long-term product direction.
 
 ### Admin Experience
 

@@ -393,3 +393,18 @@ This document tracks the major development milestones of IEXEL Club OS. Complete
 - Private, non-cacheable and non-indexable response protection for Matchday Hub.
 - No schema change: the feature reuses the existing registration emergency-contact fields.
 - No medical, Welfare, registration-status or internal-resolution data is exposed to Coaches.
+
+---
+
+# Communications Convergence & Safeguarding Sequence
+
+**Status:** In Progress
+
+### Batches
+
+- **IN3F6-A4:** Communications Channel / Player Safeguarding / Adult Player Architecture Audit — ✅ Complete
+- **IN3F6-A5:** Channel-Neutral Communications Terminology + Architecture Documentation — ✅ Complete
+- **IN3F6-A6:** Youth / Adult Player Classification Foundation — ✅ Complete
+- **IN3F6-A7:** Youth Communication Safeguarding Foundation — 📋 Planned
+- **IN3F6-A8:** Player Messages / Club News Activation — 📋 Planned
+

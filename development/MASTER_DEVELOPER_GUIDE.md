@@ -156,6 +156,50 @@ These rules apply to every feature, module and pull request.
 - Keep modules loosely coupled and highly cohesive.
 - Prefer composition over duplication.
 
+### Channel-Neutral Communications
+
+Club OS Communications are based on canonical recipient identity, not on a specific portal role.
+
+A communication marked visible in Club OS Messages may be delivered to an authorised recipient experience according to:
+- canonical person identity;
+- audience resolution;
+- recipient snapshot;
+- communication visibility;
+- role/experience permissions;
+- safeguarding policy.
+
+Do not architect the Communications domain around "Parent Portal" semantics. Parent, Player, Coach, Committee and other authorised experiences should reuse the canonical Communications domain where appropriate rather than creating duplicate communication stores. Presentation layers may differ by role, but canonical communication and recipient data should remain shared.
+
+### Recipient vs Email Eligibility
+
+A valid Club OS recipient is NOT the same thing as an email-eligible recipient.
+
+A person may:
+- be a valid canonical Club OS recipient;
+- appear in recipient Messages;
+- lack a valid email address.
+
+Email eligibility must therefore remain a delivery-channel concern and must not determine whether a person is a valid Club OS recipient.
+
+### Youth / Adult Player Classification Direction
+
+Player identity is unified under a single canonical `Player` role, with age/safeguarding classification sitting beneath Player identity rather than creating duplicate roles or workspaces.
+
+Player classification model:
+- **Known Youth**: Age verified under statutory adult threshold (<18). Full safeguarding rules, linked guardian oversight, and Welfare audit apply.
+- **Known Adult**: Age verified adult (>=18). Receives standard player communications; youth guardian rules do not apply.
+- **Age Unknown**: Date of birth missing or unverified. Age Unknown MUST receive the SAFEST applicable youth-level communication protections until the person's age/classification is resolved, while retaining the domain fact that age is unverified.
+
+Classification basis: `date_of_birth` is the canonical basis for classification. Team names or team age groups must NOT be used as the sole safeguarding source of truth.
+
+### Youth Communication Safeguarding Principles
+
+Youth communication safeguarding distinguishes between guardian visibility/oversight and email delivery:
+- Do NOT automatically generate duplicate email delivery to linked guardians when an audience already targets both Players and Guardians.
+- Safeguarding controls separately determine: Club OS recipient status, linked guardian Club OS visibility, guardian email copying, Welfare audit logging, Welfare notifications, and Welfare approval.
+- Routine team announcements must not automatically generate unnecessary Welfare notifications.
+- **Direct Youth Communication Safeguard**: Club OS must not create an unsupervised private communication pathway between an adult club official and a youth player. Direct/specific youth-player communication requires explicit safeguarding controls (guardian visibility/oversight, sender capability checks, audit logging, direct object access controls, and information isolation).
+
 ### Database
 
 - Never modify database tables directly.
