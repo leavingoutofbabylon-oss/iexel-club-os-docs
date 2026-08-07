@@ -37,11 +37,11 @@ Club OS has reached the stage where the core architecture is strong and the main
 - **Committee:** Remove duplicate Home / Club Overview navigation.
 - **Committee:** Improve registration summary metrics with total registrations, registered this month, awaiting approval and outstanding actions.
 - **Committee:** Provide operational create/edit/archive flows for club events, communications and projects because committee users cannot use wp-admin.
-- **Coach:** Capture opponent, competition and match location during match-event creation.
+- **Coach — complete:** Capture opponent, competition and match location during match-event creation.
 - **Coach — complete:** Show authorised emergency contacts in Matchday Hub.
 - **Coach:** Open Directions in a new tab without replacing Club OS.
 - **Coach — complete:** Allow bench/substitute selection in Lineup Builder and persist it into Matchday Hub and substitution controls.
-- **Parent:** Fix selected-child context so an U8 child cannot see an U7 next event.
+- **Parent — complete:** Fix selected-child context so an U8 child cannot see an U7 next event, and deliver Parent All-Children event identity + multi-child RSVP.
 - **Parent:** Improve Team Hub text contrast.
 - **Parent:** Provide a real Finance page with invoice detail and payment history.
 - **Notifications:** Improve attachment/image viewing so users can close and return without relying on the browser Back button.
@@ -67,14 +67,14 @@ Club OS has reached the stage where the core architecture is strong and the main
 | OS-010 | Welfare | Expand into broader compliance workspace | Future feature | Medium | Post-MVP |
 | OS-011 | Welfare | Strengthen concern detail hierarchy | Visual/UX | Medium | Polish |
 | OS-012 | Welfare | Make directory filters more compact | Visual | Low | Post-MVP |
-| OS-016 | Coach | Capture match configuration during event creation | Workflow | High | MVP |
+| OS-016 | Coach | Capture match configuration during event creation — delivered in Portal Event Builder & Secretary Events Management | Resolved gap | Complete | Sprint 30 |
 | OS-017 | Coach | Emergency contacts missing from Matchday Hub — exact-season authorised projection delivered | Resolved gap | Complete | MVP Experience Polish |
 | OS-018 | Coach | Directions opens in same browser tab | Bug | High | MVP |
 | OS-019 | Coach | Some pages use different visual language | Consistency | Medium | Polish |
 | OS-020 | Coach | Priority alerts dominate dashboard | UX | Medium | Polish |
 | OS-025 | Coach | Bench players could not be selected or shown in Matchday Hub — saved substitute flow delivered | Resolved bug | Complete | MVP Experience Polish |
 | OS-027 | Parent | Dates displayed in ISO format | Consistency | Medium | MVP |
-| OS-028 | Parent | Selected child sees event from wrong team | Functional bug | Critical | MVP blocker |
+| OS-028 | Parent | Selected child sees event from wrong team — selected-child event scoping, Player Preview, and Parent All-Children multi-child RSVP delivered | Resolved bug | Complete | Sprint 31 |
 | OS-029 | Parent | Team Hub has blue-on-blue text | Accessibility | High | MVP |
 | OS-030 | Parent | Finance experience is too limited | Missing workflow | High | MVP |
 | OS-031 | Notifications | Image attachments lack an in-app close/viewer experience | UX | Medium | MVP polish |
@@ -134,7 +134,7 @@ This is a future read-only architecture and security audit, not an implemented f
 ### Parent Workspace
 
 - Keep dashboard, registrations, events and announcements.
-- Fix selected-child/team context everywhere.
+- **Selected-Child & All-Children Event Scoping (complete):** Parent selected-child scoping (OS-028), Player Preview scoping, and All-Children event child identity (avatars/initials, per-child status) with independent multi-child RSVP on Event Detail are fully delivered.
 - Build a fuller family finance experience with invoice detail and payment history.
 - Improve notification attachments with an in-app viewer/lightbox.
 - Post-MVP, evolve communications into richer posts, galleries, match reports and generated club content.

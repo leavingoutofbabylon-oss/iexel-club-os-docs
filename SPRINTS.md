@@ -19,8 +19,9 @@ This document tracks the major development milestones of IEXEL Club OS. Complete
 | 25 | Live Match Controls | ✅ Complete |
 | 26 | Goal Attribution | ✅ Complete |
 | 27 | Rolling Match Substitutions | ✅ Complete |
-| 28 | Match Readiness Dashboard | ✅ Complete |
 | 29 | Welfare Experience Foundation | ✅ Complete |
+| 30 | Secretary Command Centre & Operations | ✅ Complete |
+| 31 | Parent Experience Scoping & Multi-Child RSVP | ✅ Complete |
 
 ---
 
@@ -405,6 +406,41 @@ This document tracks the major development milestones of IEXEL Club OS. Complete
 - **IN3F6-A4:** Communications Channel / Player Safeguarding / Adult Player Architecture Audit — ✅ Complete
 - **IN3F6-A5:** Channel-Neutral Communications Terminology + Architecture Documentation — ✅ Complete
 - **IN3F6-A6:** Youth / Adult Player Classification Foundation — ✅ Complete
-- **IN3F6-A7:** Youth Communication Safeguarding Foundation — 📋 Planned
-- **IN3F6-A8:** Player Messages / Club News Activation — 📋 Planned
+- **IN3F6-A7:** Youth Communication Safeguarding Foundation — ✅ Complete
+- **IN3F6-A8:** Player Messages / Club News Activation — ✅ Complete
 
+---
+
+# Sprint 30
+
+## Secretary Command Centre & Operations
+
+**Status:** Complete
+
+**Goal:** Deliver operational governance, venue CRUD, club-wide registration directory, and member lifecycle management within Club OS.
+
+### Delivered
+
+- **Secretary Teams & Assignments Management:** Team creation/editing, permanent team references, and player/staff team assignment workflows (`IN3F12-STM1`, `IN3F12-STA1`).
+- **Venue Management Workspace:** Operational venue directory, create/edit/archive CRUD flows, and postcode-aware location resolution (`IN3F12-SV1`).
+- **Club OS Portal Account Management:** Secretary-managed portal account creation and member account linking (`IN3F12-SPA1`).
+- **Events Management Workspace:** Operational event builder capturing opponent, competition, and match location during event creation (`IN3F12-SE1`, `IN3F12-SE2`).
+- **Club-Wide Registration Coverage:** Authorised operational registration directory distinct from Parent "My Registrations", search/filtering by player/parent/status/season/team, season-aware Not Registered list, and pre-filled registration starting workflow (`IN3F12-REG1`, `IN3F12-REG2`).
+- **Member Active / Inactive Lifecycle:** Operational Person Profile Make Inactive / Reactivate workflow, historical statistics preservation, and exclusion of inactive members from active squad/registration workflows (`IN3F12-M1`, `IN3F12-M2`).
+
+---
+
+# Sprint 31
+
+## Parent Experience Scoping & Multi-Child RSVP
+
+**Status:** Complete
+
+**Goal:** Resolve Parent selected-child event scoping (OS-028), Player Preview scoping, and deliver Parent All-Children event child identity and independent multi-child RSVP.
+
+### Delivered
+
+- **Parent Selected-Child & Player Scoping Repair (OS-028):** Parent selected-child context strictly scopes events to the chosen child; Player Preview and real Player contexts remain strictly single-player (`IN3F12-P1A`, `IN3F12-P1A2`).
+- **Parent All-Children Event Identity:** Shared event cards identify relevant linked children with 36px circular profile photos or gradient initials fallbacks, child names, and per-child availability status badges (`IN3F12-P2`, `IN3F12-P2A`).
+- **Multi-Child Event Detail RSVP:** Event Detail renders independent RSVP controls per eligible child when multiple linked children qualify for the same event, submitting `(event_id, person_id)` records without sibling response overwrites (`IN3F12-P2C`, `IN3F12-P2D`).
+- **Server Security & Lifecycle:** Parent-child relationships, event eligibility, and active player status validated server-side; inactive members blocked; Coach and Player surfaces consume canonical availability records.

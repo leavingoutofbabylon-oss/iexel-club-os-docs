@@ -44,14 +44,19 @@ Complete all remaining operational experiences before Release Readiness.
 - ✅ AI Workspace and routing
 - ✅ People and Teams
 - ✅ Events and Attendance
-- ✅ Matchday Experience
-- ✅ Lineup Builder
-- ✅ Reusable Custom Formation Templates
+- ✅ Matchday Experience & Lineup Builder
+- ✅ Welfare Experience Foundation & Safeguarding
+- ✅ Secretary Command Centre (Teams, Assignments, Venues, Portal Accounts, Events)
+- ✅ Club-Wide Registration Coverage & Directory
+- ✅ Member Active/Inactive Lifecycle Management
+- ✅ Parent Selected-Child & Player Event Scoping (OS-028)
+- ✅ Parent All-Children Event Identity & Independent Multi-Child RSVP
 
 ### Current Focus
 
-- Welfare Experience
-- End-to-end workflow validation
+- Treasurer & Finance Experience (Invoice lifecycle management, fee rules, discount policies)
+- Committee operational workflows & Club OS native CRUD
+- Player Workspace & My Stats engagement
 - Internal club MVP testing
 
 ### Next Milestones
