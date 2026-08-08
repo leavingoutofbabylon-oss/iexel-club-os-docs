@@ -22,6 +22,7 @@ This document tracks the major development milestones of IEXEL Club OS. Complete
 | 29 | Welfare Experience Foundation | ✅ Complete |
 | 30 | Secretary Command Centre & Operations | ✅ Complete |
 | 31 | Parent Experience Scoping & Multi-Child RSVP | ✅ Complete |
+| 32 | Secretary Operations, Person-First Team Assignments & Auto Team-Season Resolution | ✅ Complete |
 
 ---
 
@@ -444,3 +445,42 @@ This document tracks the major development milestones of IEXEL Club OS. Complete
 - **Parent All-Children Event Identity:** Shared event cards identify relevant linked children with 36px circular profile photos or gradient initials fallbacks, child names, and per-child availability status badges (`IN3F12-P2`, `IN3F12-P2A`).
 - **Multi-Child Event Detail RSVP:** Event Detail renders independent RSVP controls per eligible child when multiple linked children qualify for the same event, submitting `(event_id, person_id)` records without sibling response overwrites (`IN3F12-P2C`, `IN3F12-P2D`).
 - **Server Security & Lifecycle:** Parent-child relationships, event eligibility, and active player status validated server-side; inactive members blocked; Coach and Player surfaces consume canonical availability records.
+
+---
+
+# Sprint 32
+
+## Secretary Operations, Person-First Team Assignments & Auto Team-Season Resolution
+
+**Status:** Complete
+
+**Goal:** Deliver full Secretary Operations capability map, parent wizard autosave notes preservation, person-first team assignment routing, and canonical Team Season auto-resolution.
+
+### Delivered
+
+- **Secretary People Directory & Person Profiles:** Portal-native Secretary people directory, person profiles, person creation, and DOB management (`IN3F12-SEC1`, `IN3F12-SEC2`).
+- **Secretary Registration Detail & Review Lifecycle:** Full registration review, information request parent round-trip, approval, and registered conversion (`IN3F12-REG1`).
+- **Player Materialisation & Parent Linkage:** Materialises active Player person record and links parent/guardian relationship automatically upon registration approval (`IN3F12-REG2`).
+- **Secretary Portal Accounts Management:** Secretary-managed Club OS portal account creation and member account linking (`IN3F12-SPA1`).
+- **Secretary Teams & Venue Management:** Permanent team references, team CRUD, venue directory, postcode-aware location resolution, and venue profiles (`IN3F12-STM1`, `IN3F12-SV1`).
+- **Secretary Events Management & Notifications:** Event builder capturing opponent, competition, and location with lifecycle notification dispatches (`IN3F12-SE1`).
+- **Person-First Team Assignment Routing & Auto Team-Season Resolution:** Person-first routing (`/secretary/people/{person_id}/assignments/new/`), dynamic team selector rendering, and automatic resolution of canonical `Team Season` records when `team_season_id = 0` (`IN3F12-STA1`).
+- **ActivityLogger Argument Order Repair:** Corrected `ActivityLogger::log()` argument ordering across team assignment creation workflows (`IN3F12-LOG1`).
+- **Parent Wizard Autosave Notes Preservation Repair:** Fixed wizard autosave to preserve Secretary information request notes without wiping during parent edit/resubmission (`IN3F12-SR3C`).
+
+### Real Browser Verification
+
+- Complete operational lifecycle browser-validated:
+  Parent registration (Registration #195)
+  → Secretary review
+  → Information request
+  → Parent edit & resubmission
+  → Secretary approval
+  → Registered status
+  → Person #175 / CLB-000140 materialisation
+  → Jess Test guardian linkage
+  → Sammy Player portal account creation
+  → Person-first team assignment to U9 GOLD
+  → Auto-resolution to Team Season #7 (U9 GOLD 2026/27)
+  → Assignment #102 created
+  → Player Experience / Team Workspace verified

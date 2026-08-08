@@ -59,8 +59,8 @@ Club OS has reached the stage where the core architecture is strong and the main
 | OS-001 | Committee | Duplicate Home and Club Overview navigation | Bug/UX | High | MVP |
 | OS-002 | Committee | Registration panel needs stronger operational metrics | UX | High | MVP |
 | OS-003 | Committee | Quick Actions should move near the top | UX | High | MVP |
-| OS-004 | Committee | Create/edit/archive club events, communications and projects | Missing operational workflow | High | MVP |
-| OS-005 | Committee | Improve dashboard visual hierarchy | Visual | Medium | Polish |
+| OS-004 | Committee | Create/edit/archive club events, communications and projects — delivered in Secretary Events, Communications & Command Centre | Resolved workflow | Complete | Sprint 30/32 |
+| OS-005 | Committee | Improve dashboard visual hierarchy — delivered in Secretary Command Centre & Portal Navigation | Visual | Complete | Sprint 30 |
 | OS-006 | Committee | Projects card feels isolated | Visual | Low | Post-MVP |
 | OS-008 | Welfare | Quick Actions should move near the top | UX | High | MVP |
 | OS-009 | Welfare | Add edit/archive lifecycle for concerns; deletion heavily restricted | Workflow | Medium | Post-MVP |
