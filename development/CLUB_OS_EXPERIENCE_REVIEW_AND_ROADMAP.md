@@ -108,8 +108,7 @@ Club OS has reached the stage where the core architecture is strong and the main
 - Add richer registration metrics.
 - Because operational users cannot access wp-admin, Committee needs Club OS-native management of club events, communications and projects.
 
-### Welfare Workspace
-
+- **Welfare Experience Foundation (complete):** Role-aware safeguarding workspace, concern dashboard, concern directory, concern detail, status/priority lifecycle, optimistic revision control, activity timeline, and access isolation delivered (`Sprint 29`).
 - Keep the concern dashboard, concern directory, concern detail, medical overview and emergency contacts.
 - Move Quick Actions higher.
 - Post-MVP, expand beyond concern management into DBS, safeguarding, first-aid and qualification compliance.

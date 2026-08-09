@@ -16,10 +16,11 @@ The estimate reflects implemented, usable capability rather than the number of i
 | Communications | 10% | Early foundations only; club and team messaging remain planned. |
 | Rewards | 20% | Partial foundations; a complete rewards workflow remains planned. |
 | Finance | 95% | Parent Family Finance workspace, Parent Invoice Detail, Treasurer Finance MVP lifecycle, payment allocations, and recurring billing are complete. |
+| Welfare / Safeguarding | 95% | Safeguarding dashboard, concern directory, detail, priority & status lifecycle, activity timeline, and strict access isolation are complete. |
 | Reporting | 10% | Match Reports, Player Ratings and wider exports remain planned. |
 
 ## Current MVP Boundary
 
-Completed capabilities include Matchday Hub, Match Details, Match Mode, Match Lineup Builder, Goal Attribution, Rolling Substitutions, Secretary Operations, Parent Family Finance, Parent Invoice Detail, and Treasurer Finance MVP lifecycle.
+Completed capabilities include Matchday Hub, Match Details, Match Mode, Match Lineup Builder, Goal Attribution, Rolling Substitutions, Secretary Operations, Parent Family Finance, Parent Invoice Detail, Treasurer Finance MVP lifecycle, and Welfare / Safeguarding Experience Foundation.
 
 The full club-wide MVP is not yet complete. The next product focus is Match Reports, Player Ratings and Player of the Match, followed by wider communications, rewards, finance, reporting and release polish.
