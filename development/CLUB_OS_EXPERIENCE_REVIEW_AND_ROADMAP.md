@@ -43,10 +43,12 @@ Club OS has reached the stage where the core architecture is strong and the main
 - **Coach — complete:** Allow bench/substitute selection in Lineup Builder and persist it into Matchday Hub and substitution controls.
 - **Parent — complete:** Fix selected-child context so an U8 child cannot see an U7 next event, and deliver Parent All-Children event identity + multi-child RSVP.
 - **Parent:** Improve Team Hub text contrast.
-- **Parent:** Provide a real Finance page with invoice detail and payment history.
+- **Parent — complete:** Fix selected-child context so an U8 child cannot see an U7 next event, and deliver Parent All-Children event identity + multi-child RSVP.
+- **Parent:** Improve Team Hub text contrast.
+- **Parent — complete:** Provide a real Finance page with invoice detail and payment history — delivered in Parent Family Finance & Invoice Detail.
 - **Notifications:** Improve attachment/image viewing so users can close and return without relying on the browser Back button.
-- **Treasurer:** Provide invoice view/edit/cancel/archive or void actions and a proper invoice detail route.
-- **Treasurer:** Allow Treasurer role to manage fee rules and discount policies inside Club OS.
+- **Treasurer — complete:** Provide invoice view/edit/cancel/archive or void actions and a proper invoice detail route — delivered in Treasurer Finance MVP.
+- **Treasurer — complete:** Allow Treasurer role to manage fee rules and discount policies inside Club OS — delivered in Treasurer Fee Rules & Discount Policies management.
 - **Player:** Create a real My Stats page based on the coach player-statistics experience, limited to the logged-in player.
 - **Player:** Expand My Season with progress, form, attendance, milestones and next achievement.
 - **Player:** Add a lightweight pre-MVP engagement feature such as weekly challenges or personal targets.
@@ -76,12 +78,12 @@ Club OS has reached the stage where the core architecture is strong and the main
 | OS-027 | Parent | Dates displayed in ISO format | Consistency | Medium | MVP |
 | OS-028 | Parent | Selected child sees event from wrong team — selected-child event scoping, Player Preview, and Parent All-Children multi-child RSVP delivered | Resolved bug | Complete | Sprint 31 |
 | OS-029 | Parent | Team Hub has blue-on-blue text | Accessibility | High | MVP |
-| OS-030 | Parent | Finance experience is too limited | Missing workflow | High | MVP |
+| OS-030 | Parent | Finance experience is too limited — Parent Family Finance workspace, invoice detail & payment history delivered | Resolved gap | Complete | Sprint 33 |
 | OS-031 | Notifications | Image attachments lack an in-app close/viewer experience | UX | Medium | MVP polish |
-| FIN-027 | Treasurer | Invoices cannot be viewed, edited, cancelled, archived or voided properly | Missing workflow | Critical | MVP |
+| FIN-027 | Treasurer | Invoices cannot be viewed, edited, cancelled, archived or voided properly — Treasurer invoice lifecycle delivered | Resolved gap | Complete | Sprint 33 |
 | FIN-028 | Treasurer | Blue-on-blue text on billing pages | Accessibility | High | MVP |
-| FIN-029 | Treasurer | Cannot create/edit/archive fee rules | Missing workflow | High | MVP |
-| FIN-030 | Treasurer | Cannot create/edit/archive discount policies | Missing workflow | High | MVP |
+| FIN-029 | Treasurer | Cannot create/edit/archive fee rules — Portal Fee Rules management delivered | Resolved gap | Complete | Sprint 33 |
+| FIN-030 | Treasurer | Cannot create/edit/archive discount policies — Portal Discount Policies management delivered | Resolved gap | Complete | Sprint 33 |
 | FIN-031 | Treasurer | Text shows caret as though editable | Visual bug | Low | MVP polish |
 | PL-021 | Player | My Season has too much unused space and weak engagement | UX | High | MVP |
 | PL-022 | Player | My Stats is only a minimal dashboard section | Missing experience | Critical | MVP |
@@ -135,15 +137,14 @@ This is a future read-only architecture and security audit, not an implemented f
 
 - Keep dashboard, registrations, events and announcements.
 - **Selected-Child & All-Children Event Scoping (complete):** Parent selected-child scoping (OS-028), Player Preview scoping, and All-Children event child identity (avatars/initials, per-child status) with independent multi-child RSVP on Event Detail are fully delivered.
-- Build a fuller family finance experience with invoice detail and payment history.
+- **Parent Family Finance (complete):** Family Finance workspace, invoice detail experience, child attribution, and payment allocation history are fully delivered.
 - Improve notification attachments with an in-app viewer/lightbox.
 - Post-MVP, evolve communications into richer posts, galleries, match reports and generated club content.
 
 ### Treasurer Workspace
 
 - Keep the dedicated finance identity, payment recording, bulk family invoicing and billing schedules.
-- Add invoice lifecycle management and invoice detail.
-- Move Fee Rules and Discount Policies into Treasurer-controlled Club OS workflows.
+- **Treasurer Finance MVP (complete):** Invoice lifecycle management (draft, issue, cancel), payment recording & allocations, Fee Rules, and Discount Policies are fully delivered inside Club OS.
 - Post-MVP, add reporting, exports, reconciliation and payment integrations.
 
 ### Player Workspace

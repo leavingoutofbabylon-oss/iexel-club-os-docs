@@ -51,10 +51,12 @@ Complete all remaining operational experiences before Release Readiness.
 - ✅ Member Active/Inactive Lifecycle Management
 - ✅ Parent Selected-Child & Player Event Scoping (OS-028)
 - ✅ Parent All-Children Event Identity & Independent Multi-Child RSVP
+- ✅ Parent Family Finance & Invoice Detail Experience (OS-030)
+- ✅ Treasurer Finance & Invoice Lifecycle MVP (FIN-027)
 
 ### Current Focus
 
-- Treasurer & Finance Experience (Invoice lifecycle management, fee rules, discount policies)
+- Continue role/workspace MVP gap auditing against the Experience Review & Roadmap
 - Committee operational workflows & Club OS native CRUD
 - Player Workspace & My Stats engagement
 - Internal club MVP testing

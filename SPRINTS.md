@@ -484,3 +484,20 @@ This document tracks the major development milestones of IEXEL Club OS. Complete
   → Auto-resolution to Team Season #7 (U9 GOLD 2026/27)
   → Assignment #102 created
   → Player Experience / Team Workspace verified
+
+---
+
+# Sprint 33
+
+## Parent Family Finance & Treasurer Finance MVP Lifecycle
+
+**Status:** Complete
+
+**Goal:** Deliver Parent Family Finance workspace, Parent Invoice Detail experience, and confirm Treasurer Finance MVP lifecycle capability.
+
+### Delivered
+
+- **Parent Family Finance Workspace (OS-030):** Parent-facing Family Finance page (`/club-os/parent/finance/`), household total outstanding / overdue / open invoice metrics, multi-child charge breakdown, household invoice history, and Parent Home CTA (`IN3F19-PAR1B1`, `IN3F19-PAR1B2`, `IN3F19-PAR1B2A`).
+- **Parent Invoice Detail & Canonical Overdue Derivation:** Dedicated Parent Invoice Detail page (`/club-os/parent/invoices/{id}/`), line items with child attribution, payment allocation history, payment instructions, canonical overdue status derivation via `Invoice::is_overdue()`, and strict household authorization boundary (`IN3F20-PAR1B3`, `IN3F20-PAR1B3D`).
+- **Mobile-Responsive Invoice Item Presentation:** Stacked card layout for invoice items on screens <=600px, eliminating horizontal table scrollbars on mobile viewports (`IN3F20-PAR1B3E`).
+- **Treasurer Finance MVP Audit (FIN-027):** Confirmed full operational readiness of Treasurer Finance overview, manual invoice creation, bulk/family fee-rule generation, draft management, invoice issuing, cancellation, payment recording, multi-invoice allocations, recurring billing schedules, fee rules, and discount policies (`IN3F21-FIN1A`).

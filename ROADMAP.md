@@ -17,6 +17,8 @@ IEXEL Club OS is a portal-first operating system for grassroots football clubs. 
 - [x] Events and venues.
 - [x] Event audience, RSVP and availability.
 - [x] Attendance and Team Attendance Workspace.
+- [x] Parent Family Finance workspace, Parent Invoice Detail experience, and household balance tracking.
+- [x] Treasurer Finance workspace, invoice lifecycle, fee rules, discount policies, payment recording, and recurring billing.
 
 ## Match Operations
 
