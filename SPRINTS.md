@@ -428,6 +428,7 @@ This document tracks the major development milestones of IEXEL Club OS. Complete
 - **Events Management Workspace:** Operational event builder capturing opponent, competition, and match location during event creation (`IN3F12-SE1`, `IN3F12-SE2`).
 - **Club-Wide Registration Coverage:** Authorised operational registration directory distinct from Parent "My Registrations", search/filtering by player/parent/status/season/team, season-aware Not Registered list, and pre-filled registration starting workflow (`IN3F12-REG1`, `IN3F12-REG2`).
 - **Member Active / Inactive Lifecycle:** Operational Person Profile Make Inactive / Reactivate workflow, historical statistics preservation, and exclusion of inactive members from active squad/registration workflows (`IN3F12-M1`, `IN3F12-M2`).
+- **Committee Workspace & Native Operations:** Executive dashboard with live club health & finance metrics, native Club Projects CRUD (create, edit, progress %, status, priority, category, owner, archiving, visibility, reordering), Committee Communications (compose, schedule, templates, delivery logs, Audience Builder v2 targeting, safeguarding checks), and activity logging (`IN3F23-COM1A`).
 
 ---
 

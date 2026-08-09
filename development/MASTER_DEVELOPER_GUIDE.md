@@ -53,12 +53,11 @@ Complete all remaining operational experiences before Release Readiness.
 - ✅ Parent All-Children Event Identity & Independent Multi-Child RSVP
 - ✅ Parent Family Finance & Invoice Detail Experience (OS-030)
 - ✅ Treasurer Finance & Invoice Lifecycle MVP (FIN-027)
+- ✅ Committee Workspace & Native Operations (Club Projects CRUD, Communications, Audience Builder v2)
 
 ### Current Focus
 
-- Continue role/workspace MVP gap auditing against the Experience Review & Roadmap
-- Committee operational workflows & Club OS native CRUD
-- Player Workspace & My Stats engagement
+- Continue final role/workspace MVP gap auditing and release-readiness review against the Experience Review & Roadmap
 - Internal club MVP testing
 
 ### Next Milestones

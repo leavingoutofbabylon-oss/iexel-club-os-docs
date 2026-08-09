@@ -102,11 +102,11 @@ Club OS has reached the stage where the core architecture is strong and the main
 
 ### Committee Workspace
 
+- **Committee Workspace & Native Operations (complete):** Club OS-native management of club events, Club Projects CRUD, Committee Communications, Audience Builder v2, and live executive dashboard metrics are fully delivered (`Sprint 30`).
 - Keep the premium hero and core dashboard structure.
 - Use Club Overview as the sole landing tab.
 - Move Quick Actions directly below the hero or alerts.
 - Add richer registration metrics.
-- Because operational users cannot access wp-admin, Committee needs Club OS-native management of club events, communications and projects.
 
 - **Welfare Experience Foundation (complete):** Role-aware safeguarding workspace, concern dashboard, concern directory, concern detail, status/priority lifecycle, optimistic revision control, activity timeline, and access isolation delivered (`Sprint 29`).
 - Keep the concern dashboard, concern directory, concern detail, medical overview and emergency contacts.
