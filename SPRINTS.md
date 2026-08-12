@@ -538,7 +538,17 @@ This document tracks the major development milestones of IEXEL Club OS. Complete
 
 ## 2D — Competitive Player ↔ Training Only Transition
 
-**Status:** Separate future audit and implementation
+**Batch 2D-A acceptance update (2026-08-12):** The Secretary Person Profile owns an explicit **Move to Training Only** action, and the complete browser flow has passed LocalWP manual acceptance. The atomic service reloads/locks canonical state, rejects cross-Season assignment conflicts and any non-terminal saved Match lineup, ends every current-Season competitive Player assignment with `status=inactive` and canonical `left_on`, starts exactly one TrainingMembership through `start_in_transaction()`, writes safe activity events, and invalidates existing Player/Guardian experience caches. The Player role, linked account and Registration are deliberately retained. Person, family, Finance, Team Assignment, Match and statistics history remain untouched. Current self Player Experience and competitive Coach/Matchday projections cease naturally when active competitive assignments end. Acceptance also proved the saved not-started lineup block, removal through the normal lineup UI, successful `Training Only · U7` transition and repeat idempotency.
+
+**Status:** Batch 2D-A implemented; LocalWP manual acceptance passed; pending commit. Batch 2D-B is not implemented.
+
+### Match Event ownership integrity repair
+
+- Fixture/Friendly ownership is canonical through `events.team_id`, `events.season_id` and `events.team_season_id`; Team-less Match writes fail closed while legitimate Team-less Training, Meeting and club Events remain supported.
+- Malformed scheduled/not-started Match Events remain readable and can be repaired through the Secretary UI using an active Team and deterministic TeamSeason resolution.
+- Existing saved selections are checked against the exact target TeamSeason roster before ownership changes; compatible lineups are retained and incompatible lineups fail with actionable feedback.
+- Event ownership, exact-TeamSeason audience, Match details and audit writes remain one transaction, and the repaired audience is installed before Event change-notification recipient resolution.
+- Completed malformed historical Events remain readable; no broad rewrite, schema change or migration was introduced.
 
 ### Expected scope
 
@@ -546,6 +556,12 @@ This document tracks the major development milestones of IEXEL Club OS. Complete
 - Preservation of historical Person identity, Player Registrations, Team Assignments, match participation, statistics, finance and activity history.
 - Audit and safe handling of current Team Assignment, Player role/account access, active Match Registration, future Matchday eligibility, future event audiences, TrainingMembership, Season/Age Group and finance/billing relationships.
 - Preserve a future return or invitation to the Match Player pathway.
+
+### Explicitly deferred to Batch 2D-B
+
+- Historical-only former Player Experience.
+- Parent Preview policy or workspace redesign.
+- Training Member self portal, Event/Coach/Finance integration, and reverse Training Only → Match Player transition.
 
 ## Later pathways and communications
 

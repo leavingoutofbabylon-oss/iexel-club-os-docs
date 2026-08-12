@@ -57,14 +57,16 @@ Complete all remaining operational experiences before Release Readiness.
 - ✅ Prospect → Training Only Batch 2B (manual acceptance passed; pending commit)
 
 - ✅ Training Membership Visibility & Secretary Management Batch 2C (source complete; pending manual acceptance)
+- ✅ Atomic Match Player → Training Only Transition Batch 2D-A + Match Event Ownership Repair (manual acceptance passed; pending commit)
 
 ### Current Focus
 
-Batch 2C — Training Membership Visibility & Secretary Management is source-complete and awaiting LocalWP manual acceptance. The next separate development slice remains 2D — Competitive Player ↔ Training Only transition.
+Batch 2D-A — Atomic Match Player → Training Only Transition and the supporting Match Event ownership repair have passed LocalWP manual acceptance and are pending commit. The Secretary Person Profile provides one explicit atomic transition that ends every current-Season competitive Player assignment and starts the canonical TrainingMembership. The Player role, linked account, Registration, family, Finance, assignment history and Match/statistics history are preserved. Saved not-started lineups block until the Player is removed, live Matches must reach a terminal state, and terminal Match history remains untouched. Fixture/Friendly Events require canonical `team_id`, `season_id` and `team_season_id`; malformed scheduled Matches can be repaired through the Secretary UI with lineup compatibility and exact-TeamSeason audience validation. Historical-only Player Experience and the reverse pathway remain deferred to 2D-B.
 
 - Continue final role/workspace MVP gap auditing and release-readiness review against the Experience Review & Roadmap
 - Complete commit review for the accepted Prospect → Training Only Batch 2B
-- Complete LocalWP manual acceptance for source-complete Training Membership Batch 2C and prepare the separate 2D transition audit
+- Complete LocalWP manual acceptance for source-complete Training Membership Batch 2C and commit review for accepted Batch 2D-A
+- Keep Batch 2D-B historical-only Player Experience, Parent Preview policy, and reverse transition work separate
 - Internal club MVP testing
 
 ### Next Milestones
