@@ -502,3 +502,52 @@ This document tracks the major development milestones of IEXEL Club OS. Complete
 - **Parent Invoice Detail & Canonical Overdue Derivation:** Dedicated Parent Invoice Detail page (`/club-os/parent/invoices/{id}/`), line items with child attribution, payment allocation history, payment instructions, canonical overdue status derivation via `Invoice::is_overdue()`, and strict household authorization boundary (`IN3F20-PAR1B3`, `IN3F20-PAR1B3D`).
 - **Mobile-Responsive Invoice Item Presentation:** Stacked card layout for invoice items on screens <=600px, eliminating horizontal table scrollbars on mobile viewports (`IN3F20-PAR1B3E`).
 - **Treasurer Finance MVP Audit (FIN-027):** Confirmed full operational readiness of Treasurer Finance overview, manual invoice creation, bulk/family fee-rule generation, draft management, invoice issuing, cancellation, payment recording, multi-invoice allocations, recurring billing schedules, fee rules, and discount policies (`IN3F21-FIN1A`).
+
+---
+
+# Training Membership MVP Sequence
+
+## 2B — Prospect → Training Only
+
+**Status:** Manual acceptance passed; pending commit
+
+### Accepted behaviour
+
+- A continuing Prospect can be converted through the Secretary Prospect detail workspace.
+- Ambiguity-aware identity resolution creates or reuses the canonical Person and, for youth, Parent/Guardian Person and relationship.
+- The pathway starts the canonical TrainingMembership for a selected active Season and normalized active TeamSeason Age Group, then records the Prospect as `converted_training`.
+- Existing `UNDER 7`, `Under 7`, `U7` and `U 7` representations normalize to the stable Training Membership comparison key without rewriting TeamSeason data.
+- Training Only creates no Player role, Player account, competitive Team Assignment, Match Registration or Matchday eligibility.
+- Final LocalWP browser acceptance confirmed conversion, resulting People visibility and the absence of competitive-player side effects.
+
+## 2C — Training Membership Visibility & Secretary Management
+
+**Status:** Next bounded implementation
+
+### Expected scope
+
+- Canonical Training Membership read model.
+- Clear Training Only badges/status in the Secretary People Directory, Person Profile, relevant relationship/member views and Training Membership management surfaces.
+- Authorized Coach/Manager visibility where the member is legitimately visible, including appropriate training or Age Group operational summaries.
+- Secretary direct creation of a Person/member as Training Only, reusing the canonical TrainingMembership service and canonical youth relationship rules.
+- Season and normalized Age Group selection.
+- Appropriate end/archive Training Membership actions.
+- No fake Player role, account, Team Assignment or Registration to make Training Only visible.
+
+## 2D — Competitive Player ↔ Training Only Transition
+
+**Status:** Separate future audit and implementation
+
+### Expected scope
+
+- Controlled, explicit and auditable Match Player → Training Only transition.
+- Preservation of historical Person identity, Player Registrations, Team Assignments, match participation, statistics, finance and activity history.
+- Audit and safe handling of current Team Assignment, Player role/account access, active Match Registration, future Matchday eligibility, future event audiences, TrainingMembership, Season/Age Group and finance/billing relationships.
+- Preserve a future return or invitation to the Match Player pathway.
+
+## Later pathways and communications
+
+- Prospect → direct Match Player invitation/registration remains a separate future pathway; Training Only is not a mandatory stepping stone.
+- Taster/Trial invitations and Secretary communications to a Parent/Guardian or adult applicant are retained as post-MVP planning.
+- Configurable Secretary/reply-to email and eventual role-authorized IMAP/SMTP or equivalent mailbox integration remain post-MVP and are not MVP blockers.
+- Prospect conversion, Secretary direct creation and Match Player transition must all converge on the one canonical TrainingMembership domain.

@@ -54,10 +54,13 @@ Complete all remaining operational experiences before Release Readiness.
 - ✅ Parent Family Finance & Invoice Detail Experience (OS-030)
 - ✅ Treasurer Finance & Invoice Lifecycle MVP (FIN-027)
 - ✅ Committee Workspace & Native Operations (Club Projects CRUD, Communications, Audience Builder v2)
+- ✅ Prospect → Training Only Batch 2B (manual acceptance passed; pending commit)
 
 ### Current Focus
 
 - Continue final role/workspace MVP gap auditing and release-readiness review against the Experience Review & Roadmap
+- Complete commit review for the accepted Prospect → Training Only Batch 2B
+- Prepare the next bounded Training Membership batch: canonical read-model visibility and Secretary management
 - Internal club MVP testing
 
 ### Next Milestones

@@ -176,6 +176,18 @@ This is a future read-only architecture and security audit, not an implemented f
 - Post-MVP, add image movement, crop, zoom and focal-point controls.
 - Add club-profile defaults for Grassroots, Academy, Semi-Professional, Professional and Custom.
 
+### Training Membership pathway roadmap
+
+Training Membership is the one canonical representation of Training Only membership. It is based on Person, Season and normalized Age Group; it must not be represented by a fake Player role, Player account, competitive Team Assignment or Match Registration.
+
+- **2B — Prospect → Training Only:** Manual acceptance passed. A continuing Prospect can resolve or create canonical Person and Parent/Guardian identities, preserve or create the canonical relationship, start a TrainingMembership, and transition to `converted_training` without gaining competitive-player state.
+- **2C — Training Membership Visibility & Secretary Management:** Next bounded implementation. Add a canonical Training Membership read model; clear Training Only status/badges in the Secretary People Directory, Secretary Person Profile, relevant relationship/member views and Training Membership management surfaces; authorized Coach/Manager visibility where operationally legitimate; Secretary direct creation of Training Only membership through the canonical service; Season/Age Group management; and appropriate end/archive actions.
+- **2D — Competitive Player ↔ Training Only Transition:** Separate audit and implementation. Provide a controlled, auditable Match Player → Training Only transition that preserves Person identity, registrations, assignments, match history, statistics and financial history while safely handling current competitive eligibility, Team Assignment state, Player role/account access, active Match Registration, future audiences, TrainingMembership creation, Season/Age Group and activity logging. Preserve a future return/invitation path to Match Player.
+
+The three Training Only entry paths—Prospect conversion, Secretary direct creation and an existing Match Player transition—must converge on the same TrainingMembership service/domain. Training Only is not a mandatory step before Match Player: a later bounded pathway may invite a Prospect directly into competitive registration and assignment.
+
+Post-MVP planning retains Taster/Trial invitations, Secretary communications to the Prospect contact, configurable Secretary/reply-to addressing and eventual role-authorized club mailbox integration. These communication capabilities are not Operational MVP blockers and must continue to reuse the channel-neutral Communications architecture.
+
 ## Future club profiles
 
 ### Grassroots
