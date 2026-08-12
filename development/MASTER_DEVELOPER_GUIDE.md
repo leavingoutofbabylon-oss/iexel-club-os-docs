@@ -14,7 +14,7 @@ This document remains the authoritative source for Club OS architecture.
 # Master Developer Guide
 
 **Version:** 1.0  
-**Last Verified:** 2026-07-24  
+**Last Verified:** 2026-08-12
 **Applies To:** Operational MVP
 
 ---
@@ -56,11 +56,15 @@ Complete all remaining operational experiences before Release Readiness.
 - ✅ Committee Workspace & Native Operations (Club Projects CRUD, Communications, Audience Builder v2)
 - ✅ Prospect → Training Only Batch 2B (manual acceptance passed; pending commit)
 
+- ✅ Training Membership Visibility & Secretary Management Batch 2C (source complete; pending manual acceptance)
+
 ### Current Focus
+
+Batch 2C — Training Membership Visibility & Secretary Management is source-complete and awaiting LocalWP manual acceptance. The next separate development slice remains 2D — Competitive Player ↔ Training Only transition.
 
 - Continue final role/workspace MVP gap auditing and release-readiness review against the Experience Review & Roadmap
 - Complete commit review for the accepted Prospect → Training Only Batch 2B
-- Prepare the next bounded Training Membership batch: canonical read-model visibility and Secretary management
+- Complete LocalWP manual acceptance for source-complete Training Membership Batch 2C and prepare the separate 2D transition audit
 - Internal club MVP testing
 
 ### Next Milestones

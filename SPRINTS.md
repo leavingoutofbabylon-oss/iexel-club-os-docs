@@ -522,7 +522,9 @@ This document tracks the major development milestones of IEXEL Club OS. Complete
 
 ## 2C — Training Membership Visibility & Secretary Management
 
-**Status:** Next bounded implementation
+**Source completion update (2026-08-12):** Implementation is complete and pending LocalWP manual acceptance. It includes batched current-Season visibility in Secretary People, distinct Training Only/Youth Match Player/Senior Match Player summaries, a native Person Profile card, responsive People and Training Members directories, atomic roleless direct creation through the canonical Add Person and TrainingMembershipService path, existing-Person re-entry, and guarded end/archive lifecycle actions. DOB remains the canonical youth/adult classifier: youth retains an explicit supported TeamSeason U-group, while an adult TrainingMembership stores the schema-compatible `senior` key and displays `Senior` without requiring a youth TeamSeason. Youth creation reuses the existing Guardian Links workflow. Coach/Manager visibility was audited as **NOT CURRENTLY VISIBLE** and was not broadened. No Player role, account, Team Assignment, Match Registration, match eligibility, Events, Finance or Communications integration was added. Batch 2D below remains separate and incomplete.
+
+**Status:** Source implementation complete; pending LocalWP manual acceptance
 
 ### Expected scope
 
@@ -530,7 +532,7 @@ This document tracks the major development milestones of IEXEL Club OS. Complete
 - Clear Training Only badges/status in the Secretary People Directory, Person Profile, relevant relationship/member views and Training Membership management surfaces.
 - Authorized Coach/Manager visibility where the member is legitimately visible, including appropriate training or Age Group operational summaries.
 - Secretary direct creation of a Person/member as Training Only, reusing the canonical TrainingMembership service and canonical youth relationship rules.
-- Season and normalized Age Group selection.
+- Season and normalized operational classification: an explicit supported U-group for youth, or DOB-derived `senior` for adults.
 - Appropriate end/archive Training Membership actions.
 - No fake Player role, account, Team Assignment or Registration to make Training Only visible.
 
