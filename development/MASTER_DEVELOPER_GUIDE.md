@@ -14,7 +14,7 @@ This document remains the authoritative source for Club OS architecture.
 # Master Developer Guide
 
 **Version:** 1.0  
-**Last Verified:** 2026-08-12
+**Last Verified:** 2026-08-13
 **Applies To:** Operational MVP
 
 ---
@@ -58,15 +58,16 @@ Complete all remaining operational experiences before Release Readiness.
 
 - ✅ Training Membership Visibility & Secretary Management Batch 2C (source complete; pending manual acceptance)
 - ✅ Atomic Match Player → Training Only Transition Batch 2D-A + Match Event Ownership Repair (manual acceptance passed; pending commit)
+- ✅ Registered-only Training Only → Match Player Batch 2D-B1 + Training Player-role normalisation (final acceptance passed; pending commit)
 
 ### Current Focus
 
-Batch 2D-A — Atomic Match Player → Training Only Transition and the supporting Match Event ownership repair have passed LocalWP manual acceptance and are pending commit. The Secretary Person Profile provides one explicit atomic transition that ends every current-Season competitive Player assignment and starts the canonical TrainingMembership. The Player role, linked account, Registration, family, Finance, assignment history and Match/statistics history are preserved. Saved not-started lineups block until the Player is removed, live Matches must reach a terminal state, and terminal Match history remains untouched. Fixture/Friendly Events require canonical `team_id`, `season_id` and `team_season_id`; malformed scheduled Matches can be repaired through the Secretary UI with lineup compatibility and exact-TeamSeason audience validation. Historical-only Player Experience and the reverse pathway remain deferred to 2D-B.
+Batch 2D-B1 has passed final acceptance and is pending commit. `Player` describes football-participant identity: Training Only is `Player` + active current `TrainingMembership` + no active competitive Player Team Assignment, while Match Player requires the canonical competitive assignment and Registration predicates. Prospect conversion, direct Training creation and a narrow active/current backfill ensure Player through the transaction-safe Person-role boundary; Player role alone still creates no account, Team Assignment, Registration, Event audience, lineup or Match eligibility. Secretary-controlled reciprocal transitions enforce participation exclusivity, with Training → Match Player gated by exactly one current Person-linked `registered` Registration and a compatible active current Team/TeamSeason. Current/historical roster and statistics presentation, plus responsive Training Members filters, passed final acceptance. Account activation, Finance, Event invitation and Batch 2D-B2 Secretary-native Registration setup remain separate.
 
 - Continue final role/workspace MVP gap auditing and release-readiness review against the Experience Review & Roadmap
 - Complete commit review for the accepted Prospect → Training Only Batch 2B
-- Complete LocalWP manual acceptance for source-complete Training Membership Batch 2C and commit review for accepted Batch 2D-A
-- Keep Batch 2D-B historical-only Player Experience, Parent Preview policy, and reverse transition work separate
+- Complete LocalWP manual acceptance for source-complete Training Membership Batch 2C; complete commit review for accepted Batch 2D-A and Batch 2D-B1
+- Keep Batch 2D-B2 Secretary-native Registration setup, historical-only Player Experience, Parent Preview policy and any Training self-service workspace separate
 - Internal club MVP testing
 
 ### Next Milestones

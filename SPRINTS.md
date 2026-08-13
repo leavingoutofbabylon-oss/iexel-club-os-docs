@@ -517,12 +517,12 @@ This document tracks the major development milestones of IEXEL Club OS. Complete
 - Ambiguity-aware identity resolution creates or reuses the canonical Person and, for youth, Parent/Guardian Person and relationship.
 - The pathway starts the canonical TrainingMembership for a selected active Season and normalized active TeamSeason Age Group, then records the Prospect as `converted_training`.
 - Existing `UNDER 7`, `Under 7`, `U7` and `U 7` representations normalize to the stable Training Membership comparison key without rewriting TeamSeason data.
-- Training Only creates no Player role, Player account, competitive Team Assignment, Match Registration or Matchday eligibility.
+- Batch 2D-B1 later normalises the converted football participant to Player identity while still creating no account, competitive Team Assignment, Match Registration or Matchday eligibility.
 - Final LocalWP browser acceptance confirmed conversion, resulting People visibility and the absence of competitive-player side effects.
 
 ## 2C — Training Membership Visibility & Secretary Management
 
-**Source completion update (2026-08-12):** Implementation is complete and pending LocalWP manual acceptance. It includes batched current-Season visibility in Secretary People, distinct Training Only/Youth Match Player/Senior Match Player summaries, a native Person Profile card, responsive People and Training Members directories, atomic roleless direct creation through the canonical Add Person and TrainingMembershipService path, existing-Person re-entry, and guarded end/archive lifecycle actions. DOB remains the canonical youth/adult classifier: youth retains an explicit supported TeamSeason U-group, while an adult TrainingMembership stores the schema-compatible `senior` key and displays `Senior` without requiring a youth TeamSeason. Youth creation reuses the existing Guardian Links workflow. Coach/Manager visibility was audited as **NOT CURRENTLY VISIBLE** and was not broadened. No Player role, account, Team Assignment, Match Registration, match eligibility, Events, Finance or Communications integration was added. Batch 2D below remains separate and incomplete.
+**Source completion update (updated 2026-08-13):** Implementation is complete and pending LocalWP manual acceptance. It includes batched current-Season visibility, distinct Training Only/Youth Match Player/Senior Match Player summaries, responsive People and Training Members directories, existing-Person re-entry, and guarded end/archive lifecycle actions. Batch 2D-B1 updates direct Training creation to ensure canonical Player identity through the transaction-safe role boundary while leaving Training participation separate: no account, Team Assignment, Registration, Match eligibility, Finance or Event audience is created. DOB remains the classifier; youth uses a supported TeamSeason U-group and adults use `senior`. Coach/Manager visibility remains assignment-based and was not broadened.
 
 **Status:** Source implementation complete; pending LocalWP manual acceptance
 
@@ -540,7 +540,7 @@ This document tracks the major development milestones of IEXEL Club OS. Complete
 
 **Batch 2D-A acceptance update (2026-08-12):** The Secretary Person Profile owns an explicit **Move to Training Only** action, and the complete browser flow has passed LocalWP manual acceptance. The atomic service reloads/locks canonical state, rejects cross-Season assignment conflicts and any non-terminal saved Match lineup, ends every current-Season competitive Player assignment with `status=inactive` and canonical `left_on`, starts exactly one TrainingMembership through `start_in_transaction()`, writes safe activity events, and invalidates existing Player/Guardian experience caches. The Player role, linked account and Registration are deliberately retained. Person, family, Finance, Team Assignment, Match and statistics history remain untouched. Current self Player Experience and competitive Coach/Matchday projections cease naturally when active competitive assignments end. Acceptance also proved the saved not-started lineup block, removal through the normal lineup UI, successful `Training Only · U7` transition and repeat idempotency.
 
-**Status:** Batch 2D-A implemented; LocalWP manual acceptance passed; pending commit. Batch 2D-B is not implemented.
+**Status:** Batch 2D-A implemented and manually accepted; pending commit. Batch 2D-B1 final acceptance passed; pending commit. Batch 2D-B2 is not implemented.
 
 ### Match Event ownership integrity repair
 
@@ -557,11 +557,17 @@ This document tracks the major development milestones of IEXEL Club OS. Complete
 - Audit and safe handling of current Team Assignment, Player role/account access, active Match Registration, future Matchday eligibility, future event audiences, TrainingMembership, Season/Age Group and finance/billing relationships.
 - Preserve a future return or invitation to the Match Player pathway.
 
-### Explicitly deferred to Batch 2D-B
+### Batch 2D-B1 — Registered-only Training Only → Match Player
+
+**Final acceptance update (2026-08-13):** Player is the football-participant identity for both Training Only and Match Player states. Prospect conversion, direct Training creation and a narrow idempotent active/current Training participant backfill ensure Player without creating accounts, Registrations, assignments or Event eligibility. Secretary-controlled reciprocal transitions enforce participation exclusivity; Training → Match Player requires exactly one current Person-linked `registered` Registration, zero active Player assignment conflicts and a compatible active current Team/TeamSeason. Success creates a new regular active Player assignment episode, ends (never deletes/archives) the TrainingMembership and writes one safe activity event atomically. Current/historical roster and statistics presentation and the responsive Training Members mobile filters passed final acceptance. Registration, account, family, Finance, existing Event audiences, historical assignments and Match/statistics history remain unchanged.
+
+**Status:** Final acceptance passed; pending commit
+
+### Explicitly deferred to Batch 2D-B2 and later
 
 - Historical-only former Player Experience.
 - Parent Preview policy or workspace redesign.
-- Training Member self portal, Event/Coach/Finance integration, and reverse Training Only → Match Player transition.
+- Secretary-native Start Registration from Training Member, Training Member self portal, Event/Coach/Finance integration, historical-only former Player Experience and Parent Preview policy changes.
 
 ## Later pathways and communications
 
