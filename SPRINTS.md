@@ -540,7 +540,7 @@ This document tracks the major development milestones of IEXEL Club OS. Complete
 
 **Batch 2D-A acceptance update (2026-08-12):** The Secretary Person Profile owns an explicit **Move to Training Only** action, and the complete browser flow has passed LocalWP manual acceptance. The atomic service reloads/locks canonical state, rejects cross-Season assignment conflicts and any non-terminal saved Match lineup, ends every current-Season competitive Player assignment with `status=inactive` and canonical `left_on`, starts exactly one TrainingMembership through `start_in_transaction()`, writes safe activity events, and invalidates existing Player/Guardian experience caches. The Player role, linked account and Registration are deliberately retained. Person, family, Finance, Team Assignment, Match and statistics history remain untouched. Current self Player Experience and competitive Coach/Matchday projections cease naturally when active competitive assignments end. Acceptance also proved the saved not-started lineup block, removal through the normal lineup UI, successful `Training Only · U7` transition and repeat idempotency.
 
-**Status:** Batch 2D-A implemented and manually accepted; pending commit. Batch 2D-B1 final acceptance passed; pending commit. Batch 2D-B2 is not implemented.
+**Status:** Batch 2D-A implemented and manually accepted; pending commit. Batch 2D-B1 final acceptance passed and is merged. Batch 2D-B2 implementation and LocalWP happy-path manual acceptance are complete; pending intentional commit/push/merge.
 
 ### Match Event ownership integrity repair
 
@@ -561,13 +561,19 @@ This document tracks the major development milestones of IEXEL Club OS. Complete
 
 **Final acceptance update (2026-08-13):** Player is the football-participant identity for both Training Only and Match Player states. Prospect conversion, direct Training creation and a narrow idempotent active/current Training participant backfill ensure Player without creating accounts, Registrations, assignments or Event eligibility. Secretary-controlled reciprocal transitions enforce participation exclusivity; Training → Match Player requires exactly one current Person-linked `registered` Registration, zero active Player assignment conflicts and a compatible active current Team/TeamSeason. Success creates a new regular active Player assignment episode, ends (never deletes/archives) the TrainingMembership and writes one safe activity event atomically. Current/historical roster and statistics presentation and the responsive Training Members mobile filters passed final acceptance. Registration, account, family, Finance, existing Event audiences, historical assignments and Match/statistics history remain unchanged.
 
-**Status:** Final acceptance passed; pending commit
+**Status:** Final acceptance passed; merged on `main`
 
-### Explicitly deferred to Batch 2D-B2 and later
+### Batch 2D-B2 — Secretary-native Registration setup
+
+**Final acceptance update (2026-08-13):** The Secretary Training Member detail resolves the canonical current-Season Registration for the existing Player and presents state-based Start, Continue or View actions. Starting creates one canonical draft through the existing Registration service and wizard, binds `existing_person_id` and the active TrainingMembership Season, uses `returning_player` by default or `trialist_conversion` for reliable Prospect-origin membership, and resumes active episodes idempotently. Contradictory active records fail closed; rejected/withdrawn history remains intact. Youth guardian links are reused without duplication, while adults use existing Player contact details without creating a guardian. Registration does not change TrainingMembership, create an account or Team Assignment, or mutate Finance, Events or Matchday. LocalWP happy-path acceptance verified one existing Person through Draft, Submitted and Registered, followed by the accepted B1 transition to one compatible current Team Assignment; the Person, Registration, family links and historical Training Membership were retained, and Team Hub showed one current roster entry.
+
+**Status:** Implementation complete; LocalWP happy-path manual acceptance passed; pending intentional commit/push/merge
+
+### Explicitly deferred to later work
 
 - Historical-only former Player Experience.
 - Parent Preview policy or workspace redesign.
-- Secretary-native Start Registration from Training Member, Training Member self portal, Event/Coach/Finance integration, historical-only former Player Experience and Parent Preview policy changes.
+- Training Member self portal, Event/Coach/Finance integration, historical-only former Player Experience and Parent Preview policy changes.
 
 ## Later pathways and communications
 

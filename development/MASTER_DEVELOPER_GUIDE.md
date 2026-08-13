@@ -58,16 +58,17 @@ Complete all remaining operational experiences before Release Readiness.
 
 - ✅ Training Membership Visibility & Secretary Management Batch 2C (source complete; pending manual acceptance)
 - ✅ Atomic Match Player → Training Only Transition Batch 2D-A + Match Event Ownership Repair (manual acceptance passed; pending commit)
-- ✅ Registered-only Training Only → Match Player Batch 2D-B1 + Training Player-role normalisation (final acceptance passed; pending commit)
+- ✅ Registered-only Training Only → Match Player Batch 2D-B1 + Training Player-role normalisation (accepted and merged)
+- ✅ Secretary-native Registration setup for Training Only Players Batch 2D-B2 (implementation complete; LocalWP happy-path manual acceptance passed; pending intentional commit/push/merge)
 
 ### Current Focus
 
-Batch 2D-B1 has passed final acceptance and is pending commit. `Player` describes football-participant identity: Training Only is `Player` + active current `TrainingMembership` + no active competitive Player Team Assignment, while Match Player requires the canonical competitive assignment and Registration predicates. Prospect conversion, direct Training creation and a narrow active/current backfill ensure Player through the transaction-safe Person-role boundary; Player role alone still creates no account, Team Assignment, Registration, Event audience, lineup or Match eligibility. Secretary-controlled reciprocal transitions enforce participation exclusivity, with Training → Match Player gated by exactly one current Person-linked `registered` Registration and a compatible active current Team/TeamSeason. Current/historical roster and statistics presentation, plus responsive Training Members filters, passed final acceptance. Account activation, Finance, Event invitation and Batch 2D-B2 Secretary-native Registration setup remain separate.
+Batch 2D-B2 implementation is complete and the LocalWP happy path has passed manual acceptance. The Secretary Training Member detail resolves the canonical current-Season Person-linked Registration and presents state-based Start, Continue or View actions. Starting Registration reuses the existing Person, current active TrainingMembership Season, canonical Registration service and normal wizard; ordinary Training Members use `returning_player`, while reliable Prospect-origin membership uses `trialist_conversion`. Contradictory active records fail closed, terminal history is preserved, and repeated starts resume the existing episode. Registration creates no account, Team Assignment, Finance or Event eligibility. Once the existing lifecycle reaches `registered`, the workflow returns to the Training Member detail for the accepted Batch 2D-B1 Move to Match Player action. The accepted LocalWP flow retained the same Person, Registration, family links and Training Membership history through the competitive transition and produced one current Team Hub roster entry. The branch remains pending intentional commit, push and merge.
 
 - Continue final role/workspace MVP gap auditing and release-readiness review against the Experience Review & Roadmap
 - Complete commit review for the accepted Prospect → Training Only Batch 2B
-- Complete LocalWP manual acceptance for source-complete Training Membership Batch 2C; complete commit review for accepted Batch 2D-A and Batch 2D-B1
-- Keep Batch 2D-B2 Secretary-native Registration setup, historical-only Player Experience, Parent Preview policy and any Training self-service workspace separate
+- Complete LocalWP manual acceptance for source-complete Training Membership Batch 2C; complete commit review for accepted Batch 2D-A and Batch 2D-B2
+- Keep historical-only Player Experience, Parent Preview policy and any Training self-service workspace separate
 - Internal club MVP testing
 
 ### Next Milestones
