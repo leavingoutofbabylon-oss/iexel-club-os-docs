@@ -540,7 +540,7 @@ This document tracks the major development milestones of IEXEL Club OS. Complete
 
 **Batch 2D-A acceptance update (2026-08-12):** The Secretary Person Profile owns an explicit **Move to Training Only** action, and the complete browser flow has passed LocalWP manual acceptance. The atomic service reloads/locks canonical state, rejects cross-Season assignment conflicts and any non-terminal saved Match lineup, ends every current-Season competitive Player assignment with `status=inactive` and canonical `left_on`, starts exactly one TrainingMembership through `start_in_transaction()`, writes safe activity events, and invalidates existing Player/Guardian experience caches. The Player role, linked account and Registration are deliberately retained. Person, family, Finance, Team Assignment, Match and statistics history remain untouched. Current self Player Experience and competitive Coach/Matchday projections cease naturally when active competitive assignments end. Acceptance also proved the saved not-started lineup block, removal through the normal lineup UI, successful `Training Only · U7` transition and repeat idempotency.
 
-**Status:** Batch 2D-A implemented and manually accepted; pending commit. Batch 2D-B1 final acceptance passed and is merged. Batch 2D-B2 implementation and LocalWP happy-path manual acceptance are complete; pending intentional commit/push/merge.
+**Status:** Batch 2D-A implemented and manually accepted; pending commit. Batch 2D-B1 and Batch 2D-B2 final acceptance passed and both are merged.
 
 ### Match Event ownership integrity repair
 
@@ -567,13 +567,44 @@ This document tracks the major development milestones of IEXEL Club OS. Complete
 
 **Final acceptance update (2026-08-13):** The Secretary Training Member detail resolves the canonical current-Season Registration for the existing Player and presents state-based Start, Continue or View actions. Starting creates one canonical draft through the existing Registration service and wizard, binds `existing_person_id` and the active TrainingMembership Season, uses `returning_player` by default or `trialist_conversion` for reliable Prospect-origin membership, and resumes active episodes idempotently. Contradictory active records fail closed; rejected/withdrawn history remains intact. Youth guardian links are reused without duplication, while adults use existing Player contact details without creating a guardian. Registration does not change TrainingMembership, create an account or Team Assignment, or mutate Finance, Events or Matchday. LocalWP happy-path acceptance verified one existing Person through Draft, Submitted and Registered, followed by the accepted B1 transition to one compatible current Team Assignment; the Person, Registration, family links and historical Training Membership were retained, and Team Hub showed one current roster entry.
 
-**Status:** Implementation complete; LocalWP happy-path manual acceptance passed; pending intentional commit/push/merge
+**Status:** Final acceptance passed; merged on `main`
 
 ### Explicitly deferred to later work
 
 - Historical-only former Player Experience.
 - Parent Preview policy or workspace redesign.
 - Training Member self portal, Event/Coach/Finance integration, historical-only former Player Experience and Parent Preview policy changes.
+
+## Team Staff Operational Access Reconciliation
+
+**Status:** Implementation and LocalWP manual acceptance complete; pending intentional commit
+
+This bounded prerequisite for Player Profile A reconciles the existing `iexel_manage_assigned_team` capability directly on linked active accounts from canonical current active Team staff assignments. Qualifying assignment roles are `coach`, `manager` and `assistant_coach`, and the assignment must belong to an active Team and active TeamSeason in the current active Season. Person role alone, an inactive Person, an inactive or historical assignment, and a stale TeamSeason do not qualify.
+
+- Manager and Assistant Coach identity remains canonical in Team Assignment data; neither is promoted to a Coach WordPress role.
+- An account created or linked after the assignment is reconciled immediately; an assignment never auto-creates credentials.
+- Multiple qualifying assignments retain the capability when one ends; ending the final qualifying assignment removes it.
+- Reconciliation owns only this assigned-Team capability and preserves Treasurer, Welfare, Club Admin and unrelated account access.
+- The capability is an account-level prerequisite only. Every Team or Player operation must still prove the exact active Team assignment and current Team/TeamSeason scope at request time; the capability never grants all-Team access.
+- Core LocalWP acceptance proved one Manager-assigned Team and one Coach-assigned Team were accessible while an unrelated Team remained denied, with no broad all-Team access.
+
+## Player Profile A — Security, Core Workspace and Current Operational Medical/Safety
+
+**Status:** Implementation and LocalWP manual acceptance complete; pending intentional commit
+
+The existing front-end route `/club-os/teams/{TEAM_ID}/players/{PERSON_ID}/` is retained and hardened. A linked active Coach, Manager or Assistant Coach must use the Coach experience, hold `iexel_manage_assigned_team`, and have exactly one active staff assignment on the exact active route Team and exact active current TeamSeason. A linked active Club Admin retains the `iexel_manage_club_os` override. Ordinary Secretary stays on the Secretary Person Profile; Parent, Player, Treasurer, Welfare, Committee and preview contexts are denied.
+
+- The target must be an active Player Person with exactly one active Player assignment on the exact route Team/current TeamSeason. Training Only, former, inactive, registered-but-unassigned, stale and duplicate/corrupt contexts fail closed.
+- One immutable authorized scope supplies a unified read model containing minimum identity, current assignment, current-Season Registration status, known-youth guardian telephone, exact-Season emergency contact and existing football navigation. Exact DOB, previous Teams and mutation controls are absent.
+- Current Operational Medical & Safety is a dedicated non-Season Person-level singleton (`player_operational_medical_safety`) with a unique canonical `person_id`. Admin and active Secretary users with `iexel_manage_registrations` may replace or explicitly clear the four bounded current fields through the protected Secretary Person workflow. Authorized exact-current-Team Coach, Manager and Assistant Coach users receive those fields read-only through Player Profile A, without history, provenance or editor metadata.
+- Completed Registration remains immutable historical evidence. On the first exact transition to `registered`, allergies and medication may seed only when no current row exists; `medical_notes` and `emergency_information` never seed, existing Players receive no bulk historical backfill, and later Registration changes never synchronize into current state. An explicit all-empty current row remains authoritative and never falls back to historical Registration.
+- Emergency Contact remains the separate who-to-contact architecture. Welfare/safeguarding cases and Finance remain separate and are neither queried nor copied. Secretary Person Profile, the focused editor and Player Profile A use private/no-store/no-cache/noindex response protection; activity events contain metadata and changed-field names only, never medical content.
+- Welfare and Finance are absolutely excluded. The profile does not expand attendance, statistics or Player Journey, does not log views or sensitive content, and uses the established private/no-store/noindex response protection.
+- The focused static/in-memory validator covers exact actor/target authorization, persona denials, duplicate/corrupt data, minimal fields, medical leakage, Welfare/Finance separation, response protection, retained route and mobile structure.
+
+**LocalWP acceptance update (2026-08-14):** Manual acceptance is complete for assigned Coach, Manager and Assistant Coach architecture; exact assigned-Team authorization; cross-Team denial; Training Only isolation; Player Profile A; the Secretary current Medical & Safety workflow; the Coach read-only four-field projection; and an explicitly empty current state that does not resurrect Registration history. Registration lifecycle testing confirmed no current Medical & Safety content before the final `registered` transition, then seeded allergies and medication only; historical medical notes and emergency information did not seed, and an existing current row remained protected. The persisted Training Member Registration type remained authoritative through successful submission. Responsive acceptance passed at 600px, 390px and 360px. The Player Workspace response was verified with `Cache-Control: private, no-store, no-cache, must-revalidate, max-age=0`, `Pragma: no-cache` and `X-Robots-Tag: noindex, nofollow`. The final pre-commit audit found no functional MVP blocker. The accumulated batch remains pending intentional commit.
+
+**Current Operational Medical & Safety implementation update (2026-08-14):** Implementation and LocalWP manual acceptance are complete; intentional commit is still pending.
 
 ## Later pathways and communications
 

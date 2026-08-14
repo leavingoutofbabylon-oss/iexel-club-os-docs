@@ -14,7 +14,7 @@ This document remains the authoritative source for Club OS architecture.
 # Master Developer Guide
 
 **Version:** 1.0  
-**Last Verified:** 2026-08-13
+**Last Verified:** 2026-08-14
 **Applies To:** Operational MVP
 
 ---
@@ -59,16 +59,24 @@ Complete all remaining operational experiences before Release Readiness.
 - ✅ Training Membership Visibility & Secretary Management Batch 2C (source complete; pending manual acceptance)
 - ✅ Atomic Match Player → Training Only Transition Batch 2D-A + Match Event Ownership Repair (manual acceptance passed; pending commit)
 - ✅ Registered-only Training Only → Match Player Batch 2D-B1 + Training Player-role normalisation (accepted and merged)
-- ✅ Secretary-native Registration setup for Training Only Players Batch 2D-B2 (implementation complete; LocalWP happy-path manual acceptance passed; pending intentional commit/push/merge)
+- ✅ Secretary-native Registration setup for Training Only Players Batch 2D-B2 (final acceptance passed; merged on `main`)
+
+- ✅ Team Staff Operational Access Reconciliation (implementation and LocalWP manual acceptance complete; pending intentional commit)
+- ✅ Front-end Player Profile A — Security, Core Workspace and Current Operational Medical/Safety (implementation and LocalWP manual acceptance complete; pending intentional commit)
 
 ### Current Focus
 
-Batch 2D-B2 implementation is complete and the LocalWP happy path has passed manual acceptance. The Secretary Training Member detail resolves the canonical current-Season Person-linked Registration and presents state-based Start, Continue or View actions. Starting Registration reuses the existing Person, current active TrainingMembership Season, canonical Registration service and normal wizard; ordinary Training Members use `returning_player`, while reliable Prospect-origin membership uses `trialist_conversion`. Contradictory active records fail closed, terminal history is preserved, and repeated starts resume the existing episode. Registration creates no account, Team Assignment, Finance or Event eligibility. Once the existing lifecycle reaches `registered`, the workflow returns to the Training Member detail for the accepted Batch 2D-B1 Move to Match Player action. The accepted LocalWP flow retained the same Person, Registration, family links and Training Membership history through the competitive transition and produced one current Team Hub roster entry. The branch remains pending intentional commit, push and merge.
+Team Staff Operational Access Reconciliation and Player Profile A are implementation complete and have passed LocalWP manual acceptance; the accumulated batch remains pending intentional commit. The existing front-end Player Workspace at `/club-os/teams/{TEAM_ID}/players/{PERSON_ID}/` has been hardened and completed for Player Profile A. A linked active Coach, Manager or Assistant Coach must operate through the Coach experience, hold `iexel_manage_assigned_team`, and have exactly one active staff assignment on the exact active route Team and exact active current TeamSeason; a linked active Club Admin retains the established `iexel_manage_club_os` override. Ordinary Secretary remains on the Secretary Person Profile and Parent, Player, Treasurer, Welfare and Committee personas are not broadened.
+
+Player Profile A authorizes the complete actor/target/Team/current-Season context once and passes an immutable scope into one unified read model. The target must be an active Player with exactly one active Player assignment on that exact TeamSeason, so Training Only, former, inactive and registered-but-unassigned Players fail closed. The read-only profile shows minimum identity and assignment data without exact DOB, a minimal current-Season Registration status, known-youth guardian name/relationship/telephone, and the existing exact-Season `EmergencyContactService` projection.
+
+Current Operational Medical & Safety is now a dedicated non-Season Person-level singleton (`player_operational_medical_safety`), with at most one current row per canonical Person. Admin and active Secretary users with `iexel_manage_registrations` may replace or explicitly clear the four bounded current fields through the protected Secretary Person workflow. Authorized current-Team Coach, Manager and Assistant Coach users receive only those four current fields read-only through Player Profile A; no history, provenance, editor metadata, Welfare or Finance data is exposed. Registration remains immutable historical evidence. Only allergies and medication may be seeded prospectively on the first exact transition to `registered`, only when no current row exists; `medical_notes` and `emergency_information` are never seeded, existing Players receive no historical bulk backfill, and an explicit all-empty current row never resurrects Registration data. Emergency Contact remains the separate who-to-contact projection. Welfare, Finance and safeguarding cases remain separate domains. Secretary Person Profile, the Medical & Safety editor and Player Profile A use private/no-store/no-cache/noindex response protection, and activity events contain metadata and changed-field names only, never medical content. LocalWP acceptance confirmed the Secretary workflow, explicit empty current state, assigned-Team Coach read-only projection, cross-Team denial, Training Only isolation, and first seeding only at the final `registered` transition. It also confirmed allergies and medication seed without medical notes or emergency information, an existing current row is not overwritten, the persisted Training Member Registration type remains authoritative through successful submission, mobile layouts at 600px, 390px and 360px, and the intended private/no-store/no-cache/noindex response headers. Implementation and manual acceptance are complete; intentional commit is still pending.
 
 - Continue final role/workspace MVP gap auditing and release-readiness review against the Experience Review & Roadmap
 - Complete commit review for the accepted Prospect → Training Only Batch 2B
-- Complete LocalWP manual acceptance for source-complete Training Membership Batch 2C; complete commit review for accepted Batch 2D-A and Batch 2D-B2
+- Complete LocalWP manual acceptance for source-complete Training Membership Batch 2C; complete commit review for accepted Batch 2D-A
 - Keep historical-only Player Experience, Parent Preview policy and any Training self-service workspace separate
+- Complete intentional commit review for the accepted Player Profile A / Team Staff / Current Medical & Safety batch
 - Internal club MVP testing
 
 ### Next Milestones
