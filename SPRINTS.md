@@ -507,7 +507,7 @@ This document tracks the major development milestones of IEXEL Club OS. Complete
 
 # MVP Priority Alert Persona-Scoping Repair
 
-**Status (updated 2026-08-14):** Implementation, source validation and LocalWP manual acceptance complete; committed and pushed on `fix/mvp-priority-alert-persona-scoping`; pending merge to `main`.
+**Status (updated 2026-08-14):** Implementation, source validation and LocalWP manual acceptance complete; implementation merged to plugin `main`, acceptance documentation merged to docs `main`, and OS-032 formally complete and closed for MVP.
 
 **Goal:** Ensure every actionable Priority Alert is relevant to the active persona and has a destination that persona is authorised to use, without changing canonical notification delivery or recipient state.
 

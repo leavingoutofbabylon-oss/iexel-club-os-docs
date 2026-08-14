@@ -63,7 +63,7 @@ Complete all remaining operational experiences before Release Readiness.
 
 - ✅ Team Staff Operational Access Reconciliation (implementation and LocalWP manual acceptance complete; pending intentional commit)
 - ✅ Front-end Player Profile A — Security, Core Workspace and Current Operational Medical/Safety (implementation and LocalWP manual acceptance complete; pending intentional commit)
-- ✅ MVP Priority Alert persona scoping (implementation, source validation and LocalWP manual acceptance complete; committed and pushed on `fix/mvp-priority-alert-persona-scoping`; pending merge to `main`)
+- ✅ MVP Priority Alert persona scoping (implementation, source validation and LocalWP manual acceptance complete; implementation merged to plugin `main`, acceptance documentation merged to docs `main`, and OS-032 formally closed for MVP)
 
 ### Current Focus
 
@@ -78,7 +78,7 @@ Current Operational Medical & Safety is now a dedicated non-Season Person-level 
 - Complete commit review for accepted Batch 2D-A
 - Keep historical-only Player Experience, Parent Preview policy and any Training self-service workspace separate
 - Complete intentional commit review for the accepted Player Profile A / Team Staff / Current Medical & Safety batch
-- Complete merge review for the accepted MVP Priority Alert persona-scoping repair
+- OS-032 MVP Priority Alert persona-scoping repair is complete and closed for MVP
 - Internal club MVP testing
 
 ### Next Milestones
