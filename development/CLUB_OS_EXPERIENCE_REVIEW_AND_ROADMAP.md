@@ -88,7 +88,7 @@ Final focused evidence: Workspace Priority Alert scoping 109 checks; Committee p
 |---|---|---|---|---|---|
 | OS-001 | Committee | Duplicate Home and Club Overview navigation | Bug/UX | High | MVP |
 | OS-002 | Committee | Registration panel needs stronger operational metrics | UX | High | MVP |
-| OS-003 | Committee | Quick Actions should move near the top | UX | High | MVP |
+| OS-003 | Committee | Committee Quick Actions moved near the top; all five actions passed MVP acceptance | Resolved UX | Complete | MVP |
 | OS-004 | Committee | Create/edit/archive club events, communications and projects — delivered in Secretary Events, Communications & Command Centre | Resolved workflow | Complete | Sprint 30/32 |
 | OS-005 | Committee | Improve dashboard visual hierarchy — delivered in Secretary Command Centre & Portal Navigation | Visual | Complete | Sprint 30 |
 | OS-006 | Committee | Projects card feels isolated | Visual | Low | Post-MVP |
@@ -134,8 +134,51 @@ Final focused evidence: Workspace Priority Alert scoping 109 checks; Committee p
 - **Committee Workspace & Native Operations (complete):** Club OS-native management of club events, Club Projects CRUD, Committee Communications, Audience Builder v2, and live executive dashboard metrics are fully delivered (`Sprint 30`).
 - Keep the premium hero and core dashboard structure.
 - Use Club Overview as the sole landing tab.
-- Move Quick Actions directly below the hero or alerts.
+- **Committee Quick Actions (OS-003 — accepted):** All five Committee Quick Actions work and OS-003 remains PASS.
+- **Non-blocking MVP UX follow-up:** Review the current **Open Team Workspaces** wording and destination for the Committee persona. It correctly opens the shared Coach Team area and correctly shows **No assigned teams** when a Committee user has no Team assignment, so this is not a functional defect. Prefer clearer leadership-oriented wording such as **View Teams** or **Team Overview**, or a more suitable oversight destination. This follow-up does not create a new MVP implementation batch; release readiness remains the primary MVP priority.
 - Add richer registration metrics.
+
+#### Post-MVP concept — Committee / Executive Team Health Dashboard
+
+**Status:** Explicitly deferred until Post-MVP. This is a leadership and oversight experience for Committee/Admin users, not an operational Coach management experience and not an MVP release blocker.
+
+The Team Health Dashboard could provide a club-wide, read-mostly summary of Team health without sending oversight users into the Coach Team Workspace. Potential summary data includes:
+
+- Player count.
+- Coach and Manager count.
+- Squad capacity and vacancies.
+- Games played, wins, draws and losses.
+- Goals for and goals against.
+- Attendance rate.
+- Availability rate.
+- Current Registration/compliance completeness.
+
+Future high-level status labels could include **Healthy**, **Needs Attention** and **Critical**. Their semantics and thresholds remain intentionally undefined until a later authorised product and data-design phase.
+
+#### Post-MVP concept — Team Health Profile
+
+Selecting a Team from the Team Health Dashboard could open a richer leadership drill-down covering:
+
+- Squad composition and capacity.
+- Coaching coverage.
+- Match and results trends.
+- Attendance and availability trends.
+- Registration/compliance indicators.
+- Football performance summaries.
+- Alerts requiring Committee/Admin attention.
+
+Future authorised extensions may include Finance or sponsorship indicators only where the user's permissions allow. The profile must not expose sensitive Welfare information.
+
+The Team Health experience must remain a leadership oversight layer over canonical Club OS data. It must not replace the Coach Team Workspace, Welfare Workspace, Finance Workspace or Secretary operational Team administration. Any later implementation should:
+
+- Reuse canonical Team and TeamSeason data.
+- Reuse current active Team Assignment data.
+- Reuse canonical Statistics data.
+- Reuse Attendance and Availability data.
+- Remain role-aware and read-mostly for Committee users.
+- Avoid duplicating operational Team data or creating a second source of truth.
+- Preserve Coach workspace boundaries and Finance and Welfare permission boundaries.
+- Be mobile-friendly and allow later authorised drill-down.
 
 - **Welfare Experience Foundation (complete):** Role-aware safeguarding workspace, concern dashboard, concern directory, concern detail, status/priority lifecycle, optimistic revision control, activity timeline, and access isolation delivered (`Sprint 29`).
 - Keep the concern dashboard, concern directory, concern detail, medical overview and emergency contacts.
