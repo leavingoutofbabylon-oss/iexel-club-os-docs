@@ -31,7 +31,7 @@ Club OS has reached the stage where the core architecture is strong and the main
 
 ## MVP Priority Alert persona-scoping acceptance
 
-**Status (updated 2026-08-14):** Implementation, source validation and LocalWP manual acceptance are complete. The implementation is committed and pushed on `fix/mvp-priority-alert-persona-scoping` and remains pending merge to `main`.
+**Status (updated 2026-08-14):** Implementation, source validation and LocalWP manual acceptance are complete. The implementation is merged to plugin `main`, the acceptance documentation is merged to docs `main`, and OS-032 is formally complete and closed for MVP.
 
 ### Accepted MVP policy
 
@@ -108,7 +108,7 @@ Final focused evidence: Workspace Priority Alert scoping 109 checks; Committee p
 | OS-029 | Parent | Team Hub has blue-on-blue text | Accessibility | High | MVP |
 | OS-030 | Parent | Finance experience is too limited — Parent Family Finance workspace, invoice detail & payment history delivered | Resolved gap | Complete | Sprint 33 |
 | OS-031 | Notifications | Image attachments lack an in-app close/viewer experience | UX | Medium | MVP polish |
-| OS-032 | Global | Priority Alerts could expose work unrelated to the active persona — persona/capability scoping accepted; pending merge to `main` | Resolved security/UX | Complete | MVP |
+| OS-032 | Global | Priority Alerts could expose work unrelated to the active persona — persona/capability scoping accepted, merged to plugin `main`, and formally closed for MVP | Resolved security/UX | Complete | MVP |
 | FIN-027 | Treasurer | Invoices cannot be viewed, edited, cancelled, archived or voided properly — Treasurer invoice lifecycle delivered | Resolved gap | Complete | Sprint 33 |
 | FIN-028 | Treasurer | Blue-on-blue text on billing pages | Accessibility | High | MVP |
 | FIN-029 | Treasurer | Cannot create/edit/archive fee rules — Portal Fee Rules management delivered | Resolved gap | Complete | Sprint 33 |
