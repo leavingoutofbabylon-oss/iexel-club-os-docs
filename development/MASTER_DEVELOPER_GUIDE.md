@@ -56,7 +56,7 @@ Complete all remaining operational experiences before Release Readiness.
 - ✅ Committee Workspace & Native Operations (Club Projects CRUD, Communications, Audience Builder v2)
 - ✅ Prospect → Training Only Batch 2B (manual acceptance passed; pending commit)
 
-- ✅ Training Membership Visibility & Secretary Management Batch 2C (source complete; pending manual acceptance)
+- ✅ Training Membership Visibility & Secretary Management Batch 2C (implementation and LocalWP manual acceptance complete)
 - ✅ Atomic Match Player → Training Only Transition Batch 2D-A + Match Event Ownership Repair (manual acceptance passed; pending commit)
 - ✅ Registered-only Training Only → Match Player Batch 2D-B1 + Training Player-role normalisation (accepted and merged)
 - ✅ Secretary-native Registration setup for Training Only Players Batch 2D-B2 (final acceptance passed; merged on `main`)
@@ -74,7 +74,7 @@ Current Operational Medical & Safety is now a dedicated non-Season Person-level 
 
 - Continue final role/workspace MVP gap auditing and release-readiness review against the Experience Review & Roadmap
 - Complete commit review for the accepted Prospect → Training Only Batch 2B
-- Complete LocalWP manual acceptance for source-complete Training Membership Batch 2C; complete commit review for accepted Batch 2D-A
+- Complete commit review for accepted Batch 2D-A
 - Keep historical-only Player Experience, Parent Preview policy and any Training self-service workspace separate
 - Complete intentional commit review for the accepted Player Profile A / Team Staff / Current Medical & Safety batch
 - Internal club MVP testing
