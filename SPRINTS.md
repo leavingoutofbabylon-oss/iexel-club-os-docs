@@ -505,6 +505,44 @@ This document tracks the major development milestones of IEXEL Club OS. Complete
 
 ---
 
+# MVP Priority Alert Persona-Scoping Repair
+
+**Status (updated 2026-08-14):** Implementation, source validation and LocalWP manual acceptance complete; committed and pushed on `fix/mvp-priority-alert-persona-scoping`; pending merge to `main`.
+
+**Goal:** Ensure every actionable Priority Alert is relevant to the active persona and has a destination that persona is authorised to use, without changing canonical notification delivery or recipient state.
+
+### Delivered
+
+- Added recipient-aware, `MemberExperienceContext`-based workspace projection through `WorkspacePriorityAlertService`, with target authorization and final display limits applied after eligibility filtering.
+- Refined Committee operational alerts so ordinary Committee membership does not imply Treasurer, Secretary, Coach, Event/team attendance, Registration review or Welfare responsibility.
+- Added shared Finance warning ownership through `FinanceOperationalAlertsProvider`; Treasurer and authorised Committee contexts reuse one overdue-invoice calculation and the canonical `/club-os/finance/outstanding/` portal destination where authorised.
+- Preserved notification delivery, recipient generation, unread/read and acknowledgement state, Event and Welfare permissions, Secretary Command Centre Priority Actions and persona-native alerts. No schema, migration, CSS or JavaScript change was required.
+
+### LocalWP acceptance
+
+- Parent selected-child/all-children scoping, Player own-person relevance and Coach Team/current-TeamSeason scoping remain intact.
+- Welfare no longer receives guardian/Parent Event alerts merely because the same Person has both personas; Welfare permissions remain unchanged.
+- Louis Hall as ordinary Committee receives none of the unrelated Finance, Match Report, Event-response or Registration-review alerts and sees the correct smooth-running empty state.
+- Jess Test as Finance-authorised Committee receives the Finance warning, and its action opens the canonical Outstanding Accounts surface rather than reloading Committee.
+- Treasurer receives exactly one equivalent Finance warning for qualifying overdue invoices; Parent and Welfare receive none.
+- Secretary Command Centre Priority Actions remain the authoritative Secretary feed, and broad Club Admin capabilities remain narrowed by the active persona.
+
+### Validation
+
+- Workspace Priority Alert scoping: 109 checks passed.
+- Committee permissions: 90 passed.
+- Treasurer operational read access: 45 passed.
+- Treasurer Finance relationships: 250 passed.
+- Treasurer directory UX: 34 passed.
+- Parent Family Finance: 44 passed.
+- Secretary Command Centre: 95 passed.
+- Secretary Events: 108 passed.
+- Event action leakage: 27 passed.
+- Dashboard cancellations: 54 passed.
+- Committee Communications: 281 passed.
+
+The pre-existing Treasurer Finance configuration validator baseline mismatch concerning the expected rewrite/schema version remains open. It predates this repair and is not a regression caused by it.
+
 # Training Membership MVP Sequence
 
 ## 2B — Prospect → Training Only

@@ -29,6 +29,34 @@ Club OS has reached the stage where the core architecture is strong and the main
 - **Player:** Experience motivation, progress and belonging.
 - **Administrator:** Maintain and configure the Club OS platform, not perform every sensitive operational role.
 
+## MVP Priority Alert persona-scoping acceptance
+
+**Status (updated 2026-08-14):** Implementation, source validation and LocalWP manual acceptance are complete. The implementation is committed and pushed on `fix/mvp-priority-alert-persona-scoping` and remains pending merge to `main`.
+
+### Accepted MVP policy
+
+A Priority Alert shown in a workspace must represent something the **active persona** can legitimately understand and act upon. Canonical Person identity and Communication recipients remain shared, but each workspace applies persona relevance, capability checks and target authorization before rendering an alert. Committee membership alone does not imply Finance, Registration review, Match reporting, Event/team attendance or Welfare responsibility. Future read-only oversight belongs in Club Health, Team Health or governance reporting rather than as a misleading actionable Priority Alert.
+
+The accepted projection uses `WorkspacePriorityAlertService`, recipient-aware Communication candidate retrieval, `MemberExperienceContext` filtering and final display limiting only after eligibility checks. `FinanceOperationalAlertsProvider` owns one shared Finance warning calculation. Notification delivery, recipient generation, unread/read and acknowledgement state, Event and Welfare permissions, Secretary Command Centre Priority Actions and existing persona-native alerts are unchanged. No schema, migration, CSS or JavaScript change was required.
+
+### Accepted persona behaviour
+
+- **Parent:** Priority Alerts remain family/child relevant; authorised Parent Event notifications remain available; selected-child and all-children scoping is preserved; operational Finance warnings do not leak into Parent.
+- **Player:** Priority Alerts remain Player-relevant; unrelated Finance, Welfare, Secretary, Committee and Coach operational alerts are excluded.
+- **Coach:** Priority Alerts remain Team, Matchday and attendance focused and scoped to legitimate Coach operational context; unrelated Committee, Finance and Welfare alerts are excluded.
+- **Welfare:** Guardian Event notifications belonging to the same canonical Person do not appear while Viewing As Welfare. Welfare remains safeguarding-focused, Parent-only Event access remains restricted, and Welfare Event permissions were not broadened.
+- **Ordinary Committee:** LocalWP acceptance with Louis Hall confirmed that Finance warnings, Incomplete Match Reports, Events awaiting attendance responses and Registrations requiring review are absent. With no genuine Committee priority, the dashboard correctly reports “Everything is running smoothly.” Committee remains a governance/oversight persona rather than an implicit Treasurer, Secretary, Coach or Welfare super-role.
+- **Finance-authorised Committee:** LocalWP acceptance with Jess Test confirmed that the Finance warning appears when authorised, remains absent for ordinary Committee members and opens the canonical Outstanding Accounts surface instead of reloading Committee.
+- **Treasurer:** A qualifying overdue invoice produces exactly one canonical Finance warning. Its action and the existing View Outstanding Accounts Quick Action both use `/club-os/finance/outstanding/`. The operational warning does not leak into Parent or Welfare.
+- **Secretary:** Secretary Command Centre Priority Actions remain authoritative. No second generic Priority Alert feed was introduced and the existing Secretary workflow is unchanged.
+- **Club Admin and multi-role users:** Broad capabilities do not override an active narrow Parent, Welfare, Player or Coach persona. Broader operational alerts return only in an appropriately broad persona with an authorised destination.
+
+### Finance alert ownership and validation
+
+Finance warnings are primarily Finance/Treasurer operational alerts. They may also appear in an authorised Committee/Admin context when canonical Finance and destination access permit it. The overdue-invoice calculation is shared through `FinanceOperationalAlertsProvider` rather than duplicated, and the canonical portal destination is `/club-os/finance/outstanding/`.
+
+Final focused evidence: Workspace Priority Alert scoping 109 checks; Committee permissions 90; Treasurer operational read access 45; Treasurer Finance relationships 250; Treasurer directory UX 34; Parent Family Finance 44; Secretary Command Centre 95; Secretary Events 108; Event action leakage 27; Dashboard cancellations 54; Committee Communications 281. A pre-existing Treasurer Finance configuration validator baseline mismatch concerning the expected rewrite/schema version remains open. It predates this repair and is not resolved or caused by the Priority Alert work.
+
 ## MVP priorities
 
 - **Global:** Move Quick Actions directly below each workspace hero, using the Coach dashboard as the reference pattern.
@@ -80,6 +108,7 @@ Club OS has reached the stage where the core architecture is strong and the main
 | OS-029 | Parent | Team Hub has blue-on-blue text | Accessibility | High | MVP |
 | OS-030 | Parent | Finance experience is too limited — Parent Family Finance workspace, invoice detail & payment history delivered | Resolved gap | Complete | Sprint 33 |
 | OS-031 | Notifications | Image attachments lack an in-app close/viewer experience | UX | Medium | MVP polish |
+| OS-032 | Global | Priority Alerts could expose work unrelated to the active persona — persona/capability scoping accepted; pending merge to `main` | Resolved security/UX | Complete | MVP |
 | FIN-027 | Treasurer | Invoices cannot be viewed, edited, cancelled, archived or voided properly — Treasurer invoice lifecycle delivered | Resolved gap | Complete | Sprint 33 |
 | FIN-028 | Treasurer | Blue-on-blue text on billing pages | Accessibility | High | MVP |
 | FIN-029 | Treasurer | Cannot create/edit/archive fee rules — Portal Fee Rules management delivered | Resolved gap | Complete | Sprint 33 |
