@@ -1,6 +1,6 @@
 # Release Checklist
 
-**Last verified:** 2026-07-24
+**Last verified:** 2026-08-15
 
 ---
 
@@ -14,7 +14,7 @@
 - [ ] `IEXEL_CLUB_OS_DB_VERSION` constant is updated if schema changed
 - [ ] New upgrade steps are added to `UpgradeRunner` if schema changed
 - [ ] `CHANGELOG.md` is updated with all changes for this release
-- [ ] Release Readiness page passes on a clean test installation
+- [x] Release Readiness and clean-install verification pass on a clean test installation (verified on WP 7.0.4 / PHP 8.2.29 / MySQL 8.4; blocker repairs merged on `main`)
 - [ ] Release Readiness page passes on an upgraded test installation (from previous version)
 
 ---

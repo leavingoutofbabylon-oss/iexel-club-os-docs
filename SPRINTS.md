@@ -692,3 +692,38 @@ The existing front-end route `/club-os/teams/{TEAM_ID}/players/{PERSON_ID}/` is 
 - Taster/Trial invitations and Secretary communications to a Parent/Guardian or adult applicant are retained as post-MVP planning.
 - Configurable Secretary/reply-to email and eventual role-authorized IMAP/SMTP or equivalent mailbox integration remain post-MVP and are not MVP blockers.
 - Prospect conversion, Secretary direct creation and Match Player transition must all converge on the one canonical TrainingMembership domain.
+
+---
+
+# Release Candidate Gate 2C
+
+## RC Clean-Install Blocker Repair
+
+**Status:** Implementation, Gate 2C post-commit clean-install verification and pre-merge audit complete; merged to plugin `main` (`e3f115dce90a04f3812036334317f691ba367b42`).
+
+### Delivered
+
+1. **AI Activity / dbDelta Schema Reconciliation:**
+   - Corrected multiline `CREATE TABLE` DDL formatting in `CreateAIActivityTable.php` by removing intermediate blank lines misparsed by WordPress 7.0.4 `dbDelta`.
+   - Preserved persistent schema semantics, column types and exact 4 indexes (`PRIMARY`, `user_id`, `provider`, `created_at`) with zero schema/data version change and no migration required.
+   - Repeated schema reconciliation passes 2/2 cleanly with 0 warnings and 0 malformed SQL.
+
+2. **Member Experience Identity Boundary / Fail-Closed Enforcement:**
+   - Removed `synthetic_welfare_context` and confirmed the architectural invariant: *Administrative authority does not create member identity*.
+   - Unlinked WordPress administrators and users without an active linked `Person` fail closed cleanly with `MemberExperienceOperationResult::fail()`.
+   - Legitimate linked Welfare, Committee, Coach, Parent, Player, Secretary and Treasurer persona resolution and switching are preserved without capability broadening.
+
+3. **Public Prospect Intake Feedback & Route Inventory:**
+   - Moved feedback-cookie consumption to pre-output routing in `PublicProspectRouter.php`, eliminating headers-already-sent warnings during form rendering.
+   - Restored canonical 4-tuple element structure (`slug`, `title`, `capability`, `hidden = false`) for public prospect routes in `ReleaseRouteInventory::administrator()`.
+   - Verified valid PRG flow, one-time error notice rendering/clearing, thank-you confirmation, exactly 1 prospect creation and zero real emails sent.
+
+4. **Billing Scheduler Contract on Fresh Installation:**
+   - Confirmed canonical current source behavior: `iexel_club_os_process_billing_schedules = 0` on an empty site with no billing schedules.
+
+### Validation
+
+- Fresh-install baseline verified on WordPress 7.0.4 / PHP 8.2.29 / MySQL 8.4 with 48 owned tables, schema/data version `2026.08.6`, complete upgrade state (25/25 steps/results), 15 formations and 129 slots.
+- Lifecycle verified: deactivation PASS, reactivation PASS, repeated reconciliation 2/2 PASS, 0 dbDelta warnings, 0 malformed SQL, 0 duplicate hooks.
+- Identity & routes verified: unlinked admin fail-closed PASS, linked personas PASS, public enquiry flow PASS, 12/12 admin pages smoke PASS, 166 Kernel accessors PASS.
+- Upgrade matrix validation (Environment 2) remains the pending RC gate.

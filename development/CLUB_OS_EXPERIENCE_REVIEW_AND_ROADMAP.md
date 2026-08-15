@@ -74,6 +74,36 @@ The full safely executable non-mutating release gate passed 68/68. Five controll
 
 Post-MVP scope remains explicit: real Weather integration, Rewards, Achievements/XP, Travel Time, richer Matchday Notes, broader audit completeness and dormant placeholder cleanup are not MVP release blockers.
 
+## RC Clean-Install Blocker Repair acceptance
+
+**Status (updated 2026-08-15):** Implementation, Gate 2C post-commit clean-install verification and pre-merge audit complete. Merged to plugin `main` at commit `e3f115dce90a04f3812036334317f691ba367b42`.
+
+### Clean-install findings and blocker resolutions
+
+A true fresh-install Release Candidate test on WordPress 7.0.4, PHP 8.2.29 and MySQL 8.4 established the clean-baseline foundation (48 Club OS-owned tables, schema/data version `2026.08.6`, complete upgrade status across 25/25 steps/results, 15 system formations and 129 slots) and resolved three genuine release-candidate blockers:
+
+1. **AI Activity / dbDelta Schema Reconciliation (Blocker 1):**
+   - **Defect:** Repeated schema reconciliation under WordPress 7.0.4 exposed a dbDelta parsing defect caused by intermediate blank lines inside `CreateAIActivityTable.php` multiline `CREATE TABLE` DDL. This produced `dbDelta` undefined-index warnings and malformed empty-index `ALTER TABLE` SQL.
+   - **Repair:** DDL formatting was corrected without changing persistent schema semantics. Schema and data versions remain `2026.08.6`, no migration is required, and the 4 canonical indexes (`PRIMARY`, `user_id`, `provider`, `created_at`) remain intact. Repeated reconciliation passes 2/2 cleanly with 0 warnings and 0 malformed SQL.
+
+2. **Member Experience Identity Boundary / Fail-Closed Enforcement (Blocker 2):**
+   - **Defect:** An unlinked WordPress administrator with no canonical Club OS Person record previously resolved to a synthetic Welfare member experience with `person_id = 0`. This violated the core identity model.
+   - **Repair:** Confirmed the canonical invariant: **Administrative authority does not create member identity**. Removed `synthetic_welfare_context` and synthetic identity fallback. Users without an active linked `Person` fail closed with `MemberExperienceOperationResult::fail()`. Legitimate linked Welfare, Committee, Coach, Parent, Player, Secretary and Treasurer persona resolution and switching are preserved, with zero capability broadening.
+
+3. **Public Prospect Intake Feedback & Route Inventory (Blocker 3):**
+   - **Defect:** Public prospect feedback-cookie consumption occurred inside `PublicProspectIntakePage::render_form()` after HTML output started, triggering headers-already-sent warnings. Additionally, public prospect route inventory rows had an incomplete tuple shape lacking the 4th boolean parameter.
+   - **Repair:** Feedback-cookie consumption was moved to pre-output routing in `PublicProspectRouter.php`, ensuring zero header mutation during rendering. Public route inventory rows in `ReleaseRouteInventory::administrator()` were updated to the canonical 4-tuple element structure (`slug`, `title`, `capability`, `hidden = false`).
+   - **Result:** Public enquiry GET returns HTTP 200, invalid submissions perform clean PRG redirect with one-time error notice rendering/clearing, valid submissions complete thank-you flow creating exactly 1 prospect record, zero duplicate records, zero header warnings, zero route inventory warnings and zero real emails sent.
+
+4. **Billing Scheduler Contract on Clean Installation:**
+   - On an empty installation with no billing schedules, `iexel_club_os_process_billing_schedules = 0`. This is the intentional canonical source behavior; zero billing hooks on an empty site is not a defect, and the scheduler contract was not altered.
+
+### Validation & Release Candidate Status
+
+- **Post-Commit Clean-Install Gate (Gate 2C):** Verified on a fresh WordPress 7.0.4 baseline copied with an exact deterministic 976-file SHA-256 manifest. Confirmed 48 tables, schema/data version `2026.08.6`, upgrade complete (25/25 steps/results), 15 formations, 129 slots, zero business fixtures, clean deactivation/reactivation, 2/2 repeated schema reconciliation passes, 0 dbDelta warnings, 0 malformed SQL, 0 duplicate hooks, and all identity/prospect flows.
+- **Automated Validation:** Focused validators passed 3/3 (`validate-committee-permissions.php` 95 checks, `validate-event-lifecycle-participant-projections.php` 257 checks, `validate-public-prospect-intake-security.php` 124 checks). Full non-mutating validator gate passed 68/68. The previously accepted evidence that all 5 controlled mutating validators passed 5/5 is fully preserved. PHP lint passed 8/8.
+- **Merge & Current Status:** Merged to plugin `main` (`e3f115dce90a04f3812036334317f691ba367b42`). The clean-install blocker repair is formally complete. The upgrade-matrix validation (Environment 2) remains the pending RC gate. Post-MVP items remain deferred.
+
 ## MVP priorities
 
 - **Global:** Move Quick Actions directly below each workspace hero, using the Coach dashboard as the reference pattern.
