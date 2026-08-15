@@ -14,7 +14,7 @@ This document remains the authoritative source for Club OS architecture.
 # Master Developer Guide
 
 **Version:** 1.0  
-**Last Verified:** 2026-08-14
+**Last Verified:** 2026-08-15
 **Applies To:** Operational MVP
 
 ---
@@ -37,7 +37,7 @@ Every contributor should read this guide before making architectural or implemen
 
 ### Current Priority
 
-Complete all remaining operational experiences before Release Readiness.
+Complete the accepted MVP release-readiness integrity merge and prepare the release candidate.
 
 ### Recently Completed
 
@@ -64,8 +64,13 @@ Complete all remaining operational experiences before Release Readiness.
 - ✅ Team Staff Operational Access Reconciliation (implementation and LocalWP manual acceptance complete; pending intentional commit)
 - ✅ Front-end Player Profile A — Security, Core Workspace and Current Operational Medical/Safety (implementation and LocalWP manual acceptance complete; pending intentional commit)
 - ✅ MVP Priority Alert persona scoping (implementation, source validation and LocalWP manual acceptance complete; implementation merged to plugin `main`, acceptance documentation merged to docs `main`, and OS-032 formally closed for MVP)
+- ✅ MVP Release Readiness Integrity Batches 1, 2, 2.5 and 3 (implementation, validation and LocalWP manual acceptance complete; committed and pushed to plugin feature branch; merge to plugin `main` pending)
 
 ### Current Focus
+
+The MVP Release Readiness Integrity sequence is accepted. Batch 1 removed synthetic Weather from active MVP presentation and Match Readiness, leaving genuine preparation criteria able to reach 100% / Match Ready; dormant Weather integration remains Post-MVP. Batch 2 removed the accepted visible MVP placeholder and dead-action surfaces while retaining genuine Player Progress, Player-of-the-Match/statistics, Availability, Audience and valid ID-bound Person/Team routes; unknown authenticated generic portal routes now fail closed to HTTP 404 / Page not found. Batch 2.5 removed the remaining misleading legacy Admin Welfare Concern placeholder cards while retaining genuine concern data, authorised workflows, canonical portal detail, Timeline and Activity History with authorization and sensitive response protection unchanged. Batch 3 corrected the runtime release policy: overall Ready requires zero unresolved risks where `required = true`; `required` is the deterministic blocking switch, severity is classification/urgency, Critical is canonical, and every required Critical risk blocks release. Implementation, validation and LocalWP acceptance are complete and the four batches are committed and pushed on `fix/mvp-release-readiness-integrity`; merge to plugin `main` remains pending.
+
+The required release-risk inventory covers plugin activation, portal boot registration, authentication boundary, duplicate administrator routes, duplicate portal routes, duplicate scheduled hooks, missing database tables, Kernel service resolution, schema upgrade/lifecycle integrity, destructive-delete integrity, communication attachment validation and scheduled-hook deactivation cleanup. LocalWP Release Readiness showed Ready with zero required open risks (Blocker 0, Critical 0, High 0, Medium 4, Low 1, Informational 2), and controlled lifecycle evidence passed. `medium.audit-coverage-inconsistent` remains visible, non-required Post-MVP/P2 completeness debt concerning broader ActivityLogger/timeline coverage across some administrative domains; security-critical Welfare, Communications, Finance and Match audit boundaries are not downgraded. `medium.placeholder-experiences` also remains visible and non-required because active audited MVP exposure is resolved while dormant/deferred Post-MVP scaffolding remains.
 
 Team Staff Operational Access Reconciliation and Player Profile A are implementation complete and have passed LocalWP manual acceptance; the accumulated batch remains pending intentional commit. The existing front-end Player Workspace at `/club-os/teams/{TEAM_ID}/players/{PERSON_ID}/` has been hardened and completed for Player Profile A. A linked active Coach, Manager or Assistant Coach must operate through the Coach experience, hold `iexel_manage_assigned_team`, and have exactly one active staff assignment on the exact active route Team and exact active current TeamSeason; a linked active Club Admin retains the established `iexel_manage_club_os` override. Ordinary Secretary remains on the Secretary Person Profile and Parent, Player, Treasurer, Welfare and Committee personas are not broadened.
 

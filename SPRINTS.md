@@ -543,6 +543,46 @@ This document tracks the major development milestones of IEXEL Club OS. Complete
 
 The pre-existing Treasurer Finance configuration validator baseline mismatch concerning the expected rewrite/schema version remains open. It predates this repair and is not a regression caused by it.
 
+# MVP Release Readiness Integrity
+
+**Status (2026-08-15):** Batches 1, 2, 2.5 and 3 are implementation complete, validation complete and LocalWP manually accepted. All four are committed and pushed on plugin feature branch `fix/mvp-release-readiness-integrity`; merge to plugin `main` remains pending.
+
+## Batch 1 — Weather / Match Readiness Integrity
+
+- Removed synthetic Weather from active MVP Event Detail, Team Events, Matchday Hub, Match Mode, Match Report and Event Hub presentation where applicable.
+- Removed Weather as a Match Readiness criterion and next action. Genuine readiness criteria now determine status, and genuinely complete preparation reaches 100% / Match Ready.
+- Weather was not implemented; dormant Weather integration scaffolding remains Post-MVP.
+- LocalWP acceptance, the 110-check focused validator and the full 68/68 non-mutating release gate passed.
+
+## Batch 2 — Visible MVP Placeholder Cleanup
+
+- Removed accepted active MVP placeholders/dead actions for Player and Parent-preview Achievements, Matchday Travel Time and future Notes, Event Hub Rewards and stale Availability, synthetic/fixed-zero Event status or response presentation where applicable, Registration photo upload, generic Admin Person/Team Profile entries, legacy Person/Team Coming Soon cards and the generic authenticated “Page coming soon” fallback.
+- Preserved genuine Player Progress, Player-of-the-Match/statistics, Availability, Audience and valid ID-bound Person/Team Profile routes. Unknown authenticated generic portal routes fail closed to HTTP 404 / Page not found.
+- LocalWP acceptance passed; the focused validator evolved to 169 checks and the full non-mutating gate remained 68/68.
+
+## Batch 2.5 — Welfare Placeholder Repair
+
+- Removed Timeline, Notes, Attachments, Communications, Activity History and misleading Next Steps placeholder cards from the active legacy Admin Welfare Concern detail while retaining its genuine authorised read value.
+- Preserved genuine concern data, status/priority/Welfare Officer assignment workflows, canonical portal Welfare detail, real portal Timeline and Activity History. Welfare authorization, sensitive response protection and unauthorized-access denial remain unchanged.
+- Deferred Notes, Attachments and concern Communications were not implemented.
+- LocalWP acceptance, the 193-check focused validator and the 68/68 non-mutating release gate passed.
+
+## Batch 3 — Release Readiness Policy / Integrity
+
+- Corrected the canonical policy: overall Ready requires zero unresolved risks with `required = true`. `required` is the deterministic blocking switch; severity classifies urgency and does not decide whether a required risk blocks.
+- Corrected the prior Blocker/High/Medium-only defect that omitted Critical and could theoretically allow a required Critical risk alongside Ready. Critical is canonical and required Critical risks block release.
+- Required categories: plugin activation; portal boot registration; authentication boundary; duplicate administrator routes; duplicate portal routes; duplicate scheduled hooks; missing database tables; Kernel service resolution; schema upgrade/lifecycle integrity; destructive-delete integrity; communication attachment validation; scheduled-hook deactivation cleanup.
+- The focused validator passed 244 checks.
+
+### LocalWP acceptance and release evidence
+
+- Release Readiness showed Ready; required open risks 0; Blocker 0; Critical 0; High 0; Medium 4; Low 1; Informational 2. Controlled lifecycle evidence showed Pass.
+- `medium.audit-coverage-inconsistent` showed **Required before 1.0: No**. It remains visible Post-MVP/P2 completeness debt for broader ActivityLogger/timeline coverage across some administrative domains; security-critical Welfare, Communications, Finance and Match audit boundaries were not removed or downgraded.
+- `medium.placeholder-experiences` showed **Required before 1.0: No**. Active audited MVP placeholder exposure is resolved, but dormant/deferred Post-MVP scaffolding remains. The inventory distinguishes those two states.
+- The full safely executable non-mutating release gate passed 68/68.
+- Five controlled integration/mutating validators were excluded, not failed: `validate-parent-autosave-preservation.php`, `validate-parent-card-info-request.php`, `validate-person-first-team-assignment-routing.php`, `validate-secretary-registration-approval.php`, `validate-secretary-registration-lifecycle.php`.
+- Real Weather integration, Rewards, Achievements/XP, Travel Time, richer Matchday Notes, broader audit completeness and dormant placeholder cleanup remain Post-MVP.
+
 # Training Membership MVP Sequence
 
 ## 2B — Prospect → Training Only
