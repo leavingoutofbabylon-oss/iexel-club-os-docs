@@ -545,7 +545,7 @@ The pre-existing Treasurer Finance configuration validator baseline mismatch con
 
 # MVP Release Readiness Integrity
 
-**Status (2026-08-15):** Batches 1, 2, 2.5 and 3 are implementation complete, validation complete and LocalWP manually accepted. All four are committed and pushed on plugin feature branch `fix/mvp-release-readiness-integrity`; merge to plugin `main` remains pending.
+**Status (2026-08-15):** Batches 1, 2, 2.5 and 3 are implementation complete, source validation complete and LocalWP manually accepted. The plugin implementation is merged to plugin `main`, the documentation reconciliation is merged to docs `main`, and the MVP Release Readiness Integrity workstream is formally complete.
 
 ## Batch 1 — Weather / Match Readiness Integrity
 

@@ -59,7 +59,7 @@ Final focused evidence: Workspace Priority Alert scoping 109 checks; Committee p
 
 ## MVP Release Readiness Integrity acceptance
 
-**Status (updated 2026-08-15):** Batches 1, 2, 2.5 and 3 are implementation complete, validation complete and LocalWP manually accepted. They are committed and pushed on plugin feature branch `fix/mvp-release-readiness-integrity`; merge to plugin `main` is still pending.
+**Status (updated 2026-08-15):** Batches 1, 2, 2.5 and 3 are implementation complete, source validation complete and LocalWP manually accepted. The plugin implementation is merged to plugin `main`, the documentation reconciliation is merged to docs `main`, and the MVP Release Readiness Integrity workstream is formally complete.
 
 - **Batch 1 — Weather / Match Readiness Integrity:** Synthetic Weather was removed from active MVP Event Detail, Team Events, Matchday Hub, Match Mode, Match Report and Event Hub presentation where applicable, and Weather is no longer a readiness criterion or next action. Genuine preparation criteria determine readiness and a genuinely complete preparation reaches 100% / Match Ready. Weather was not implemented; dormant Weather integration scaffolding remains Post-MVP. LocalWP acceptance and the 110-check focused validator passed.
 - **Batch 2 — Visible MVP Placeholder Cleanup:** Removed the accepted Player and Parent-preview Achievements placeholders, Matchday Travel Time and future Notes placeholders, Event Hub Rewards dead actions and stale Availability placeholder, synthetic/fixed-zero Event status or response presentation where applicable, Registration photo-upload placeholder, generic Admin Person/Team Profile menu entries, legacy Person/Team Coming Soon cards and the authenticated generic “Page coming soon” route fallback. Genuine Player Progress, Player-of-the-Match/statistics, Availability, Audience and ID-bound Person/Team routes remain; unknown authenticated generic portal routes now fail closed to HTTP 404 / Page not found. LocalWP acceptance passed and the focused validator reached 169 checks.
@@ -126,7 +126,7 @@ Post-MVP scope remains explicit: real Weather integration, Rewards, Achievements
 | OS-030 | Parent | Finance experience is too limited — Parent Family Finance workspace, invoice detail & payment history delivered | Resolved gap | Complete | Sprint 33 |
 | OS-031 | Notifications | Image attachments lack an in-app close/viewer experience | UX | Medium | MVP polish |
 | OS-032 | Global | Priority Alerts could expose work unrelated to the active persona — persona/capability scoping accepted, merged to plugin `main`, and formally closed for MVP | Resolved security/UX | Complete | MVP |
-| RR-001 | Release Readiness | Integrity Batches 1, 2, 2.5 and 3 accepted; feature branch committed and pushed, plugin `main` merge pending | Resolved release integrity | Accepted / merge pending | MVP |
+| RR-001 | Release Readiness | Integrity Batches 1, 2, 2.5 and 3 implemented, validated and accepted; plugin implementation and documentation reconciliation merged to their respective `main` branches | Resolved release integrity | Complete | MVP |
 | FIN-027 | Treasurer | Invoices cannot be viewed, edited, cancelled, archived or voided properly — Treasurer invoice lifecycle delivered | Resolved gap | Complete | Sprint 33 |
 | FIN-028 | Treasurer | Blue-on-blue text on billing pages | Accessibility | High | MVP |
 | FIN-029 | Treasurer | Cannot create/edit/archive fee rules — Portal Fee Rules management delivered | Resolved gap | Complete | Sprint 33 |
