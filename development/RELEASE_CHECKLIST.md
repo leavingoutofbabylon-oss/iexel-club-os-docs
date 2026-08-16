@@ -15,7 +15,7 @@
 - [ ] New upgrade steps are added to `UpgradeRunner` if schema changed
 - [ ] `CHANGELOG.md` is updated with all changes for this release
 - [x] Release Readiness and clean-install verification pass on a clean test installation (verified on WP 7.0.4 / PHP 8.2.29 / MySQL 8.4; blocker repairs merged on `main`)
-- [ ] Release Readiness page passes on an upgraded test installation (from previous version)
+- [x] Release Readiness and controlled upgrade matrix pass on upgraded test installations across all canonical baselines (Rows 1–4 and Interruption/Resume verified on WP 7.0.4 / PHP 8.2.29 / MySQL 8.4; Environment 2 PASSED)
 
 ---
 

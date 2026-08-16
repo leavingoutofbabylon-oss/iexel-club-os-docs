@@ -37,7 +37,7 @@ Every contributor should read this guide before making architectural or implemen
 
 ### Current Priority
 
-Execute the MVP release candidate validation plan (clean-install blocker repairs merged; upgrade matrix validation pending).
+Progress from completed RC validation environments (Environment 1 Clean Install and Environment 2 Controlled Upgrade Matrix verified and accepted) to Internal Club Testing and final Release Readiness sign-off.
 
 ### Recently Completed
 
@@ -65,17 +65,16 @@ Execute the MVP release candidate validation plan (clean-install blocker repairs
 - ✅ Front-end Player Profile A — Security, Core Workspace and Current Operational Medical/Safety (implementation and LocalWP manual acceptance complete; pending intentional commit)
 - ✅ MVP Priority Alert persona scoping (implementation, source validation and LocalWP manual acceptance complete; implementation merged to plugin `main`, acceptance documentation merged to docs `main`, and OS-032 formally closed for MVP)
 - ✅ MVP Release Readiness Integrity Batches 1, 2, 2.5 and 3 (implementation, source validation and LocalWP manual acceptance complete; plugin implementation merged to plugin `main`, documentation reconciliation merged to docs `main`, and the workstream formally complete)
-- ✅ RC Clean-Install Blocker Repair (Gate 2C post-commit verification and pre-merge audit complete; merged on plugin `main` at `e3f115dce90a04f3812036334317f691ba367b42`)
+- ✅ RC Clean-Install Blocker Repair Gate 2C (post-commit verification and pre-merge audit complete; merged on plugin `main` at `e3f115dce90a04f3812036334317f691ba367b42`)
+- ✅ RC Controlled Upgrade Matrix Gate 2 (Environment 2 verified across Rows 1–4 and Interruption/Resume; full-registry reconciliation architecture confirmed and accepted)
 
 ### Current Focus
 
-The RC Clean-Install Blocker Repair is formally complete and merged to plugin `main` (`e3f115dce90a04f3812036334317f691ba367b42`). A true fresh-install Release Candidate test on WordPress 7.0.4, PHP 8.2.29 and MySQL 8.4 established the clean-baseline foundation (48 Club OS-owned tables, schema/data version `2026.08.6`, complete upgrade state across 25/25 steps/results, 15 system formations and 129 slots) and resolved three genuine release-candidate blockers:
-1. **AI Activity / dbDelta Reconciliation:** Fixed multiline `CREATE TABLE` DDL formatting in `CreateAIActivityTable.php` by removing intermediate blank lines misparsed by WordPress 7.0.4 `dbDelta`. Schema and data versions remain `2026.08.6`, no migration is required, and repeated schema reconciliation passes 2/2 cleanly with 0 warnings and 0 malformed SQL.
-2. **Member Experience Identity Boundary / Fail-Closed Enforcement:** Removed `synthetic_welfare_context` and confirmed the architectural invariant: **Administrative authority does not create member identity**. Unlinked WordPress administrators and users without an active linked `Person` fail closed cleanly with `MemberExperienceOperationResult::fail()`. Linked Welfare, Committee, Coach, Parent, Player, Secretary and Treasurer persona resolution and switching are preserved with zero capability broadening.
-3. **Public Prospect Intake Feedback & Route Inventory:** Moved feedback-cookie consumption to pre-output routing in `PublicProspectRouter.php`, eliminating headers-already-sent warnings during form rendering. Restored the canonical 4-tuple element structure (`slug`, `title`, `capability`, `hidden = false`) for public prospect routes in `ReleaseRouteInventory::administrator()`.
-4. **Billing Scheduler Contract on Clean Installation:** Confirmed that `iexel_club_os_process_billing_schedules = 0` on an empty site with no billing schedules is the canonical current source behavior and not a defect.
+Both Release Candidate test environments are verified and accepted:
+1. **Environment 1 (Clean Installation):** Verified on WordPress 7.0.4 / PHP 8.2.29 / MySQL 8.4; establishes the clean baseline (48 Club OS-owned tables, schema/data version `2026.08.6`, complete upgrade state across 25/25 steps/results, 15 formations and 129 slots), with AI activity dbDelta reconciliation, unlinked administrator fail-closed identity boundary (*Administrative authority does not create member identity*), pre-output public prospect feedback routing, and canonical empty-site billing scheduler behavior.
+2. **Environment 2 (Controlled Upgrade Matrix):** Full-registry idempotent reconciliation pipeline validated across all 4 canonical baselines (`2026.07.1`, `2026.08.2`, `2026.08.5`, `2026.08.6`) plus controlled failure interruption/resume. All 25 registered `UpgradeStep` contracts evaluated in sequence, with safe no-op evaluation on fulfilled invariants (`ran = false`) and transactional application on unfulfilled invariants (`ran = true`). Team references normalized to `TM-%06d`, role capabilities reconciled, business data preserved 100%, and unlinked admins fail closed across all baselines.
 
-Post-commit Gate 2C verification proved the deterministic 976-file manifest, clean deactivation/reactivation, 2/2 reconciliation passes, unlinked admin fail-closed, public prospect PRG and feedback flow, 3/3 focused validators, 68/68 full non-mutating validator gate, 8/8 PHP lint, and clean logs. The previously accepted evidence that all 5 controlled mutating validators passed 5/5 is fully preserved. The next major RC task is Environment 2 upgrade-matrix validation. Post-MVP scope remains deferred.
+The next major milestone is Internal Club Testing followed by formal Release Readiness sign-off. Post-MVP scope remains deferred.
 
 ### Next Milestones
 

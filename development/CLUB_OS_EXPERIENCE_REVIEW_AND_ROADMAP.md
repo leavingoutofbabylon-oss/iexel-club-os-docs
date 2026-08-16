@@ -102,7 +102,37 @@ A true fresh-install Release Candidate test on WordPress 7.0.4, PHP 8.2.29 and M
 
 - **Post-Commit Clean-Install Gate (Gate 2C):** Verified on a fresh WordPress 7.0.4 baseline copied with an exact deterministic 976-file SHA-256 manifest. Confirmed 48 tables, schema/data version `2026.08.6`, upgrade complete (25/25 steps/results), 15 formations, 129 slots, zero business fixtures, clean deactivation/reactivation, 2/2 repeated schema reconciliation passes, 0 dbDelta warnings, 0 malformed SQL, 0 duplicate hooks, and all identity/prospect flows.
 - **Automated Validation:** Focused validators passed 3/3 (`validate-committee-permissions.php` 95 checks, `validate-event-lifecycle-participant-projections.php` 257 checks, `validate-public-prospect-intake-security.php` 124 checks). Full non-mutating validator gate passed 68/68. The previously accepted evidence that all 5 controlled mutating validators passed 5/5 is fully preserved. PHP lint passed 8/8.
-- **Merge & Current Status:** Merged to plugin `main` (`e3f115dce90a04f3812036334317f691ba367b42`). The clean-install blocker repair is formally complete. The upgrade-matrix validation (Environment 2) remains the pending RC gate. Post-MVP items remain deferred.
+- **Merge & Status:** Merged to plugin `main` (`e3f115dce90a04f3812036334317f691ba367b42`). Clean-install blocker repairs are formally complete.
+
+## RC Controlled Upgrade Matrix Gate 2 acceptance
+
+**Status (updated 2026-08-16):** Execution, architecture audit and formal acceptance complete.
+
+### UpgradeRunner Reconciliation Architecture
+
+`UpgradeRunner` was confirmed as a **full-registry idempotent reconciliation pipeline**:
+- For any non-current baseline (`2026.07.1`, `2026.08.2`, `2026.08.5`), all 25 registered `UpgradeStep` contracts are evaluated sequentially.
+- Each step checks its `is_valid()` predicate first: satisfied invariants execute as safe no-op checks (`ran = false`), while unfulfilled invariants execute `apply()` (`ran = true`) inside a database transaction and revalidate.
+- Persisted `completed_steps` records all verified/satisfied invariants across the registry.
+- `schema_version` and `data_version` do not filter the registry, and steps do not define from-version ranges.
+- The pre-execution 18/9/2 assumption was a theoretical estimate of newly introduced migrations, not `UpgradeRunner` execution semantics.
+- An already-current installation (`2026.08.6` with all 25 valid invariants) immediately returns `already_current` with 0 steps executed.
+
+### Matrix Execution Evidence
+
+1. **Row 1 (`906960b` / `2026.07.1` -> `2026.08.6`):** 41 -> 48 tables, 25 steps (18 mutating, 7 no-op) in 2.0803s. Normalized team reference to `TM-000001`, backfilled Secretary capabilities. **PASS**.
+2. **Row 2 (`ddb784e` / `2026.08.2` -> `2026.08.6`):** 44 -> 48 tables, 25 steps (10 mutating, 15 no-op) in 1.4483s. Reconciled Coach team management capability. **PASS**.
+3. **Row 3 (`0d62f56` / `2026.08.5` -> `2026.08.6`):** 47 -> 48 tables, 25 steps (3 mutating, 22 no-op) in 1.3500s. Reconciled Manager capability, backfilled Training participant player role. **PASS**.
+4. **Row 4 (`e3f115d` / `2026.08.6` -> `2026.08.6` - Idempotence):** 48 tables, `code: already_current`, 0 steps executed in 0.3523s, 0 mutations. **PASS**.
+
+### Interruption, Identity & Safety Guarantees
+
+- **Controlled Interruption & Resume:** Simulated failure at step `2026_07_welfare_concerns`; verified `failed` status, non-ready blocking notice, smooth resumption to `complete` with `retry_count = 1`, and lock release. Harness/state simulation only; production plugin source was untouched.
+- **Identity Invariant:** *Administrative authority does not create member identity*. Unlinked administrators fail closed across all upgraded baselines without synthetic `person_id = 0` personas.
+- **Safety Audits:** Zero duplicate data, zero destructive reapplication, zero capability regression, zero event/match historical corruption, and zero formation/reference duplication.
+- **Environment Isolation:** Executed entirely on disposable RC database (`127.0.0.1:10010`); development database (`127.0.0.1:10005`) and plugin source remained untouched.
+
+Both Environment 1 (Clean Installation) and Environment 2 (Controlled Upgrade Matrix) have passed. Next milestone: Internal Club Testing.
 
 ## MVP priorities
 

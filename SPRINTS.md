@@ -726,4 +726,37 @@ The existing front-end route `/club-os/teams/{TEAM_ID}/players/{PERSON_ID}/` is 
 - Fresh-install baseline verified on WordPress 7.0.4 / PHP 8.2.29 / MySQL 8.4 with 48 owned tables, schema/data version `2026.08.6`, complete upgrade state (25/25 steps/results), 15 formations and 129 slots.
 - Lifecycle verified: deactivation PASS, reactivation PASS, repeated reconciliation 2/2 PASS, 0 dbDelta warnings, 0 malformed SQL, 0 duplicate hooks.
 - Identity & routes verified: unlinked admin fail-closed PASS, linked personas PASS, public enquiry flow PASS, 12/12 admin pages smoke PASS, 166 Kernel accessors PASS.
-- Upgrade matrix validation (Environment 2) remains the pending RC gate.
+- Controlled Upgrade Matrix (Environment 2) passed across all 4 canonical baselines plus controlled interruption/resume scenario.
+
+---
+
+# Release Candidate Gate 2
+
+## RC Environment 2 — Controlled Upgrade Matrix Execution
+
+**Status:** Implementation, full 4-row matrix execution, controlled interruption test, architecture audit and formal acceptance complete.
+
+### Delivered & Verified
+
+1. **Full-Registry Idempotent Reconciliation Architecture:**
+   - Proved that `UpgradeRunner` evaluates all 25 registered `UpgradeStep` contracts sequentially on non-current databases without version slicing.
+   - Verified that `is_valid()` precedes each step: steps already satisfied execute as safe, non-mutating checks (`ran = false`), while unfulfilled invariants execute `apply()` (`ran = true`) inside a transaction and revalidate.
+   - Corrected previous pre-execution theoretical assumption of 18/9/2 applicable steps: `completed_steps` accurately reflects all verified invariants in the registry.
+   - Current installations (`2026.08.6` with all 25 valid invariants) return `already_current` with 0 steps executed.
+
+2. **Controlled Matrix Execution (Rows 1–4):**
+   - **Row 1 (`906960b` / `2026.07.1` -> `2026.08.6`):** 41 -> 48 tables, 25 steps (18 mutating, 7 no-op) in 2.0803s. Secretary capabilities and team references normalized to `TM-000001`. **PASS**.
+   - **Row 2 (`ddb784e` / `2026.08.2` -> `2026.08.6`):** 44 -> 48 tables, 25 steps (10 mutating, 15 no-op) in 1.4483s. Coach team management capability reconciled. **PASS**.
+   - **Row 3 (`0d62f56` / `2026.08.5` -> `2026.08.6`):** 47 -> 48 tables, 25 steps (3 mutating, 22 no-op) in 1.3500s. Manager capabilities reconciled, Training participant player role backfilled. **PASS**.
+   - **Row 4 (`e3f115d` / `2026.08.6` -> `2026.08.6` - Idempotence):** 48 tables, `code: already_current`, 0 steps executed in 0.3523s, 0 mutations. **PASS**.
+
+3. **Controlled Interruption & Resume Verification:**
+   - Injected interrupted failure state at step `2026_07_welfare_concerns`.
+   - Verified `UpgradeStatus::current()->state` reported `failed` and `ready = false` with blocking notice.
+   - Resumed `UpgradeRunner->run()`; completed remaining steps to `complete` with `retry_count = 1` and lock released.
+   - Confirmed harness/database-state simulation only with zero production source modification.
+
+4. **Safety & Data Integrity Guarantees:**
+   - Zero duplicate data, zero destructive reapplication, zero capability regression, zero event/match corruption, and zero formation/reference duplication.
+   - Verified *Administrative authority does not create member identity*: unlinked administrators fail closed across all upgraded baselines.
+   - Isolated disposable database (`127.0.0.1:10010`) used exclusively; development database (`127.0.0.1:10005`) and plugin source remained untouched.
