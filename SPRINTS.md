@@ -23,6 +23,9 @@ This document tracks the major development milestones of IEXEL Club OS. Complete
 | 30 | Secretary Command Centre & Operations | ✅ Complete |
 | 31 | Parent Experience Scoping & Multi-Child RSVP | ✅ Complete |
 | 32 | Secretary Operations, Person-First Team Assignments & Auto Team-Season Resolution | ✅ Complete |
+| 33 | Treasurer Finance, Invoices & Fee Rules Management | ✅ Complete |
+| RC | Release Candidate Verification (Clean Install Gate 2C & Upgrade Matrix Gate 2) | ✅ Complete |
+| Internal | MVP Internal Club Testing: SEC-001 through SEC-008 & Event Suite Alignment | ✅ Complete |
 
 ---
 
@@ -760,3 +763,38 @@ The existing front-end route `/club-os/teams/{TEAM_ID}/players/{PERSON_ID}/` is 
    - Zero duplicate data, zero destructive reapplication, zero capability regression, zero event/match corruption, and zero formation/reference duplication.
    - Verified *Administrative authority does not create member identity*: unlinked administrators fail closed across all upgraded baselines.
    - Isolated disposable database (`127.0.0.1:10010`) used exclusively; development database (`127.0.0.1:10005`) and plugin source remained untouched.
+
+---
+
+# MVP Internal Club Testing
+
+## SEC-008 — Coach Team Event Scope Hardening & Football Event-Type Alignment
+
+**Status:** Implementation complete, automated validation complete, LocalWP browser acceptance complete, committed and pushed (`2370551`).
+
+**Goal:** Align Coach/Manager team event creation and editing with canonical `EventAudiencePolicy`, restricting Coach events strictly to valid football event types (`Training`, `Fixture`, `Friendly`, `Tournament`), preserving full event edit fidelity, repairing Matchday Hub match location display, and keeping Secretary flexible club event workflows intact.
+
+### Delivered & Verified
+
+1. **Coach Event Builder Scope Hardening:**
+   - Restricted `TeamEventForm::event_types()` to the four canonical football event types: `Training`, `Fixture`, `Friendly`, and `Tournament`. Other generic event types are unavailable in the Coach workflow.
+   - Enforced server-side validation rejecting any unauthorized Coach attempts to create non-football events.
+   - Secretary retains the broader canonical event model across all seven event types (`Training`, `Match / Fixture`, `Friendly`, `Tournament`, `Meeting`, `Social`, `Other`) with flexible audience targeting.
+
+2. **Contextual Football Field Behaviour:**
+   - **Training:** Presents clean session-only fields (Title, Date, Start/End Time, Venue, Team Audience). Match-specific fields (Opponent, Competition, Home/Away/Neutral selector) are hidden.
+   - **Important Product Owner Decision:** Optional **Meet / Arrive Time remains supported for Training**. This is intentional and supersedes older statements; grassroots clubs legitimately ask players to arrive before training commences.
+   - **Fixture:** Fully supports Opponent Name, Competition, Home/Away/Neutral Match Location radio controls, Meet / Arrive Time, Kick-off Time, End Time, existing Club Venue or one-off venue with structured address/postcode, team audience, and Event Hub/Team Events projections.
+   - **Friendly:** Retains full match-specific behaviour with explicit Friendly labelling in Team Events.
+   - **Tournament:** Represents the overall tournament event cleanly without single-match Opponent/Competition fields or Home/Away selectors, supporting Start/End times, optional Meet / Arrive, venue, and team audience.
+
+3. **Edit Fidelity & Matchday Hub Location Presentation Repair:**
+   - Verified 100% round-trip edit preservation of event type, opponent, competition, match location, venue/address/postcode, date, meet time, kick-off, end time, status, and audience.
+   - Discovered and repaired a Matchday Hub presentation defect where the `MATCH LOCATION` card rendered blank despite canonical `home_away` data persisting accurately in `wp_iexel_os_event_match_details`.
+   - Root cause: `MatchdayHeroCard::render()` referenced an undefined `$match_location` variable.
+   - Fixed by deriving display state from canonical `match_details['home_away']` with fallback to `event['home_away']` and default `'Home'`.
+   - Verified Home, Away, and Neutral rendering states; Event 227 browser acceptance confirmed `MATCH LOCATION → Away`.
+   - Automated validation: focused validator `tools/validate-coach-fixture-builder-match-details.php` passed **68/68 assertions**; master regression passed **25/25 suites**.
+
+4. **Secretary Regression Protection:**
+   - Verified that Secretary retains the full flexible event suite. Created a real Secretary Meeting with whole-club/no-team scope, Committee Members audience, and 3 invited participants without leakage of Coach restrictions.

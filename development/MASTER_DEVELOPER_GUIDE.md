@@ -67,6 +67,7 @@ Progress from completed RC validation environments (Environment 1 Clean Install 
 - ✅ MVP Release Readiness Integrity Batches 1, 2, 2.5 and 3 (implementation, source validation and LocalWP manual acceptance complete; plugin implementation merged to plugin `main`, documentation reconciliation merged to docs `main`, and the workstream formally complete)
 - ✅ RC Clean-Install Blocker Repair Gate 2C (post-commit verification and pre-merge audit complete; merged on plugin `main` at `e3f115dce90a04f3812036334317f691ba367b42`)
 - ✅ RC Controlled Upgrade Matrix Gate 2 (Environment 2 verified across Rows 1–4 and Interruption/Resume; full-registry reconciliation architecture confirmed and accepted)
+- ✅ MVP Internal Club Testing: SEC-001 (Canonical Team Season Provisioning), SEC-002 (Grassroots Play-Up Eligibility), SEC-004/005 (Meet Time Unification), SEC-006 (Committee Event Routing), SEC-007A/B/C (Event Audience Policy, Flexible Builder & Privacy-Safe RSVP), and SEC-008 (Coach Football Event Scope Hardening, Training Meet Time Policy & Matchday Hub Location Repair `2370551`)
 
 ### Current Focus
 

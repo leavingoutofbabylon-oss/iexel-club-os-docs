@@ -136,71 +136,75 @@ Both Environment 1 (Clean Installation) and Environment 2 (Controlled Upgrade Ma
 
 ## MVP priorities
 
-- **Global:** Move Quick Actions directly below each workspace hero, using the Coach dashboard as the reference pattern.
-- **Global:** Fix blue-on-blue and other low-contrast text through shared design tokens.
-- **Global:** Standardise displayed dates to DD-MM-YYYY or DD/MM/YYYY consistently across Club OS.
-- **Committee:** Remove duplicate Home / Club Overview navigation.
-- **Committee:** Improve registration summary metrics with total registrations, registered this month, awaiting approval and outstanding actions.
-- **Committee:** Provide operational create/edit/archive flows for club events, communications and projects because committee users cannot use wp-admin.
-- **Coach — complete:** Capture opponent, competition and match location during match-event creation.
-- **Coach — complete:** Show authorised emergency contacts in Matchday Hub.
-- **Coach:** Open Directions in a new tab without replacing Club OS.
-- **Coach — complete:** Allow bench/substitute selection in Lineup Builder and persist it into Matchday Hub and substitution controls.
-- **Parent — complete:** Fix selected-child context so an U8 child cannot see an U7 next event, and deliver Parent All-Children event identity + multi-child RSVP.
-- **Parent:** Improve Team Hub text contrast.
-- **Parent — complete:** Fix selected-child context so an U8 child cannot see an U7 next event, and deliver Parent All-Children event identity + multi-child RSVP.
-- **Parent:** Improve Team Hub text contrast.
-- **Parent — complete:** Provide a real Finance page with invoice detail and payment history — delivered in Parent Family Finance & Invoice Detail.
-- **Notifications:** Improve attachment/image viewing so users can close and return without relying on the browser Back button.
-- **Treasurer — complete:** Provide invoice view/edit/cancel/archive or void actions and a proper invoice detail route — delivered in Treasurer Finance MVP.
-- **Treasurer — complete:** Allow Treasurer role to manage fee rules and discount policies inside Club OS — delivered in Treasurer Fee Rules & Discount Policies management.
-- **Player:** Create a real My Stats page based on the coach player-statistics experience, limited to the logged-in player.
-- **Player:** Expand My Season with progress, form, attendance, milestones and next achievement.
-- **Player:** Add a lightweight pre-MVP engagement feature such as weekly challenges or personal targets.
-- **Admin:** Reorganise the Club OS sidebar into grouped sections and hide route-only detail pages.
+- **Global — complete:** Move Quick Actions directly below each workspace hero across all persona dashboards via `PortalDashboardLayout`.
+- **Global:** Fix blue-on-blue and other low-contrast text through shared design tokens (OS-029, FIN-028, PL-024).
+- **Global — complete:** Standardise displayed dates to DD/MM/YYYY and HH:mm consistently across Club OS via `DisplayDate` service (OS-027).
+- **Committee — complete:** Remove duplicate Home / Club Overview navigation — Club Overview is the sole landing tab (OS-001).
+- **Committee:** Registration summary metrics — executive Club Health overview delivered; operational registration review queues intentionally owned by Secretary Command Centre per OS-032 governance policy (OS-002).
+- **Committee — complete:** Provide operational create/edit/archive flows for club events, communications and projects because committee users cannot use wp-admin (OS-004).
+- **Coach — complete:** Capture opponent, competition and match location during match-event creation (OS-016).
+- **Coach — complete:** Show authorised emergency contacts in Matchday Hub (OS-017).
+- **Coach — complete:** Open Directions in a new tab without replacing Club OS via `target="_blank"` / `rel="noopener"` (OS-018).
+- **Coach — complete:** Priority alerts dominance and scoping — resolved in `WorkspacePriorityAlertService` (OS-020).
+- **Coach — complete:** Allow bench/substitute selection in Lineup Builder and persist it into Matchday Hub and substitution controls (OS-025).
+- **Coach — complete:** Coach Team Event Scope Hardening & Football Event-Type Alignment (SEC-008) — restricted to Training, Fixture, Friendly, Tournament; Meet / Arrive Time intentionally supported for Training; Matchday Hub Match Location display repaired (`2370551`).
+- **Parent — complete:** Fix selected-child context so an U8 child cannot see an U7 next event, and deliver Parent All-Children event identity + multi-child RSVP (OS-028).
+- **Parent:** Improve Team Hub text contrast (OS-029).
+- **Parent — complete:** Provide a real Finance page with invoice detail and payment history — delivered in Parent Family Finance & Invoice Detail (OS-030).
+- **Notifications:** Improve attachment/image viewing so users can close and return without relying on the browser Back button (OS-031 — Post-MVP).
+- **Treasurer — complete:** Provide invoice view/edit/cancel/archive or void actions and a proper invoice detail route — delivered in Treasurer Finance MVP (FIN-027).
+- **Treasurer — complete:** Allow Treasurer role to manage fee rules and discount policies inside Club OS — delivered in Treasurer Fee Rules & Discount Policies management (FIN-029, FIN-030).
+- **Treasurer:** Fix blue-on-blue text on billing pages (FIN-028).
+- **Treasurer:** Fix static summary text showing caret as though editable (FIN-031).
+- **Player — complete:** Create a real My Stats page based on the coach player-statistics experience, limited to the logged-in player (PL-022) — delivered in Batch IN3F16-PL1C at `/club-os/player/stats/`.
+- **Player — complete:** Expand My Season with progress, attendance, milestones and next achievement (PL-021) — delivered in Batch IN3F17-PL2B2.
+- **Player — complete:** Move Quick Actions near the top (PL-023) — delivered in `PortalDashboardLayout`.
+- **Player:** Fix blue-on-blue text (PL-024).
+- **Admin:** Reorganise the Club OS sidebar into grouped sections and hide route-only detail pages (ADM-001 / ADM-002 / ADM-003 — Recommended Next Implementation Batch).
 
 ## Consolidated review log
 
 | ID | Area | Finding | Type | Priority | Release |
 |---|---|---|---|---|---|
-| OS-001 | Committee | Duplicate Home and Club Overview navigation | Bug/UX | High | MVP |
-| OS-002 | Committee | Registration panel needs stronger operational metrics | UX | High | MVP |
+| OS-001 | Committee | Duplicate Home and Club Overview navigation — resolved; Club Overview is sole landing tab | Resolved UX | Complete | MVP |
+| OS-002 | Committee | Registration panel operational metrics — executive Club Health overview delivered; operational queues intentionally owned by Secretary Command Centre per OS-032 | UX | Low | Post-MVP |
 | OS-003 | Committee | Committee Quick Actions moved near the top; all five actions passed MVP acceptance | Resolved UX | Complete | MVP |
 | OS-004 | Committee | Create/edit/archive club events, communications and projects — delivered in Secretary Events, Communications & Command Centre | Resolved workflow | Complete | Sprint 30/32 |
 | OS-005 | Committee | Improve dashboard visual hierarchy — delivered in Secretary Command Centre & Portal Navigation | Visual | Complete | Sprint 30 |
 | OS-006 | Committee | Projects card feels isolated | Visual | Low | Post-MVP |
-| OS-008 | Welfare | Quick Actions should move near the top | UX | High | MVP |
+| OS-008 | Welfare | Quick Actions moved directly below hero across all persona dashboards | Resolved UX | Complete | MVP |
 | OS-009 | Welfare | Add edit/archive lifecycle for concerns; deletion heavily restricted | Workflow | Medium | Post-MVP |
 | OS-010 | Welfare | Expand into broader compliance workspace | Future feature | Medium | Post-MVP |
 | OS-011 | Welfare | Strengthen concern detail hierarchy | Visual/UX | Medium | Polish |
 | OS-012 | Welfare | Make directory filters more compact | Visual | Low | Post-MVP |
 | OS-016 | Coach | Capture match configuration during event creation — delivered in Portal Event Builder & Secretary Events Management | Resolved gap | Complete | Sprint 30 |
 | OS-017 | Coach | Emergency contacts missing from Matchday Hub — exact-season authorised projection delivered | Resolved gap | Complete | MVP Experience Polish |
-| OS-018 | Coach | Directions opens in same browser tab | Bug | High | MVP |
-| OS-019 | Coach | Some pages use different visual language | Consistency | Medium | Polish |
-| OS-020 | Coach | Priority alerts dominate dashboard | UX | Medium | Polish |
+| OS-018 | Coach | Directions opens in same browser tab — resolved with `target="_blank"` / `rel="noopener"` across Matchday and Event venue cards | Resolved bug | Complete | MVP |
+| OS-019 | Coach | Some pages use different visual language — dark immersive matchday/team styling is intentional and should not trigger homogenisation | Visual | Low | Post-MVP |
+| OS-020 | Coach | Priority alerts dominate dashboard — persona scoping, capping and filtering delivered in `WorkspacePriorityAlertService` | Resolved UX | Complete | MVP |
 | OS-025 | Coach | Bench players could not be selected or shown in Matchday Hub — saved substitute flow delivered | Resolved bug | Complete | MVP Experience Polish |
-| OS-027 | Parent | Dates displayed in ISO format | Consistency | Medium | MVP |
+| OS-027 | Parent | Dates displayed in ISO format — standardised to DD/MM/YYYY and HH:mm via `DisplayDate` Batches 1 & 2 | Resolved consistency | Complete | MVP |
 | OS-028 | Parent | Selected child sees event from wrong team — selected-child event scoping, Player Preview, and Parent All-Children multi-child RSVP delivered | Resolved bug | Complete | Sprint 31 |
 | OS-029 | Parent | Team Hub has blue-on-blue text | Accessibility | High | MVP |
 | OS-030 | Parent | Finance experience is too limited — Parent Family Finance workspace, invoice detail & payment history delivered | Resolved gap | Complete | Sprint 33 |
-| OS-031 | Notifications | Image attachments lack an in-app close/viewer experience | UX | Medium | MVP polish |
+| OS-031 | Notifications | Image attachments lack an in-app close/viewer experience — direct link downloads are functional for MVP; lightbox viewer deferred | UX | Low | Post-MVP |
 | OS-032 | Global | Priority Alerts could expose work unrelated to the active persona — persona/capability scoping accepted, merged to plugin `main`, and formally closed for MVP | Resolved security/UX | Complete | MVP |
+| SEC-008 | Coach | Coach Team Event Scope Hardening & Football Event-Type Alignment — restricted to Training, Fixture, Friendly, Tournament; Meet/Arrive supported for Training; Matchday Hub Match Location repair delivered (`2370551`) | Resolved gap | Complete | MVP |
 | RR-001 | Release Readiness | Integrity Batches 1, 2, 2.5 and 3 implemented, validated and accepted; plugin implementation and documentation reconciliation merged to their respective `main` branches | Resolved release integrity | Complete | MVP |
 | FIN-027 | Treasurer | Invoices cannot be viewed, edited, cancelled, archived or voided properly — Treasurer invoice lifecycle delivered | Resolved gap | Complete | Sprint 33 |
 | FIN-028 | Treasurer | Blue-on-blue text on billing pages | Accessibility | High | MVP |
 | FIN-029 | Treasurer | Cannot create/edit/archive fee rules — Portal Fee Rules management delivered | Resolved gap | Complete | Sprint 33 |
 | FIN-030 | Treasurer | Cannot create/edit/archive discount policies — Portal Discount Policies management delivered | Resolved gap | Complete | Sprint 33 |
 | FIN-031 | Treasurer | Text shows caret as though editable | Visual bug | Low | MVP polish |
-| PL-021 | Player | My Season has too much unused space and weak engagement | UX | High | MVP |
-| PL-022 | Player | My Stats is only a minimal dashboard section | Missing experience | Critical | MVP |
-| PL-023 | Player | Quick Actions should move near the top | UX | High | MVP |
+| PL-021 | Player | My Season has too much unused space and weak engagement — delivered with Season Journey, Milestones, Attendance rate, Next Milestone target in Batch IN3F17-PL2B2 | Resolved UX | Complete | MVP |
+| PL-022 | Player | My Stats is only a minimal dashboard section — dedicated standalone experience with Appearances, Goals, Assists, POTM, Attendance, Clean Sheets, safeguarding delivered in Batch IN3F16-PL1C | Resolved gap | Complete | MVP |
+| PL-023 | Player | Quick Actions moved directly below hero across all persona dashboards | Resolved UX | Complete | MVP |
 | PL-024 | Player | Blue-on-blue text | Accessibility | High | MVP |
-| ADM-001 | Admin | Sidebar navigation is too long | UX | High | MVP |
+| ADM-001 | Admin | Sidebar navigation is too long — over 30 items in wp-admin sidebar | UX | High | MVP |
 | ADM-002 | Admin | Route-only pages appear as sidebar destinations | UX | High | MVP |
 | ADM-003 | Admin | Operational dashboards appear in admin navigation | UX/Architecture | Medium | MVP polish |
 | ADM-004 | Admin | Long-term sensitive-role approval workflow | Security/Governance | High | Post-MVP |
-| SET-001 | Settings | Current page is primarily a Brand Studio, not a full Settings area | Information architecture | High | MVP |
+| SET-001 | Settings | Current page is primarily a Brand Studio, not a full Settings area — modular settings evolution deferred to Post-MVP | Information architecture | Medium | Post-MVP |
 | SET-002 | Settings | Add image positioning, zoom and focal-point controls | Visual tool | Medium | Post-MVP |
 | SET-003 | Settings | Create separate Club, System and Experience Settings areas | Information architecture | High | Post-MVP |
 | SET-004 | Settings | Add club-profile defaults: Grassroots, Academy, Semi-Pro, Professional and Custom | Platform feature | High | Post-MVP |
@@ -267,8 +271,9 @@ The Team Health experience must remain a leadership oversight layer over canonic
 ### Coach Workspace
 
 - Preserve the Matchday Hub, Team Workspace, statistics and lineup builder design.
-- Emergency-contact projection and bench selection are complete; match setup during event creation and external directions remain open.
-- Use the Coach dashboard as the reference pattern for Quick Actions placement.
+- **Coach Event Setup & Scope Hardening (SEC-008 — complete):** Coach team event creation is restricted to the four football event types `Training`, `Fixture`, `Friendly` and `Tournament`. Other generic event types are unavailable in the Coach workflow. Secretary retains the broader canonical event model. Meet / Arrive Time is intentionally supported for Training.
+- **Matchday Hub Location & External Directions (complete):** Emergency-contact projection, bench/substitute selection, external Directions (`target="_blank"` / `rel="noopener"` via PR #123), and Match Location hero card derivation (`2370551`) are fully delivered and verified.
+- Use the Coach dashboard as the reference pattern for Quick Actions placement (delivered across all persona dashboards).
 - Do not redesign the immersive dark team and match workspaces merely to make every page identical.
 
 ### Front-end Player Profile Workspace — Player Profile A
@@ -293,7 +298,7 @@ The Team Health experience must remain a leadership oversight layer over canonic
 - Keep dashboard, registrations, events and announcements.
 - **Selected-Child & All-Children Event Scoping (complete):** Parent selected-child scoping (OS-028), Player Preview scoping, and All-Children event child identity (avatars/initials, per-child status) with independent multi-child RSVP on Event Detail are fully delivered.
 - **Parent Family Finance (complete):** Family Finance workspace, invoice detail experience, child attribution, and payment allocation history are fully delivered.
-- Improve notification attachments with an in-app viewer/lightbox.
+- Improve notification attachments with an in-app viewer/lightbox (Post-MVP).
 - Post-MVP, evolve communications into richer posts, galleries, match reports and generated club content.
 
 ### Treasurer Workspace
@@ -305,9 +310,9 @@ The Team Health experience must remain a leadership oversight layer over canonic
 ### Player Workspace
 
 - Reframe the workspace around motivation, progress, achievement and belonging.
-- Create a full My Stats experience based on coach-visible player statistics.
-- Expand My Season with attendance, form, progress bars, milestones and next achievement.
-- Add lightweight challenges or competitions before MVP where feasible.
+- **Player My Stats (PL-022 — complete):** Dedicated standalone `/club-os/player/stats/` page delivered in Batch IN3F16-PL1C with Appearances, Goals, Assists, Player of the Match, Attendance rate, Clean Sheets (GK), Season Story, and Recent Match Contributions, backed by child-safe privacy rules (excluding negative labels, match ratings, and starts/substitute breakdowns).
+- **Player My Season Journey & Milestones (PL-021 — complete):** Expanded `PlayerMySeasonCard` delivered in Batch IN3F17-PL2B2 with Season Journey progress, completed milestone badges, dynamic Next Milestone targets, and attendance rate context.
+- **Player Quick Actions (PL-023 — complete):** Rendered directly below the hero card via `PortalDashboardLayout`.
 - Post-MVP, add rewards, XP, coach pointers, league tables, development journeys and team challenges.
 - **Player Communications & Safeguarding Roadmap:**
   - Player Messages / Club News is part of the intended Player Experience; activation is gated by safeguarding controls.
@@ -321,16 +326,19 @@ The Team Health experience must remain a leadership oversight layer over canonic
 ### Admin Experience
 
 - Keep admin focused on platform maintenance, system configuration and canonical records.
-- Group sidebar navigation into Dashboard, People, Football, Seasons, Registrations, Finance, Communications, Welfare and System.
-- Hide Person Profile, Team Profile and other route-only pages from the sidebar.
-- Post-MVP, separate WordPress administrator power from automatic access to sensitive operational data.
+- **Admin Navigation Consolidation (ADM-001 / ADM-002 / ADM-003 — Recommended Next Implementation Batch):**
+  - Reorganise the 30+ item wp-admin sidebar into clean logical sections (Platform, People, Football, Seasons, Registrations, Finance, Communications, Welfare, System).
+  - Assign `null` parent slugs to route-only action and detail pages (e.g. `Add Season`, `New Registration`, `Add Club Project`) so they remain accessible via in-page workflows without cluttering the sidebar.
+  - Remove operational portal dashboard duplicates (e.g. `Committee Dashboard`) from wp-admin navigation.
+  - Preserve portal/admin boundaries with zero schema or database changes.
+- Post-MVP, separate WordPress administrator power from automatic access to sensitive operational data (ADM-004).
 
 ### Settings and Brand Studio
 
-- Rename or separate the current visual page as Brand Studio.
-- Create separate Club Settings, System Settings and Experience Settings over time.
-- Post-MVP, add image movement, crop, zoom and focal-point controls.
-- Add club-profile defaults for Grassroots, Academy, Semi-Professional, Professional and Custom.
+- Rename or separate the current visual page as Brand Studio (SET-001).
+- Create separate Club Settings, System Settings and Experience Settings over time (SET-003).
+- Post-MVP, add image movement, crop, zoom and focal-point controls (SET-002).
+- Add club-profile defaults for Grassroots, Academy, Semi-Professional, Professional and Custom (SET-004).
 
 ### Training Membership pathway roadmap
 
@@ -354,6 +362,75 @@ Training Membership is the one canonical representation of Training Only partici
 The three Training Only entry paths—Prospect conversion, Secretary direct creation and an existing Match Player transition—must converge on the same TrainingMembership service/domain. Training Only is not a mandatory step before Match Player: a later bounded pathway may invite a Prospect directly into competitive registration and assignment.
 
 Post-MVP planning retains Taster/Trial invitations, Secretary communications to the Prospect contact, configurable Secretary/reply-to addressing and eventual role-authorized club mailbox integration. These communication capabilities are not Operational MVP blockers and must continue to reuse the channel-neutral Communications architecture.
+
+## Newly confirmed product follow-ups
+
+### Venue & Address Finder / Recent Grounds
+
+**Status:** Future Product Candidate / Post-MVP Enhancement.
+
+**Product Objective:** Make event and fixture creation significantly more convenient for club volunteers.
+
+The intended experience is similar in convenience to Spond-style place/address search:
+- As the user types a venue or ground address, Club OS offers structured real-place suggestions.
+- Selecting a result automatically populates structured fields: Venue Name, Address, and Postcode.
+- Manual text entry must always remain first-class and fully functional.
+
+#### Recent and Frequently Used Venues
+The design supports convenient reuse of:
+- Recent Venues
+- Frequently Used Grounds
+- Repeat opposition/away grounds
+
+**Architectural Principle:** Do *not* automatically promote every temporary or away ground into the canonical Club Venue directory. Maintain a clear distinction between:
+1. **Club Venues:** Formally managed, reusable home/training/club facilities in `wp_iexel_os_venues`.
+2. **Recent / Frequently Used Event Venues:** Lightweight convenience history for one-off, away, and neutral match locations.
+
+#### Architecture Direction
+Future implementation should use a reusable place-search provider boundary (`VenueSearchProvider` interface) rather than tightly coupling Event forms to a single mapping vendor:
+- Provider abstraction for place lookups and geocoding.
+- Structured result mapping into canonical event venue fields.
+- Privacy and data minimisation for typed queries sent to external APIs.
+- Graceful offline/network-failure fallback where manual entry remains seamlessly available.
+- No maps provider is selected or integrated in MVP.
+
+### Events Card Consistency
+
+**Status:** Candidate UX Follow-up.
+
+During browser acceptance, Product Owner review noted that the **Team Events** cards have a stronger, more polished Club OS visual identity than the generic `/club-os/events/` cards.
+- Future UX work will evaluate adapting the established Team Events visual language (midnight-blue card treatment, gold/yellow accent hierarchy, football-specific badges, and clear operational hierarchy) onto the general Events page.
+- Avoid blindly duplicating every football-specific field, as the general Events page serves club-wide non-football events (Meetings, Socials) as well.
+- Prefer reusable component architecture over creating ad-hoc card variations.
+
+### Venue Control Presentation
+
+**Status:** Candidate UX Polish.
+
+The Event Builder venue-selection radio and control presentation appeared visually basic during SEC-008 browser acceptance. This will be addressed as bounded visual polish unless a formal accessibility audit identifies a genuine compliance blocker.
+
+### Training Meet / Arrive Time Policy
+
+**Status:** Confirmed Product Decision.
+
+Optional **Meet / Arrive Time is intentionally supported for Training** events. This supersedes any earlier handover statement suggesting Meet / Arrive Time should be hidden for training sessions. Grassroots clubs routinely require players to arrive before training commences for preparation, warmup, or administrative checks.
+
+## Product principles
+
+1. **Volunteer Administrative Efficiency:** Club OS must reduce repetitive administrative effort for club volunteers while preserving explicit user control.
+2. **Purpose-Built Football Convenience:** Convenience features such as venue search, structured autofill, and recent ground reuse are commercially valuable because they make routine football administration fast and effortless, helping the product feel purpose-built for grassroots football rather than like generic management software.
+3. **Canonical Identity & Boundaries:** Administrative authority never creates member identity; operational queues belong to their respective role workspaces (e.g. Secretary Command Centre owns registration review; Committee retains executive oversight).
+
+## Recommended next implementation batch
+
+### ADM-001 / ADM-002 / ADM-003 — Admin Sidebar Navigation Consolidation & Route Cleanup
+
+**Recommended Priority:** High / MVP
+**Scope:**
+- Consolidate the 30+ item wp-admin sidebar into clean, logical grouped sections (Platform, People, Football, Seasons, Registrations, Finance, Communications, Welfare, System).
+- Assign `null` parent slugs to route-only action and detail pages (`Add Season`, `New Registration`, `Add Club Project`, etc.) so they remain accessible via in-page buttons and direct URLs without cluttering the sidebar navigation.
+- Remove operational portal dashboard duplicates (e.g. `Committee Dashboard`) from wp-admin navigation (portal remains canonical home).
+- Pure UI/routing refactor in `AdminUI.php` and `ReleaseRouteInventory.php` with zero database, schema, migration, or portal-routing risk.
 
 ## Future club profiles
 
