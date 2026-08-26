@@ -156,7 +156,7 @@ Both Environment 1 (Clean Installation) and Environment 2 (Controlled Upgrade Ma
 - **Treasurer — complete:** Provide invoice view/edit/cancel/archive or void actions and a proper invoice detail route — delivered in Treasurer Finance MVP (FIN-027).
 - **Treasurer — complete:** Allow Treasurer role to manage fee rules and discount policies inside Club OS — delivered in Treasurer Fee Rules & Discount Policies management (FIN-029, FIN-030).
 - **Treasurer — complete:** Fix blue-on-blue text on billing pages (FIN-028) — resolved by the systemic dark-surface contrast treatment, commit `34cd5d4`, 2026-08-21; billing schedule cards, billing schedule metadata and finance invoice links now use appropriate on-dark foreground tokens.
-- **Treasurer:** Fix static summary text showing caret as though editable (FIN-031). Low priority; not yet re-verified against current source — remains open pending a small source-first check.
+- **Treasurer:** Fix static summary text showing caret as though editable (FIN-031). Low priority. A read-only source audit (2026-08-26) could not reproduce this in current Finance/Treasurer source — no static summary currently uses `cursor: text` or another confirmed input-like affordance, and the Treasurer/Finance surface has been substantially rebuilt since this finding was originally recorded. No specific fix commit was identified either. **Not marked complete** — this is not confirmed fixed, only not currently reproducible. Implementation must not proceed without a fresh Product Owner reproduction/screenshot.
 - **Player — complete:** Create a real My Stats page based on the coach player-statistics experience, limited to the logged-in player (PL-022) — delivered in Batch IN3F16-PL1C at `/club-os/player/stats/`.
 - **Player — complete:** Expand My Season with progress, attendance, milestones and next achievement (PL-021) — delivered in Batch IN3F17-PL2B2.
 - **Player — complete:** Move Quick Actions near the top (PL-023) — delivered in `PortalDashboardLayout`.
@@ -176,7 +176,7 @@ Both Environment 1 (Clean Installation) and Environment 2 (Controlled Upgrade Ma
 | OS-008 | Welfare | Quick Actions moved directly below hero across all persona dashboards | Resolved UX | Complete | MVP |
 | OS-009 | Welfare | Add edit/archive lifecycle for concerns; deletion heavily restricted | Workflow | Medium | Post-MVP |
 | OS-010 | Welfare | Expand into broader compliance workspace | Future feature | Medium | Post-MVP |
-| OS-011 | Welfare | Strengthen concern detail hierarchy | Visual/UX | Medium | Polish |
+| OS-011 | Welfare | Strengthen concern detail hierarchy — independently verified still present by a 2026-08-26 read-only audit (the portal Welfare Concern Detail page renders Summary/Information/Timeline/Activity History as undifferentiated equal-weight grid cards, with no safeguarding or capability impact). Confirmed real, cosmetic/non-blocking; not currently promoted ahead of Internal Club Testing | Visual/UX | Medium | Polish |
 | OS-012 | Welfare | Make directory filters more compact | Visual | Low | Post-MVP |
 | OS-016 | Coach | Capture match configuration during event creation — delivered in Portal Event Builder & Secretary Events Management | Resolved gap | Complete | Sprint 30 |
 | OS-017 | Coach | Emergency contacts missing from Matchday Hub — exact-season authorised projection delivered | Resolved gap | Complete | MVP Experience Polish |
@@ -198,7 +198,7 @@ Both Environment 1 (Clean Installation) and Environment 2 (Controlled Upgrade Ma
 | FIN-028 | Treasurer | Blue-on-blue text on billing pages — resolved: billing schedule cards/metadata and finance invoice links now use on-dark foreground tokens (`34cd5d4`, 2026-08-21); protected by `validate-dark-surface-contrast.php` | Resolved accessibility | Complete | MVP |
 | FIN-029 | Treasurer | Cannot create/edit/archive fee rules — Portal Fee Rules management delivered | Resolved gap | Complete | Sprint 33 |
 | FIN-030 | Treasurer | Cannot create/edit/archive discount policies — Portal Discount Policies management delivered | Resolved gap | Complete | Sprint 33 |
-| FIN-031 | Treasurer | Text shows caret as though editable | Visual bug | Low | MVP polish |
+| FIN-031 | Treasurer | Text shows caret as though editable (historical finding) — not reproducible in current source as of a 2026-08-26 read-only audit; no matching `cursor: text`/input-like affordance found on any current Finance/Treasurer static summary, and the surface has been substantially rebuilt since. Product Owner reproduction required before implementation | Visual bug | Low | MVP polish — awaiting reproduction |
 | PL-021 | Player | My Season has too much unused space and weak engagement — delivered with Season Journey, Milestones, Attendance rate, Next Milestone target in Batch IN3F17-PL2B2 | Resolved UX | Complete | MVP |
 | PL-022 | Player | My Stats is only a minimal dashboard section — dedicated standalone experience with Appearances, Goals, Assists, POTM, Attendance, Clean Sheets, safeguarding delivered in Batch IN3F16-PL1C | Resolved gap | Complete | MVP |
 | PL-023 | Player | Quick Actions moved directly below hero across all persona dashboards | Resolved UX | Complete | MVP |
@@ -310,7 +310,7 @@ The Team Health experience must remain a leadership oversight layer over canonic
 
 - Keep the dedicated finance identity, payment recording, bulk family invoicing and billing schedules.
 - **Treasurer Finance MVP (complete):** Invoice lifecycle management (draft, issue, cancel), payment recording & allocations, Fee Rules, and Discount Policies are fully delivered inside Club OS.
-- **Billing/invoice dark-surface contrast (FIN-028 — complete):** Resolved by the systemic dark-surface contrast treatment (commit `34cd5d4`, 2026-08-21); protected by `tools/validate-dark-surface-contrast.php`. FIN-031 (static caret-cursor visual bug) is a separate, still-open Low-priority item — not addressed here.
+- **Billing/invoice dark-surface contrast (FIN-028 — complete):** Resolved by the systemic dark-surface contrast treatment (commit `34cd5d4`, 2026-08-21); protected by `tools/validate-dark-surface-contrast.php`. FIN-031 (static caret-cursor visual bug) is a separate item — not addressed here, and not confirmed complete; see the Consolidated review log for its current not-reproducible status.
 - Post-MVP, add reporting, exports, reconciliation and payment integrations.
 
 ### Player Workspace
@@ -437,7 +437,12 @@ Optional **Meet / Arrive Time is intentionally supported for Training** events. 
 
 **No unresolved High/MVP implementation defect is currently known.** The same audit confirmed Release Readiness currently reports **Ready** (22 checks: 17 Pass, 1 Review, 4 External, 0 Fail, zero required-and-unresolved risks), and found no other open roadmap item at High priority within MVP scope. This does not mean Club OS is "finished" — it means no currently-known High/MVP blocker remains after source reconciliation, and **Club OS remains suitable for continued Internal Club Testing.**
 
-The only items the roadmap still shows open within MVP scope are **FIN-031** (Low priority, static caret-cursor visual bug) and **OS-011** (Medium priority/Polish, Welfare concern-detail hierarchy) — neither has yet been re-verified against current source. **No new implementation batch should be promoted merely because an older roadmap item still appears open.** The next sensible engineering decision point is a small, read-only source reconciliation of these remaining polish candidates — using the same source-first approach that revealed ADM-001/002/003 and OS-029/FIN-028/PL-024 were already complete — before choosing to implement either. Internal Club Testing feedback may also surface a more important real-world issue that should take priority over both.
+The only items the roadmap still shows open within MVP scope are **FIN-031** and **OS-011**. Both have now been re-verified against current source by a read-only audit (2026-08-26), with two different outcomes:
+
+- **FIN-031** (Low priority, static caret-cursor visual bug) **could not be reproduced in current source.** No Finance/Treasurer static summary currently uses `cursor: text` or another confirmed input-like affordance, and the Treasurer/Finance surface has been substantially rebuilt since this finding was originally recorded, with no specific fix commit identifiable. This is **not** the same as confirming it fixed — it remains open, classified as *not reproducible in current source; Product Owner reproduction required before implementation*.
+- **OS-011** (Medium priority/Polish, Welfare concern-detail hierarchy) **was independently confirmed still present**, with no safeguarding or capability impact — the portal Welfare Concern Detail page still renders its Summary, Information, Timeline and Activity History as undifferentiated equal-weight grid cards. It remains genuinely open and is a legitimate small future candidate, but is cosmetic/non-blocking and is not currently promoted ahead of Internal Club Testing.
+
+**Neither is currently promoted as the next implementation batch.** No unresolved High/MVP implementation blocker is known, and Release Readiness currently reports Ready. Internal Club Testing feedback should drive the next meaningful implementation batch, unless a higher-priority regression emerges in the meantime. If FIN-031 is ever picked up, it requires a fresh reproduction from the Product Owner first, not direct implementation from this roadmap description.
 
 ## Future club profiles
 

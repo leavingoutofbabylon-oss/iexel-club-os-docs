@@ -852,6 +852,10 @@ The existing front-end route `/club-os/teams/{TEAM_ID}/players/{PERSON_ID}/` is 
 
 FIN-031 (static caret-cursor visual bug, Low priority) and OS-011 (Welfare concern-detail hierarchy, Medium/Polish) are separate items and remain open — not addressed by this fix and not implemented in this reconciliation.
 
+### FIN-031 / OS-011 read-only reconciliation audit (2026-08-26)
+
+A follow-up read-only source audit reconciled both remaining open items against current source. Neither was implemented. **FIN-031** could not be reproduced in current Finance/Treasurer source — no static summary uses `cursor: text` or another confirmed input-like affordance, and no specific fix commit was identifiable; it remains open, reclassified as *not reproducible in current source, Product Owner reproduction required before implementation* (not marked complete). **OS-011** was independently confirmed still present on the portal Welfare Concern Detail page (undifferentiated equal-weight grid cards for Summary/Information/Timeline/Activity History, no safeguarding impact) and remains genuinely open. Neither was promoted to the next implementation batch; continued Internal Club Testing was recommended.
+
 ---
 
 # Completed Match Correction Architecture & Player Progress MVP Decision
