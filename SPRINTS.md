@@ -26,6 +26,7 @@ This document tracks the major development milestones of IEXEL Club OS. Complete
 | 33 | Treasurer Finance, Invoices & Fee Rules Management | ✅ Complete |
 | RC | Release Candidate Verification (Clean Install Gate 2C & Upgrade Matrix Gate 2) | ✅ Complete |
 | Internal | MVP Internal Club Testing: SEC-001 through SEC-008 & Event Suite Alignment | ✅ Complete |
+| CMC | Completed Match Correction Architecture (Batches 2A, 2B-1, 2B-2), Acceptance Gate & Player Progress MVP Decision | ✅ Complete |
 
 ---
 
@@ -798,3 +799,94 @@ The existing front-end route `/club-os/teams/{TEAM_ID}/players/{PERSON_ID}/` is 
 
 4. **Secretary Regression Protection:**
    - Verified that Secretary retains the full flexible event suite. Created a real Secretary Meeting with whole-club/no-team scope, Committee Members audience, and 3 invited participants without leakage of Coach restrictions.
+
+---
+
+# Completed Match Correction Architecture & Player Progress MVP Decision
+
+**Status:** Complete. Implemented, source-validated, browser-accepted where applicable, committed and pushed to `feature/mvp-internal-testing-fixes` (`436ec5d` through `2844e7a`, 2026-08-24 to 2026-08-26); not yet merged to plugin `main`.
+
+**Goal:** Give Coaches a safe, auditable way to correct a completed Match's record after Full Time — score-neutral goal correction, incorrect-goal removal and missed-goal addition — on top of a canonical timeline-ordering and score-reconciliation architecture, while keeping the completed-match participant experience privacy-minimised, and resolve the Player Progress MVP navigation architecture.
+
+## Completed Match Participant and Coach Experience
+
+**Status:** Complete (`436ec5d`, `95142f3`, `3392843`).
+
+- Delivered the completed-match participant experience (`CompletedMatchExperienceService`) for Player, Parent and Parent Preview: a scoring-focused Match Story and appropriate completed-match information, intentionally privacy-minimised.
+- Participant projections exclude substitutions involving unrelated Players, ratings, Coach Notes, correction reasons, correction audit metadata and unrelated Player identities. Player self-scope, Parent linked-child scope and Parent Preview exact-child scope remain canonical and were proved by dedicated privacy assertions.
+- Delivered the Coach completed-Event experience: Final Score, WIN/DRAW/LOSS result badge, Match Summary, authoritative Match Timeline, completed Match Report, and correction/recovery actions.
+- Improved Full Time match report continuity and mobile score layout, and moved responsive Coach timeline/summary presentation to container-aware CSS so it remains usable when the Club OS content column narrows independently of the browser viewport.
+
+## Completed Match Correction v1
+
+**Status:** Complete (`8e42364`).
+
+- Delivered score-neutral correction of an existing active Club goal: scorer change, assist add/change/removal, chronology-safe minute correction, and Normal ↔ Penalty.
+- The workflow is reached from Completed Event → Match correction and recovery → Correct Match Record and never reopens the Match.
+- Corrections are auditable and transactional. Historical Player eligibility is derived from the actual historical pitch state, not merely all selected Players. The scorer and assister cannot be the same Player.
+
+## Batch 2A — Canonical Score Reconciliation & Remove Incorrect Goal
+
+**Status:** Complete (`d8d9607`).
+
+Implemented the canonical score-reconciliation architecture that every subsequent correction workflow builds on:
+
+1. Canonical active-ledger score derivation and a reusable score-reconciliation writer.
+2. Live Goal writes migrated away from independent score-delta ownership onto the same reconciliation writer.
+3. Live Undo Last Goal migrated to canonical reconciliation, and stale live Undo is blocked outside valid Match phases (a completed/Full Time Match must use Correct Match Record instead).
+4. Completed/Full Time Remove Incorrect Goal, with a mandatory correction reason for score-changing removal.
+5. Idempotency, structured audit and rollback/failure safety across the write path.
+6. Match Report, statistics and participant projections update from canonical active data without reopening the Match.
+
+Stored Match score and the active scoring ledger must reconcile; normal correction operations fail closed when the pre-operation score is already inconsistent. Arbitrary direct score editing is not part of the architecture.
+
+## Batch 2B-1 — Canonical Match Incident Timeline Order
+
+**Status:** Complete (`eebd849`).
+
+Resolved the architecture blocker around historical insertion by introducing `timeline_order` as a first-class concept, deliberately separated from Add Missed Goal so the replay architecture could be validated independently:
+
+- `sequence` remains the immutable creation/audit order; `timeline_order` owns effective chronological replay/display order.
+- Existing incidents were backfilled through the controlled upgrade path (`UpgradeRunner`); live incidents append with new sequence/timeline positions.
+- Historical corrections can retain/reuse their logical timeline position while receiving a fresh creation sequence.
+- Chronological repositories, replay, statistics and presentation use the effective timeline order as required. Active chronological display rank is not the same thing as immutable creation sequence, and historical `sequence` values are never renumbered.
+
+## Batch 2B-2 — Add Missed Goal
+
+**Status:** Complete (`6bb435b`).
+
+- The completed-match correction page supports Add Missed Goal for all canonical scoring directions/modes: Club goal, opponent goal, opponent own goal awarded to Club, Club Player own goal awarded to opponent, and Normal/Penalty where semantically valid. Historical placement uses `timeline_order`.
+- Historical scorer/assist eligibility is derived from saved Event selection, Event audience, Attendance Present/Late and the historical on-pitch state at the chosen placement boundary — never merely all selected/bench Players.
+- Equal-minute behaviour is deterministic: if an existing incident shares the same period/minute, the Coach must choose an explicit Before/After historical boundary. The system never breaks an equal-minute tie using database ID, submission time or arbitrary ordering — proved on the established Event 57 acceptance scenario (at 20′, after the 18′ substitution and before the 24′ substitution, the eligible pool is Public Enquiry, DECLAN ROGERS, Test Person, HENRY JAMES and JUDE KANE, with david adel correctly off the pitch; at exactly 18′, Before yields Public Enquiry, david adel, DECLAN ROGERS, Test Person and HENRY JAMES, while After yields Public Enquiry, DECLAN ROGERS, Test Person, HENRY JAMES and JUDE KANE).
+- The scorer cannot also be the assister. Goal-mode field semantics are enforced server-side; browser behaviour is a UX enhancement, not the security boundary.
+- **UX acceptance:** manual "Show eligible Players" fallback; automatic historical eligibility refresh when Period/Minute/placement changes; stale scorer/assist selections cleared when timing changes; explicit equal-minute Before/After selection; scorer dynamically excluded from Assist; incompatible fields cleared/hidden when scoring mode changes; responsive/even goal-mode cards on mobile; a semantic interaction-continuity anchor at the Match-time working area after server round-trips (no brittle fixed-pixel scroll offset); Reason remains required for the real save but does not block the eligibility preview action. The broader OS continues to use server-rendered round trips for this workflow; interaction continuity is a reusable UX principle for future server-rendered actions, not a global AJAX architecture.
+
+## Completed Match Correction End-to-End Acceptance Gate
+
+**Status:** Complete (`2cb13ef`).
+
+A disposable completed Match proved the combined journey in one continuous run: score-neutral correction, incorrect-goal removal, missed-goal addition, equal-minute historical placement, all supported goal semantics, canonical score reconciliation, timeline ordering, idempotency, rollback/failure safety, Match Report retention, ratings/POTM retention, Team/Player statistics, participant privacy and completed/full-time lifecycle preservation throughout. The acceptance validator passed 169 checks when introduced.
+
+## Validator Hygiene Reconciliation
+
+**Status:** Complete (`2844e7a`).
+
+- The live-goal eligibility validator no longer assumes Event 57 is an old live First-Half fixture; its live-workspace, goal-attribution-form and idempotency coverage now runs against an isolated disposable fixture (57 checks).
+- The substitution/Attendance eligibility validator no longer depends on obsolete Event 57 live-state assumptions; its rolling-substitution, re-entry, form and Match Mode page-rendering coverage now runs against an isolated disposable fixture (96 checks).
+- The Player Progress validator no longer expects the deliberately removed WordPress/Gravatar Player-photo fallback, and its navigation assertions were reconciled to the confirmed embedded Team Workspace architecture below (367 checks).
+- **Current Player image contract:** uploaded Player photo → otherwise the canonical configured/default Club OS visual. A linked WordPress account alone must not introduce an external Gravatar/WP-derived Player image.
+- Event 57 remains the stable completed-Match acceptance fixture (completed, full_time, 2–0, five active incidents) throughout and was proved read-only at every step.
+
+## Player Progress — Canonical MVP Architecture Decision
+
+**Status:** Confirmed Product Decision (2026-08-26).
+
+For the Operational MVP, Player Progress remains an embedded Player-specific Team Workspace experience:
+
+Player Home → Team Workspace → My Progress
+
+- Player global navigation remains deliberately simplified: Home, Team, Events, News. Player Progress is **not** a fifth global navigation item.
+- The Player Home Progress card continues to link through the authorised Team Workspace My Progress destination, sourced from the existing canonical Team/Member Experience projection rather than a hand-built URL.
+- Team Workspace → My Progress renders the Player Progress experience (`PortalPlayerProgressPage`) in embedded mode. Player self-scope remains authoritative; Parent Preview remains exact-child scoped.
+- Standalone infrastructure — the `/club-os/player/progress/` and `/club-os/parent/progress/` routes and the `PlayerProgressUrl` URL-builder class — remains in the repository. Source evidence (introduced together in one earlier feature commit, fully route-registered and security-hardened, but with zero current call sites for `PlayerProgressUrl` anywhere in production code) classifies it as unfinished/alternate standalone infrastructure rather than the primary Player journey. It was not removed or redesigned.
+- **Deferred cleanup item (Post-MVP, not a blocker):** after MVP/Release Readiness, decide whether to (A) formally retain/document the standalone route as an alternate/bookmarkable direct entry point, or (B) deprecate/remove the unused standalone URL-builder/route infrastructure.

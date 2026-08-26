@@ -37,7 +37,7 @@ Every contributor should read this guide before making architectural or implemen
 
 ### Current Priority
 
-Progress from completed RC validation environments (Environment 1 Clean Install and Environment 2 Controlled Upgrade Matrix verified and accepted) to Internal Club Testing and final Release Readiness sign-off.
+Internal Club Testing (SEC-001 through SEC-008) and the Completed Match Correction architecture (Batches 2A, 2B-1, 2B-2 and their end-to-end acceptance gate) are complete. Continue Internal Club Testing / Release Readiness toward Club OS v1.0; see `CLUB_OS_EXPERIENCE_REVIEW_AND_ROADMAP.md`'s "Recommended next implementation batch" for the current authoritative next item.
 
 ### Recently Completed
 
@@ -68,6 +68,8 @@ Progress from completed RC validation environments (Environment 1 Clean Install 
 - ✅ RC Clean-Install Blocker Repair Gate 2C (post-commit verification and pre-merge audit complete; merged on plugin `main` at `e3f115dce90a04f3812036334317f691ba367b42`)
 - ✅ RC Controlled Upgrade Matrix Gate 2 (Environment 2 verified across Rows 1–4 and Interruption/Resume; full-registry reconciliation architecture confirmed and accepted)
 - ✅ MVP Internal Club Testing: SEC-001 (Canonical Team Season Provisioning), SEC-002 (Grassroots Play-Up Eligibility), SEC-004/005 (Meet Time Unification), SEC-006 (Committee Event Routing), SEC-007A/B/C (Event Audience Policy, Flexible Builder & Privacy-Safe RSVP), and SEC-008 (Coach Football Event Scope Hardening, Training Meet Time Policy & Matchday Hub Location Repair `2370551`)
+- ✅ Completed Match Correction architecture — canonical score reconciliation + Remove Incorrect Goal (Batch 2A), canonical Match incident `timeline_order` (Batch 2B-1: `sequence` is immutable creation/audit order, `timeline_order` owns effective chronological replay/display order), Add Missed Goal with historical eligibility and deterministic equal-minute placement (Batch 2B-2), and a combined end-to-end acceptance gate; implemented, validated, committed and pushed to `feature/mvp-internal-testing-fixes`, pending merge to plugin `main`
+- ✅ Validator hygiene reconciliation (live-goal, substitution/Attendance and Player Progress validators no longer depend on obsolete Event 57 live-state assumptions or the removed WordPress/Gravatar avatar fallback) and the Player Progress canonical MVP decision (embedded Team Workspace → My Progress journey; see `CLUB_OS_EXPERIENCE_REVIEW_AND_ROADMAP.md`)
 
 ### Current Focus
 
@@ -75,7 +77,7 @@ Both Release Candidate test environments are verified and accepted:
 1. **Environment 1 (Clean Installation):** Verified on WordPress 7.0.4 / PHP 8.2.29 / MySQL 8.4; establishes the clean baseline (48 Club OS-owned tables, schema/data version `2026.08.6`, complete upgrade state across 25/25 steps/results, 15 formations and 129 slots), with AI activity dbDelta reconciliation, unlinked administrator fail-closed identity boundary (*Administrative authority does not create member identity*), pre-output public prospect feedback routing, and canonical empty-site billing scheduler behavior.
 2. **Environment 2 (Controlled Upgrade Matrix):** Full-registry idempotent reconciliation pipeline validated across all 4 canonical baselines (`2026.07.1`, `2026.08.2`, `2026.08.5`, `2026.08.6`) plus controlled failure interruption/resume. All 25 registered `UpgradeStep` contracts evaluated in sequence, with safe no-op evaluation on fulfilled invariants (`ran = false`) and transactional application on unfulfilled invariants (`ran = true`). Team references normalized to `TM-%06d`, role capabilities reconciled, business data preserved 100%, and unlinked admins fail closed across all baselines.
 
-The next major milestone is Internal Club Testing followed by formal Release Readiness sign-off. Post-MVP scope remains deferred.
+Internal Club Testing and the Completed Match Correction architecture are complete. The next major milestone is formal Release Readiness sign-off toward Club OS v1.0. Post-MVP scope remains deferred.
 
 ### Next Milestones
 
