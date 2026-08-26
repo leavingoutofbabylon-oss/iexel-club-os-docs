@@ -161,7 +161,7 @@ Both Environment 1 (Clean Installation) and Environment 2 (Controlled Upgrade Ma
 - **Player — complete:** Expand My Season with progress, attendance, milestones and next achievement (PL-021) — delivered in Batch IN3F17-PL2B2.
 - **Player — complete:** Move Quick Actions near the top (PL-023) — delivered in `PortalDashboardLayout`.
 - **Player:** Fix blue-on-blue text (PL-024).
-- **Admin:** Reorganise the Club OS sidebar into grouped sections and hide route-only detail pages (ADM-001 / ADM-002 / ADM-003 — Recommended Next Implementation Batch).
+- **Admin — complete:** Reorganise the Club OS sidebar into grouped sections and hide route-only detail pages — delivered as Admin Sidebar Navigation Consolidation & Route Cleanup (ADM-001 / ADM-002 / ADM-003), commit `c88eab9`, 2026-08-21.
 
 ## Consolidated review log
 
@@ -203,9 +203,9 @@ Both Environment 1 (Clean Installation) and Environment 2 (Controlled Upgrade Ma
 | PL-022 | Player | My Stats is only a minimal dashboard section — dedicated standalone experience with Appearances, Goals, Assists, POTM, Attendance, Clean Sheets, safeguarding delivered in Batch IN3F16-PL1C | Resolved gap | Complete | MVP |
 | PL-023 | Player | Quick Actions moved directly below hero across all persona dashboards | Resolved UX | Complete | MVP |
 | PL-024 | Player | Blue-on-blue text | Accessibility | High | MVP |
-| ADM-001 | Admin | Sidebar navigation is too long — over 30 items in wp-admin sidebar | UX | High | MVP |
-| ADM-002 | Admin | Route-only pages appear as sidebar destinations | UX | High | MVP |
-| ADM-003 | Admin | Operational dashboards appear in admin navigation | UX/Architecture | Medium | MVP polish |
+| ADM-001 | Admin | Sidebar navigation was too long — over 30 items in wp-admin sidebar; consolidated to 19 visible items grouped into logical clusters, 36 route-only items hidden with routes preserved (`c88eab9`, 2026-08-21) | Resolved UX | Complete | MVP |
+| ADM-002 | Admin | Route-only pages appeared as sidebar destinations — hidden with in-page contextual creation actions restored on People/Teams/Events/Venues and existing admin-navigation components elsewhere; 227-check focused validator passing | Resolved UX | Complete | MVP |
+| ADM-003 | Admin | Operational dashboards (e.g. Committee Dashboard) appeared in admin navigation — hidden from the sidebar; portal remains the canonical home for those experiences | Resolved UX/Architecture | Complete | MVP |
 | ADM-004 | Admin | Long-term sensitive-role approval workflow | Security/Governance | High | Post-MVP |
 | SET-001 | Settings | Current page is primarily a Brand Studio, not a full Settings area — modular settings evolution deferred to Post-MVP | Information architecture | Medium | Post-MVP |
 | SET-002 | Settings | Add image positioning, zoom and focal-point controls | Visual tool | Medium | Post-MVP |
@@ -331,11 +331,11 @@ The Team Health experience must remain a leadership oversight layer over canonic
 ### Admin Experience
 
 - Keep admin focused on platform maintenance, system configuration and canonical records.
-- **Admin Navigation Consolidation (ADM-001 / ADM-002 / ADM-003 — Recommended Next Implementation Batch):**
-  - Reorganise the 30+ item wp-admin sidebar into clean logical sections (Platform, People, Football, Seasons, Registrations, Finance, Communications, Welfare, System).
-  - Assign `null` parent slugs to route-only action and detail pages (e.g. `Add Season`, `New Registration`, `Add Club Project`) so they remain accessible via in-page workflows without cluttering the sidebar.
-  - Remove operational portal dashboard duplicates (e.g. `Committee Dashboard`) from wp-admin navigation.
-  - Preserve portal/admin boundaries with zero schema or database changes.
+- **Admin Navigation Consolidation (ADM-001 / ADM-002 / ADM-003 — complete):** Delivered `c88eab9` (2026-08-21), "consolidate admin navigation and restore contextual creation actions". `AdminUI::register_menu()` now registers 19 visible sidebar destinations grouped into logical clusters (Platform/Dashboard; People & Football Operations; Seasons & Registrations; Finance, Communications & Projects; Welfare & Safeguarding; System & Settings) and 36 hidden route-only destinations (`add_submenu_page(null, ...)`), with every admin slug/route preserved. Route-only action and detail pages (`Add Person`, `Add Team`, `Add Event`, `Add Venue`, `Add Season`, `New Registration`, `Add Club Project`, etc.) remain reachable through in-page contextual creation actions restored on `PeoplePage`, `TeamsPage`, `EventsPage`, `VenuesPage` and pre-existing admin-navigation components elsewhere. The operational Committee Dashboard duplicate is hidden from the sidebar; the portal remains the canonical home for that experience. Zero schema or database changes. The focused validator `tools/validate-admin-navigation-consolidation.php` passes 227/227 checks, including exact visible/hidden slug sets, `ReleaseRouteInventory` hidden-flag accuracy for every route it covers, no duplicate slugs, callback existence, in-page discoverability across 11 pages, Release Readiness "Duplicate administrator routes"/"Duplicate portal routes" both Pass, and Welfare/Finance capability boundaries.
+- **Non-blocking follow-up / technical debt identified during ADM acceptance (not part of ADM-001/002/003 itself, no Product Owner decision made yet):**
+  - `ReleaseRouteInventory::administrator()` does not yet enumerate 10 of the 55 real `AdminUI` routes (Committee Dashboard, AI Workspace, Club Projects, Add/Edit Club Project, Welfare Dashboard, Welfare Concerns, Add/View Welfare Concern, Entity Lifecycle). Current duplicate-route Release Readiness checks still pass; this is an inventory-completeness gap, not a routing failure, and is a candidate for a small future cleanup batch.
+  - `app/UI/AdminMenu.php` is a HIGH-confidence dead-code cleanup candidate: an early foundation-era scaffold class with zero runtime call sites, never hooked to `admin_menu`, fully superseded by `app/core/UI/AdminUI.php`. Production is not currently affected by it.
+  - Two hidden admin routes currently have no in-app discoverability path: Committee Dashboard (portal is canonical; the hidden route is a future deprecation candidate) and the full standalone AI Workspace page (the Dashboard already embeds its assistant widget inline; the full page remains registered but unlinked). Whether to retain either as intentionally hidden/internal, add discoverability, or formally deprecate is an open Product Owner decision, not resolved here.
 - Post-MVP, separate WordPress administrator power from automatic access to sensitive operational data (ADM-004).
 
 ### Settings and Brand Studio
@@ -428,14 +428,13 @@ Optional **Meet / Arrive Time is intentionally supported for Training** events. 
 
 ## Recommended next implementation batch
 
-### ADM-001 / ADM-002 / ADM-003 — Admin Sidebar Navigation Consolidation & Route Cleanup
+**ADM-001 / ADM-002 / ADM-003 (Admin Sidebar Navigation Consolidation & Route Cleanup) is complete** — see the Admin Experience section above. It is no longer the recommended next implementation batch.
 
-**Recommended Priority:** High / MVP
-**Scope:**
-- Consolidate the 30+ item wp-admin sidebar into clean, logical grouped sections (Platform, People, Football, Seasons, Registrations, Finance, Communications, Welfare, System).
-- Assign `null` parent slugs to route-only action and detail pages (`Add Season`, `New Registration`, `Add Club Project`, etc.) so they remain accessible via in-page buttons and direct URLs without cluttering the sidebar navigation.
-- Remove operational portal dashboard duplicates (e.g. `Committee Dashboard`) from wp-admin navigation (portal remains canonical home).
-- Pure UI/routing refactor in `AdminUI.php` and `ReleaseRouteInventory.php` with zero database, schema, migration, or portal-routing risk.
+A read-only audit performed while verifying ADM-001/002/003 found that this roadmap had described already-shipped work (committed 2026-08-21) as upcoming for over a month. That audit did not extend to re-verifying the current code-level status of the other roadmap items still shown open below, so the same drift cannot be ruled out for them.
+
+The roadmap's own Consolidated review log currently still lists OS-029, FIN-028 and PL-024 (blue-on-blue text contrast, High priority, MVP) as open, with no other item marked as the clear authoritative next batch. Given the demonstrated gap between this document and actual repository state, promoting any one of these to "next" without first re-verifying it against current source would risk repeating the same mistake.
+
+**Next implementation priority requires a current-state reconciliation audit** — a read-only pass verifying OS-029, FIN-028, PL-024 and any other roadmap item still shown open against actual current source (the same kind of audit that discovered ADM-001/002/003 was already done), before committing to a specific next implementation batch.
 
 ## Future club profiles
 

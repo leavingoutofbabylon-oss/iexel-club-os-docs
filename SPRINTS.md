@@ -26,6 +26,7 @@ This document tracks the major development milestones of IEXEL Club OS. Complete
 | 33 | Treasurer Finance, Invoices & Fee Rules Management | ✅ Complete |
 | RC | Release Candidate Verification (Clean Install Gate 2C & Upgrade Matrix Gate 2) | ✅ Complete |
 | Internal | MVP Internal Club Testing: SEC-001 through SEC-008 & Event Suite Alignment | ✅ Complete |
+| ADM | Admin Sidebar Navigation Consolidation & Route Cleanup (ADM-001 / ADM-002 / ADM-003) | ✅ Complete |
 | CMC | Completed Match Correction Architecture (Batches 2A, 2B-1, 2B-2), Acceptance Gate & Player Progress MVP Decision | ✅ Complete |
 
 ---
@@ -799,6 +800,31 @@ The existing front-end route `/club-os/teams/{TEAM_ID}/players/{PERSON_ID}/` is 
 
 4. **Secretary Regression Protection:**
    - Verified that Secretary retains the full flexible event suite. Created a real Secretary Meeting with whole-club/no-team scope, Committee Members audience, and 3 invited participants without leakage of Coach restrictions.
+
+---
+
+# ADM-001 / ADM-002 / ADM-003 — Admin Sidebar Navigation Consolidation & Route Cleanup
+
+**Status:** Complete. Implemented, validated and committed to `feature/mvp-internal-testing-fixes` (`c88eab9`, 2026-08-21); not yet merged to plugin `main`.
+
+**Goal:** Reorganise the wp-admin Club OS sidebar (previously 30+ items) into a clean, role-appropriate structure without cluttering navigation with route-only action/detail pages, while preserving every existing slug/route and restoring in-page discoverability for anything moved out of the sidebar.
+
+### Delivered
+
+- `AdminUI::register_menu()` now registers 19 visible sidebar destinations grouped into logical clusters (Platform/Dashboard; People & Football Operations; Seasons & Registrations; Finance, Communications & Projects; Welfare & Safeguarding; System & Settings), and 36 hidden route-only destinations (`add_submenu_page(null, ...)`) — every prior admin slug/route remains addressable.
+- Route-only action and detail pages (`Add Person`, `Add Team`, `Add Event`, `Add Venue`, `Add Season`, `New Registration`, `Add Club Project`, etc.) were removed from the sidebar and given restored in-page contextual creation actions on `PeoplePage`, `TeamsPage`, `EventsPage` and `VenuesPage`; Seasons, Registrations, Finance, Communications, Club Projects and Welfare already had their own admin-navigation components.
+- The operational Committee Dashboard duplicate is hidden from the sidebar; the portal remains the canonical home for that experience.
+- Zero database, schema, migration or portal-routing changes.
+
+### Validation
+
+- The focused validator `tools/validate-admin-navigation-consolidation.php` passes **227/227 checks**: exact visible (19) and hidden (36) slug sets and ordering; every callback resolves on `AdminUI`; `ReleaseRouteInventory` hidden-flag accuracy for every route it covers; no duplicate slugs; in-page discoverability across 11 pages/components; `ReleaseReadinessService` "Duplicate administrator routes" and "Duplicate portal routes" both report Pass; Welfare and Finance capability boundaries intact.
+
+### Non-blocking follow-up identified during a subsequent read-only audit (not part of ADM-001/002/003 itself)
+
+- `ReleaseRouteInventory::administrator()` does not yet enumerate 10 of the 55 real `AdminUI` routes (Committee Dashboard, AI Workspace, Club Projects, Add/Edit Club Project, Welfare Dashboard, Welfare Concerns, Add/View Welfare Concern, Entity Lifecycle). Current duplicate-route checks still pass; this is an inventory-completeness gap, not a routing failure.
+- `app/UI/AdminMenu.php` is a HIGH-confidence dead-code cleanup candidate: an early foundation-era scaffold class with zero runtime call sites, never hooked to `admin_menu`, fully superseded by `AdminUI.php`.
+- Two hidden routes (Committee Dashboard; the full standalone AI Workspace page, whose assistant widget the Dashboard already embeds inline) currently have no in-app discoverability path. Whether to retain either as intentionally hidden, add discoverability, or formally deprecate is an open Product Owner decision.
 
 ---
 
