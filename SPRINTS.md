@@ -27,6 +27,7 @@ This document tracks the major development milestones of IEXEL Club OS. Complete
 | RC | Release Candidate Verification (Clean Install Gate 2C & Upgrade Matrix Gate 2) | ✅ Complete |
 | Internal | MVP Internal Club Testing: SEC-001 through SEC-008 & Event Suite Alignment | ✅ Complete |
 | ADM | Admin Sidebar Navigation Consolidation & Route Cleanup (ADM-001 / ADM-002 / ADM-003) | ✅ Complete |
+| A11Y | Dark-Surface Text Contrast (OS-029, FIN-028, PL-024) | ✅ Complete |
 | CMC | Completed Match Correction Architecture (Batches 2A, 2B-1, 2B-2), Acceptance Gate & Player Progress MVP Decision | ✅ Complete |
 
 ---
@@ -825,6 +826,31 @@ The existing front-end route `/club-os/teams/{TEAM_ID}/players/{PERSON_ID}/` is 
 - `ReleaseRouteInventory::administrator()` does not yet enumerate 10 of the 55 real `AdminUI` routes (Committee Dashboard, AI Workspace, Club Projects, Add/Edit Club Project, Welfare Dashboard, Welfare Concerns, Add/View Welfare Concern, Entity Lifecycle). Current duplicate-route checks still pass; this is an inventory-completeness gap, not a routing failure.
 - `app/UI/AdminMenu.php` is a HIGH-confidence dead-code cleanup candidate: an early foundation-era scaffold class with zero runtime call sites, never hooked to `admin_menu`, fully superseded by `AdminUI.php`.
 - Two hidden routes (Committee Dashboard; the full standalone AI Workspace page, whose assistant widget the Dashboard already embeds inline) currently have no in-app discoverability path. Whether to retain either as intentionally hidden, add discoverability, or formally deprecate is an open Product Owner decision.
+
+---
+
+# OS-029 / FIN-028 / PL-024 — Dark-Surface Text Contrast
+
+**Implementation status:** Complete. Implemented and committed to `feature/mvp-internal-testing-fixes` (`34cd5d4`, "Fix dark-surface finance contrast and visual hierarchy", 2026-08-21); not yet merged to plugin `main`.
+
+**Documentation/source reconciliation status:** Confirmed complete by a subsequent read-only MVP / Release Readiness reconciliation audit (2026-08-26), which found the roadmap still describing all three as open High/MVP defects a month after they were fixed.
+
+**Goal:** Eliminate low-contrast "blue-on-blue" text — dark navy foreground tokens (`--iexel-ink`, `--iexel-midnight`) accidentally reused on dark midnight-blue surfaces — across Team Workspace/Team Hub, Finance/billing/invoice and Player Statistics.
+
+### Delivered
+
+- A systemic on-dark foreground-token treatment in `design-system.css`: dark-surface component classes (`.iexel-team-workspace-hero`, `.iexel-billing-schedule-card`, `.iexel-billing-schedule-meta`, `.iexel-billing-run-meta`, `.iexel-player-statistics-hero`/`-quality`/`-filters`/`-summary`/`-history-section`, and related Team/Coach/Match dark surfaces) now force `--iexel-text`/`--iexel-muted`/`color` to `var(--iexel-color-on-dark, #fff)` rather than inheriting a dark-on-dark default.
+- Direct fixes in `public.css` (Team Workspace hero heading/body text) and `member-experience.css` (finance invoice links, billing schedule metadata).
+- `tools/validate-dark-surface-contrast.php` was added in the same commit to guard the exact bad pattern going forward.
+
+### Validation
+
+- `tools/validate-dark-surface-contrast.php` passes **6390/6390** checks (re-confirmed 2026-08-26).
+- Independently re-verified: `.iexel-team-workspace-hero` (OS-029, Team Hub — also the Parent-facing Team Hub destination) renders white/near-white text on a dark midnight-navy gradient background; the design-system.css on-dark token block explicitly covers billing/invoice classes (FIN-028) and Player Statistics classes (PL-024).
+
+### Scope note
+
+FIN-031 (static caret-cursor visual bug, Low priority) and OS-011 (Welfare concern-detail hierarchy, Medium/Polish) are separate items and remain open — not addressed by this fix and not implemented in this reconciliation.
 
 ---
 

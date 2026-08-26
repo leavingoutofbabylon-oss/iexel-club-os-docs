@@ -37,7 +37,7 @@ Every contributor should read this guide before making architectural or implemen
 
 ### Current Priority
 
-Internal Club Testing (SEC-001 through SEC-008), the Completed Match Correction architecture (Batches 2A, 2B-1, 2B-2 and their end-to-end acceptance gate) and Admin Sidebar Navigation Consolidation (ADM-001/002/003) are all complete. No single next implementation batch is currently authoritative — see `CLUB_OS_EXPERIENCE_REVIEW_AND_ROADMAP.md`'s "Recommended next implementation batch" section, which recommends a read-only current-state reconciliation audit of the remaining open roadmap items before committing to one.
+Internal Club Testing (SEC-001 through SEC-008), the Completed Match Correction architecture (Batches 2A, 2B-1, 2B-2 and their end-to-end acceptance gate), Admin Sidebar Navigation Consolidation (ADM-001/002/003) and dark-surface text contrast (OS-029/FIN-028/PL-024) are all complete. A read-only MVP / Release Readiness reconciliation audit (2026-08-26) found no currently-known unresolved High/MVP implementation blocker and confirmed Release Readiness reports Ready — Club OS remains suitable for continued Internal Club Testing. This does not mean the product is finished. Before selecting another roadmap-labelled implementation batch, prefer a small source-first verification of any remaining polish-level candidate (see `CLUB_OS_EXPERIENCE_REVIEW_AND_ROADMAP.md`'s "Recommended next implementation batch" section) — the same approach that revealed ADM-001/002/003 and OS-029/FIN-028/PL-024 were already complete.
 
 ### Recently Completed
 
@@ -71,6 +71,7 @@ Internal Club Testing (SEC-001 through SEC-008), the Completed Match Correction 
 - ✅ Completed Match Correction architecture — canonical score reconciliation + Remove Incorrect Goal (Batch 2A), canonical Match incident `timeline_order` (Batch 2B-1: `sequence` is immutable creation/audit order, `timeline_order` owns effective chronological replay/display order), Add Missed Goal with historical eligibility and deterministic equal-minute placement (Batch 2B-2), and a combined end-to-end acceptance gate; implemented, validated, committed and pushed to `feature/mvp-internal-testing-fixes`, pending merge to plugin `main`
 - ✅ Validator hygiene reconciliation (live-goal, substitution/Attendance and Player Progress validators no longer depend on obsolete Event 57 live-state assumptions or the removed WordPress/Gravatar avatar fallback) and the Player Progress canonical MVP decision (embedded Team Workspace → My Progress journey; see `CLUB_OS_EXPERIENCE_REVIEW_AND_ROADMAP.md`)
 - ✅ Admin Sidebar Navigation Consolidation & Route Cleanup (ADM-001/002/003, `c88eab9`) — wp-admin navigation is consolidated into logical groups; route-only admin screens remain registered but hidden from the sidebar, reachable through in-page contextual actions. Daily operations should prefer the relevant role/workspace experience where one exists; wp-admin remains the deeper administration/configuration/oversight surface
+- ✅ Dark-surface text contrast (OS-029/FIN-028/PL-024, `34cd5d4`) — Team Workspace/Team Hub, Finance/billing/invoice and Player Statistics dark surfaces use on-dark foreground tokens; protected by `tools/validate-dark-surface-contrast.php`
 
 ### Current Focus
 

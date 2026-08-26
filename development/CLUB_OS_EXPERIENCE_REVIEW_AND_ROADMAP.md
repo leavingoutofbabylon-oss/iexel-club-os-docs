@@ -137,7 +137,7 @@ Both Environment 1 (Clean Installation) and Environment 2 (Controlled Upgrade Ma
 ## MVP priorities
 
 - **Global — complete:** Move Quick Actions directly below each workspace hero across all persona dashboards via `PortalDashboardLayout`.
-- **Global:** Fix blue-on-blue and other low-contrast text through shared design tokens (OS-029, FIN-028, PL-024).
+- **Global — complete:** Fix blue-on-blue and other low-contrast text through shared design tokens (OS-029, FIN-028, PL-024) — delivered via the systemic dark-surface on-dark token treatment, commit `34cd5d4`, 2026-08-21; protected by `tools/validate-dark-surface-contrast.php` (6390 checks passing).
 - **Global — complete:** Standardise displayed dates to DD/MM/YYYY and HH:mm consistently across Club OS via `DisplayDate` service (OS-027).
 - **Committee — complete:** Remove duplicate Home / Club Overview navigation — Club Overview is the sole landing tab (OS-001).
 - **Committee:** Registration summary metrics — executive Club Health overview delivered; operational registration review queues intentionally owned by Secretary Command Centre per OS-032 governance policy (OS-002).
@@ -150,17 +150,17 @@ Both Environment 1 (Clean Installation) and Environment 2 (Controlled Upgrade Ma
 - **Coach — complete:** Coach Team Event Scope Hardening & Football Event-Type Alignment (SEC-008) — restricted to Training, Fixture, Friendly, Tournament; Meet / Arrive Time intentionally supported for Training; Matchday Hub Match Location display repaired (`2370551`).
 - **Coach — complete:** Completed Match Correction (CMC-001) — Correct Match Record (scorer/assist/minute correction, Normal ↔ Penalty), Remove Incorrect Goal and Add Missed Goal, built on canonical score reconciliation and Match incident `timeline_order`, with a combined end-to-end acceptance gate.
 - **Parent — complete:** Fix selected-child context so an U8 child cannot see an U7 next event, and deliver Parent All-Children event identity + multi-child RSVP (OS-028).
-- **Parent:** Improve Team Hub text contrast (OS-029).
+- **Parent — complete:** Improve Team Hub text contrast (OS-029) — resolved by the systemic dark-surface contrast treatment, commit `34cd5d4`, 2026-08-21.
 - **Parent — complete:** Provide a real Finance page with invoice detail and payment history — delivered in Parent Family Finance & Invoice Detail (OS-030).
 - **Notifications:** Improve attachment/image viewing so users can close and return without relying on the browser Back button (OS-031 — Post-MVP).
 - **Treasurer — complete:** Provide invoice view/edit/cancel/archive or void actions and a proper invoice detail route — delivered in Treasurer Finance MVP (FIN-027).
 - **Treasurer — complete:** Allow Treasurer role to manage fee rules and discount policies inside Club OS — delivered in Treasurer Fee Rules & Discount Policies management (FIN-029, FIN-030).
-- **Treasurer:** Fix blue-on-blue text on billing pages (FIN-028).
-- **Treasurer:** Fix static summary text showing caret as though editable (FIN-031).
+- **Treasurer — complete:** Fix blue-on-blue text on billing pages (FIN-028) — resolved by the systemic dark-surface contrast treatment, commit `34cd5d4`, 2026-08-21; billing schedule cards, billing schedule metadata and finance invoice links now use appropriate on-dark foreground tokens.
+- **Treasurer:** Fix static summary text showing caret as though editable (FIN-031). Low priority; not yet re-verified against current source — remains open pending a small source-first check.
 - **Player — complete:** Create a real My Stats page based on the coach player-statistics experience, limited to the logged-in player (PL-022) — delivered in Batch IN3F16-PL1C at `/club-os/player/stats/`.
 - **Player — complete:** Expand My Season with progress, attendance, milestones and next achievement (PL-021) — delivered in Batch IN3F17-PL2B2.
 - **Player — complete:** Move Quick Actions near the top (PL-023) — delivered in `PortalDashboardLayout`.
-- **Player:** Fix blue-on-blue text (PL-024).
+- **Player — complete:** Fix blue-on-blue text (PL-024) — resolved by the systemic dark-surface contrast treatment, commit `34cd5d4`, 2026-08-21; Player Statistics dark surfaces now use appropriate on-dark foreground tokens.
 - **Admin — complete:** Reorganise the Club OS sidebar into grouped sections and hide route-only detail pages — delivered as Admin Sidebar Navigation Consolidation & Route Cleanup (ADM-001 / ADM-002 / ADM-003), commit `c88eab9`, 2026-08-21.
 
 ## Consolidated review log
@@ -186,7 +186,7 @@ Both Environment 1 (Clean Installation) and Environment 2 (Controlled Upgrade Ma
 | OS-025 | Coach | Bench players could not be selected or shown in Matchday Hub — saved substitute flow delivered | Resolved bug | Complete | MVP Experience Polish |
 | OS-027 | Parent | Dates displayed in ISO format — standardised to DD/MM/YYYY and HH:mm via `DisplayDate` Batches 1 & 2 | Resolved consistency | Complete | MVP |
 | OS-028 | Parent | Selected child sees event from wrong team — selected-child event scoping, Player Preview, and Parent All-Children multi-child RSVP delivered | Resolved bug | Complete | Sprint 31 |
-| OS-029 | Parent | Team Hub has blue-on-blue text | Accessibility | High | MVP |
+| OS-029 | Parent | Team Hub had blue-on-blue text — resolved: `.iexel-team-workspace-hero` and related dark surfaces now use on-dark foreground tokens (`34cd5d4`, 2026-08-21); protected by `validate-dark-surface-contrast.php` | Resolved accessibility | Complete | MVP |
 | OS-030 | Parent | Finance experience is too limited — Parent Family Finance workspace, invoice detail & payment history delivered | Resolved gap | Complete | Sprint 33 |
 | OS-031 | Notifications | Image attachments lack an in-app close/viewer experience — direct link downloads are functional for MVP; lightbox viewer deferred | UX | Low | Post-MVP |
 | OS-032 | Global | Priority Alerts could expose work unrelated to the active persona — persona/capability scoping accepted, merged to plugin `main`, and formally closed for MVP | Resolved security/UX | Complete | MVP |
@@ -195,14 +195,14 @@ Both Environment 1 (Clean Installation) and Environment 2 (Controlled Upgrade Ma
 | PL-025 | Player | Player Progress navigation architecture undecided — confirmed canonical MVP journey is Player Home → Team Workspace → My Progress (embedded); Player global navigation stays Home/Team/Events/News with no fifth Progress item | Resolved decision | Complete | MVP |
 | RR-001 | Release Readiness | Integrity Batches 1, 2, 2.5 and 3 implemented, validated and accepted; plugin implementation and documentation reconciliation merged to their respective `main` branches | Resolved release integrity | Complete | MVP |
 | FIN-027 | Treasurer | Invoices cannot be viewed, edited, cancelled, archived or voided properly — Treasurer invoice lifecycle delivered | Resolved gap | Complete | Sprint 33 |
-| FIN-028 | Treasurer | Blue-on-blue text on billing pages | Accessibility | High | MVP |
+| FIN-028 | Treasurer | Blue-on-blue text on billing pages — resolved: billing schedule cards/metadata and finance invoice links now use on-dark foreground tokens (`34cd5d4`, 2026-08-21); protected by `validate-dark-surface-contrast.php` | Resolved accessibility | Complete | MVP |
 | FIN-029 | Treasurer | Cannot create/edit/archive fee rules — Portal Fee Rules management delivered | Resolved gap | Complete | Sprint 33 |
 | FIN-030 | Treasurer | Cannot create/edit/archive discount policies — Portal Discount Policies management delivered | Resolved gap | Complete | Sprint 33 |
 | FIN-031 | Treasurer | Text shows caret as though editable | Visual bug | Low | MVP polish |
 | PL-021 | Player | My Season has too much unused space and weak engagement — delivered with Season Journey, Milestones, Attendance rate, Next Milestone target in Batch IN3F17-PL2B2 | Resolved UX | Complete | MVP |
 | PL-022 | Player | My Stats is only a minimal dashboard section — dedicated standalone experience with Appearances, Goals, Assists, POTM, Attendance, Clean Sheets, safeguarding delivered in Batch IN3F16-PL1C | Resolved gap | Complete | MVP |
 | PL-023 | Player | Quick Actions moved directly below hero across all persona dashboards | Resolved UX | Complete | MVP |
-| PL-024 | Player | Blue-on-blue text | Accessibility | High | MVP |
+| PL-024 | Player | Blue-on-blue text — resolved: Player Statistics dark surfaces now use on-dark foreground tokens (`34cd5d4`, 2026-08-21); protected by `validate-dark-surface-contrast.php` | Resolved accessibility | Complete | MVP |
 | ADM-001 | Admin | Sidebar navigation was too long — over 30 items in wp-admin sidebar; consolidated to 19 visible items grouped into logical clusters, 36 route-only items hidden with routes preserved (`c88eab9`, 2026-08-21) | Resolved UX | Complete | MVP |
 | ADM-002 | Admin | Route-only pages appeared as sidebar destinations — hidden with in-page contextual creation actions restored on People/Teams/Events/Venues and existing admin-navigation components elsewhere; 227-check focused validator passing | Resolved UX | Complete | MVP |
 | ADM-003 | Admin | Operational dashboards (e.g. Committee Dashboard) appeared in admin navigation — hidden from the sidebar; portal remains the canonical home for those experiences | Resolved UX/Architecture | Complete | MVP |
@@ -302,6 +302,7 @@ The Team Health experience must remain a leadership oversight layer over canonic
 - Keep dashboard, registrations, events and announcements.
 - **Selected-Child & All-Children Event Scoping (complete):** Parent selected-child scoping (OS-028), Player Preview scoping, and All-Children event child identity (avatars/initials, per-child status) with independent multi-child RSVP on Event Detail are fully delivered.
 - **Parent Family Finance (complete):** Family Finance workspace, invoice detail experience, child attribution, and payment allocation history are fully delivered.
+- **Team Hub text contrast (OS-029 — complete):** Resolved by the systemic dark-surface contrast treatment (commit `34cd5d4`, 2026-08-21); protected by `tools/validate-dark-surface-contrast.php`.
 - Improve notification attachments with an in-app viewer/lightbox (Post-MVP).
 - Post-MVP, evolve communications into richer posts, galleries, match reports and generated club content.
 
@@ -309,6 +310,7 @@ The Team Health experience must remain a leadership oversight layer over canonic
 
 - Keep the dedicated finance identity, payment recording, bulk family invoicing and billing schedules.
 - **Treasurer Finance MVP (complete):** Invoice lifecycle management (draft, issue, cancel), payment recording & allocations, Fee Rules, and Discount Policies are fully delivered inside Club OS.
+- **Billing/invoice dark-surface contrast (FIN-028 — complete):** Resolved by the systemic dark-surface contrast treatment (commit `34cd5d4`, 2026-08-21); protected by `tools/validate-dark-surface-contrast.php`. FIN-031 (static caret-cursor visual bug) is a separate, still-open Low-priority item — not addressed here.
 - Post-MVP, add reporting, exports, reconciliation and payment integrations.
 
 ### Player Workspace
@@ -317,6 +319,7 @@ The Team Health experience must remain a leadership oversight layer over canonic
 - **Player My Stats (PL-022 — complete):** Dedicated standalone `/club-os/player/stats/` page delivered in Batch IN3F16-PL1C with Appearances, Goals, Assists, Player of the Match, Attendance rate, Clean Sheets (GK), Season Story, and Recent Match Contributions, backed by child-safe privacy rules (excluding negative labels, match ratings, and starts/substitute breakdowns).
 - **Player My Season Journey & Milestones (PL-021 — complete):** Expanded `PlayerMySeasonCard` delivered in Batch IN3F17-PL2B2 with Season Journey progress, completed milestone badges, dynamic Next Milestone targets, and attendance rate context.
 - **Player Quick Actions (PL-023 — complete):** Rendered directly below the hero card via `PortalDashboardLayout`.
+- **Player Statistics dark-surface contrast (PL-024 — complete):** Resolved by the systemic dark-surface contrast treatment (commit `34cd5d4`, 2026-08-21); protected by `tools/validate-dark-surface-contrast.php`.
 - **Player Progress canonical MVP journey (PL-025 — complete, confirmed Product Owner decision):** Player Progress remains an embedded Player-specific Team Workspace experience — Player Home → Team Workspace → My Progress. Player global navigation stays deliberately simplified (Home, Team, Events, News); Player Progress is **not** a fifth global navigation item, and the Player Home Progress card links through the authorised Team Workspace My Progress destination via the existing canonical Team/Member Experience projection. Player self-scope and Parent Preview exact-child scope remain authoritative. Standalone infrastructure (`/club-os/player/progress/`, `/club-os/parent/progress/`, `PlayerProgressUrl`) remains in the repository as unfinished/alternate infrastructure, not the primary journey; a future Post-MVP bounded decision will confirm whether to retain it as a documented alternate entry point or deprecate it.
 - Post-MVP, add rewards, XP, coach pointers, league tables, development journeys and team challenges.
 - **Player Communications & Safeguarding Roadmap:**
@@ -428,13 +431,13 @@ Optional **Meet / Arrive Time is intentionally supported for Training** events. 
 
 ## Recommended next implementation batch
 
-**ADM-001 / ADM-002 / ADM-003 (Admin Sidebar Navigation Consolidation & Route Cleanup) is complete** — see the Admin Experience section above. It is no longer the recommended next implementation batch.
+**ADM-001 / ADM-002 / ADM-003 (Admin Sidebar Navigation Consolidation & Route Cleanup) is complete** — see the Admin Experience section above.
 
-A read-only audit performed while verifying ADM-001/002/003 found that this roadmap had described already-shipped work (committed 2026-08-21) as upcoming for over a month. That audit did not extend to re-verifying the current code-level status of the other roadmap items still shown open below, so the same drift cannot be ruled out for them.
+**OS-029, FIN-028 and PL-024 (blue-on-blue dark-surface text contrast) are also complete.** A read-only MVP / Release Readiness reconciliation audit confirmed all three were resolved by commit `34cd5d4` ("Fix dark-surface finance contrast and visual hierarchy", 2026-08-21) — the same day as the ADM commit — through a systemic on-dark foreground-token treatment covering Team Workspace/Team Hub, Finance/billing/invoice and Player Statistics dark surfaces. `tools/validate-dark-surface-contrast.php` currently passes 6390/6390 checks protecting this treatment. Both discoveries follow the same pattern: real, dated, validated work that this roadmap had not yet caught up to.
 
-The roadmap's own Consolidated review log currently still lists OS-029, FIN-028 and PL-024 (blue-on-blue text contrast, High priority, MVP) as open, with no other item marked as the clear authoritative next batch. Given the demonstrated gap between this document and actual repository state, promoting any one of these to "next" without first re-verifying it against current source would risk repeating the same mistake.
+**No unresolved High/MVP implementation defect is currently known.** The same audit confirmed Release Readiness currently reports **Ready** (22 checks: 17 Pass, 1 Review, 4 External, 0 Fail, zero required-and-unresolved risks), and found no other open roadmap item at High priority within MVP scope. This does not mean Club OS is "finished" — it means no currently-known High/MVP blocker remains after source reconciliation, and **Club OS remains suitable for continued Internal Club Testing.**
 
-**Next implementation priority requires a current-state reconciliation audit** — a read-only pass verifying OS-029, FIN-028, PL-024 and any other roadmap item still shown open against actual current source (the same kind of audit that discovered ADM-001/002/003 was already done), before committing to a specific next implementation batch.
+The only items the roadmap still shows open within MVP scope are **FIN-031** (Low priority, static caret-cursor visual bug) and **OS-011** (Medium priority/Polish, Welfare concern-detail hierarchy) — neither has yet been re-verified against current source. **No new implementation batch should be promoted merely because an older roadmap item still appears open.** The next sensible engineering decision point is a small, read-only source reconciliation of these remaining polish candidates — using the same source-first approach that revealed ADM-001/002/003 and OS-029/FIN-028/PL-024 were already complete — before choosing to implement either. Internal Club Testing feedback may also surface a more important real-world issue that should take priority over both.
 
 ## Future club profiles
 
