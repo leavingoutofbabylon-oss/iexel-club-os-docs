@@ -29,6 +29,7 @@ This document tracks the major development milestones of IEXEL Club OS. Complete
 | ADM | Admin Sidebar Navigation Consolidation & Route Cleanup (ADM-001 / ADM-002 / ADM-003) | ✅ Complete |
 | A11Y | Dark-Surface Text Contrast (OS-029, FIN-028, PL-024) | ✅ Complete |
 | CMC | Completed Match Correction Architecture (Batches 2A, 2B-1, 2B-2), Acceptance Gate & Player Progress MVP Decision | ✅ Complete |
+| ICT-Fixes | Internal Club Testing Remediation — Secretary Safeguards, Current Emergency Contact, Password-Reset Completion Alerts & Final Pre-Merge Validator Hygiene (`b2b51eb`) | ✅ Complete |
 
 ---
 
@@ -946,3 +947,34 @@ Player Home → Team Workspace → My Progress
 - Team Workspace → My Progress renders the Player Progress experience (`PortalPlayerProgressPage`) in embedded mode. Player self-scope remains authoritative; Parent Preview remains exact-child scoped.
 - Standalone infrastructure — the `/club-os/player/progress/` and `/club-os/parent/progress/` routes and the `PlayerProgressUrl` URL-builder class — remains in the repository. Source evidence (introduced together in one earlier feature commit, fully route-registered and security-hardened, but with zero current call sites for `PlayerProgressUrl` anywhere in production code) classifies it as unfinished/alternate standalone infrastructure rather than the primary Player journey. It was not removed or redesigned.
 - **Deferred cleanup item (Post-MVP, not a blocker):** after MVP/Release Readiness, decide whether to (A) formally retain/document the standalone route as an alternate/bookmarkable direct entry point, or (B) deprecate/remove the unused standalone URL-builder/route infrastructure.
+
+---
+
+# Internal Club Testing Remediation & Final Pre-Merge Validator Hygiene
+
+**Status:** Complete — merged to plugin `main` at `b2b51eb` (2026-08-29).
+
+Closes out the Internal Club Testing remediation programme that followed the SEC-001–SEC-008 / Completed Match Correction work above, and integrates the accumulated `feature/mvp-internal-testing-fixes` branch into plugin `main`.
+
+## Delivered
+
+- Secretary member-maintenance safeguards and person-bound registration/training-member flow fixes.
+- Canonical Current Emergency Contact management: a Person-level current-state record, authoritative even when explicitly empty, with an exact-current-Season Registration compatibility fallback and unavailable as the final state — never inferring a value the Secretary has not recorded.
+- Secretary-assisted password-reset completion alerts: request/completion tracked via ordinary WordPress user meta (no schema, no password/token/URL ever stored or logged), completion attributed to the resetting WP user (never falsely attributed to the requesting Secretary), idempotent on WordPress's own canonical `after_password_reset` hook, one logical `DashboardAlert` per eligible completion, seven-day (`604800`s) self-expiring eligibility window, fail-closed re-check of the Person/WP-user link at both completion and read time.
+- Final pre-merge validator/repository hygiene: removed a stray scratch helper (`scratch/web_run_validator.php`); replaced brittle exact-literal `DATA_VERSION`/`SCHEMA_VERSION`/`REWRITE_SCHEMA_VERSION`/preview-route-array validator assertions with structural proofs of the underlying invariant across 14 validator files; repaired bootstrap/fixture drift (missing `require_once`s, missing WordPress function stubs, a stale local `Season` fixture, a variable-name collision) uncovered in the process. Zero production files were touched by this hygiene work.
+
+## Integration
+
+- **Method:** audited, GREEN-gated, pure fast-forward (`git merge --ff-only`) — no merge commit, no rebase, no squash, no force push.
+- **Divergence at integration:** `origin/main` 0 commits ahead, `feature/mvp-internal-testing-fixes` 57 commits ahead, merge-base == `origin/main`.
+- **Final clean-branch pre-merge release gate:** GREEN (zero functional/security/schema/integration blocker; two harmless validator-drift items and one bare-CLI mysqli environmental limitation, all individually classified as non-blocking).
+- **Post-integration sanity validation:** PASS (all 10 required validators green on the post-merge tree).
+- **Result:** plugin `main` and `origin/main` both point to `b2b51eb`.
+
+## Known non-blocking validator debt (unchanged by this integration; tracked, not defects)
+
+- `validate-prospect-training-conversion.php` — harmless source-shape drift: an exact-literal assertion against `TeamSeasonService`'s `age_group` snapshot expression no longer matches after a legitimate `trim()`/`'Unspecified'`-default refactor; the eligibility-governing invariant remains independently proven by adjacent assertions in the same file.
+- `validate-committee-club-projects.php` — a stale exact-literal assertion no longer matches after a legitimate, already-committed `log_important_lifecycle_activity()` call was added inside the same success-gated block it pins; the "cache refresh restricted to successful mutations" invariant still holds by direct inspection.
+- `validate-visual-foundation.php` — a stale dependency-array assertion (expects `public.css` enqueued with an empty dependency array) no longer matches after `public.css` was given a genuine, deliberate `iexel-club-os-club-mark` load-order dependency, introduced by an already-committed branding-controls feature.
+- `validate-secretary-portal-account-linking.php` — passes, but emits non-fatal `stdClass could not be converted to int` PHP warnings; cosmetic, does not affect the PASS result.
+- A pre-existing, non-content whitespace nit: a trailing blank line at EOF in `app/core/Upgrade/ParentGuardianRelationshipReconciliation.php` (flagged by `git diff --check`; not a conflict marker).

@@ -132,7 +132,7 @@ A true fresh-install Release Candidate test on WordPress 7.0.4, PHP 8.2.29 and M
 - **Safety Audits:** Zero duplicate data, zero destructive reapplication, zero capability regression, zero event/match historical corruption, and zero formation/reference duplication.
 - **Environment Isolation:** Executed entirely on disposable RC database (`127.0.0.1:10010`); development database (`127.0.0.1:10005`) and plugin source remained untouched.
 
-Both Environment 1 (Clean Installation) and Environment 2 (Controlled Upgrade Matrix) have passed. Next milestone: Internal Club Testing.
+Both Environment 1 (Clean Installation) and Environment 2 (Controlled Upgrade Matrix) have passed. Internal Club Testing and its subsequent remediation programme are now complete and merged to plugin `main` at `b2b51eb` (2026-08-29, pure fast-forward, GREEN pre-merge gate). Next milestone: Final Release Readiness / Club OS v1.0 sign-off — see `RELEASE_CHECKLIST.md` for the specific remaining gates. This is safe integration into `main`, not final Release Readiness sign-off or production deployment approval.
 
 ## MVP priorities
 
