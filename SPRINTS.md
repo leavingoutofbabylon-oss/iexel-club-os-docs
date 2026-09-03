@@ -978,3 +978,47 @@ Closes out the Internal Club Testing remediation programme that followed the SEC
 - `validate-visual-foundation.php` — a stale dependency-array assertion (expects `public.css` enqueued with an empty dependency array) no longer matches after `public.css` was given a genuine, deliberate `iexel-club-os-club-mark` load-order dependency, introduced by an already-committed branding-controls feature.
 - `validate-secretary-portal-account-linking.php` — passes, but emits non-fatal `stdClass could not be converted to int` PHP warnings; cosmetic, does not affect the PASS result.
 - A pre-existing, non-content whitespace nit: a trailing blank line at EOF in `app/core/Upgrade/ParentGuardianRelationshipReconciliation.php` (flagged by `git diff --check`; not a conflict marker).
+
+---
+
+# Verified Historical Scorer Attribution v1 (CMC-002)
+
+**Status:** Complete. Implemented, source-validated, browser-accepted, committed and pushed to plugin `main` at `2f3dcee` ("feat: add verified historical scorer attribution").
+
+**Goal:** Give Coaches a safe, auditable, evidence-backed way to recover a genuine historical scorer on a completed Match's active Club goal for the rare case where reliable Tier-1 historical participation evidence (saved Selection + legitimate live-bench admission) is genuinely absent, without weakening the normal Correct Match Record eligibility rule and without broadening historical eligibility for anyone else.
+
+## Verified scorer write path
+
+**Status:** Complete.
+
+- `CompletedMatchGoalCorrectionService::verify_historical_scorer()` follows the established void+append correction architecture (`void_incident()` + `add_goal_at_timeline_order()`) — no new persistence primitive. It re-confirms, under lock, that Tier-1 eligibility is still empty before proceeding, and rejects even a direct/forged invocation once Tier-1 evidence exists.
+- v1 Tier-2 candidate discovery is deliberately narrow: exact Event Audience **or** exact Event Attendance for the exact Match — discovery only, never automatic proof of participation, and never intersected with Team assignment.
+- Required Coach input: verified scorer, verification source (`match_footage` / `club_records` / `first_hand_knowledge`, a closed vocabulary shared with the form), a mandatory evidence note, and explicit confirmation.
+- A distinct `verify_historical_match_goal` idempotent-action string keeps retries from colliding with ordinary `correct_match_goal` requests. A distinct `match_goal_verified_historical_attribution` audit action (metadata-only: event/incident IDs, verified scorer, verification source, evidence note, request key, acting user — deliberately never a candidate-pool list) keeps it from ever being confused with a system-verified correction.
+- `CompletedMatchRecordCorrectionPage` adds a "Verify scorer manually" pathway from an adapted "Insufficient historical evidence" state, reachable only when Tier-1 is empty and the Tier-2 candidate pool is non-empty (fails closed with no dead-end link otherwise); the ordinary Correct Match Record form is unchanged and the two pathways are mutually exclusive for a given goal.
+
+## Downstream integration — Data Quality and Player Statistics
+
+**Status:** Complete.
+
+- `FootballStatisticsEngine` gained a shared, role-specific `outsideSelectionPersonIds()` helper (reused by both the Team-scope and Player-scope outside-selection warning paths) that exempts **only** the exact active incident's scorer role when a matching, currently-live verified-attribution audit record exists — never the whole incident, never assist/player-in/player-out, never a different incident or Match. A superseded (re-verified) attribution naturally stops qualifying because it points at an incident that is no longer active.
+- `PlayerStatisticsRepository::eligibleMatchesForPlayerSeason()` additively merges in a Match where the exact verified scorer has no Selection row but does have currently-live verified-attribution provenance, deduplicated by Match. The Player's own "My Progress" self-service view is explicitly excluded from this merge, mirroring how `effective_selection()` itself already stays out of that surface.
+- `FootballStatisticsEngine::buildPlayerStatistics()` credits the verified scorer with exactly one goal and one appearance for that Match, reusing the genuine `attendanceForPerson()` lookup — never fabricating starting/substitute status, minutes, Attendance, rating or POTM, and never granting participation to any other Event Audience/Attendance candidate.
+- A new `ActivityLogger::verified_scorer_attributions_for_events()` / `verified_scorer_attributions_for_person()` pair provides this provenance as narrow, batched reads (never one query per Match/incident), reusing the existing `activity_log` `action`/`object_id` indexes.
+
+## Browser-acceptance regression — Player-specific Match-card crediting
+
+**Status:** Found and fixed before final sign-off.
+
+Browser acceptance found that a non-scoring Player's own Player Statistics Match card could show another Player's verified goal (e.g. `Goals 1` on a Player who did not score) — the verified-scorer crediting block credited every verified scorer for a Match regardless of which specific Player's own statistics build was being rendered. Fixed with a single additional guard so a Player-scoped build (`person_id` set) credits only that exact verified scorer; a team-wide build (`person_id === 0`) is unaffected and still credits every verified scorer, exactly as intended for the Team Statistics player table. A dedicated regression fixture in `tools/validate-player-season-stats.php` reproduces the exact leak and is confirmed to fail without the guard.
+
+## Validation
+
+- `tools/validate-team-workspace-overview-shell-polish.php` — 326 checks (write-path, Data Quality exception and downstream-integration assertions).
+- `tools/validate-player-season-stats.php` — 112 checks, including the dedicated Player-specific-crediting regression fixture (verified scorer's own build vs. a non-scoring Player's own build vs. team-wide scope).
+- `tools/validate-team-statistics-current-player-scope.php`, `tools/validate-player-team-statistics-visibility.php`, `tools/validate-player-progress.php`, `tools/validate-dark-surface-contrast.php` all pass unaffected.
+- Browser acceptance confirmed: verified scorer recovered through the exceptional pathway; score unchanged; active goal incident carries the verified scorer; the Player receives goal + appearance + Match history; no starter/substitute/minutes fabricated; the exact verified scorer no longer triggers the generic outside-selection Data Quality warning while the two genuine goalkeeper warnings remain; Player Match-card statistics remain Player-specific after the crediting-leak fix.
+
+## Deferred / out of v1 scope
+
+Not implemented, not scaffolded: Verified Historical Appearance, Verified Historical Assist Attribution, Historical Registration as candidate evidence, reliable effective-dated Team-assignment history, a longer-term unified historical-participation evidence model, and Match Hero Goal-Scorer Presentation (tracked as a required Pre-MVP item, not Post-MVP). See `CLUB_OS_EXPERIENCE_REVIEW_AND_ROADMAP.md`'s "Historical Match Participation Evidence — Deferred Opportunities" and "Match Hero Goal-Scorer Presentation" sections.

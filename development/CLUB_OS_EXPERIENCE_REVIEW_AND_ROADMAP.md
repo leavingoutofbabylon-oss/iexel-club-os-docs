@@ -149,6 +149,8 @@ Both Environment 1 (Clean Installation) and Environment 2 (Controlled Upgrade Ma
 - **Coach — complete:** Allow bench/substitute selection in Lineup Builder and persist it into Matchday Hub and substitution controls (OS-025).
 - **Coach — complete:** Coach Team Event Scope Hardening & Football Event-Type Alignment (SEC-008) — restricted to Training, Fixture, Friendly, Tournament; Meet / Arrive Time intentionally supported for Training; Matchday Hub Match Location display repaired (`2370551`).
 - **Coach — complete:** Completed Match Correction (CMC-001) — Correct Match Record (scorer/assist/minute correction, Normal ↔ Penalty), Remove Incorrect Goal and Add Missed Goal, built on canonical score reconciliation and Match incident `timeline_order`, with a combined end-to-end acceptance gate.
+- **Coach — complete:** Verified Historical Scorer Attribution v1 (CMC-002) — exceptional, evidence-backed scorer recovery for a completed Match's active Club goal when reliable Tier-1 historical participation evidence is genuinely absent; Player-specific and provenance-specific, browser accepted and merged (`2f3dcee`).
+- **Coach — Pre-MVP, required before Version 1 release:** Match Hero Goal-Scorer Presentation (CMC-003) — show Club goal scorers beneath the Match score in familiar football-result style, across both live Match Mode and completed-Match presentation. Not yet implemented; see "Match Hero Goal-Scorer Presentation" below.
 - **Parent — complete:** Fix selected-child context so an U8 child cannot see an U7 next event, and deliver Parent All-Children event identity + multi-child RSVP (OS-028).
 - **Parent — complete:** Improve Team Hub text contrast (OS-029) — resolved by the systemic dark-surface contrast treatment, commit `34cd5d4`, 2026-08-21.
 - **Parent — complete:** Provide a real Finance page with invoice detail and payment history — delivered in Parent Family Finance & Invoice Detail (OS-030).
@@ -192,6 +194,8 @@ Both Environment 1 (Clean Installation) and Environment 2 (Controlled Upgrade Ma
 | OS-032 | Global | Priority Alerts could expose work unrelated to the active persona — persona/capability scoping accepted, merged to plugin `main`, and formally closed for MVP | Resolved security/UX | Complete | MVP |
 | SEC-008 | Coach | Coach Team Event Scope Hardening & Football Event-Type Alignment — restricted to Training, Fixture, Friendly, Tournament; Meet/Arrive supported for Training; Matchday Hub Match Location repair delivered (`2370551`) | Resolved gap | Complete | MVP |
 | CMC-001 | Coach | No safe way to correct a completed Match after Full Time — Correct Match Record, Remove Incorrect Goal and Add Missed Goal delivered on canonical score reconciliation and Match incident `timeline_order`, validated by a combined end-to-end acceptance gate | Resolved gap | Complete | MVP |
+| CMC-002 | Coach | A completed Match's active Club goal can have no reliable Tier-1 historical participation evidence (no saved Selection, no legitimate live-bench admission), leaving the scorer unrecoverable and Data Quality showing a misleading generic outside-selection warning — exceptional, evidence-backed Verified Historical Scorer Attribution delivered (`2f3dcee`), Player-specific and provenance-specific throughout | Resolved gap | Complete | MVP |
+| CMC-003 | Coach | Club OS does not yet present Club goal scorers beneath the Match score in familiar football-result style, in either live Match Mode or completed-Match presentation | Product requirement | High | Pre-MVP |
 | PL-025 | Player | Player Progress navigation architecture undecided — confirmed canonical MVP journey is Player Home → Team Workspace → My Progress (embedded); Player global navigation stays Home/Team/Events/News with no fifth Progress item | Resolved decision | Complete | MVP |
 | RR-001 | Release Readiness | Integrity Batches 1, 2, 2.5 and 3 implemented, validated and accepted; plugin implementation and documentation reconciliation merged to their respective `main` branches | Resolved release integrity | Complete | MVP |
 | FIN-027 | Treasurer | Invoices cannot be viewed, edited, cancelled, archived or voided properly — Treasurer invoice lifecycle delivered | Resolved gap | Complete | Sprint 33 |
@@ -277,6 +281,7 @@ The Team Health experience must remain a leadership oversight layer over canonic
 - **Coach Event Setup & Scope Hardening (SEC-008 — complete):** Coach team event creation is restricted to the four football event types `Training`, `Fixture`, `Friendly` and `Tournament`. Other generic event types are unavailable in the Coach workflow. Secretary retains the broader canonical event model. Meet / Arrive Time is intentionally supported for Training.
 - **Matchday Hub Location & External Directions (complete):** Emergency-contact projection, bench/substitute selection, external Directions (`target="_blank"` / `rel="noopener"` via PR #123), and Match Location hero card derivation (`2370551`) are fully delivered and verified.
 - **Completed Match Correction (CMC-001 — complete):** From a completed Event, Match correction and recovery → Correct Match Record supports score-neutral scorer/assist/minute correction and Normal ↔ Penalty without reopening the Match. Remove Incorrect Goal and Add Missed Goal are also delivered, built on canonical active-ledger score reconciliation and Match incident `timeline_order` (`sequence` stays the immutable creation/audit order; `timeline_order` owns effective chronological replay/display order). Historical Player eligibility always reflects the actual historical pitch state — saved selection, Event audience, Attendance and the on-pitch state at the chosen placement boundary — never merely all selected/bench Players, and an equal-minute tie always requires an explicit Coach Before/After choice rather than an arbitrary break. A combined end-to-end acceptance gate proved the full correction journey (correction, removal, addition, equal-minute placement, all goal semantics, statistics, participant privacy) on one disposable completed Match. The completed-match participant experience for Player/Parent/Parent Preview remains a privacy-minimised, scoring-focused Match Story that never exposes ratings, Coach Notes, correction reasons/audit metadata or unrelated Player identities.
+- **Verified Historical Scorer Attribution v1 (CMC-002 — complete, `2f3dcee`):** For the rare case where a completed Match's active Club goal has no reliable Tier-1 historical evidence (no saved Selection, no legitimate live-bench admission via `effective_selection()`), an authorised Coach may use an exceptional, evidence-backed pathway (`CompletedMatchGoalCorrectionService::verify_historical_scorer()`) instead of the normal Correct Match Record form. Candidate discovery is narrowly exact Event Audience **or** exact Event Attendance for that exact Match — discovery only, never automatic proof — and the Coach must supply the verified scorer, a verification source (Match footage / Club records / First-hand knowledge), an evidence note and explicit confirmation. Reuses the established void+append correction architecture and writes a distinct, transactional `match_goal_verified_historical_attribution` audit record. A valid attribution is Player-specific and provenance-specific: it credits the verified goal, one appearance and Match-history inclusion for that exact Player only, never fabricates starting/substitute status, minutes, Attendance, rating, POTM or an assist, never rewrites saved Selection or broadens `effective_selection()`, and Data Quality recognises the exception only for the exact active incident's scorer role. A downstream Player-specific-crediting regression (a non-scoring Player's own Match card briefly showing another Player's verified goal) was found in browser acceptance and fixed before final sign-off. See `MASTER_DEVELOPER_GUIDE.md`'s "Verified Historical Scorer Attribution — Historical Eligibility Direction" and `SPRINTS.md` for full delivery detail, and "Historical Match Participation Evidence — Deferred Opportunities" below for what remains out of v1 scope.
 - Use the Coach dashboard as the reference pattern for Quick Actions placement (delivered across all persona dashboards).
 - Do not redesign the immersive dark team and match workspaces merely to make every page identical.
 
@@ -423,6 +428,59 @@ The Event Builder venue-selection radio and control presentation appeared visual
 
 Optional **Meet / Arrive Time is intentionally supported for Training** events. This supersedes any earlier handover statement suggesting Meet / Arrive Time should be hidden for training sessions. Grassroots clubs routinely require players to arrive before training commences for preparation, warmup, or administrative checks.
 
+### Match Hero Goal-Scorer Presentation (CMC-003)
+
+**Status:** Confirmed Product Decision — **PRE-MVP / BEFORE VERSION 1 RELEASE.** Not yet implemented; this is a required MVP gap, not a Post-MVP enhancement, and must not be reprioritised behind Post-MVP work.
+
+**Product Objective:** Present Club goal scorers beneath the Match score in familiar football-result style, so a Match reads the way football fans naturally expect:
+
+```
+U7 GOLD 3–2 GURU NANAK
+
+David Adel 12′, 48′
+Jude Kane 37′
+```
+
+The exact visual design above is illustrative, not a locked UI specification.
+
+Required principles:
+- Must work across **both** live Match Mode and completed-Match presentation.
+- Source scorer information from canonical active Match goal incidents only — do not create a second scorer data store.
+- Live Match Mode should update the scorer presentation as goals are recorded.
+- Completed-Match presentation should retain scorer information beneath the final score.
+- Ordinary corrected scorer attribution (Correct Match Record) and Verified Historical Scorer Attribution (CMC-002) must both be automatically reflected — no separate wiring per correction pathway.
+- Voided/superseded incidents must never remain visible in the presentation.
+- Multiple goals by the same Player should support natural football-style consolidation (e.g. `David Adel 12′, 48′`).
+- Do not invent opponent scorer identities where Club OS does not record them.
+- Preserve the premium midnight-blue-and-gold Club OS design system and responsive/mobile presentation.
+- Use football terminology rather than generic activity-feed language.
+
+## Historical Match Participation Evidence — Deferred Opportunities
+
+**Status:** Post-v1 / Deferred. None of the following are current v1 commitments; do not implement or scaffold any of them without a separate, dedicated approval.
+
+Verified Historical Scorer Attribution v1 (CMC-002) deliberately keeps verified attribution Player-specific and provenance-specific rather than broadening `effective_selection()`. The following opportunities were identified during that work and are recorded here so they are not lost, not so they can be started:
+
+### 1. Verified Historical Appearance
+
+A future authorised-Coach pathway to verify that a Player genuinely participated in a historical Match even where Club OS has no saved Selection, no legitimate live-bench admission, no goal, no assist, and no POTM/rating — recovering a truthful historical appearance/Match-history record without inventing a Match incident. Likely future principles mirror CMC-002: explicit authorised verification, constrained historical candidate discovery, verification source, evidence note, explicit confirmation, auditable provenance, Player + Event specific, no current-roster fallback. Should eventually support appearance and Match history only — never a fabricated goal, assist, starter/substitute status, minutes, Attendance, rating or POTM.
+
+### 2. Verified Historical Assist Attribution
+
+CMC-002 is scorer-only. A corresponding verified historical assist pathway is deferred and should reuse appropriate safety/audit principles when eventually designed — its eligibility semantics should not be assumed identical to the scorer pathway without a future dedicated audit.
+
+### 3. Historical Registration as candidate evidence
+
+Season/age-group Registration history may eventually help identify historically plausible Players where exact Event Audience/Attendance evidence is unavailable. Registration must **not** be treated as reliable historical evidence until the repository/data model is audited for genuinely effective historical registration by Season, age group and relevant Match date. Even if later approved, Registration should initially be candidate-discovery evidence only, never automatic proof of participation.
+
+### 4. Reliable effective-dated Team-assignment history
+
+Current Team-assignment history is not sufficiently reliable for historical eligibility decisions. A read-only audit conducted during CMC-002 found `team_assignments.joined_on`/`left_on` unreliable in practice (three materially different write paths; a confirmed real-data counter-example of a `joined_on` date recorded 13 days after a Match the same Person is independently evidenced to have attended). Future work should establish a trustworthy effective-dated Team-membership history before Team assignments can be used as historical evidence. Do not imply that "ever assigned to this Team" proves Match-date eligibility.
+
+### 5. Longer-term historical-participation evidence model
+
+An architectural direction, not an immediate refactor: Club OS may eventually benefit from a coherent historical-participation evidence model that distinguishes the evidential strength of saved Match Selection, legitimate live-bench admission, explicitly verified scorer attribution, a future verified assist attribution, a future verified historical appearance, and potentially-reliable effective-dated Registration/Team membership once those are separately audited. Do not refactor toward this now — CMC-002's v1 architecture deliberately keeps verified attribution Player-specific and provenance-specific rather than broadening `effective_selection()`.
+
 ## Product principles
 
 1. **Volunteer Administrative Efficiency:** Club OS must reduce repetitive administrative effort for club volunteers while preserving explicit user control.
@@ -442,7 +500,11 @@ The only items the roadmap still shows open within MVP scope are **FIN-031** and
 - **FIN-031** (Low priority, static caret-cursor visual bug) **could not be reproduced in current source.** No Finance/Treasurer static summary currently uses `cursor: text` or another confirmed input-like affordance, and the Treasurer/Finance surface has been substantially rebuilt since this finding was originally recorded, with no specific fix commit identifiable. This is **not** the same as confirming it fixed — it remains open, classified as *not reproducible in current source; Product Owner reproduction required before implementation*.
 - **OS-011** (Medium priority/Polish, Welfare concern-detail hierarchy) **was independently confirmed still present**, with no safeguarding or capability impact — the portal Welfare Concern Detail page still renders its Summary, Information, Timeline and Activity History as undifferentiated equal-weight grid cards. It remains genuinely open and is a legitimate small future candidate, but is cosmetic/non-blocking and is not currently promoted ahead of Internal Club Testing.
 
-**Neither is currently promoted as the next implementation batch.** No unresolved High/MVP implementation blocker is known, and Release Readiness currently reports Ready. Internal Club Testing feedback should drive the next meaningful implementation batch, unless a higher-priority regression emerges in the meantime. If FIN-031 is ever picked up, it requires a fresh reproduction from the Product Owner first, not direct implementation from this roadmap description.
+**Neither is currently promoted as the next implementation batch.** No unresolved High/MVP implementation blocker is known, and Release Readiness currently reports Ready. If FIN-031 is ever picked up, it requires a fresh reproduction from the Product Owner first, not direct implementation from this roadmap description.
+
+**Verified Historical Scorer Attribution v1 (CMC-002) is now complete** — see the Coach Workspace section above and `SPRINTS.md` for full delivery detail. Its downstream Data Quality exception, Player Statistics eligible-matches/crediting integration, and a browser-acceptance Player-specific-crediting regression were all implemented, validated and merged at `2f3dcee`.
+
+**Recommended next implementation batch: Match Hero Goal-Scorer Presentation (CMC-003) — see "Match Hero Goal-Scorer Presentation" above.** This is a confirmed Product Owner decision and is explicitly classified Pre-MVP / before Version 1 release, not Post-MVP. It is the next intended product area after the CMC-002 documentation checkpoint. The deferred CMC-002 follow-on opportunities ("Historical Match Participation Evidence — Deferred Opportunities" above) remain Post-v1 and are not part of this next batch.
 
 ## Future club profiles
 
