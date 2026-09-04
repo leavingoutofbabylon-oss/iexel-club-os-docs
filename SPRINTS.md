@@ -1019,6 +1019,100 @@ Browser acceptance found that a non-scoring Player's own Player Statistics Match
 - `tools/validate-team-statistics-current-player-scope.php`, `tools/validate-player-team-statistics-visibility.php`, `tools/validate-player-progress.php`, `tools/validate-dark-surface-contrast.php` all pass unaffected.
 - Browser acceptance confirmed: verified scorer recovered through the exceptional pathway; score unchanged; active goal incident carries the verified scorer; the Player receives goal + appearance + Match history; no starter/substitute/minutes fabricated; the exact verified scorer no longer triggers the generic outside-selection Data Quality warning while the two genuine goalkeeper warnings remain; Player Match-card statistics remain Player-specific after the crediting-leak fix.
 
+## Historical eligibility and Data Quality correctness fixes
+
+**Status:** Complete (`2cbae72`, `7d3caa0`, 2026-09-03 — landed in this same arc, ahead of `2f3dcee`).
+
+- `historically_eligible_players()` (`CompletedMatchGoalCorrectionService`, used by both Correct Match Record and Add Missed Goal) now replays the historical pitch state against `MatchLiveBenchAdmissionService::effective_selection()` (Selection **plus** legitimate live-bench admissions) rather than the raw saved Selection alone (`2cbae72`, files: `CompletedMatchGoalCorrectionService.php`, `FootballStatisticsEngine.php`, `Kernel.php`, `CompletedMatchGoalAdditionService.php`). Without this, a Player legitimately admitted to the live bench and later substituted on was invisible to historical eligibility, incorrectly reporting zero eligible historical scorer/assist candidates even though the Match's own incident history proved they played. Pitch-state replay itself is unchanged — an admission still only becomes "on pitch" via a genuine substitution incident, never automatically.
+- Data Quality's recovery-action routing (`TeamStatisticsDataQualityCard`/`PlayerStatisticsDataQualityCard`) is now a positive allowlist per destination rather than a catch-all default (`7d3caa0`). `GOAL_CODES` (routed to Correct Match Record / Remove Goal) now also includes `unattributed_goal` and `unattributed_own_goal` (both genuinely correctable/removable, previously omitted); a new `MATCH_REPORT_CODES` allowlist replaces the old "everything else goes to Match Report" default, listing only codes Match Report can actually edit (ratings, Player of the Match, report text); every other code (selection/incident/goalkeeper/location integrity) now correctly receives no Match Report recovery link rather than a misleading one.
+- Both fixes are validated by `tools/validate-team-workspace-overview-shell-polish.php` (part of the same 326-check total cited below).
+
 ## Deferred / out of v1 scope
 
-Not implemented, not scaffolded: Verified Historical Appearance, Verified Historical Assist Attribution, Historical Registration as candidate evidence, reliable effective-dated Team-assignment history, a longer-term unified historical-participation evidence model, and Match Hero Goal-Scorer Presentation (tracked as a required Pre-MVP item, not Post-MVP). See `CLUB_OS_EXPERIENCE_REVIEW_AND_ROADMAP.md`'s "Historical Match Participation Evidence — Deferred Opportunities" and "Match Hero Goal-Scorer Presentation" sections.
+Not implemented, not scaffolded: Verified Historical Appearance, Verified Historical Assist Attribution, Historical Registration as candidate evidence, reliable effective-dated Team-assignment history, and a longer-term unified historical-participation evidence model. See `CLUB_OS_EXPERIENCE_REVIEW_AND_ROADMAP.md`'s "Historical Match Participation Evidence — Deferred Opportunities" section. (Match Hero Goal-Scorer Presentation, formerly tracked here as a required Pre-MVP item, is now complete — see "Match Hero Goal-Scorer Presentation (CMC-003)" below.)
+
+---
+
+# Match Hero Goal-Scorer Presentation (CMC-003)
+
+**Status:** Complete. Implemented, source-validated, browser-accepted, committed and pushed to plugin `main` at `b37de1c` ("feat: add match goal scorers to result heroes"), with a live-eligibility correction (`ff73ae6`) and responsive/half-width polish (`0b8d21b`) landing in the same arc.
+
+**Goal:** Present Club goal scorers beneath the Match score in familiar football-result style on both live Match Mode and completed-Match presentation, sourced from canonical active Match goal incidents only.
+
+## Scorer hero component and integration
+
+**Status:** Complete (`b37de1c`).
+
+- `MatchGoalScorersCard` (new, `app/core/UI/Components/MatchMode/MatchGoalScorersCard.php`) is the sole owner of scorer grouping/formatting: same-Player multi-goal consolidation (`David Adel 12′, 48′`), penalty suffix, neutral `Own goal`/`Scorer not recorded` entries, exclusion of opponent goals and voided/superseded incidents, and correct 0′-vs-null-minute handling (a stored `0` renders `0′`; a genuinely missing minute renders nothing).
+- Composed directly inside `MatchModeScoreCard`'s own scoreboard grid via an optional, backward-compatible 5th `$incidents` parameter (an output-buffer-and-wrap technique) — not as an external sibling — associated with whichever column the Club's own side occupies. Shared verbatim by live Match Mode, the Coach completed-Event hero and the three focused sub-action pages (which simply omit the parameter and are unaffected).
+- The privacy-minimised participant Match Story (`CompletedParticipantMatchExperience`) renders the same component directly against `CompletedMatchExperienceService`'s own narrow, 7-field `club_goal_scorers` projection (active/incident_type/goal_mode/goal_type/scorer_person_id/scorer_name/minute only — never assist/void/audit/rating/Coach-note fields).
+- Ordinary Correct Match Record corrections and Verified Historical Scorer Attribution (CMC-002) both flow through automatically — no separate wiring per correction pathway, since both write through the same canonical active-incident data `MatchGoalScorersCard` reads.
+
+## Participant scorer-name fix
+
+**Status:** Complete (part of `b37de1c`'s arc).
+
+Browser acceptance found a Player/Parent completed-Match Story showing "Scorer not recorded" for a Match where the Coach view showed the correct name. Root cause: `CompletedMatchExperienceService::build()` sourced incidents via `MatchIncidentRepository::active_for_event()` (an unjoined query with no `scorer_name`), while Coach paths use the joined `for_event()`. Fixed by switching to `for_event()` plus an explicit PHP `array_filter()` on `$row['active']` to preserve the original active-only semantics.
+
+## Live attribution eligibility correction
+
+**Status:** Complete (`ff73ae6`, "fix: align live goal eligibility with on-pitch state").
+
+Browser acceptance on a synthetic live Match found the Goal Scorer/Assist dropdowns missing Players who were shown as Current On Pitch — confirmed **not** a CMC-003 regression (zero diff on the relevant files at the time), but a pre-existing rule violation newly surfaced by testing. `MatchLivePlayerEligibilityService::project()` was double-filtering: the on-pitch set (from Selection/substitution replay) was correct, but a second pass then additionally required an Attendance row of Present/Late, silently dropping an on-pitch Player with **no** Attendance row at all.
+
+Fixed narrowly: an on-pitch Player is now scorer/assist eligible unless they carry an **explicit** non-Present/Late Attendance status — a missing row no longer disqualifies, but an explicit Absent/Excused status still does (this distinction was deliberately preserved after it was found to be independently asserted by `tools/validate-match-substitution-attendance-eligibility.php`). Available Bench Players remain ineligible until legitimately admitted (`MatchLiveBenchAdmissionService::admit()`/`effective_selection()`, which still requires Present/Late) or substituted onto the pitch. `MatchGoalService`'s server-side write validation calls the same `project()` method, so this one fix corrects both the dropdown candidates and write-time enforcement together.
+
+## Focused-action and half-width responsive polish
+
+**Status:** Complete (`0b8d21b`, "fix: polish match score hero responsive layout").
+
+- The focused Goal Attribution/Substitution/Change Goalkeeper score card no longer stretches vertically merely to match a taller adjacent form (`align-items: start` on the focused-action grids, matching normal Live Match Mode's own already-correct behaviour).
+- Team names now scale relative to the score card's own container width (`container-type: inline-size` + a resilient `clamp()`), not the viewport — fixing character-by-character breaks (`U7 / GO / LD`) that occurred whenever the card was narrower than the viewport assumed (a two-column desktop split, a focused-action card, or an actually-narrow viewport).
+- The scorer list switches to one entry per line (bullet suppressed) below a safe card width, guaranteeing a Player name and minute never separate onto different lines regardless of how many scorers there are.
+- All CMC-003 scorer grouping/semantics (consolidation, penalty, own goal, unattributed, 0′/null-minute, opponent/voided exclusion) are unaffected — this batch never touched `MatchGoalScorersCard::build_lines()`.
+
+## Validation
+
+- `tools/validate-match-goal-scorers-hero.php` (new) — 94 checks (component grouping/formatting, privacy-minimised projection, call-site integration, responsive resilience).
+- `tools/validate-match-goal-live-eligibility.php` — extended with the live-eligibility correction fixture.
+- `tools/validate-event-detail-batch1-mobile-redesign.php`, `tools/validate-dark-surface-contrast.php` pass unaffected.
+- Browser acceptance confirmed on both live Match Mode and completed-Match presentation, at desktop and 320px, including the Rochester City/U7 Gold long-name and multi-scorer half-width cases.
+
+---
+
+# Primary Immersive Module Accent-Top Consolidation
+
+**Status:** Complete (`54edcb2`, `5616f8b`).
+
+**Goal:** Establish one reusable primitive for the restrained club-accent top-edge treatment already used independently across Team Events/Attendance/Statistics, Match Report, Correct Match Record and Event Detail, and close the remaining gaps on Match Mode, Match Recovery/Match Details, the main Events header and the Matchday Hub hero — without redesigning any already-accepted surface.
+
+## Match Mode gold-trim polish
+
+**Status:** Complete (`54edcb2`).
+
+- Match Mode's own cards (Live Score, Match State, Current On Pitch, Available/Unavailable Bench, Starting Lineup, Other Matchday Players, Match Incident Timeline, Available player audience, Staff) converted from a one-off gold left rail to the established gold top-edge treatment, scoped to `.iexel-match-mode .iexel-match-mode-card:not(.iexel-attendance-change-card)` so `EventAttendancePage.php`'s own, unrelated reuse of the same shared class is untouched.
+- Match Recovery and Match Details (the same shared `<details>/<summary>` disclosure) now use the same 2px accent border as the page's premium navigation controls (`.iexel-workspace-back`, "Back to Matchday Hub") in their resting/collapsed state, not only once expanded. Expand/collapse behaviour, the disclosure arrow, focus treatment and Recovery's own Undo Last Goal/Substitution/Goalkeeper Change content are all unchanged — **Undo Last Goal was not removed or moved.**
+
+## Reusable primitive + remaining header gaps
+
+**Status:** Complete (`5616f8b`).
+
+- Introduced `.iexel-accent-top-module` (`assets/css/public.css`) as the one reusable primitive, deliberately the smallest safe property footprint (`border-top` only). Because a bare single-class rule was found to lose the cascade to a consumer's own pre-existing `border` shorthand at equal specificity, real consumers are paired with the modifier class in a compound selector rather than relying on source order.
+- **Main Events header** (`EventsWorkspace.php`, `.iexel-events-workspace-header`) now carries the primitive, its legacy left rail removed. `.iexel-event-card` (the cards below it) already had the top-accent treatment from earlier work and was not touched.
+- **Matchday Hub hero** (`MatchdayHeroCard.php`, `.iexel-matchday-hero`) now carries the primitive — the one genuine gap an audit found (a dark, page-level primary module with no accent treatment at all, unlike `MatchReadinessCard` immediately below it). Matchday Hub's own light (`#fff`) operational grid cards (Quick Actions, Selected Squad, Attendance, Venue, Emergency Contacts, Timeline, Register Progress) are a deliberately different card language and remain untouched.
+- **Team Availability** was audited and found **already correctly treated** by a later, more complete "Final MVP Polish" rule (`.iexel-team-availability-tab .iexel-team-attendance-hero`) that an earlier read-only audit had missed — no production change was needed or made.
+- **TeamEventForm** remains deliberately excluded — an interactive task/form surface, not a primary information module.
+- The main Events workspace is intentionally shared across every portal persona (Parent, Player, Coach, Secretary, Treasurer, Welfare, Committee) — the header treatment's multi-role reach is deliberate, not a permissions/workspace leak.
+
+## Validation
+
+- `tools/validate-match-mode-gold-trim.php` (new) — 10 checks.
+- `tools/validate-accent-top-module-primitive.php` (new) — 17 checks (primitive existence/token, both new consumers, TeamEventForm/`.iexel-os-card`/nested-row/semantic-card exclusions, Match Mode's and main Events' pre-existing treatments unaffected).
+- `tools/validate-event-detail-batch1-mobile-redesign.php`, `tools/validate-dark-surface-contrast.php`, `tools/validate-events-workspace.php`, `tools/validate-team-workspace-route-and-display.php` all pass unaffected.
+- Browser acceptance confirmed at desktop and 320px across Main Events, Matchday Hub, Team Availability (regression) and Match Mode (regression).
+
+## Known validator debt (unrelated to this work)
+
+Several DB-integrated Match Mode validators (`validate-match-mode-attendance-live-squad.php`, `validate-match-mode-player-actions.php`, `validate-match-substitution-attendance-eligibility.php`, `validate-live-bench-admission.php`, `validate-match-goal-live-eligibility.php`) share a pre-existing dev-fixture assumption that Person 19 is a genuine current Team-1 Player, which does not hold on this dev database (Person 19 is currently a Team-6 Player there). This predates the CSS/eligibility batches above and produces the identical failure at the identical assertion count regardless of which of them is run — confirmed unrelated by direct comparison. Do not change production behaviour or seed data to silence it.
+
+Separately, some older visual-polish validators (e.g. `tools/validate-team-attendance-final-polish.php`, `tools/validate-team-workspace-overview-shell-polish.php`) include an in-flight "changed set" self-check (`git status`/`git diff --stat` against a hardcoded expected file list) written for their own original batch. These fail whenever run against a clean, fully-committed tree, or during any later, unrelated batch — a structural mismatch between how they were authored (a pre-commit self-check for one specific batch) and how they get invoked later, not a product regression. Treat as validator technical debt.

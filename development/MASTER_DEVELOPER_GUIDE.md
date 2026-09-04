@@ -237,6 +237,33 @@ When Tier-1 evidence is genuinely empty for a specific active goal incident, an 
 
 A valid verified attribution is Player-specific and provenance-specific evidence of participation for **that exact Player, that exact Match** — it credits the verified goal, one appearance, and inclusion in that Player's own historical Match history. It must never fabricate starting/substitute status, minutes, Attendance, rating, POTM or an assist, must never rewrite saved Match Selection, must never broaden `effective_selection()`, and must never imply that any other Event Audience/Attendance participant gained historical eligibility. Data Quality recognises this exception only for the exact active incident + scorer role covered by a live audit record — never as a general outside-selection suppression, and never for assist/player-in/player-out roles. See `CLUB_OS_EXPERIENCE_REVIEW_AND_ROADMAP.md`'s Coach Workspace section and `SPRINTS.md` for full delivery detail, and the deferred Post-v1 opportunities (Verified Historical Appearance, Verified Historical Assist, Registration/Team-assignment historical-evidence reliability) recorded there.
 
+**Historical eligibility must reflect `effective_selection()`, not raw saved Selection.** `historically_eligible_players()` (Correct Match Record / Add Missed Goal) replays the historical pitch state against `MatchLiveBenchAdmissionService::effective_selection()` — the same Selection-plus-legitimate-live-bench-admission merge every live Match Mode write path already uses — never the raw saved Selection alone. A Player legitimately admitted to the live bench and later substituted on must not become invisible to historical eligibility merely because they were never part of the original saved kickoff Selection.
+
+**Data Quality recovery actions must be truthful.** A Data Quality warning's "Fix"/recovery link must only route to a destination (Correct Match Record, Event Attendance, Match Report) that can genuinely act on that exact warning code. This is a positive allowlist per destination, not a catch-all default — an unmatched code must not silently fall through to a page that cannot actually resolve it. A missing recovery action is preferable to a misleading one.
+
+### Primary Immersive Module Accent Treatment
+
+Club OS's premium dark immersive surfaces (Team Workspace, Match Mode, Matchday Hub, Match Report, Correct Match Record, main Events, Player/Team Statistics) share a restrained club-accent top-edge treatment on their **primary module surfaces**. The colour is always the Club's own runtime-configured **Accent Colour** — never a hardcoded value:
+
+```
+Settings "Accent Colour" -> brand_accent -> --iexel-brand-accent
+    -> --iexel-color-gold -> var(--iexel-gold)
+```
+
+`var(--iexel-gold)` is the established component-level token for this — always reference it (or an alias that resolves to it); never hardcode the IEXEL default (`#cba135`) or describe this treatment as literally "gold" in new code comments.
+
+The reusable primitive is `.iexel-accent-top-module` (`assets/css/public.css`), applied by adding the class to a primary module's own markup alongside its existing class(es). Because a bare single-class rule can lose the cascade to a consumer's own pre-existing `border` shorthand at equal specificity, each real consumer is paired with the modifier class in one compound selector (e.g. `.iexel-events-workspace-header.iexel-accent-top-module`) rather than relying on source order.
+
+The durable design distinction:
+
+- **PRIMARY IMMERSIVE MODULE** (a page-level hero, or a top-level card in a primary grid) → restrained accent top trim.
+- **NESTED CONTENT** (individual Player/Attendance/incident rows, stat tiles, form field groups) → no accent top trim by default.
+- **INTERACTIVE TASK/FORM SURFACE** (e.g. `TeamEventForm`) → does not automatically inherit primary-module trim merely by reusing a shared card class.
+- **SEMANTIC STATE SURFACE** (Data Quality warning cards, danger/success notices) → preserves its own warning/error/success treatment; never overwritten by the branding accent.
+- **INTERACTIVE DISCLOSURE/OUTLINE CONTROL** (e.g. Match Recovery/Match Details, "Back to Matchday Hub") → may use the same restrained accent as a full border, matching the page's other premium navigation controls.
+
+This treatment must never be applied to the unrelated, club-wide light `.iexel-os-card` family, and must never spill into a shared component's use on an unrelated page (e.g. `EventAttendancePage.php`'s reuse of `.iexel-match-mode-card` for its own Attendance Change card is deliberately excluded). See `CLUB_OS_EXPERIENCE_REVIEW_AND_ROADMAP.md`'s Coach Workspace section and `SPRINTS.md` for delivery detail.
+
 ### Database
 
 - Never modify database tables directly.
