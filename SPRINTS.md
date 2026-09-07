@@ -1116,3 +1116,181 @@ Fixed narrowly: an on-pitch Player is now scorer/assist eligible unless they car
 Several DB-integrated Match Mode validators (`validate-match-mode-attendance-live-squad.php`, `validate-match-mode-player-actions.php`, `validate-match-substitution-attendance-eligibility.php`, `validate-live-bench-admission.php`, `validate-match-goal-live-eligibility.php`) share a pre-existing dev-fixture assumption that Person 19 is a genuine current Team-1 Player, which does not hold on this dev database (Person 19 is currently a Team-6 Player there). This predates the CSS/eligibility batches above and produces the identical failure at the identical assertion count regardless of which of them is run — confirmed unrelated by direct comparison. Do not change production behaviour or seed data to silence it.
 
 Separately, some older visual-polish validators (e.g. `tools/validate-team-attendance-final-polish.php`, `tools/validate-team-workspace-overview-shell-polish.php`) include an in-flight "changed set" self-check (`git status`/`git diff --stat` against a hardcoded expected file list) written for their own original batch. These fail whenever run against a clean, fully-committed tree, or during any later, unrelated batch — a structural mismatch between how they were authored (a pre-commit self-check for one specific batch) and how they get invoked later, not a product regression. Treat as validator technical debt.
+
+---
+
+# Team Events & Attendance Month-Disclosure Navigation
+
+**Status:** Complete (`082e418`, "feat: add month navigation to season history").
+
+**Goal:** Replace the earlier fixed-batch-size "Past Events" progressive disclosure (load 5 more at a time) with calendar-month grouping, so a Team's history reads as recognisable football seasons rather than an arbitrary reveal count, and extend the same pattern to Attendance history.
+
+## Reusable primitive
+
+- `MonthDisclosureGrouping` (new, `app/core/UI/Formatting/MonthDisclosureGrouping.php`) is a small, stateless grouping/labelling helper extracted from `PlayerStatisticsMatchHistoryCard`'s own already-working, responsive-validated month-disclosure pattern — that original component is left completely unchanged and was not migrated onto the helper in this batch. Callers must pre-sort records themselves; the helper only buckets in encounter order by calendar month (`F Y`), plus an explicit-plural record-count label (`count_label()`) rather than a naive `+ 's'` default.
+
+## Consumers
+
+- `TeamEventsList::renderPast()` — Team Past Events now use month-disclosure grouping in place of the old fixed-size "load more" batches (`PAST_EVENTS_BATCH_SIZE` removed). Upcoming Events is deliberately untouched (unconditional full render) — only historical navigation was the reported pain point.
+- `TeamCompletedRegistersCard` — Completed Attendance registers gained the same month-disclosure treatment.
+- `EventsWorkspace` (Portal) and `TeamAttendanceService` were extended in the same arc to support the new grouping at their respective call sites.
+- Latest month opens by default; older months collapse — the same convention later reused verbatim for Shared Messages (see "Shared Messages Month-Disclosure Navigation" below).
+
+## Validation
+
+- `tools/validate-month-disclosure-navigation.php` (new) — 348 lines of checks covering the grouping helper and its consumers.
+- `tools/validate-events-workspace.php`, `tools/validate-player-team-events-navigation.php` extended/re-passing.
+
+---
+
+# Coach Workspace Release-Readiness Polish
+
+**Status:** Complete (`e796f19`, "fix: polish coach workspace release readiness").
+
+**Goal:** Close a small set of visual-polish items surfaced during release-readiness review, without touching business logic.
+
+## Changes
+
+- **Venue Control Presentation — resolved.** The Event Builder's Venue Type radios (`Existing Club Venue` / `One-off Venue`) previously rendered as bare, unstyled radio labels — noted as visually basic during SEC-008 acceptance (see `CLUB_OS_EXPERIENCE_REVIEW_AND_ROADMAP.md`'s former "Venue Control Presentation" entry, now updated to reflect this fix). `TeamEventForm.php` now wraps them in `.iexel-team-venue-modes`/`.iexel-team-venue-mode`, the same card-row visual language already established for `.iexel-team-audience-mode` — no new pattern invented.
+- **Matchday Selection formation-code badge.** `MatchdaySelectionCard` gained an optional `$formation_code` parameter, rendered as a small badge beside the card heading (e.g. alongside "Starting XI") when a valid formation is set.
+- Small, mechanical class/markup touch-ups across several Matchday/Attendance components (`AttendanceBulkActionsCard`, `AttendanceHeroCard`, `AttendanceProgressCard`, `ReadonlyLineupPitch`, `MatchRatingsCard`, `MatchdayAttendanceCard`, `MatchdayEmergencyContactsCard`, `MatchdayQuickActionsCard`, `MatchdayTimelineCard`, `MatchdayVenueCard`, `PortalSection`, `MatchdayHubPage`, `MemberExperienceService`) — presentation-only, no permission or data changes.
+
+## Validation
+
+- Existing Matchday/Attendance/Event Builder validators re-pass unaffected; no new dedicated validator was required for this polish-only batch.
+
+---
+
+# Coach Workspace Batch B — Statistics Navigation, Inline Availability Editing & Return-to-Context
+
+**Status:** Complete (`a9c5dc7`, "fix: close out coach workspace release readiness").
+
+**Goal:** Close out the remaining Coach Workspace release-readiness gaps: a dedicated Statistics landing for a multi-Team Coach, inline Player-response editing directly from Event Detail, and returning the Coach to the section they just acted on rather than the top of a long page.
+
+## B1 — Statistics navigation / Team chooser
+
+`PortalCoachStatisticsChooserPage` (new) is the "Statistics" top-nav landing for a Coach/Manager who manages more than one Team (the single-Team case is resolved directly by `MemberExperienceService::navigation()` with no chooser needed). It reuses `PortalTeamsPage.php`'s exact accessible-Team source (`Relationships::accessible_team_summaries()`, the same authorisation boundary already used by every other Team-selection surface) and its established `.iexel-my-teams`/`.iexel-my-team-card` markup verbatim — no new query, no new visual language, no new permission boundary. Wired into `PortalRouter.php`'s `statistics` portal section. The destination itself (`TeamWorkspacePage`'s Statistics tab) retains its own independent authorisation check; this page is a navigation aid only, not a second security boundary.
+
+## B2 — Inline Coach Team Responses availability editing
+
+The former standalone `CoachAvailabilityUpdateForm` dropdown (a separate control below the response lists) is replaced by an inline per-Player editor directly inside the existing `AvailabilityPanel` list: `AvailabilityPanel::render()` gained optional `$event_id`/`$editable_person_ids` parameters, and a Player's name becomes a `<details>` disclosure containing a small Response select + Save button only when both are supplied and that Player's id is in `$editable_person_ids` (which must already be the exact canonical eligible-Player set, `MemberPortalService::coach_availability_players_for_event()` — the same source the former standalone dropdown used). This is a new **presentation** entry point into the existing `update_player_availability_as_coach()` write path — there is still exactly one Availability writer, and its own independent authorisation check (`can_manage_player_availability()`) is the real enforcement boundary regardless of what the panel shows. The separate "Coaches Attending" panel (Coach/staff data, not Player Availability) is explicitly excluded from becoming editable here.
+
+## B3 — Return-to-context on redirect
+
+Event lifecycle actions (schedule/cancel/complete/archive, `EventLifecycleRequestHandler`) and the new inline availability write (`MemberPortalService::redirect_coach_availability_result()`) now redirect back to the specific section the Coach just acted on (`#event-responses` / `#team-responses` via the existing `ContextAnchor` primitive — the same mechanism the sibling RSVP-reminder redirect already used) instead of the top of a potentially long Event Detail page. The fragment is a server-chosen literal, never derived from request data.
+
+## Validation
+
+- `tools/validate-coach-workspace-batch-b.php` (new) — 380 checks.
+- `tools/validate-event-detail-batch1-mobile-redesign.php` extended/re-passing.
+
+---
+
+# Live Match Transient Success Notice Auto-Dismiss
+
+**Status:** Complete (`22a18fd`, "fix: auto-dismiss live match success notices").
+
+**Goal:** A live Match Mode success notice (Goal added, Substitution made, Lineup saved, etc.) should clear itself after being read, rather than sitting on screen until the Coach's next action; error/warning notices must never be affected.
+
+## Implementation
+
+`MatchModePage::notice()` marks **only** success-type notices with `data-iexel-transient-notice="1"` — error notices never carry this attribute. A new, small progressive-enhancement script (`assets/js/match-mode-notice.js`) removes the marked notice from the DOM and clears its query-string parameters (`match_notice`, `match_notice_type`) via `history.replaceState()` after 5000ms. Every live Match action is a POST → canonical write → `wp_safe_redirect()` → fresh GET, so at most one notice can exist on a given page load — there is no client-side stacking case. If the script fails to run, the server-rendered notice simply remains visible (the pre-existing behaviour) — it never disappears instantly or depends on JS for correctness.
+
+## Validation
+
+- `tools/validate-live-match-transient-notice.php` (new) — 196 lines of checks.
+
+---
+
+# Shared Messages Month-Disclosure Navigation
+
+**Status:** Complete (`fc9dc8a`, "feat: improve shared messages navigation and presentation").
+
+**Goal:** Apply the same calendar-month disclosure grouping established for Team Events/Attendance (see "Team Events & Attendance Month-Disclosure Navigation" above) to the shared Messages/Club Announcements history, so a long announcement history reads as recognisable months rather than one long undifferentiated list.
+
+## Changes
+
+- `PortalAnnouncementsPage.php` reuses the same `MonthDisclosureGrouping` helper (no second grouping implementation) to bucket the recipient's visible announcement/communication history by month. The latest month opens by default; older months collapse — matching the Team Events/Attendance convention exactly.
+- Individual conversation/announcement **detail** view was **not** month-grouped — only the list/history view. Announcement previews preserve meaningful text structure (not a naive character-truncated snippet).
+- Presentation now uses the established premium midnight-navy/accent-top card language consistent with the rest of Club OS's immersive surfaces.
+- One shared, recipient-based Messages experience remains canonical (see `MASTER_DEVELOPER_GUIDE.md`'s "Channel-Neutral Communications" rule) — this batch did not introduce a role-specific Messages store or a second Communications architecture.
+- **Explicitly not introduced in this batch:** unread counts, filtering, search or pagination. Do not describe any of these as delivered.
+
+## Validation
+
+- `tools/validate-shared-messages-month-navigation.php` (new) — 449 lines of checks.
+
+---
+
+# Event Builder Productivity & Training Only Event Audience Eligibility
+
+**Status:** Complete (`1c97ebb`, "feat: improve event builder productivity and audience eligibility"). Implemented across several acceptance rounds with the Product Owner, source-validated and committed/pushed to plugin `main`.
+
+**Goal:** Reduce repetitive Coach Event Builder effort (optional End Time, Duplicate Event, weekly recurrence) and correct a genuine Training Only Event-audience gap the Product Owner found in real browser testing, without weakening League/Fixture competitive eligibility protections or requiring a fake Team Assignment for Training Only Players.
+
+## 1. Optional Event End Time
+
+`EventRepository::clean_data()` now stores a genuinely blank End Time as `null` (the `events.end_time` column was already nullable — no migration) rather than silently coercing an empty string into a fake `00:00:00`. `start_time` handling is unchanged. The end-before-start validation (create and edit) remains conditional on both times genuinely being present. `EventChangeNotificationService` renders the word "Not set" for a blank before/after change value instead of a dangling arrow with nothing after it.
+
+## 2. Duplicate Event (safe, non-Match types only)
+
+A "Duplicate Event" action opens the **existing** Create Event form pre-filled from the source Event — it never immediately clones/persists anything, and the new Event is created only once the Coach reviews and submits normally through the unmodified `handle_create_event_request()` writer. The source Event is completely unaffected; no `duplicate_from_event_id` or similar provenance field was added to the schema (`EventRepository::duplicate()` — a pre-existing, unused method — was left untouched, not repurposed). Restricted to non-Match types (Training/Tournament) — Fixture/Friendly keep their own Match/fixture-specific setup and are not reachable through this productivity shortcut. Lifecycle/cancellation state, RSVP responses, Attendance and Match data (selections/incidents/statistics) are never part of the prefilled values.
+
+## 3. Cross-Team Duplicate Event
+
+A Coach, Manager or `iexel_manage_club_os` holder who manages more than one Team can change the **destination Team** before creating the duplicated Event (a `<select>` with server-precomputed per-option destination URLs, since the destination Team is a URL path segment, not a query parameter). Both source and destination Teams are independently re-authorised server-side against the same canonical `Relationships::accessible_team_summaries()` source already used elsewhere (never trusting the request's `team_id`/`duplicate_from`) — a fabricated or unauthorised Team fails closed. The destination audience (including its Same-Age-Group/Training Only candidates, see below) is always re-derived fresh from the **destination** Team's own current context; source-Team Person IDs are never copied blindly across Teams. Same-Team Duplicate continues to work exactly as before. Venues are club-wide (not Team-scoped), so a prefilled venue remains valid across the destination change with no re-derivation needed.
+
+## 4. Weekly Recurring Events
+
+Available on the CREATE form only (never Edit), for non-Match types only. Each requested occurrence (weekly, 1–4 week interval, first occurrence included in the count, server-side hard cap of 12 regardless of client input) is created through the exact same `EventRepository::create()` call a single Event uses — there is deliberately **no** recurrence-series entity, no `parent_event_id`, and no "edit all occurrences" behaviour. Every generated occurrence is a fully normal, independent Event from the moment it is created. Multi-occurrence creation is wrapped in one transaction — a partial failure rolls back the whole submission rather than reporting false success. The Repeat control's weekly-configuration fields (interval, occurrence count, explanatory note) are hidden whenever "Does not repeat" is selected and shown only for "Weekly" — a genuine CSS cascade-origin bug (an author-stylesheet `display: grid` rule always beats the browser's own `[hidden]{display:none}` rule at equal specificity, regardless of source order) was found and fixed with a `:not([hidden])` scope, not a JavaScript change (the toggle script itself was already correct on both load and change). Monthly/advanced recurrence was **not** implemented — do not describe it as available.
+
+## 5. Training Only Event Audience Eligibility
+
+**Root cause of the reported gap:** `TeamEventAudienceOptions::for_team()` only ever queried `team_assignments` for a Team's player pool. A Training Only Player has **no** `team_assignments` row at all by design (`TeamAssignmentRepository::validate_training_only_conflict()` actively refuses to create one while an active Training Membership exists) — so they were structurally unreachable from any audience surface built on that query alone, regardless of Event type.
+
+**The fix:** `TeamEventAudienceOptions::for_team()` gained an explicit, additional Training Only candidate pool sourced from `TrainingMembershipRepository::for_age_group()` — the same canonical Training Membership query the Secretary Training Members workspace already uses — scoped to the current active Season and the Team's own age group (normalised via the existing `AgeGroupKey`, which already reconciles Team `age_group`'s "U7"/"UNDER 7" spelling variants). **Training Membership remains the sole and canonical source of truth for Training Only participation — no Team Assignment is created, read, or required to make a Training Only Player visible in any Event audience surface.** The same active/current registration bar already applied to every other candidate applies identically here; inactive Persons, an ENDED (former) Training Membership, a Training Membership scoped to a different age group, and a fabricated/nonexistent Person ID are all excluded (the last one silently, via the same `array_intersect()` pattern that already drops any other ineligible submitted ID — no new validation-error path).
+
+**Where Training Only Players now appear:**
+
+- **"Current Team + Same Age Group Players"** — surfaces valid same-age-group Training Only Players in a clearly separated "Training Only" group, each row tagged with a `Training Only` badge. If no Training Only candidates exist, the section is omitted entirely (an explicit empty-state sentence covers the case where no same-age candidates of any kind exist — never a bare "Optionally add players from:" heading over nothing).
+- **"Selected Players"** — additionally exposes a clearly separated Training Only group (the exact same reused markup/CSS, not a new visual treatment) alongside the plain current-Team Player list. This required the write-time computation (`TeamWorkspacePage::handle_create_event_request()`, `PortalEventEditPage::validated_audience()`) to merge in only the narrower `training_only_person_ids` subset — deliberately never the full same-age pool, which would also (incorrectly) admit other Teams' regular same-age Players into "Selected Players", a different, deliberately broader feature.
+
+## 6. Fixture / Friendly / Tournament participation distinction — the critical safety rule
+
+This is a deliberate, type-aware distinction, not a blanket rule in either direction:
+
+- **Fixture (League/competitive):** normal competitive registration/eligibility protections are **unchanged**. Training Only membership does **not** create blanket Fixture eligibility — the candidate pool computed by `TeamEventAudienceOptions::for_team()` simply never contains Training Only Players when the Event type is `fixture`, enforced identically at render time and, authoritatively, at write time using the **actually submitted** type (so a hand-crafted `type=fixture` POST cannot smuggle a Training Only Person ID into a Fixture's audience — proven by a real crafted-request test).
+- **Friendly:** an authorised Coach **may** deliberately admit/select an otherwise-valid Training Only Player — for both "Current Team + Same Age Group Players" and "Selected Players". This does not create a Team Assignment, does not change Training Membership status, and does not convert the Player to competitive registration. Once legitimately admitted and saved into Match Selection (the existing `MatchSelectionRepository::replace_for_event()` writer), the existing saved-selection state carries the Player through the normal lineup/Matchday Hub/Live Match lifecycle unchanged — Live Match's Goal Scorer/Assist eligibility (`MatchLivePlayerEligibilityService`) does not reject them for being Training Only, because it is scoped by the saved selection and Event audience, exactly as for any other Player. An unrelated Training Only Player (never added to that specific Event's audience) never becomes globally Match-eligible.
+- **Tournament:** the current Team Event Builder's Tournament type remains a plain **Event** workflow, not the Fixture/Friendly Match Selection/lineup/Live Match workflow (confirmed by source inspection: `CoachActionsCard`'s Match-workflow gate — Match Mode / Configure Match — is scoped to `fixture`/`friendly` only). Training Only participation for Tournament is therefore governed entirely by ordinary Event-audience rules (point 5 above); there is no separate Match-lifecycle rule to state, and Tournament must not be described as having the full Match lifecycle.
+
+**Registration/competitive eligibility and event-specific participation eligibility are two distinct concepts** — this batch broadens the latter (which Events a Training Only Player can be deliberately included in) without touching the former (which Matches count toward competitive registration/League eligibility) in any way.
+
+## 7. RSVP and Attendance
+
+A legitimately admitted Training Only Event recipient participates in the normal RSVP path — `AvailabilityRepository::responses_for_event()`/`summaries_for_events()` (previously gated on an active `team_assignments` 'player' row for football event types, which a Training Only Player structurally never has) now also accept an active Training Membership as equally valid evidence. Attendance eligibility already followed the saved Event audience directly (`EventAttendancePage` reads `event_audience` membership with no `team_assignments` gate) and needed no change. No separate/duplicate RSVP or Attendance system was introduced.
+
+## 8. Write-time validation and known data-quality finding
+
+While investigating a reported "Selected Players first row shows a blank checkbox with no name" bug (same batch, same commit), the cause was found to be unrelated to Training Only: an existing, real `team_assignments` row (Person 176) references a `person_id` with **no corresponding row in `people` at all** — a pre-existing data-integrity defect, not introduced by this batch. Because `active_for_team_role()`'s `LEFT JOIN` yields a genuinely `NULL` name for that row and its `ORDER BY p.display_name` sorts `NULL` first (MySQL's default), the orphaned row was always the *first* rendered option. Fixed using Club OS's own established fallback convention (`$player['person_name'] ?? 'Player'`, already used pervasively elsewhere — e.g. `MatchLineupForm`, `MatchModeService`, `PortalEventAudienceCard`) rather than inventing a new label; the underlying Person is never dropped or hidden, only its display text. **Person 176's missing `people` row itself remains an open data-integrity follow-up — not fixed by this batch, and not a blocker to it.**
+
+## 9. Mobile (320px) layout
+
+A genuine responsive bug was found and fixed: the Training Only row could overhang the card's right edge at 320px. Root-caused (not guessed) to a flex item's default `min-width: auto` (not `0`) combined with a `white-space: nowrap` badge forcing the row wider than its grid track, compounded by a mobile-only grid rule using a bare `1fr` column instead of the desktop rule's `minmax(0, 1fr)`. Fixed with `min-width: 0` + `flex-wrap: wrap` on the row, a corrected `minmax(0, 1fr)` mobile column rule, and a responsive badge-wrap treatment (badge drops to its own line, its own text never breaks mid-word) — no page-level `overflow-x: hidden` workaround, no hidden badge, no player-specific hard-coded width. Confirmed at 320px and desktop, including a long-name case.
+
+## Validation
+
+- `tools/validate-event-builder-productivity.php` (new) — 672 lines; static source/CSS proof for every item above (End Time, Duplicate/cross-Team Duplicate, recurrence, Training Only pool construction and type-aware Fixture exclusion, the Selected Players merge, the mobile CSS fix, and the Person-176 display fallback).
+- `tools/validate-training-only-event-audience.php` (new) — 757 lines; DB-integrated, self-cleaning behavioural proof (a valid Training Only Player appears/saves/RSVPs/is Attendance-eligible in both audience modes; ended/wrong-age-group/fabricated candidates are excluded; the empty-state and cross-Team re-derivation behave correctly; no Team Assignment is ever created).
+- `tools/validate-match-goal-live-eligibility.php` — extended (291 new lines) with League/Friendly Match-eligibility parity checks for both audience modes, including the Training Only Player's full downstream lineup/Live Match lifecycle once legitimately selected. **Verified in isolation only** — see Known Debt below.
+- `tools/validate-dark-surface-contrast.php`, `tools/validate-event-audience-policy.php`, `tools/validate-flexible-event-rsvp.php`, `tools/validate-coach-team-event-scope.php`, `tools/validate-secretary-flexible-event-audience.php`, `tools/validate-secretary-events-management.php`, `tools/validate-event-attendee-management.php`, `tools/validate-events-workspace.php`, `tools/validate-event-lifecycle.php` all pass unaffected.
+- Real browser acceptance across multiple rounds with the Product Owner, at desktop and 320px, using real dev-database Training Only Players (including the exact Player originally reported missing). All test Events/audience rows created during verification were deleted afterward; no Training Membership or Team Assignment record was ever modified during testing.
+
+## Known debt / deferred items (not resolved by this batch)
+
+- **Person 176 orphaned Team Assignment** — an active `team_assignments` row with no corresponding `people` row (see item 8 above). Needs a dev-database data-integrity fix, not a code change.
+- **`validate-match-goal-live-eligibility.php` cannot currently be run end-to-end** — its own pre-existing baseline (an unrelated dev-fixture assumption that Person 19 is a genuine current Team-1 Player — see "Known validator debt" above) still fails identically with this batch's changes fully reverted, confirmed by direct `git stash` comparison. This batch's own new checks were verified correct in isolation (extracted and run standalone, self-cleaning, idempotent) but the full file itself remains blocked on the pre-existing Person-19 drift.
+- **`validate-team-events-badge-mobile-repair.php`** has a separate, also pre-existing, unrelated breakpoint assertion failure (`.iexel-team-event-past-meta` at 480px) — confirmed via the same `git stash` technique to predate this batch entirely.
+- **Secretary late-add `EventAudienceBuilder::add_attendee()`/`add_attendees_batch()`** perform no eligibility validation of their own (pre-existing characteristic, not introduced here) — worth a dedicated audit if that path is ever extended toward Training Only.
+- **Raw Team `age_group` string normalisation** — Team-to-Team same-age-group matching (`active_for_age_group()`) still does an exact string match (not the normalised `AgeGroupKey` comparison Training Membership matching now correctly uses), so two Teams spelling the same age group differently (e.g. "U7" vs "UNDER 7") would not currently be matched as same-age for the *regular-player* pool. Training Only matching is unaffected (it normalises on read). Not addressed in this batch.
+- **Secretary has a separate Event-creation architecture** (`PortalSecretaryEventAddPage.php` — its own ~498-line form/handler, sharing only the same `EventRepository::create()` writer). Cross-Team Duplicate was **not** built into that separate form in this batch — a genuinely separate second implementation was judged out of scope; any `iexel_manage_club_os` holder (including an admin-role Secretary in this dev environment) already gets full Cross-Team Duplicate support for free through the Coach/Team Workspace path if they reach it via that route.
+- Pre-existing, unrelated items explicitly left untouched: the `venue_mode` PHP warning noted during SEC-008 acceptance; duplicated `public.css` rule blocks; the unused `EventRepository::duplicate()` method.
