@@ -1739,3 +1739,48 @@ Runtime security proof on disposable RC Upgrade (fixtures created and fully clea
 ## Known debt / deferred items (not resolved by this work)
 
 None new. This batch introduced no new deferred debt; the two baseline-only validator failures above pre-date this batch and are unrelated to it.
+
+---
+
+# Treasurer Premium Workspace Alignment Batch 1
+
+**Status: Complete.** Plugin `main` `840369102b5b1d24f7701c7d2af3b325971fa824` ("fix: align treasurer finance workspace"). This is **post-RC follow-up work**, completed after the MVP Release Candidate validation cycle and after Post-RC Guardian Link Alignment Batch 1 above — it does not reopen, extend, or supersede either, and it is not itself a release blocker.
+
+## 1. Origin
+
+A read-only Treasurer/Finance workspace UX audit found the Finance workspace's own `.iexel-os-card`/`.iexel-finance-metrics` visual system read as a weaker, more generic light-blue treatment than the shared premium `.iexel-experience-hero`/`.iexel-experience-section`/`.iexel-experience-metrics` vocabulary already used by Secretary, Welfare and Treasurer's own People/Team/Registration pages. The audit proposed exactly one controlled implementation batch: migrate Finance onto the existing shared vocabulary, without redesigning Finance into an immersive dark workspace and without mechanically replacing every legacy card.
+
+## 2. Final behaviour
+
+- **`PortalFinanceWorkspacePage`'s header, KPI strips and page sections** now use the canonical `.iexel-experience-hero` / `.iexel-experience-section` / `.iexel-experience-metrics` / `.iexel-experience-metric` components, matching the light premium administrative treatment already established elsewhere in Club OS. `.iexel-finance-workspace-header` and the page-local `.iexel-finance-metrics` component are retired (confirmed unused before removal).
+- **Invoice Detail's primary invoice record is the one deliberate exception, by Product Owner direction.** After the initial light migration was reviewed, the primary invoice summary (invoice reference, recipient, season/scope, payment status, issue/due dates, financial totals) was corrected back onto the existing dark `.iexel-os-card` treatment — the same global rule used elsewhere in Club OS, reused rather than modified. The four supporting Invoice Detail sections (Itemised Charges & Discounts, Payment Allocations, Invoice Timeline, Invoice Notes) remain on the canonical light `.iexel-experience-section` register. The resulting visual rhythm is: light page identity → dark authoritative invoice record → light supporting detail sections. Do not describe this as "every Finance card is dark" or as an immersive dark workspace equivalent to Team Workspace/Matchday Hub — Finance remains a premium **light** administrative workspace with one intentionally dark authoritative record.
+- **A genuine mid-batch discovery, corrected in the same batch:** `.iexel-os-card` actually resolves to a dark, gold-accented, white-text treatment via a second, later, more-specific rule in `assets/css/public.css` — an earlier read-only audit had cited only the first (non-winning) plain-light rule. This was found and corrected via live `getComputedStyle()` verification, and a related second regression was found the same way: `design-system.css` independently duplicated dark on-dark colour treatment for `.iexel-billing-schedule-card`, `.iexel-invoice-link` and their meta values (shared with several Team/Coach/Match dark-immersive components), silently overriding the first fix. Both are corrected: `member-experience.css` carries the light-surface colour fixes, and the Finance-only selectors were surgically removed from `design-system.css`'s shared dark-treatment rules, leaving every Team/Coach/Match/Player entry and the global `.iexel-os-card` rule untouched.
+- **Light-surface secondary-action readability fix.** `.iexel-button-secondary` is a dark-native component; the four Finance "Back to…"/"View Detail" actions that ended up on a light `.iexel-experience-section` ancestor (Billing Runs list, Invoice Not Found, Billing Run Not Found, Billing Run Detail summary) were rendering white-on-near-white. Each now additionally carries the existing `iexel-fee-rule-back` component — already proven on the light Fee Rule/Discount Policy pages, which reach the same `.iexel-finance-workspace` wrapper via this page's own delegation — rather than a new or duplicated CSS treatment. The one dark-parent instance (Invoice Detail's own restored dark summary) is correctly left as bare `.iexel-button-secondary`.
+- **Domain logic, capabilities, routing, schema and audit behaviour are unchanged.** Every diff in `PortalFinanceWorkspacePage.php` is a markup/class-attribute change; no computation, capability gate, form action, nonce or route changed.
+
+## 3. Product Owner visual acceptance
+
+**PASSED.** Accepted surfaces: Finance Overview, Invoices, Invoice Detail, Billing Schedules, Treasurer Dashboard, and 320px Invoice Detail. Accepted design direction: Finance is a premium administrative workspace with rich midnight/navy operational surfaces, a restrained runtime club-accent treatment (never a hardcoded literal colour), light KPI cards intentionally retained as subordinate financial summary tiles, the primary/detail authoritative surface (Invoice Detail's own record) using the richer dark treatment, accepted narrow-screen (320px) responsive behaviour, and no page-level horizontal overflow introduced.
+
+## 4. Validation
+
+Final focused/regression results:
+
+| Validator | Result |
+|---|---|
+| `validate-parent-family-finance.php` | PASS — 44 |
+| `validate-treasurer-billing-run-detail.php` | PASS — 93 |
+| `validate-treasurer-directory-ux.php` | PASS — 34 |
+| `validate-treasurer-finance-configuration.php` | PASS — 488 |
+| `validate-treasurer-finance-relationships.php` | PASS — 264 |
+| `validate-treasurer-invoice-detail.php` | PASS — 54 |
+| `validate-treasurer-operational-read-access.php` | PASS — 45 |
+| `validate-visual-foundation.php` | 1 confirmed baseline-only failure ("Public stylesheet dependency order changed", tied to untouched `PortalRouter.php`, reproduced identically on the pristine baseline — not introduced by this batch) |
+
+PHP lint passed on all touched PHP files throughout. `git diff --check` clean. Non-admin genuinely-restricted Treasurer runtime verification performed on the normal Dev environment (no disposable RC Upgrade fixture available for a non-admin Treasurer persona) via a non-mutating auth-cookie-injection technique — every Finance route inspected desktop and at 320px; functional spot-check of existing Invoice Detail/Billing Run Detail records and the Manual Invoice/Record Payment forms performed read-only (forms confirmed populated and functional; no fabricated invoice/payment mutation was made).
+
+## Known debt / deferred items (not resolved by this work)
+
+- **Finance Reports route defect (open, not fixed).** `finance-reports` is registered as a route with its own title/intro, but the page's `match($section)` dispatcher has no case for it, and it is not linked from the page's own navigation — it silently falls through to Finance Overview content. This was deliberately identified and left unfixed as part of this presentation-only batch, per an explicit pre-edit gate. It is the recommended next small functional Finance batch; do not describe Finance Reports as currently working.
+- **`iexel-fee-rule-back` naming debt (deferred).** The reused component correctly delivers the light-surface Finance secondary-action treatment (section 2 above), but its class name is narrower than its actual reuse (it originated on the Fee Rule page). This is naming/architecture debt only — the visual treatment itself is accepted — and renaming it was out of scope for this batch (it would require touching `PortalFeeRuleManagementPage.php` and `PortalDiscountPolicyManagementPage.php` too).
+- **Premium Surface Colour Consistency Audit (deferred, future work).** A broader audit of Club OS's premium-surface colour consistency remains future work, not started by this batch. It must not be scoped as "make every pale card dark" or "make every Club OS page identical" — it should distinguish intentionally light subordinate cards (such as Finance's own KPI tiles) from surfaces genuinely inconsistent with the established premium hierarchy, and must preserve the immersive Team/Coach/Match Mode dark treatment where that is the correct, already-accepted design.

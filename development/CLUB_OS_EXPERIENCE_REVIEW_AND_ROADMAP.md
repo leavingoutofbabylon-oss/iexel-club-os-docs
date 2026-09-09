@@ -203,6 +203,8 @@ Both Environment 1 (Clean Installation) and Environment 2 (Controlled Upgrade Ma
 | FIN-029 | Treasurer | Cannot create/edit/archive fee rules — Portal Fee Rules management delivered | Resolved gap | Complete | Sprint 33 |
 | FIN-030 | Treasurer | Cannot create/edit/archive discount policies — Portal Discount Policies management delivered | Resolved gap | Complete | Sprint 33 |
 | FIN-031 | Treasurer | Text shows caret as though editable (historical finding) — not reproducible in current source as of a 2026-08-26 read-only audit; no matching `cursor: text`/input-like affordance found on any current Finance/Treasurer static summary, and the surface has been substantially rebuilt since. Product Owner reproduction required before implementation | Visual bug | Low | MVP polish — awaiting reproduction |
+| FIN-032 | Treasurer | Finance's own visual system felt pale/generic against the shared premium Club OS vocabulary — Treasurer Premium Workspace Alignment Batch 1 delivered, Product Owner visual acceptance PASSED (`8403691`) | Resolved gap | Complete | Post-RC |
+| FIN-033 | Treasurer | `finance-reports` route registered but not dispatched; falls through to Finance Overview content — identified during FIN-032, deliberately not fixed (out of scope for a presentation-only batch) | Routing defect | Medium | Post-RC — open |
 | PL-021 | Player | My Season has too much unused space and weak engagement — delivered with Season Journey, Milestones, Attendance rate, Next Milestone target in Batch IN3F17-PL2B2 | Resolved UX | Complete | MVP |
 | PL-022 | Player | My Stats is only a minimal dashboard section — dedicated standalone experience with Appearances, Goals, Assists, POTM, Attendance, Clean Sheets, safeguarding delivered in Batch IN3F16-PL1C | Resolved gap | Complete | MVP |
 | PL-023 | Player | Quick Actions moved directly below hero across all persona dashboards | Resolved UX | Complete | MVP |
@@ -324,6 +326,8 @@ The Team Health experience must remain a leadership oversight layer over canonic
 - Keep the dedicated finance identity, payment recording, bulk family invoicing and billing schedules.
 - **Treasurer Finance MVP (complete):** Invoice lifecycle management (draft, issue, cancel), payment recording & allocations, Fee Rules, and Discount Policies are fully delivered inside Club OS.
 - **Billing/invoice dark-surface contrast (FIN-028 — complete):** Resolved by the systemic dark-surface contrast treatment (commit `34cd5d4`, 2026-08-21); protected by `tools/validate-dark-surface-contrast.php`. FIN-031 (static caret-cursor visual bug) is a separate item — not addressed here; a 2026-09-08 diagnostic (see the Consolidated review log) now positively classifies it as browser caret browsing rather than a Club OS defect, so no plugin fix is expected to be needed.
+- **Treasurer Premium Workspace Alignment Batch 1 (FIN-032 — complete, Product Owner visual acceptance PASSED):** Finance's own presentation migrated onto the shared premium `.iexel-experience-hero`/`.iexel-experience-section`/`.iexel-experience-metrics` vocabulary already used elsewhere in Club OS, resolving the pale/generic feel identified by a read-only UX audit. Invoice Detail's own primary invoice record is a single, Product-Owner-directed exception, keeping the existing dark `.iexel-os-card` treatment while its four supporting sections use the light register; a light-surface secondary-action readability defect this exposed was also corrected. See "Treasurer Premium Workspace Alignment Batch 1" below and `SPRINTS.md` for full delivery detail. **Finance remains a premium light administrative workspace — this is not an immersive-dark redesign.**
+- **Finance Reports route defect (FIN-033 — open, deferred):** `finance-reports` is registered with its own title but has no case in the page's dispatcher and is not linked from its own navigation, so it silently falls through to Finance Overview content. Identified during, and deliberately not fixed by, Batch 1 above (out of scope for a presentation-only batch). Recommended next small functional Finance batch.
 - Post-MVP, add reporting, exports, reconciliation and payment integrations.
 
 ### Player Workspace
@@ -464,6 +468,28 @@ Jude Kane 37′
 
 **Do not restart or re-scope this work.** Any further family/guardian enhancement (e.g. automatic role removal on unlink, which remains deliberately unchanged) is separately prioritised future work, not an open item from this audit.
 
+### Treasurer Premium Workspace Alignment Batch 1
+
+**Status: Complete. Product Owner visual acceptance PASSED.** A read-only Treasurer/Finance UX audit, then a single approved implementation batch (plugin `main` `840369102b5b1d24f7701c7d2af3b325971fa824`, "fix: align treasurer finance workspace") — see `SPRINTS.md`'s "Treasurer Premium Workspace Alignment Batch 1" section for full delivery detail and `development/DEVELOPMENT_HANDOVER_2026-09-09C.md` for the current resume point. This is post-RC follow-up work; it does not reopen the RC cycle or Guardian Link Alignment Batch 1 above.
+
+**Accepted surfaces:** Finance Overview, Invoices, Invoice Detail, Billing Schedules, Treasurer Dashboard, and 320px Invoice Detail.
+
+**Accepted design direction:**
+1. Finance is a premium **light** administrative workspace — rich midnight/navy operational surfaces are used deliberately and sparingly, with a restrained runtime club-accent treatment (never a hardcoded literal colour), not as an immersive dark redesign.
+2. Finance's page framing and its KPI/summary tiles use the same shared `.iexel-experience-hero`/`.iexel-experience-section`/`.iexel-experience-metrics`/`.iexel-experience-metric` vocabulary as Secretary, Welfare and Treasurer's own People/Team/Registration pages.
+3. **Invoice Detail's own primary invoice record is the one deliberate exception:** it keeps the existing dark `.iexel-os-card` treatment as the workspace's single authoritative record, while its four supporting sections (Itemised Charges & Discounts, Payment Allocations, Invoice Timeline, Invoice Notes) use the light register. Light KPI cards remain intentionally subordinate financial summary tiles throughout, including nested inside that one dark record.
+4. A light-surface secondary-action readability defect (`.iexel-button-secondary`, dark-native, rendering white-on-near-white on Finance's newly-light surfaces) was found and corrected by reusing the existing `iexel-fee-rule-back` component rather than a new treatment.
+5. Narrow-screen (320px) responsive behaviour is accepted, with no page-level horizontal overflow introduced.
+
+See `SPRINTS.md`'s "Treasurer Premium Workspace Alignment Batch 1" section for the full mid-batch discovery narrative (the `.iexel-os-card`/`design-system.css` cascade correction), the validation table, and the deferred items below.
+
+**Deferred, not part of this batch:**
+- **Finance Reports route defect (FIN-033, open)** — `finance-reports` is registered but not dispatched, falling through to Finance Overview content. Recommended next small functional Finance batch.
+- **`iexel-fee-rule-back` naming debt** — the reused secondary-action component's name is narrower than its actual reuse. Naming/architecture debt only; the visual treatment is accepted.
+- **Premium Surface Colour Consistency Audit** — a broader future audit, not started. It must distinguish intentionally light subordinate cards from surfaces genuinely inconsistent with the established premium hierarchy, and must preserve immersive Team/Coach/Match Mode dark treatment where that is the correct, already-accepted design — it is not "make every pale card dark" or "make every Club OS page identical."
+
+**Do not restart or re-scope this work.** Do not describe Finance as an immersive dark workspace, and do not extend the Invoice Detail dark-record exception to any other Finance surface without a fresh, explicit Product Owner decision.
+
 ## Historical Match Participation Evidence — Deferred Opportunities
 
 **Status:** Post-v1 / Deferred. None of the following are current v1 commitments; do not implement or scaffold any of them without a separate, dedicated approval.
@@ -525,7 +551,9 @@ The only items the roadmap still shows open within MVP scope are **FIN-031** and
 
 **The Guardian Link Role Synchronisation Audit and its approved correction (Post-RC Guardian Link Alignment Batch 1) are now also complete** (plugin `main` `29220cc`) — see "Guardian Link Role Synchronisation Audit" above and `SPRINTS.md`'s "Post-RC Guardian Link Alignment Batch 1" section for full delivery detail. This was post-RC follow-up work and does not reopen the RC cycle above. **Do not restart or re-scope this work.**
 
-**No single next implementation batch is currently dominant in the authoritative backlog.** With the RC cycle, Staff Compliance A–D, and Guardian Link Alignment Batch 1 all complete, the approved-but-unpromoted candidates are **OS-011** (Welfare Concern Detail hierarchy polish — genuinely open, cosmetic/non-blocking, explicitly "not currently promoted ahead of Internal Club Testing") and the small **Person 176 orphaned Team Assignment** data-integrity item (an active Team Assignment with no corresponding `people` row, found during the Event Builder batch, still unresolved — see `SPRINTS.md`'s "Known debt / deferred items" for that batch). **Product Owner/lead developer prioritisation is needed** to choose between these — do not invent or begin a new implementation batch from this roadmap description alone. Before starting any roadmap-labelled implementation work, see `development/DEVELOPMENT_HANDOVER_2026-09-09B.md` (the current, latest handover) for the current recommended starting point.
+**Treasurer Premium Workspace Alignment Batch 1 is now also complete, with Product Owner visual acceptance PASSED** (plugin `main` `8403691`) — see "Treasurer Premium Workspace Alignment Batch 1" above and `SPRINTS.md`'s section of the same name for full delivery detail. This was post-RC follow-up work and does not reopen the RC cycle or Guardian Link Alignment Batch 1 above. **Do not restart or re-scope this work; do not extend the Invoice Detail dark-record exception to any other Finance surface without a fresh Product Owner decision.**
+
+**The Finance Reports route defect (FIN-033) is the recommended next controlled development item.** `finance-reports` is registered but not dispatched by the page's own `match($section)` handler and falls through to Finance Overview content — identified during, and deliberately left unfixed by, Treasurer Premium Workspace Alignment Batch 1 above. It is a small, well-scoped functional (not visual) Finance fix. **OS-011** (Welfare Concern Detail hierarchy polish — genuinely open, cosmetic/non-blocking) and the small **Person 176 orphaned Team Assignment** data-integrity item remain other open candidates. The broader **Premium Surface Colour Consistency Audit** identified alongside Treasurer Batch 1 remains future/deferred work, not currently promoted, unless newer evidence changes priority. **Product Owner/lead developer confirmation is still needed** before starting Finance Reports or any other item — do not invent or begin a new implementation batch from this roadmap description alone. Before starting any roadmap-labelled implementation work, see `development/DEVELOPMENT_HANDOVER_2026-09-09C.md` (the current, latest handover) for the current recommended starting point.
 
 ## Future club profiles
 
