@@ -30,6 +30,7 @@ This document tracks the major development milestones of IEXEL Club OS. Complete
 | A11Y | Dark-Surface Text Contrast (OS-029, FIN-028, PL-024) | ✅ Complete |
 | CMC | Completed Match Correction Architecture (Batches 2A, 2B-1, 2B-2), Acceptance Gate & Player Progress MVP Decision | ✅ Complete |
 | ICT-Fixes | Internal Club Testing Remediation — Secretary Safeguards, Current Emergency Contact, Password-Reset Completion Alerts & Final Pre-Merge Validator Hygiene (`b2b51eb`) | ✅ Complete |
+| RC2 | MVP Release Candidate Validation Cycle (RC-01 portal-status fix, RC-02A/RC-02A-R1 clean-install + no-current-Season repair, RC-02B upgrade validation, RC-03/RC-03-R1 persona validation + forbidden-status fix, RC-03-CLOSE) — Product Owner sign-off PASSED | ✅ Complete |
 
 ---
 
@@ -1552,3 +1553,119 @@ During manual acceptance, the Welfare compliance destination page visibly render
 - **Person-level missing-compliance ("Not Recorded") assessment/alerting** — deliberately out of scope for Batch D (an expiry-risk batch, not a missing-compliance assessment); not committed as approved future direction by any authoritative document at this checkpoint.
 - **`validate-current-emergency-contact.php`** — the same pre-existing, unrelated schema/data-version assertion failure carried forward from Batch A/B/C, re-confirmed via `git stash` to reproduce identically with none of Batch D's changes applied. Not caused by, and not repaired by, Staff Compliance.
 - All other items already carried forward from Batch A/B/C above remain unchanged and unresolved by this work.
+
+---
+
+# MVP Release Candidate Validation Cycle (RC-01 → RC-03-CLOSE)
+
+**Status:** Complete. **Product Owner manual sign-off: PASSED.** Merged to plugin `main` across three focused repair commits — `a197abdd68d824890968ae0a5726e0cd0148273c` (RC-01), `73c576762d5340ddc0cfa8c12d840b1ee10b31b7` (RC-02A-R1) and `3ee4c92963e8721b5562aa3a64e3706f81a346dc` (RC-03-R1) — interleaved with five validation-only tasks (RC-02A, RC-02A closure, RC-02B, RC-03, RC-03-CLOSE) that made no source changes of their own. See `development/DEVELOPMENT_HANDOVER_2026-09-09.md` for the current resume point and the full narrative; this section is the detailed sprint-history record.
+
+This cycle is the transition from "no currently-known unresolved High/MVP implementation blocker" (the prior targeted Release Readiness assessment) to a technically validated, Product-Owner-accepted MVP Release Candidate. **It does not represent production deployment** — see `RELEASE_CHECKLIST.md`'s separate "Release"/"Post-Release" gate for that distinct step.
+
+## 1. RC-01 — Portal Successful-Response HTTP-Status Correction (`a197abd`)
+
+**Defect.** `PortalRouter::render()`'s legitimate-route success path could render its full HTML output while an earlier-resolved HTTP status (frequently a stale 404 inherited from degraded/plain-permalink rewrite resolution) remained the actual header sent to the client — content was correct, status was not.
+
+**Repair.** `ob_start(); status_header( 200 );` immediately before the successful-render output begins, with `ob_end_flush();` at the true end of `render()`. This lets any later, genuine `wp_die()`/`status_header()` call — from a dispatched page class or the router's own not-found branch — still correctly override the optimistic 200 before the buffer is ever flushed to the client. The pre-existing `is_unknown_generic_section()` 404 guard runs unaffected, before the optimistic 200 is ever set. The final "Page not found" fallback branch explicitly re-asserts `status_header( 404 );`, correctly overriding the optimistic 200 for that one genuine outcome. Every pre-existing router-level authorization/validation `wp_die(...)` guard (maintenance-mode 503, wrong-persona 403, missing-Person 400) is preserved byte-for-byte.
+
+**Proof.** The successful Welfare compliance response body was confirmed byte-identical before and after. Real HTTP validation (genuine WordPress auth cookies) against legitimate routes across Secretary, Welfare, Treasurer, Coach and Parent personas returned 200; an unmatched section, an ineligible/nonexistent target Person, a wrong-persona request and an unauthenticated request all continued to return their original 404/403/400/302 — none were normalised to 200. `tools/validate-plain-permalink-portal-routing.php` extended 55 → 64 (structural source-level assertions; live HTTP behaviour cannot be asserted by a static validator and was proven separately, live, as above).
+
+**Nuance preserved from the originating investigation:** the long-lived normal Dev site's compiled `rewrite_rules` option was observed stale for some newer multi-segment routes. RC-02A (below) subsequently proved this is **not** a systemic fresh-install defect: a true fresh activation correctly compiles the complete current rewrite-rule set, including the newer Secretary/Welfare People/Compliance routes. The stale-rule condition is specific to a site not reactivated since those routes were added — a distinct, separate concern from RC-01, relevant background for any future controlled-upgrade work but not something this cycle needed to fix.
+
+## 2. RC-02A — Clean-Install Validation (disposable, no plugin commit)
+
+Read-only-of-source validation on a disposable **IEXEL Club OS Dev RC Clean** site — WordPress 7.1, PHP 8.2.29, MySQL 8.4.0, nginx (deliberately not downgraded to the historical WP 7.0.4 reference; current expected state was derived fresh from source at `a197abd`, not forced to match historical documentation).
+
+**Confirmed healthy:** genuine clean WordPress baseline with zero pre-existing Club OS state; normal `activate_plugin()` succeeds; schema/data version `2026.08.9`/`2026.08.9` matching source constants; `UpgradeRunner` fully current across all 36 registered `UpgradeStep`s; Staff Compliance table installed correctly, empty, with the current capability model correctly scoped (`administrator` and `iexel_welfare_officer` Y/Y, all other roles N/N — no broadening); zero bogus credentials manufactured; administrative authority does not synthesize member identity (the unlinked default administrator resolves no member experience — `MemberExperienceResolver::resolve()` fails closed); 15 system formations, 129 formation-template slots; **current rewrite rules compile correctly on normal activation** — 106 `club-os`-namespaced rules present (of 200 total) immediately after first activation, including every one of the newer multi-segment Secretary/Welfare People/Compliance routes, confirmed via direct native-match testing against `$wp_rewrite->wp_rewrite_rules()` (not merely "content rendered", the actual WordPress rewrite matcher was proven to own these routes, not Club OS's own REQUEST_URI fallback); 3-pass reconciliation byte-identical (idempotent); full deactivate/reactivate lifecycle healthy with no duplication and rewrite rules correctly recompiled on reactivation.
+
+**P2 finding, not fixed:** the actual live database contains **51** `iexel_os_*` tables; `DatabaseManager::CANONICAL_TABLES` lists **49**. The two extra tables (`current_emergency_contacts`, `event_match_live_bench_admissions`) are legitimate, correctly-created, correctly-populated tables simply absent from the inventory list that feeds the plugin's own built-in Release Readiness table-count check — a tooling-completeness gap, not a schema defect.
+
+**P3 methodology finding, not fixed:** `validate-welfare-people-compliance.php` falsely failed one whitespace-literal assertion when run against a `git archive`-exported copy of the RC Clean plugin tree (Windows `core.autocrlf=true` converts the canonical LF-committed source to CRLF on export), while passing 123/123 against the canonical repository checkout of the identical committed source. Zero functional/runtime impact — PHP execution is unaffected by line-ending representation. Recorded as a validation-methodology note for future RC work: run source-literal validators against the canonical checkout, not a `git archive` export, on Windows hosts.
+
+**One genuine P1 was found** — see RC-02A-R1 immediately below.
+
+## 3. RC-02A-R1 — No-Current-Season Team Workspace Fatal Repair (`73c5767`)
+
+**Defect.** `SeasonRepository::create()` defaults every new Season to `is_current = 0` — the default, unremarkable state of any club's very first Season before a Secretary/Admin explicitly marks one current. `TeamWorkspacePage::render()` (`PortalRouter.php`'s `'team'` section) passed `SeasonContext::season_id()`'s nullable `?int` directly into `MemberPortalService::team_viewer_mode()`'s non-nullable `int $season_id = 0` parameter. PHP enforces parameter types at the call boundary — passing `null` here threw an uncaught `TypeError` (HTTP 500) on `/club-os/teams/{id}/`, before `team_viewer_mode()`'s own body (including its `current_user_can('iexel_manage_club_os')` early-return) ever ran.
+
+**Root-cause proof.** Reproduced and resolved purely via test-data: `UPDATE seasons SET is_current = 1 WHERE id = 1` immediately made the identical route return 200, with zero code change — isolating the cause precisely to the absent "current Season" state.
+
+**Repair.** `$context->season_id() ?? 0` at the single confirmed call site. Nothing else changed.
+
+**Why this is safe (proven, not asserted).** `team_viewer_mode()` itself already treats `0` as its own established "no explicit Season, resolve current" sentinel (`$season_id = $season_id ?: absint($current?->id ?? 0)`), and when no current Season exists it already resolves this safely to `''` (not-a-viewer) — no arbitrary/historical Season is ever queried, since the function bails out via `if (!$current || ...) return '';` before any Season-scoped lookup runs. Club Admin and genuine Coach `'manager'` resolution happen *before* this check and are completely unaffected. `TeamWorkspacePage::render()` already contained a full no-current-Season empty-state architecture (`$has_context`, `$read_only`, the pre-existing `missing_current_season` warning from `SeasonContextResolver`, and `render_context_notices()`) that had simply never been reachable because the fatal occurred first — the repair does not invent any of this, it only lets the page reach it.
+
+**Live proof (RC Clean, then reconfirmed on RC Upgrade during RC-03).** No-current-Season: `/club-os/teams/{id}/` → HTTP 200, warning card correctly present, no current-season badge, season-independent content still renders, zero new PHP errors. Current-Season: same route → HTTP 200, normal content, warning correctly absent. A genuinely non-admin unauthorized viewer received identical (non-elevated) content in both states — the repair narrowed nothing and broadened nothing.
+
+**Product Owner manually accepted** the no-current-Season Team Workspace state at desktop, 320px and 390px, with no regression to the current-Season path.
+
+The existing warning copy — "Season configuration warning" / "No canonical current Season is configured." — is unchanged. **This wording is minor future UX polish only, not a release blocker.**
+
+`tools/validate-team-workspace-route-and-display.php` extended 29 → 39.
+
+### Deferred latent finding (P2, not fixed)
+
+`TeamStatisticsService.php:203`, inside `authorisedPlayerHubTeam()`, contains the structurally identical unguarded `SeasonContext::season_id()` → `team_viewer_mode()` pattern. It is **not independently reachable today** — its only two callers (`TeamWorkspacePage.php:486` and `:713-714`) both already short-circuit on `$has_context` before ever invoking it, and `$has_context` is false in exactly the state that would make `season_id()` null. It was not responsible for the RC-02A P1 and was deliberately left untouched, per the explicit narrow scope of the RC-02A-R1 repair batch. Classify as deferred latent hardening debt unless a future caller reaches it without that guard.
+
+## 4. RC-02A Closure Revalidation (disposable, no plugin commit)
+
+Reconfirmed the RC-02A-R1 repair live on RC Clean: no-current-Season Team Workspace → HTTP 200 with the warning card, no fatal, no automatic Season mutation; current-Season path unaffected; both states verified with zero new PHP errors/warnings; rewrite-rule compiled state, Staff Compliance install state and idempotence all reconfirmed unchanged/healthy.
+
+## 5. RC-02B — Supported Existing-Club Upgrade Validation (disposable, no plugin commit)
+
+Read-only-of-source validation on a disposable **IEXEL Club OS Dev RC Upgrade** site.
+
+**Chosen pre-upgrade baseline:** commit `d8d9607` ("Add canonical completed match goal removal"), schema/data version `2026.08.6`. Determined via `git log -S"2026.08.6" -- app/core/Upgrade/UpgradeVersions.php` pickaxe search: `d8d9607` is the immediate parent of the commit that bumped the version to `2026.08.7`, with zero intervening commits — the last genuine point in the actual git history at exactly `2026.08.6`. Independently cross-checked: 47 `CANONICAL_TABLES` entries + 1 separately-created AI activity table = 48 total tables at that commit, matching `MASTER_DEVELOPER_GUIDE.md`'s own historical "48 Club OS-owned tables" reference for the `2026.08.6` baseline exactly; confirmed a genuine ancestor of Staff Compliance Batch A (`git merge-base --is-ancestor`); no Staff Compliance table, capabilities, or `current_emergency_contacts` table present at this commit, consistent with genuinely predating that entire body of work.
+
+**Representative pre-upgrade existing-club fixture** (created using only legitimate production writer APIs at that historical baseline): an active/current `2026/27` Season; a Team/TeamSeason; a Coach Person with an active staff assignment; a Player Person with an active player assignment and DOB; a Parent Person with a `parent_of` relationship to the Player; an Event (fixture type, completed) with a player availability response; a Finance invoice with one line; a Welfare concern; a Player Operational Medical/Safety record.
+
+**Upgrade method:** plugin files replaced in-place with the current committed build (no deactivation, no database reset — the plugin remained continuously "active" per WordPress's own bookkeeping throughout, matching how a real WordPress-mediated plugin file update behaves). The real production upgrade-trigger mechanism was identified by source inspection — `UpgradeAdminController` (registered on `plugins_loaded`) shows an admin-notice "Run Club OS database upgrade" button whenever `UpgradeStatus::current()->ready` is false, POSTing to `admin-post.php?action=iexel_club_os_run_upgrade`, which calls `UpgradeRunner::run('administrator')` then `UpgradeLifecycle::reconcile_schedulers()` on success. The front-end portal was independently confirmed to correctly serve its own pre-existing "Maintenance in progress" 503 guard during the genuine stale-DB window, before the upgrade was invoked.
+
+**Result.** Schema/data reached `2026.08.9`/`2026.08.9`; `UpgradeStatus::current()->ready` became `true`; all 36 current `UpgradeStep` invariants valid; 51 `iexel_os_*` tables (matching the current-HEAD clean-install baseline exactly); Staff Compliance table created correctly with zero bogus credentials and the identical capability distribution to a clean install (no broadening); **every representative fixture record survived field-for-field, row-for-row** across Season, Team, TeamSeason, People, roles, relationships, Team Assignments, Events, availability, Finance invoice/line, Welfare concern and the Medical/Safety record; the current Season remained current (`SeasonRepository::current()` still resolved it, both at the database level and via live Team Workspace rendering); no automatic Season rollover; no duplicate TeamSeason; no silent data loss; no ownership reassignment; 106 `club-os` rewrite rules present post-upgrade, matching the clean-install baseline; formations/slots unchanged at 15/129.
+
+**Idempotence — self-healing confirmed, not a defect.** A second `UpgradeRunner` run, executed immediately after linking a new WP admin account to an existing Coach-assignment-holding Person (a state change introduced for subsequent smoke-testing, not part of the upgrade itself), correctly reported `code: 'upgraded'` because `TeamStaffOperationalAccessBackfill::is_valid()` correctly detected the resulting genuine capability drift (the newly-linked, now-qualifying account had not yet received its direct assigned-Team capability) and `apply()` correctly repaired it. A **third, genuinely clean run**, with no intervening state change, returned `code: 'already_current'` with the schema/data version and table count unchanged. This is the reconciliation architecture's intended self-healing behaviour working correctly, not an idempotence defect — the apparent "re-run" on the second pass was caused entirely by the test harness's own intervening action, not by the plugin.
+
+## 6. RC-03 — Final Representative Persona Validation (disposable, no plugin commit)
+
+A representative, not exhaustive, end-to-end pass across Club Admin, Secretary, Welfare, Treasurer, Coach/Manager, Parent/Guardian, Player, shared Messages/Events/Availability, Staff Compliance, sensitive-workspace boundaries, direct-route negative testing and representative HTTP-status testing — using genuinely single-persona, non-admin test accounts throughout, having learned from earlier RC work that testing negative-authorization cases with an admin-capable account produces misleading results via the legitimate Club-Admin capability-superset override.
+
+**Validated:** administrative authority does not synthesize member identity (a fresh unlinked admin fails to resolve any member experience, and the null-context wp-admin dashboard cannot receive a Staff Compliance alert regardless of capability — confirmed at the exact source guard, `ComplianceExpiryAlertsProvider::alerts()`'s `if (null === $context || ...) return [];`); Secretary cannot enter Welfare-only routes and Welfare cannot enter Secretary-only routes (both denied with a genuinely non-admin, single-persona account); a Coach with no assignment to a Team cannot see that Team's data; a Parent cannot access a non-linked child; a Player cannot access another Player's data; a non-Finance persona cannot reach Treasurer routes; unauthorized Staff Compliance management is denied; an invalid/nonexistent target returns 404; an unauthenticated portal request redirects (302).
+
+**This is a representative final RC pass, not a claim that every possible user journey was exhaustively re-tested.**
+
+**One P1 was found** — see RC-03-R1 immediately below.
+
+## 7. RC-03-R1 — Access-Restricted HTTP-Status Correction (`3ee4c92`)
+
+**Defect.** RC-03 live-reproduced that a genuinely non-admin Coach/Manager with no valid assignment to an existing Team, requesting `/club-os/teams/{id}/`, received the correct "Access restricted" denial *content* but at **HTTP 200** — the same RC-01 optimistic status leaking through one unprotected denial branch: `PortalRouter.php`'s `'team'` section rendered its `else` (denial) branch as plain inline HTML with no `status_header()` call of its own.
+
+**Audit scope.** A narrow source-and-runtime audit found the identical, unprotected pattern in **12 further** inline "Access restricted" denial branches sharing the same `can_manage_team()`/`can_view_team()`/`can_view_event()` shape: Event detail (`$can_view_detail`), Event Attendance, and ten Match-Mode/Event-management sections (matchday, live, report, correction, lineup, goal, substitution, goalkeeper, match-details, and the combined audience/edit branch). Every one of the 13 branches was independently live-reproduced against the pristine pre-fix build (HTTP 200 + "Access restricted") and then against the patched build (HTTP 403, identical unmodified denial body), with legitimate authorized access to the same 13 routes reconfirmed unaffected (200 throughout) and zero new PHP errors/warnings at any point.
+
+**`PortalFinanceWorkspacePage::restricted()` audited and deliberately left unchanged.** Every reachable Finance section already receives an authoritative `wp_die(...,403)` from `PortalRouter`'s own Finance gate (`if (str_starts_with($section, 'finance')) { if (!$context->has_role(TREASURER) || !current_user_can('iexel_view_finance')) wp_die(...,403); ... }`) before the Finance page class is ever instantiated. The underlying `iexel_club_treasurer` WP role grants `iexel_view_finance`, `iexel_manage_finance` and `iexel_manage_billing` together as one fixed bundle, applied atomically by `OperationalRoleAccessManager` — there is no real-world path to hold the first capability without the others. `PortalFinanceWorkspacePage::restricted()`'s internal calls are therefore genuinely unreachable via normal routing today. `PlayerStatisticsPage::restricted()` was confirmed to already correctly call `status_header($response)` before rendering — the established, correct pattern this repair now matches everywhere else it was missing.
+
+**Repair.** Thirteen explicit `status_header( 403 );` calls, each inserted immediately before its existing, byte-for-byte-unmodified "Access restricted" markup. Zero denial content/markup changed. Zero authorization/capability/route-matching logic changed anywhere.
+
+`tools/validate-plain-permalink-portal-routing.php` extended 64 → 91 (27 new assertions proving each corrected branch sets `status_header(403)`, that existing denial copy and every successful-render path are untouched, and that exactly thirteen corrections were made — no prior assertion weakened or removed).
+
+## 8. RC-03-CLOSE — Closure Revalidation (disposable, no plugin commit)
+
+Reconfirmed the committed `3ee4c92` build live on RC Upgrade: all 13 corrected branches → HTTP 403 with unchanged "Access restricted" content and no data leakage; the same 13 routes as the legitimate assigned Coach → HTTP 200; unauthenticated → 302; invalid/nonexistent target → 400/404 as designed; unknown route → 404; `validate-plain-permalink-portal-routing.php` 91/91; all eight directly-relevant regression validators at their established totals (`validate-team-staff-operational-access.php` 55/55, `validate-committee-permissions.php` 105/105, `validate-team-workspace-route-and-display.php` 39/39, `validate-admin-person-role-dependency-guards.php` 91/91, `validate-admin-person-role-sync.php` 54/54, `validate-secretary-people-foundation.php` 81/81, `validate-welfare-people-compliance.php` 123/123, `validate-staff-compliance-secretary-ui.php` 98/98); zero new runtime errors.
+
+**Verdict: RELEASE CANDIDATE PASS.**
+
+## 9. Product Owner Manual Sign-Off
+
+Completed after RC-03-CLOSE, against the final `3ee4c92963e8721b5562aa3a64e3706f81a346dc` build.
+
+**PRODUCT OWNER MANUAL SIGN-OFF: PASSED.**
+
+The MVP Release Candidate is therefore technically validated and Product Owner accepted. This is distinct from, and does not itself constitute, production deployment/release — see `RELEASE_CHECKLIST.md` for that separate gate.
+
+## Known debt / deferred items introduced or reconfirmed by this cycle (not resolved by this work)
+
+- **`DatabaseManager::CANONICAL_TABLES` 49-vs-51 inventory gap** (RC-02A) — P2, tooling-completeness only, not fixed.
+- **`TeamStatisticsService.php:203` latent nullable-Season pattern** (RC-02A) — P2, not independently reachable today, not fixed.
+- **CRLF source-validator methodology note** (RC-02A) — P3 procedural note about `git archive` exports on Windows hosts, not a source defect, not fixed.
+- **No-current-Season warning copy** ("Season configuration warning" / "No canonical current Season is configured.") — unchanged, minor future UX polish only.
+- **Guardian Link Role Synchronisation Audit** (new, Product Owner observation post-RC) — see `development/DEVELOPMENT_HANDOVER_2026-09-09.md` and `development/CLUB_OS_EXPERIENCE_REVIEW_AND_ROADMAP.md`'s "Newly confirmed product follow-ups" section. Audit/follow-up candidate only, not approved implementation direction.
+- All pre-existing debt already carried forward through Staff Compliance Batch D (DevTools 404 observation, `validate-current-emergency-contact.php`, Person 19/Team 1 fixture drift, `validate-team-events-badge-mobile-repair.php`, `validate-visual-foundation.php`, Person 176 orphaned Team Assignment, Secretary late-add eligibility, raw `age_group` normalisation, FIN-031) remains unchanged and unresolved by this cycle — none of it was in scope, and none of it is a release blocker per the authoritative docs.
+- **`validate-team-workspace-overview-shell-polish.php`** — a pre-existing, unrelated batch-specific git-status hygiene gate reconfirmed (via `git stash`) to fail identically on the clean baseline with zero RC-cycle changes applied; not a regression, not fixed.

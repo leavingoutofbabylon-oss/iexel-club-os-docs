@@ -449,6 +449,32 @@ Jude Kane 37′
 - **Focused-action and half-width responsive polish:** the Goal Attribution focused-action score card no longer stretches vertically merely to match a taller adjacent form; Team names now scale relative to the card/container's own width (a container-query-based resilient clamp) rather than the viewport, fixing character-by-character breaks in narrow half-width layouts; the scorer/minute list switches to one-entry-per-line below a safe card width so a Player name and minute never separate.
 - Preserves the premium midnight-blue Club OS design system and the runtime club-accent token throughout (see `MASTER_DEVELOPER_GUIDE.md`'s "Primary Immersive Module Accent Treatment") — never a hardcoded colour.
 
+### Guardian Link Role Synchronisation Audit
+
+**Status:** POST-RC workflow-integrity / onboarding audit candidate. **NOT a release blocker. NOT an approved implementation batch.** Recorded as a Product Owner observation for a future audit; no behaviour has been changed or decided.
+
+**Observed current/manual workflow:** when manually linking a Person to a Player as Parent/Guardian, the Product Owner appears to need to give that Person the Parent role *first* before they become available/usable in the Guardian linking workflow.
+
+**Product Owner's expected, more natural workflow:**
+1. Find/select the Person while linking a Parent/Guardian to a Player.
+2. Create the canonical Parent/Guardian → Child relationship.
+3. Club OS automatically ensures the adult Person has the appropriate canonical Parent role/identity.
+4. The user should not need to pre-assign the Parent role manually.
+
+**A future audit (not started, not scoped as implementation) should determine:**
+
+- Current behaviour of manual Guardian Links.
+- Whether the Parent role is genuinely a prerequisite in the current implementation.
+- Whether Registration/Prospect onboarding already creates both the parent/guardian relationship and the Parent role together.
+- Whether Training Membership / youth onboarding already relies on the existing Guardian Links flow.
+- Whether relationship creation should transactionally ensure the Parent role.
+- Whether role removal should happen automatically when a link is removed, and if so, how to protect a Person who remains guardian to another Player.
+- Whether the Parent role and the `parent_of`/`guardian_of` relationship must remain distinct domain concepts even if the UI eventually creates them atomically.
+- Authorization/safeguarding implications.
+- The canonical service/writer path to extend if a change is eventually approved.
+
+**Product architecture principle to preserve — do not collapse this to simplify the UI:** RELATIONSHIP and ROLE are related but distinct concepts. The relationship answers "which child/Player is this adult linked to?" The role/identity contributes to "which Parent/Guardian experience may this Person receive?" Any future change should extend the canonical People/relationship/role services — never a parallel guardian-link mechanism. See `development/DEVELOPMENT_HANDOVER_2026-09-09.md` for the full audit-question list.
+
 ## Historical Match Participation Evidence — Deferred Opportunities
 
 **Status:** Post-v1 / Deferred. None of the following are current v1 commitments; do not implement or scaffold any of them without a separate, dedicated approval.
@@ -506,7 +532,9 @@ The only items the roadmap still shows open within MVP scope are **FIN-031** and
 
 **Staff Compliance — canonical foundation, Secretary management, the restricted Welfare People/Person/Compliance projection, and proactive compliance expiry alerting are all now complete** (plugin `main` `b5f006a6`, `3352d300`, `cd871f3`, then `2bdd62e`) — see the Staff Compliance bullets above and `SPRINTS.md`'s "Staff Compliance — Batch A, Batch B, Batch C & Batch D" section for full delivery detail. **Do not restart or re-scope this work; do not re-implement the credential domain, either workspace's route/workflow, target-Person eligibility, type-aware credential naming, the desktop layout repair, the Welfare People inclusion rule/directory/profile, or the compliance expiry alert provider/routing.** No further Staff Compliance batch is currently approved future direction — missing-compliance ("Not Recorded") alerting, a configurable expiry threshold, a broader qualification catalogue, and notification-channel delivery (email/SMS/push) were all explicitly out of scope for Batch D and remain uncommitted, speculative ideas rather than approved next steps; do not promote any of them to a "Batch E" without a fresh, explicit Product Owner decision.
 
-**No single next implementation batch is currently dominant in the authoritative backlog.** With Staff Compliance A–D complete, `MASTER_DEVELOPER_GUIDE.md`'s own "Current Priority" (Final Release Readiness / Club OS v1.0 sign-off) remains the highest-priority activity, though it is a checklist/gate review rather than a feature-coding batch — see `RELEASE_CHECKLIST.md` for its specific remaining gates. The only other approved-but-unpromoted candidates are **OS-011** (Welfare Concern Detail hierarchy polish — genuinely open, cosmetic/non-blocking, explicitly "not currently promoted ahead of Internal Club Testing") and the small **Person 176 orphaned Team Assignment** data-integrity item (an active Team Assignment with no corresponding `people` row, found during the Event Builder batch, still unresolved — see `SPRINTS.md`'s "Known debt / deferred items" for that batch). **Product Owner/lead developer prioritisation is needed** to choose between advancing Release Readiness sign-off, picking up OS-011, or fixing the Person 176 data-integrity item — do not invent or begin a new implementation batch from this roadmap description alone. Before starting any roadmap-labelled implementation work, see `development/DEVELOPMENT_HANDOVER_2026-09-08C.md` (the current, latest handover) for the current recommended starting point.
+**The MVP Release Candidate Validation Cycle (RC-01 through RC-03-CLOSE) is now complete, and Product Owner manual sign-off has PASSED** (plugin `main` `a197abd`, `73c5767`, `3ee4c92`) — see `SPRINTS.md`'s "MVP Release Candidate Validation Cycle (RC-01 → RC-03-CLOSE)" section for full delivery detail and `development/DEVELOPMENT_HANDOVER_2026-09-09.md` for the current resume point. This closes out `MASTER_DEVELOPER_GUIDE.md`'s former "Current Priority" of Final Release Readiness / Club OS v1.0 sign-off as a *technical validation and product-acceptance* milestone — it is not itself a production deployment event; see `RELEASE_CHECKLIST.md`'s separate "Release"/"Post-Release" gate for that distinct step. **Do not restart or re-scope any RC-cycle work; do not invent an "RC-04."**
+
+**No single next implementation batch is currently dominant in the authoritative backlog.** With the RC cycle and Staff Compliance A–D both complete, the approved-but-unpromoted candidates are **OS-011** (Welfare Concern Detail hierarchy polish — genuinely open, cosmetic/non-blocking, explicitly "not currently promoted ahead of Internal Club Testing"), the small **Person 176 orphaned Team Assignment** data-integrity item (an active Team Assignment with no corresponding `people` row, found during the Event Builder batch, still unresolved — see `SPRINTS.md`'s "Known debt / deferred items" for that batch), and the newly recorded **Guardian Link Role Synchronisation Audit** (see "Newly confirmed product follow-ups" above — an audit candidate, not an approved implementation direction). **Product Owner/lead developer prioritisation is needed** to choose between these — do not invent or begin a new implementation batch from this roadmap description alone. Before starting any roadmap-labelled implementation work, see `development/DEVELOPMENT_HANDOVER_2026-09-09.md` (the current, latest handover) for the current recommended starting point.
 
 ## Future club profiles
 
