@@ -31,6 +31,7 @@ This document tracks the major development milestones of IEXEL Club OS. Complete
 | CMC | Completed Match Correction Architecture (Batches 2A, 2B-1, 2B-2), Acceptance Gate & Player Progress MVP Decision | ✅ Complete |
 | ICT-Fixes | Internal Club Testing Remediation — Secretary Safeguards, Current Emergency Contact, Password-Reset Completion Alerts & Final Pre-Merge Validator Hygiene (`b2b51eb`) | ✅ Complete |
 | RC2 | MVP Release Candidate Validation Cycle (RC-01 portal-status fix, RC-02A/RC-02A-R1 clean-install + no-current-Season repair, RC-02B upgrade validation, RC-03/RC-03-R1 persona validation + forbidden-status fix, RC-03-CLOSE) — Product Owner sign-off PASSED | ✅ Complete |
+| GLA1 | Post-RC Guardian Link Alignment Batch 1 (Secretary roleless-adult Guardian Links + transactional role ensure; Treasurer zero-role-grant and cross-role-top-up security closure) | ✅ Complete |
 
 ---
 
@@ -1666,6 +1667,75 @@ The MVP Release Candidate is therefore technically validated and Product Owner a
 - **`TeamStatisticsService.php:203` latent nullable-Season pattern** (RC-02A) — P2, not independently reachable today, not fixed.
 - **CRLF source-validator methodology note** (RC-02A) — P3 procedural note about `git archive` exports on Windows hosts, not a source defect, not fixed.
 - **No-current-Season warning copy** ("Season configuration warning" / "No canonical current Season is configured.") — unchanged, minor future UX polish only.
-- **Guardian Link Role Synchronisation Audit** (new, Product Owner observation post-RC) — see `development/DEVELOPMENT_HANDOVER_2026-09-09.md` and `development/CLUB_OS_EXPERIENCE_REVIEW_AND_ROADMAP.md`'s "Newly confirmed product follow-ups" section. Audit/follow-up candidate only, not approved implementation direction.
+- **Guardian Link Role Synchronisation Audit** (Product Owner observation post-RC) — **now resolved.** The audit ran, and its confirmed findings were implemented as Post-RC Guardian Link Alignment Batch 1 (`29220cc`) — see the dedicated section below, `development/DEVELOPMENT_HANDOVER_2026-09-09B.md`, and `development/CLUB_OS_EXPERIENCE_REVIEW_AND_ROADMAP.md`'s "Guardian Link Role Synchronisation Audit" section for final delivery detail.
 - All pre-existing debt already carried forward through Staff Compliance Batch D (DevTools 404 observation, `validate-current-emergency-contact.php`, Person 19/Team 1 fixture drift, `validate-team-events-badge-mobile-repair.php`, `validate-visual-foundation.php`, Person 176 orphaned Team Assignment, Secretary late-add eligibility, raw `age_group` normalisation, FIN-031) remains unchanged and unresolved by this cycle — none of it was in scope, and none of it is a release blocker per the authoritative docs.
 - **`validate-team-workspace-overview-shell-polish.php`** — a pre-existing, unrelated batch-specific git-status hygiene gate reconfirmed (via `git stash`) to fail identically on the clean baseline with zero RC-cycle changes applied; not a regression, not fixed.
+
+---
+
+# Post-RC Guardian Link Alignment Batch 1
+
+**Status: Complete.** Plugin `main` `29220cc0d6be03085c5096bf6bbe3af044d01741` ("fix: align guardian relationship role handling"). This is **post-RC follow-up work**, completed after the MVP Release Candidate validation cycle above and after Product Owner manual sign-off — it does not reopen, extend, or supersede RC-01 through RC-03-CLOSE, and it is not itself a release blocker.
+
+## 1. Origin
+
+A Product Owner workflow observation, recorded as the "Guardian Link Role Synchronisation Audit" candidate in the RC cycle's own follow-up list (see "Known debt / deferred items" above, and `development/DEVELOPMENT_HANDOVER_2026-09-09.md`): manually linking a Person to a Player as Parent/Guardian appeared to require giving that Person the Parent role *first*. A dedicated read-only audit ran first, confirmed the observation was accurate for the Secretary's manual Guardian Links workflow specifically, and found a related Treasurer authorization question that was resolved as part of this same batch (see section 3 below). No source, docs, schema, or capability was changed during the audit itself.
+
+## 2. Secretary Guardian Links — final behaviour
+
+The Secretary's manual "Guardian Links" candidate picker (`PortalSecretaryGuardianLinksPage`) no longer requires an adult Person to already hold an active Parent/Guardian role to appear as a selectable candidate. The canonical write service (`PersonRelationshipManagementService::link_existing_adult()`, under `POLICY_SECRETARY`) now:
+
+- creates the `parent_of`/`guardian_of` relationship, and
+- **transactionally ensures** the corresponding canonical role (`parent_of` → active `parent`; `guardian_of` → active `guardian`) as part of the same write, inside the same relationship transaction, via a new transaction-safe role-ensure primitive (`PersonRoleManagementService::ensure_parent_guardian_role_in_transaction()`), mirroring the existing pattern already used for Player-role materialisation elsewhere in the codebase.
+
+RELATIONSHIP and ROLE remain distinct domain concepts (see section 4). Existing unrelated Person roles are preserved; the role-ensure is idempotent (no duplicate role is created if the Person already holds it). This protection is enforced in the domain service itself, so a direct/crafted POST behaves identically to the picker-driven UI path — the picker never was, and still is not, the authorization boundary.
+
+## 3. Treasurer — security closure
+
+A closure review, prompted by the Secretary change above, established that a pure Treasurer (`iexel_manage_finance_relationships`) does **not** hold `iexel_manage_person_roles` — that capability is Secretary-specific, explicitly stripped from the Treasurer WP role by `ClubRoleCapabilityRegistrar`, and granted operationally only via the canonical `secretary` Person role, never `treasurer`. Because Secretary and Treasurer share the same canonical write service, an unconditional role-ensure would have let a pure Treasurer cause a role grant — a capability-gated consequence — through their narrower Finance-relationship authority.
+
+This was corrected using the service's existing policy seam (`POLICY_SECRETARY` / `POLICY_TREASURER`), with no new WP-actor awareness added to the domain layer and no capability added, removed, or reassigned:
+
+- Under `POLICY_TREASURER`, the adult **must already hold the role matching the requested relationship type** before a `parent_of`/`guardian_of` relationship may be created; the role-ensure primitive is never invoked for this policy.
+- A genuinely roleless adult is rejected **server-side**, before any transaction begins — zero role and zero relationship side effects.
+- The pre-existing incidental "cross-role top-up" (a parent-only adult being silently granted `guardian` when linked `guardian_of`, or vice versa) — traced to pristine code and confirmed **policy-blind, not an intentionally authorised Treasurer capability** — is closed the same way: Treasurer must already hold the *specific* role requested, not merely "either."
+- Treasurer's candidate picker (`TreasurerOperationalReadService::relationship_candidates()`) remains role-filtered, unchanged in scope. Its per-candidate eligibility probe was corrected from a hardcoded `parent_of`-only check to checking both relationship types, so an already-valid parent-only or guardian-only candidate is no longer incorrectly hidden merely because the probe used the wrong type — a narrow correctness fix, not a widening of who can appear.
+
+## 4. Architecture preserved: relationship vs role
+
+RELATIONSHIP ("which adult is linked to which Player/child?") and ROLE ("which operational/persona identity does this Person hold?") remain separate domain concepts, stored separately, never collapsed. A canonical family-link workflow may ensure the corresponding role as a *consequence* of relationship creation only where the originating policy is authorised to cause that consequence — Secretary and Treasurer are not equivalent merely because both may create family relationships. See `development/MASTER_DEVELOPER_GUIDE.md`'s new "Family Relationship Role Consequences" durable rule.
+
+## 5. Corrected characterisation of Registration and Prospect
+
+The original audit's Registration and Prospect findings were **overstated** and are corrected here:
+
+- **Registration:** normal current Registration matching/validation (`PeopleRepository::find_matching_parent()`'s own role-gated join, and `PlayerRegistrationValidator`'s explicit role check on a stored `parent_id`) already prevents a roleless existing adult from reaching the parent-link write through the supported workflow. The Batch-1 role-ensure added to `PlayerRegistrationService::link_parent()` is **defense-in-depth / canonical-invariant protection against future upstream validation drift**, not a fix for a currently user-reachable roleless-adult bypass.
+- **Prospect:** normal current Prospect guardian matching (`PeopleRepository::find_active_guardian_candidates()`) already requires an active Parent/Guardian role via its own `INNER JOIN`. The Batch-1 role-ensure added to `ProspectConversionGateway` is defense-in-depth / canonical-invariant alignment, and is **effectively a no-op** for a currently matched existing guardian under the supported flow. Prospect conversion does not currently allow a roleless matched guardian through normal matching.
+
+## 6. Unchanged semantics
+
+- Removing a Parent/Guardian relationship (`remove_parent_guardian_relationship()`) does **not** automatically remove the Parent/Guardian role — unchanged. A multi-child guardian therefore retains their role when one child's link is removed.
+- `MemberExperienceResolver`'s Parent-persona tolerance is unchanged: either an active role or a linked child remains independently sufficient, and both directions of that tolerance (role-without-relationship, relationship-without-role) remain non-fatal read states.
+- No backfill or migration was introduced. No schema change. No capability added, removed, or reassigned.
+
+## 7. Validation
+
+Final focused/regression results:
+
+| Validator | Result |
+|---|---|
+| `validate-treasurer-finance-relationships.php` | PASS — 264 |
+| `validate-secretary-guardian-linking.php` | PASS — 70 |
+| `validate-secretary-person-role-management.php` | PASS — 262 |
+| `validate-admin-person-role-dependency-guards.php` | PASS — 91 |
+| `validate-admin-person-role-sync.php` | PASS — 54 |
+| `validate-treasurer-operational-read-access.php` | PASS — 45 |
+| `validate-registration-existing-player-link.php` | PASS — 75 |
+| `validate-family-relationship-integrity.php` | 70 passed / 1 confirmed baseline-only failure (pre-existing Dev-site fixture drift, reproduced identically on the pristine baseline) |
+| `validate-prospect-training-conversion.php` | 1 confirmed baseline-only failure (pre-existing, unrelated TeamSeason/age_group assertion, reproduced identically on the pristine baseline) |
+
+Runtime security proof on disposable RC Upgrade (fixtures created and fully cleaned up afterward, environment restored): Treasurer roleless `parent_of`/`guardian_of` both rejected server-side with zero role/relationship created; Treasurer cross-role top-up rejected; Secretary roleless `parent_of`/`guardian_of` both succeed with the corresponding role ensured — 12/12 security-closure checks passed.
+
+## Known debt / deferred items (not resolved by this work)
+
+None new. This batch introduced no new deferred debt; the two baseline-only validator failures above pre-date this batch and are unrelated to it.
