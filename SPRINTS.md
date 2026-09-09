@@ -1781,6 +1781,65 @@ PHP lint passed on all touched PHP files throughout. `git diff --check` clean. N
 
 ## Known debt / deferred items (not resolved by this work)
 
-- **Finance Reports route defect (open, not fixed).** `finance-reports` is registered as a route with its own title/intro, but the page's `match($section)` dispatcher has no case for it, and it is not linked from the page's own navigation — it silently falls through to Finance Overview content. This was deliberately identified and left unfixed as part of this presentation-only batch, per an explicit pre-edit gate. It is the recommended next small functional Finance batch; do not describe Finance Reports as currently working.
+- **Finance Reports route defect (open, not fixed) — status changed, see below.** `finance-reports` is registered as a route with its own title/intro, but the page's `match($section)` dispatcher has no case for it, and it is not linked from the page's own navigation — it silently falls through to Finance Overview content. This was deliberately identified and left unfixed as part of this presentation-only batch, per an explicit pre-edit gate. **A dedicated read-only audit subsequently reclassified this as an unfinished scaffold rather than a routing defect awaiting a dispatcher fix (it never had a Reports renderer or service, and this was never a regression), and the scaffold has since been removed rather than completed — see "Finance Reports Phantom Route Cleanup Batch 1" below. Do not continue to describe this as an open routing defect or as the recommended next Finance batch.**
 - **`iexel-fee-rule-back` naming debt (deferred).** The reused component correctly delivers the light-surface Finance secondary-action treatment (section 2 above), but its class name is narrower than its actual reuse (it originated on the Fee Rule page). This is naming/architecture debt only — the visual treatment itself is accepted — and renaming it was out of scope for this batch (it would require touching `PortalFeeRuleManagementPage.php` and `PortalDiscountPolicyManagementPage.php` too).
 - **Premium Surface Colour Consistency Audit (deferred, future work).** A broader audit of Club OS's premium-surface colour consistency remains future work, not started by this batch. It must not be scoped as "make every pale card dark" or "make every Club OS page identical" — it should distinguish intentionally light subordinate cards (such as Finance's own KPI tiles) from surfaces genuinely inconsistent with the established premium hierarchy, and must preserve the immersive Team/Coach/Match Mode dark treatment where that is the correct, already-accepted design.
+
+---
+
+# Finance Reports Phantom Route Cleanup Batch 1
+
+**Status: Complete.** Plugin `main` `fbfc032fa286b2d227c085c369a02b8a9cd837f1` ("fix: remove phantom finance reports route"). This is **post-RC follow-up work**, completed after Treasurer Premium Workspace Alignment Batch 1 above — it does not reopen the RC cycle, Guardian Link Alignment Batch 1, or Treasurer Premium Workspace Alignment Batch 1, and it is not itself a release blocker.
+
+## 1. Origin and reclassification
+
+The previous batch's "Known debt" entry above described `finance-reports` as an open routing defect: registered with title/intro metadata, but with no `match($section)` dispatcher case, falling through to Finance Overview content. A dedicated read-only trace audit was run before any implementation to determine the precise nature of this issue rather than assume it from the route name alone. The audit established a materially more complete picture than "routing defect":
+
+- `finance-reports` had route registration (in both the primary and plain-permalink-fallback route tables) and title/intro metadata, but **had never had a dispatcher case, a Reports renderer, or a Reports service/read model, at any point since the original Treasurer Finance implementation** (confirmed via `git log -S`/`git show` on the introducing commit).
+- It was absent from Finance navigation entirely — not deliberately hidden, simply never added.
+- Direct URL access rendered the "Finance Reports" hero over Finance Overview's own body content, through the dispatcher's ordinary `default => $this->overview()` fallback — not a special case, not a crash, not a security or data-integrity issue.
+- **This was not a regression.** It was correctly classified P3 (functional/navigation completeness gap, not security or data-integrity).
+- No Finance Reports product scope — no report types, filters, exports, or data sources — had ever been product-defined anywhere in source or documentation.
+
+**Given no genuine Reports implementation existed to reconnect, "fix the dispatcher" was not an available option without inventing product scope that had never been approved.** The Product Owner decision was therefore to **remove the unfinished public-facing scaffold** rather than complete it speculatively, until a genuine Finance Reports experience is deliberately product-defined.
+
+## 2. Completed cleanup
+
+- Removed `'finance/reports' => 'finance-reports'` from both Finance route-registration tables in `PortalRouter.php` (the primary `add_rewrite_rule()` loop and the plain-permalink fallback regex table).
+- Removed the `'finance-reports' => array( 'Finance Reports', 'Operational totals and audit-ready summaries.' )` title/intro metadata entry from `PortalFinanceWorkspacePage.php`.
+- There was no dispatcher case or navigation entry to remove, confirming the audit's finding that none had ever existed.
+- Reused the plugin's own existing `REWRITE_SCHEMA_VERSION` self-healing mechanism (bumped to `finance-reports-phantom-route-removed-v1`, following the established naming convention) so WordPress's cached rewrite rules invalidate and regenerate automatically on the next request — no new `flush_rewrite_rules()` call, no activation/deactivation change, no new option introduced.
+- Strengthened `validate-treasurer-finance-configuration.php` with narrow, additive route/metadata/dispatcher consistency assertions: complete absence of `finance-reports` from both route tables and from the page's metadata/dispatcher/navigation; every remaining legitimate Finance route and its metadata still present; and a general consistency guard that cross-checks every Finance section's metadata key against the dispatcher block, so a future section scaffolded the same inconsistent way (metadata present, no dispatcher case) would fail the suite automatically. This guard was verified to actually catch a synthetic phantom entry before being relied upon.
+
+## 3. Product decision — Finance Reports is not implemented
+
+**A genuine Finance Reports capability is not considered implemented by this batch, and this batch does not define one.** Removing the phantom scaffold is not itself progress toward a Reports feature — it is the removal of a public route that implied a capability Club OS does not actually have. Before any future implementation, Finance Reports needs an explicit Product Owner definition of what Treasurer questions/reports the feature should actually serve (which totals, which filters, whether/what export format) — none of that is specified here, and none should be inferred from the retired title/intro copy ("Operational totals and audit-ready summaries") that this batch removed.
+
+## 4. Unchanged
+
+No change to `FinanceRepository`, `FinanceService`, `ResponsibleBillingContactResolver`, invoice/payment/billing calculations, invoice lifecycle, payment allocation, capabilities, schema, migrations, exports, or activity/audit behaviour. No Finance visual styling changed — Treasurer Premium Workspace Alignment Batch 1's accepted presentation is untouched, and the Premium Surface Colour Consistency Audit was not started.
+
+## 5. Validation
+
+| Validator | Result |
+|---|---|
+| `validate-parent-family-finance.php` | PASS — 44 |
+| `validate-treasurer-billing-run-detail.php` | PASS — 93 |
+| `validate-treasurer-directory-ux.php` | PASS — 34 |
+| `validate-treasurer-finance-configuration.php` | PASS — 537 (strengthened route/metadata/dispatcher consistency coverage) |
+| `validate-treasurer-finance-relationships.php` | PASS — 264 |
+| `validate-treasurer-invoice-detail.php` | PASS — 54 |
+| `validate-treasurer-operational-read-access.php` | PASS — 45 |
+| `validate-player-medical-safety-current-state.php` | PASS — 190 |
+| `validate-player-progress.php` | PASS — 367 |
+| `validate-secretary-person-role-management.php` | PASS — 262 |
+| `validate-visual-foundation.php` | 1 confirmed baseline-only failure ("Public stylesheet dependency order changed") |
+
+The `validate-visual-foundation.php` failure was re-verified specifically for this batch, since `PortalRouter.php` was genuinely touched here (unlike the previous batch): the exact failing assertion inspects a `wp_enqueue_style()` dependency-array ordering over 600 lines from this batch's edits, and was reproduced identically against pristine pre-batch plugin `HEAD` `8403691` — confirmed not introduced or affected by this batch. PHP lint passed on all touched PHP files. `git diff --check` clean throughout.
+
+Runtime verification on the normal Dev environment (non-mutating auth-cookie-injection technique, genuine non-admin Treasurer persona): `/club-os/finance/reports/` now returns HTTP 404 with the plugin's own established generic "Page not found" content — no Finance Reports hero, no Overview masquerade, no invented redirect, no placeholder. Every legitimate Finance route smoke-tested and confirmed still resolving correctly.
+
+## Known debt / deferred items (not resolved by this work)
+
+- **Future Finance Reports capability — product-definition work, not started.** See section 3 above. This is explicitly deferred and unscoped; do not infer report types, filters or exports from anything in this section.
+- The `iexel-fee-rule-back` naming debt and Premium Surface Colour Consistency Audit carried over from Treasurer Premium Workspace Alignment Batch 1 remain unchanged and unresolved by this cleanup.
