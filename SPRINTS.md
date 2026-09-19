@@ -32,6 +32,7 @@ This document tracks the major development milestones of IEXEL Club OS. Complete
 | ICT-Fixes | Internal Club Testing Remediation — Secretary Safeguards, Current Emergency Contact, Password-Reset Completion Alerts & Final Pre-Merge Validator Hygiene (`b2b51eb`) | ✅ Complete |
 | RC2 | MVP Release Candidate Validation Cycle (RC-01 portal-status fix, RC-02A/RC-02A-R1 clean-install + no-current-Season repair, RC-02B upgrade validation, RC-03/RC-03-R1 persona validation + forbidden-status fix, RC-03-CLOSE) — Product Owner sign-off PASSED | ✅ Complete |
 | GLA1 | Post-RC Guardian Link Alignment Batch 1 (Secretary roleless-adult Guardian Links + transactional role ensure; Treasurer zero-role-grant and cross-role-top-up security closure) | ✅ Complete |
+| FR-SPEC | Fundraising Architecture & Implementation Specification (F1–F6) | 📋 Approved Architecture (Implementation Pending) |
 
 ---
 
@@ -1843,3 +1844,20 @@ Runtime verification on the normal Dev environment (non-mutating auth-cookie-inj
 
 - **Future Finance Reports capability — product-definition work, not started.** See section 3 above. This is explicitly deferred and unscoped; do not infer report types, filters or exports from anything in this section.
 - The `iexel-fee-rule-back` naming debt and Premium Surface Colour Consistency Audit carried over from Treasurer Premium Workspace Alignment Batch 1 remain unchanged and unresolved by this cleanup.
+
+---
+
+# Fundraising Domain Architecture & Specification (F1–F6)
+
+**Status: Approved Product Architecture (Implementation Pending).**
+
+The Product Owner has approved Fundraising as a first-class Club OS operating capability. A comprehensive technical architecture and implementation plan has been established in `development/FUNDRAISING_ARCHITECTURE_AND_IMPLEMENTATION_PLAN.md`.
+
+## 1. Domain Summary
+- **Fundraising Families:** Fundraising Appeal (donations/targets, F1), Sponsored Challenge (activity-based, F5), Spot the Ball (flagship skill/judgement competition with independent adult panel adjudication and immutable target sealing, F2–F4), and Club Draw (future compliance-gated campaign type, deferred to F6).
+- **Core Engineering Invariants:**
+  - Fundraising transactions are **NOT ordinary club invoices**; orders interface with `FinanceService` payments via an explicit bridge without mutating existing invoice `PaymentAllocation` semantics or polluting player billing accounts.
+  - Spot the Ball target is derived by independent adult adjudication and sealed before public participation; the Secretary clicking the historical ball location is prohibited.
+  - In Spot the Ball ties, prize shares are divided equally per **unique winning participant/person**, not per entry, with deterministic zero-penny-loss remainder allocation.
+  - Strict safeguarding: zero public child profiles or child seller URLs; all financial transactions require verified adult payer authorization; minor prize settlements follow verified guardian workflows without inappropriate financial exposure to Welfare.
+- **Phasing:** Implementation is scheduled in controlled phases F1 through F6. No runtime functionality has been implemented in this documentation batch.

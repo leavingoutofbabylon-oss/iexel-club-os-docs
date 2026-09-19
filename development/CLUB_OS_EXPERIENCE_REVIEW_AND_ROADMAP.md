@@ -569,6 +569,20 @@ The only items the roadmap still shows open within MVP scope are **FIN-031** and
 
 **No single next implementation batch is currently dominant in the authoritative backlog.** With the RC cycle, Staff Compliance A–D, Guardian Link Alignment Batch 1, Treasurer Premium Workspace Alignment Batch 1, and the Finance Reports Phantom Route Cleanup all complete, the remaining documented candidates are: **OS-011** (Welfare Concern Detail hierarchy polish — genuinely open, cosmetic/non-blocking, explicitly "not currently promoted ahead of Internal Club Testing"); the small **Person 176 orphaned Team Assignment** data-integrity item; the **`iexel-fee-rule-back` naming debt** (small, low-priority, cosmetic-to-code-quality only); and the broader **Premium Surface Colour Consistency Audit** (future/deferred, larger and less-scoped than the others, not currently promoted). **A future genuine Finance Reports implementation is not currently a candidate at all — it cannot be scheduled until Product Owner product definition happens first**, which is itself not a development task. **Product Owner/lead developer selection is needed** to choose between the genuinely open candidates — do not invent or begin a new implementation batch, and do not promote the Premium Surface Colour Consistency Audit, from this roadmap description alone. Before starting any roadmap-labelled implementation work, see `development/DEVELOPMENT_HANDOVER_2026-09-09D.md` (the current, latest handover) for the current recommended starting point.
 
+## Approved Future Domain: Fundraising (F1–F6)
+
+**Status:** Approved Product Architecture (Implementation Pending). See `development/FUNDRAISING_ARCHITECTURE_AND_IMPLEMENTATION_PLAN.md` for the authoritative technical specification.
+
+The Product Owner has approved Fundraising as a first-class Club OS operating domain to support grassroots football equipment, facility and travel campaigns. The architecture encompasses:
+- **Member Fundraising Hub** (`/club-os/fundraising/`) for backing appeals and entering competitions;
+- **Secretary / Admin Management Console** (`/club-os/secretary/fundraising/`);
+- **Treasurer Financial Oversight** (`/club-os/treasurer/` & `/club-os/finance/fundraising/`) providing gross, fee, prize, and net accounting via an explicit bridge without altering existing invoice payment allocations;
+- **Spot the Ball Flagship Experience** with independent adult panel adjudication, auditable immutable target sealing, device-independent normalized coordinates, Euclidean distance calculation, and unique-person tie-breaking with deterministic penny remainder distribution;
+- **Fundraising Appeal** direct donation campaigns (F1 MVP target);
+- **Safeguarding Guarantees:** zero public child seller profiles, adult payment authorization, and linked guardian prize routing for minor winners.
+
+**Implementation Phasing:** Controlled delivery across F1 through F6. No runtime functionality is implemented in this documentation batch.
+
 ## Future club profiles
 
 ### Grassroots

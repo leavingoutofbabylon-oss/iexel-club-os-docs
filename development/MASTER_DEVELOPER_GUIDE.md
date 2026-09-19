@@ -95,6 +95,7 @@ Internal Club Testing, the Completed Match Correction architecture, and the subs
 3. ✅ MVP Release Candidate validated + Product Owner sign-off PASSED (RC-01 → RC-03-CLOSE, plugin `main` `3ee4c92`)
 4. ⏳ Release/deployment gate (tagging, production deployment, post-release monitoring) — see `RELEASE_CHECKLIST.md`; not yet started
 5. Club OS v1.0
+6. 📋 Fundraising Domain (F1–F6) — Approved product architecture and implementation specification documented (`development/FUNDRAISING_ARCHITECTURE_AND_IMPLEMENTATION_PLAN.md`); runtime implementation planned in phases F1–F6.
 
 ### Before Starting Any New Feature
 
