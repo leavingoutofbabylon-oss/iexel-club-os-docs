@@ -1,11 +1,11 @@
 # IEXEL Club OS — Fundraising Architecture & Implementation Specification
 
-**Status:** Approved Product Architecture (Implementation Pending)  
-**Version:** 1.1.0  
-**Author:** Antigravity Architecture & Core Engineering  
-**Date:** 2026-09-19  
-**Target Domain:** `app/core/Fundraising/`  
-**Applicable Releases:** F1 through F6 (Post-MVP Operational Roadmap — Planned, Not Implemented)  
+**Status:** Approved Product Architecture (Implementation Pending)
+**Version:** 1.1.0
+**Author:** Antigravity Architecture & Core Engineering
+**Date:** 2026-09-19
+**Target Domain:** `app/core/Fundraising/`
+**Applicable Releases:** F1 through F6 (Post-MVP Operational Roadmap — Planned, Not Implemented)
 
 ---
 
