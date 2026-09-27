@@ -32,6 +32,7 @@ This document tracks the major development milestones of IEXEL Club OS. Complete
 | ICT-Fixes | Internal Club Testing Remediation — Secretary Safeguards, Current Emergency Contact, Password-Reset Completion Alerts & Final Pre-Merge Validator Hygiene (`b2b51eb`) | ✅ Complete |
 | RC2 | MVP Release Candidate Validation Cycle (RC-01 portal-status fix, RC-02A/RC-02A-R1 clean-install + no-current-Season repair, RC-02B upgrade validation, RC-03/RC-03-R1 persona validation + forbidden-status fix, RC-03-CLOSE) — Product Owner sign-off PASSED | ✅ Complete |
 | GLA1 | Post-RC Guardian Link Alignment Batch 1 (Secretary roleless-adult Guardian Links + transactional role ensure; Treasurer zero-role-grant and cross-role-top-up security closure) | ✅ Complete |
+| RP-B | Registration Packages Selection, Draft Ownership & Secretary Workflows | ✅ Complete |
 | FR-SPEC | Fundraising Architecture & Implementation Specification (F1–F6) | 📋 Approved Architecture (Implementation Pending) |
 
 ---
@@ -1844,6 +1845,156 @@ Runtime verification on the normal Dev environment (non-mutating auth-cookie-inj
 
 - **Future Finance Reports capability — product-definition work, not started.** See section 3 above. This is explicitly deferred and unscoped; do not infer report types, filters or exports from anything in this section.
 - The `iexel-fee-rule-back` naming debt and Premium Surface Colour Consistency Audit carried over from Treasurer Premium Workspace Alignment Batch 1 remain unchanged and unresolved by this cleanup.
+
+---
+
+# Registration Packages Selection, Draft Ownership & Secretary Workflows (RP-B)
+
+**Status: Complete.** Plugin `main` `c0936eddafc1b7dc54e1bedf3453110cbaae984e` — "feat: establish registration packages selection, draft ownership, and secretary workflows (RP-B)"
+
+**Goal:** Extend the registration portal with package selection (Step 5), immutable package snapshots, person-first dual-context architecture (Parent self-service and Secretary-initiated), and draft ownership safety for concurrent family journeys.
+
+---
+
+## Delivered
+
+### 1. Registration Packages — Step 5 Package Selection UI
+
+- **`PackageSelectionSection` component** (`app/core/UI/Components/PackageSelectionSection.php`): renders a hero banner, package cards with season/age-group eligibility, extras checkboxes, an opt-out card (when policy permits), and a live commercial summary.
+- **`RegistrationPackageService::allows_registration_without_package()`** / **`set_allow_registration_without_package()`**: settings-driven **global** policy flag (`allow_registration_without_package`, default `yes`) with activity logging. This is a club-wide registration policy setting, not a per-package mandatory flag; it controls whether any family may complete registration without selecting an eligible package.
+- **Package eligibility validated server-side** in `PlayerRegistrationService::prepare_package_selection()`: verifies package/extras combination eligibility and builds an immutable JSON snapshot stored on the registration row.
+- **`PlayerRegistration` entity extended**: `has_package()`, `formatted_package_total()`, `canonical_journey_key()`, `creation_origin`, `package_id`, `package_snapshot` getters.
+- **`PortalRegistrationWizardPage`**: Step 5 (Package Selection) and Step 6 (Review) fully rendered; step validation and context-aware nonces applied.
+
+### 2. Treasurer Registration Package Management
+
+- **`PortalRegistrationPackageManagementPage`** (`app/core/UI/Pages/PortalRegistrationPackageManagementPage.php`): Treasurer Finance workspace surface at `/club-os/finance/registration-packages/` for managing the canonical Registration Package catalogue. Requires `iexel_manage_billing` capability.
+- **Package directory**: Active/Archived/All filter tabs with counts; paginated package cards.
+- **Package card**: displays package name, price, status badge, image thumbnail (via `$package->image_url('medium')`), description, "Available for" applicable-type badges, and attached add-on badges with price.
+- **Create/Edit form** (`RegistrationPackageForm`): package name, description, price, image attachment (WordPress Media Library, full image displayed during registration), applicable Registration pathway types (`New Player`, `Returning Player`, `Trialist Conversion`), add-on attachments, display order. wp_enqueue_media() is used for the image picker.
+- **Archive/Restore lifecycle**: packages can be archived (removing them from future registration selection without deleting historical snapshot data) and restored via inline form actions.
+- **Package ↔ Extra/Add-on associations**: the Treasurer directory shows attached Extras per package; the create/edit form manages those attachments. Distinct from the per-registration extras checkbox (that is the family's per-registration selection at Step 5).
+- **Global policy toggle**: the "Allow registration without a package" policy is managed from this same page (a form panel at the top of the directory) — not from per-package fields.
+- **`FinanceAdminRequestHandler`**: POST handlers for `package_policy_update`, `package_action` (archive/restore), and package create/edit are implemented here.
+
+**Do not restart or re-implement this management surface.** The Treasurer canonical package catalogue and its policy toggle are fully delivered and accepted.
+
+### 3. Registration Package Configuration
+
+Packages support the following configuration, managed through the Treasurer finance portal:
+
+- **Image**: optional package image (WordPress attachment), displayed at medium size in the Treasurer directory and full size during the Parent/Staff registration Step 5 selection UI.
+- **Applicable Registration pathways** (`applicable_types`): each package is scoped to one or more registration pathway types — `New Player`, `Returning Player`, `Trialist Conversion`. The Step 5 UI filters eligible packages by the registration's type; the Treasurer directory renders type badges per package.
+- **Attached Extras/Add-ons**: optional add-ons attached at the package level, presented as checkboxes at Step 5. At selection, validated add-ons are included in the immutable snapshot.
+- **"Allow registration without a package" policy**: a global club setting (not a per-package flag) controlling whether families may submit a registration that has no package selected.
+
+### 4. Registration Package Snapshot
+
+- **Immutable snapshot architecture**: at the moment a package is selected and saved, a JSON snapshot of the chosen package (name, season, age group, total, extras) is written to the registration row and never recomputed from live catalogue data. Historical commercial choice is preserved even if the package is later edited or archived.
+- **`PlayerRegistrationRepository`**: `hydrate()` parses `package_snapshot` from JSON; `values()` serialises package fields for insert/update.
+- **`TreasurerOperationalReadService`**: exposes package snapshot in the Treasurer registration read model.
+- **`PortalTreasurerRegistrationDetailPage`**: new commercial package detail card; billing context; team-season context.
+- **`PortalSecretaryRegistrationDetailPage`**: read-only historical package section; staff-context continuation link.
+
+### 5. Registration Lifecycle & Information Requested Round-Trip
+
+- **Draft**: package choice can be edited freely on a draft registration according to the established registration rules.
+- **Submitted/Under Review: lifecycle lock.** A submitted registration is locked against silent package edits — the snapshot written at submission cannot be overwritten by background saves.
+- **Information Requested (correction route)**: when a Secretary requests information on a submitted registration, the registration enters `under_review` with `has_active_information_request() = true`. This is the controlled, authorised route for allowing a Parent to correct their package selection before resubmission. On Parent resubmission, the package snapshot is updated and the information request is cleared.
+- **Approved/Registered**: once approved, the historical commercial snapshot is frozen. No further package changes occur — Finance integration (when implemented in RP-C) must read from this frozen snapshot.
+- Lifecycle boundaries validated in `validate-registration-package-selection.php` Section 10: Submit → lock, Request Information → `has_active_information_request()`, Parent resubmit → snapshot updated → Under Review, Approve → Approved.
+
+### 6. Draft Ownership & Concurrent Family-Journey Safety
+
+- **`ParentRegistrationAttemptRepository`** (`app/core/Registrations/ParentRegistrationAttemptRepository.php`): database-backed attempt tokens for the registration portal — 256-bit random token, SHA-256 hashed at rest, 2-hour TTL, row-locked during claim. No personal data stored in the token itself.
+- **`ParentRegistrationPortalService`**: full dual-context architecture — `in_context()`, `staff_authorized()`, `nonce_action()`, attempt token management (issue, validate, clear), staff prefill isolation, and family-journey deduplication via `PlayerRegistrationRepository::find_active_family_journey()`.
+- **`RegistrationPortalRequestHandler` (AJAX)**: context-aware nonce, attempt token round-trip, conflict payloads returned on duplicate active journey detection.
+- **`TrainingMemberRegistrationService::create_staff_draft_in_transaction()`**: enforces Player role prerequisite before creating a Secretary-initiated draft.
+
+### 7. Dual-Context Architecture (Parent & Staff)
+
+- **`PortalRouter`**: HTTP 403 guard on `registration_context=staff` without `iexel_manage_registrations` capability; active role forwarded to registration pages.
+- **`PersonRegistrationActionResolver`**: staff-context URLs generated in all CTA cases (pending review, approved, information-requested states).
+- **`PortalRegistrationsPage`**: `registration_context` parameter propagated across all navigation CTAs and action links.
+- **Staff player-search picker** in `PortalRegistrationWizardPage`: Secretary can select an existing Player person from search in the registration wizard; readonly fields applied when operating in staff context.
+
+### 8. Secretary/Staff Registration — Person-First Rule
+
+**Secretary/Staff Registration is not an alternative Person-creation workflow.**
+
+- The Staff registration wizard requires selecting an existing canonical Person who already holds an active Player role. The Secretary uses a searchable player picker; fields are readonly once a Player is selected.
+- If the target player does not yet exist in Club OS, the deliberate missing-player route is: **"Can't find the player? Add them to People first."** — linking to the Secretary People → New Person workflow. Person creation remains owned by the People workflow, not the Registration wizard.
+- Parent family shortcuts (family pre-fill, linked-child selection) are not shown in the Staff context.
+- `TrainingMemberRegistrationService::create_staff_draft_in_transaction()` enforces the active Player role prerequisite before a staff draft is created.
+- A Training Only participant who already holds canonical Player identity (active `Player` role, active current `TrainingMembership`, no competitive Team Assignment) **is eligible** to be selected as a staff registration target. Selecting and starting that registration does **not** itself create a competitive Team Assignment, Match eligibility, Finance obligation, duplicate Person, or duplicate Player identity. The competitive participation constraints remain in force throughout; only an explicit approved Registration progressing to a Team Assignment creates competitive eligibility, as per the established architecture.
+
+**Do not restart or re-scope this person-first rule.** Do not re-introduce blank name/DOB intake fields or family shortcut links in the Staff registration context.
+
+### 9. Schema & Upgrade
+
+- **`DatabaseManager`**: `install_registration_package_selection_schema()` and `install_registration_creation_origin_schema()` — two new schema upgrade helpers.
+- **`UpgradeRunner`**: two new upgrade steps registered (`registration_package_selection_schema` and `registration_creation_origin_schema`).
+- **`UpgradeVersions::SCHEMA_VERSION`**: `2026.09.1`.
+- **`SettingsManager`**: default `'allow_registration_without_package' => 'yes'`.
+
+### 10. UX — Responsive Registration & Shared Mobile Refinement
+
+- **`public.css`**: `@media (max-width: 679px)` — Step 5 package card styles; policy panel styles; and the accepted shared mobile registration heading/intro treatment.
+- **`registration-portal.js`**: Promise-chained autosave; Step 1→2 server verification; package selection JS interactions.
+
+**Shared Parent/Staff mobile registration refinement (accepted):** the registration wizard step presentation at narrow mobile widths now uses a shared treatment across both Parent and Staff contexts:
+
+- Step heading/card remains contained within the step card boundary (no overflow).
+- Gold step eyebrow and step title are centred.
+- Introductory/descriptive sentence is centred.
+- Functional form content (labels, inputs, field groups) remains naturally left-aligned.
+- Treatment is shared between Parent and Staff registration contexts.
+- Accepted at narrow mobile widths without horizontal overflow.
+
+**Do not restart or re-implement this mobile refinement.**
+
+---
+
+## Security & Data Integrity
+
+- Attempt tokens are 256-bit random, SHA-256 hashed at rest, 2-hour TTL, row-locked on claim. The token contains no personal data.
+- `registration_context=staff` requires `iexel_manage_registrations` capability enforced server-side in `PortalRouter` (HTTP 403) and re-checked in every AJAX handler.
+- Package eligibility validated server-side before snapshot is written; the snapshot is then immutable — client-side package data is never trusted for financial decisions.
+- Finance invoice/debt integration is explicitly NOT part of RP-B. No invoice, payment, or debt record is created or mutated by this batch.
+- Family-journey deduplication prevents two simultaneous active drafts for the same player within the same family session (returns conflict payload for UI-level feedback without data loss).
+
+---
+
+## Validation
+
+| Validator | Result |
+|---|---|
+| `validate-registration-draft-ownership.php` (new) | PASS — 125 assertions covering attempt tokens, race safety, context isolation, Finance isolation |
+| `validate-registration-package-selection.php` (new) | PASS — 135 assertions covering package selection, extras, snapshot, lifecycle, policy, UI |
+| `validate-registration-existing-player-link.php` | 4/75 pre-existing baseline failures (obsolete single-nonce substring checks, not RP-B regressions) |
+| `validate-registration-optional-fields.php` | 6/128 pre-existing baseline failures (whitespace-sensitive matching on minified code, not RP-B regressions) |
+| `validate-secretary-registration-approval.php` | Pre-existing environment assumption (WP User fixture); not an RP-B regression |
+| `validate-parent-card-info-request.php` | Pre-existing environment assumption (WP User fixture); not an RP-B regression |
+| PHP lint | PASS — 33/33 PHP files |
+| JS syntax | PASS |
+| `git diff --check` | PASS (1 trailing-newline advisory at EOF only) |
+
+**Total new assertions: 739 / 739 PASS** across the two new validators.
+
+### Real Browser Acceptance (named records verified intact)
+
+- Henry James — Person 16
+- Real_player 11 — Person 205
+- Portal Youth Test — Person 136
+- Registrations 304 and 305
+
+---
+
+## Deferred / Out of Scope
+
+- **Finance invoice/debt integration (RP-C, future):** no invoice, debt or payment record is created on registration completion in RP-B. Finance integration (Registered Registration → immutable commercial snapshot → idempotent Finance obligation/draft invoice) is a separately scoped future batch requiring its own controlled architecture and Product Owner product definition. Do not infer the RP-C implementation from this section.
+- **Secretary package-after-family registration:** a Secretary cannot currently add or change a package on behalf of a registration that was originally started by a family member and is mid-journey or already submitted. The Secretary must not silently rewrite the family's submitted commercial choice. If a package needs to be added operationally after submission, the appropriate route belongs with the Finance/RP-C design decision. The correct conflict/handoff UX is deferred.
+- **Prospect/Trialist/Taster journey enhancement:** the existing Prospect enquiry workflow (enquiry types including Taster/Trial, trial session scheduling, email communication, Prospect status progression, and Prospect → Training Only conversion) is not modified by RP-B. A future Trialist/Taster participation state, repeat trial/taster session support, safeguarding scope, Coach visibility and no-account participation rules require a dedicated audit of the existing Prospect workflow before any enhancement. Do not implement or design this batch here. The applicable package policy for Prospect/Trialist registration types also requires explicit Product Owner product definition before implementation.
 
 ---
 
