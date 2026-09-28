@@ -35,6 +35,7 @@ This document tracks the major development milestones of IEXEL Club OS. Complete
 | RP-A | Registration Package / Extra Charge foundation | ✅ Complete |
 | RP-B | Registration Packages Selection, Draft Ownership & Secretary Workflows | ✅ Complete |
 | RP-C | Registered Registration → Idempotent Finance Draft Invoice Handoff | ✅ Complete |
+| Post-RP | Post-Registration Package Arrangement Workflow (Registered w/o package → Initial package arrangement & Draft invoice) | ✅ Complete |
 | FR-SPEC | Fundraising Architecture & Implementation Specification (F1–F6) | 📋 Approved Architecture (Implementation Pending) |
 
 ---
@@ -2064,9 +2065,102 @@ The `FinanceService::create_invoice_for_registration()` method is strictly idemp
 **Total new assertions: 36 PASS** across the new RP-C validator, plus existing suite maintenance.
 
 ## Deferred / Out of Scope
-- **Post-Registration Package Request/Change:** The scenario where a family completes Registration without a package, or later wants a different/additional package after the historical Registration commercial choice has frozen, remains deferred. No architecture is approved yet. Any future solution must preserve the original Registration history.
+- **Post-Registration Package Arrangement:** Completed for the narrow first slice (arranging an initial package post-registration when none was selected during registration; see "Post-Registration Package Arrangement Workflow" below). General package upgrades, downgrades, exchanges, or replacements remain deferred.
 - **Prospect/Trialist/Taster:** RP-C does not redesign or implement this journey.
 - **Payments/Checkout:** RP-C does NOT introduce online checkout, payment gateways, automatic payment collection, recurring billing, or cart/order architecture.
+
+---
+
+# Post-Registration Package Arrangement Workflow
+
+**Status: Complete.** Plugin `main` `4285091daecf24214575a1c06c8ea86f33bdb0e1` (layout refinement `1503291e8155d8fab12b321f0e7214c3caed7532`) — "feat: add post-registration package arrangement workflow"
+
+**Goal:** Close the commercial follow-up gap for members who legitimately complete Registration without selecting a package (`allow_registration_without_package`), establishing a canonical club-side workflow for arranging an initial package later rather than resorting to arbitrary manual Finance invoicing.
+
+## Delivered
+
+### A. Canonical Domain & Persistence
+- First-class domain entity: `RegistrationPackageArrangement` (`app/core/Registrations/RegistrationPackageArrangement.php`).
+- Dedicated canonical database table: `registration_package_arrangements` (`id`, `registration_id`, `package_id`, `package_snapshot`, `total_price_minor`, `currency`, `arranged_at`, `arranged_by`, `invoice_id`, `created_at`, `updated_at`).
+- Unique database constraint: `UNIQUE KEY uk_registration_id (registration_id)` guaranteeing at most one post-registration package arrangement per registration.
+- Domain repository and service: `RegistrationPackageArrangementRepository` and `RegistrationPackageArrangementService` wired into `Kernel`.
+- Upgrade migration: `2026_09_registration_package_arrangements_schema` registered in `UpgradeRunner` with `UpgradeVersions::SCHEMA_VERSION` bumped to `2026.09.3`.
+
+### B. Historical Invariant Protection
+- The original Registration commercial record is **never** rewritten or backfilled.
+- For registrations where no package was chosen at registration time, `player_registrations.package_id` and `package_snapshot` remain strictly `NULL`, preserving the historical truth ("No package selected during registration").
+- The later package arrangement is captured as an independent business event.
+
+### C. Treasurer Workflow
+- Dedicated operational route: `/club-os/treasurer/registrations/{id}/arrange-package/` (`PortalTreasurerRegistrationArrangePackagePage.php`).
+- Route authorization: Strictly guarded by `MemberExperienceRole::TREASURER` and capability `iexel_manage_billing` (fails closed 403 Forbidden).
+- Re-verifies registration eligibility, active packages, attached add-ons, and nonce verification.
+- Interactive arrangement UI presents selectable package cards with inclusions, selectable eligible extras, and live summary calculation (base price + extras = total).
+
+### D. Eligibility & Pathway Rules
+- **Package Applicability:** Uses package pathway applicability (`is_applicable_to($reg_type)`).
+- **Extra Applicability:** Attached extras/add-ons ALSO retain their own pathway applicability (`applies_to_pathway($reg_type)`), enforced both in UI filtering and independently on server-side submission.
+- **Accepted Commercial Rule:** An attached Extra is offered only when:
+  1. The package is eligible for the Registration pathway;
+  2. The Extra is attached to that package;
+  3. The Extra itself is eligible for that Registration pathway;
+  4. Normal active/archive rules are satisfied.
+- This is intentional Treasurer-controlled behaviour. If the Treasurer later wants Returning Players to purchase an Extra like Away Top, the Treasurer can enable Returning Player in the Extra Charge's existing "Applies to (Registration Pathways)" settings without code changes. Package/extra inheritance is not an unresolved question.
+- *Confirmed Example:* Returning Player #303 (Reece Read) is offered the Team Tracksuit (+£20, includes Returning Player) but correctly NOT offered the Away Top (New Player / Trialist Conversion only).
+- Inactive packages, inactive extras, or unattached extras are rejected.
+
+### E. Immutable Arrangement Snapshot
+- Freezes all commercial details at arrangement time: package name, description, base price, currency, inclusions (`contents`), selected add-ons array (snapshots of name, line type, price, etc.), total arranged minor units, timestamp, and arranging user ID.
+- Future catalogue price changes or package archiving do not alter historical arrangements.
+
+### F. Finance Handoff
+- Calls `FinanceService::create_post_registration_package_invoice()` during arrangement confirmation.
+- Generates a standard `Draft` invoice with polymorphic provenance: `source_type = 'registration_post_package'`, `source_id = registration_id`.
+- Debtor resolved automatically via existing `BillingCandidate` resolver.
+- Line items mapped deterministically: base package as `registration_fee`, extras mapped to their configured line type (e.g. `merchandise`, `kit_charge`).
+- Resulting `invoice_id` is linked back to the arrangement record.
+- Zero-value arrangements (£0.00) complete successfully without generating empty invoices (`invoice_id = null`, `finance_status = 'no_billable_amount'`).
+
+### G. Transactional Integrity & Idempotency
+- Arrangement persistence and Finance invoice generation are wrapped in a database transaction (`START TRANSACTION ... ROLLBACK / COMMIT`). If invoice creation fails (e.g. ambiguous billing contact), the entire operation rolls back cleanly.
+- Service-level duplicate prevention (`can_arrange()`) and database unique key (`uk_registration_id`) prevent duplicate arrangements.
+- Finance handoff is idempotent: `find_invoice_by_source('registration_post_package', $registration_id)` returns existing invoice on retry rather than creating duplicates.
+
+### H. Secretary Read-Only Visibility
+- `PortalSecretaryRegistrationDetailPage` displays the arranged package details contextually alongside the preserved "At Registration: No package selected during registration" state.
+- Explicitly marked: *"Package arranged post-registration. Strictly read-only for Secretary."* No billing mutation actions or Finance invoice controls are exposed to the Secretary.
+
+### I. Responsive UX & Desktop Refinement
+- Mobile-first card grid with `min(100%, 280px)` card containment, preventing 320px viewport overflow.
+- Accessible `:focus-visible` outlines and semantic labels.
+- Desktop layout refinement committed in `1503291`: optimized definition list grid columns (100px `<dt>` with 8px column-gap) and `overflow-wrap: break-word;` so standard inclusion lines (`Club registration`, `Home match shirt`, `Shorts & socks`, `League Registration`) remain on a single line on desktop while wrapping cleanly at word boundaries on mobile.
+
+## Security & Role Boundaries
+- **Treasurer:** Owns package arrangement under `iexel_manage_billing` and manages resulting Draft invoices under the existing Finance lifecycle.
+- **Secretary:** Contextual read-only visibility only.
+- **Parent/Guardian:** Zero execution authority over post-registration package arrangements.
+
+## Validation
+
+| Test / Check | Result | Details |
+|---|---|---|
+| PHP Lint (14 files) | PASS | 0 syntax errors across all modified and untracked feature files |
+| `git diff --check` | PASS | 0 whitespace or formatting defects |
+| `validate-registration-finance-handoff.php` | PASS | 36 assertions passed, 0 failed |
+| `validate-treasurer-directory-ux.php` | PASS | 35 assertions passed, 0 failed |
+| `validate-secretary-mobile-responsive.php` | PASS | 138 assertions passed, 0 failed |
+| `validate-registration-post-package-arrangement.php` | 93 PASS / 4 FAIL | 93 core invariants passed. 4 failures reflect pre-test baseline assertions on Registration #303; accepted test evidence legitimately exists on #303 |
+
+*Note on Validator Baseline:* The 4 failures in `validate-registration-post-package-arrangement.php` occur because the script asserts that Registration #303 has *no* arrangement and *no* invoice. Following successful manual browser testing on #303, Arrangement #19 and Invoice INV-001583 now legitimately exist as accepted test evidence. Decoupling the validator's assertions to use independent disposable fixtures is recorded as a non-blocking technical cleanup candidate.
+
+## Scope & Non-Goals
+- **In Scope:** Registered Registration with no package at registration → Treasurer arranges initial package post-registration → Draft invoice created.
+- **Out of Scope (Deferred):**
+  - General package amendment, upgrade, downgrade, or exchange systems.
+  - Multiple successive package arrangements for a single registration.
+  - Arbitrary merchandise ordering or cart/checkout architectures.
+  - Parent self-service package selection post-registration.
+  - Automatic payment collection or automatic invoice issuing.
 
 ---
 
