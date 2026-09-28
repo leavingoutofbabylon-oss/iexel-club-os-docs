@@ -32,7 +32,9 @@ This document tracks the major development milestones of IEXEL Club OS. Complete
 | ICT-Fixes | Internal Club Testing Remediation — Secretary Safeguards, Current Emergency Contact, Password-Reset Completion Alerts & Final Pre-Merge Validator Hygiene (`b2b51eb`) | ✅ Complete |
 | RC2 | MVP Release Candidate Validation Cycle (RC-01 portal-status fix, RC-02A/RC-02A-R1 clean-install + no-current-Season repair, RC-02B upgrade validation, RC-03/RC-03-R1 persona validation + forbidden-status fix, RC-03-CLOSE) — Product Owner sign-off PASSED | ✅ Complete |
 | GLA1 | Post-RC Guardian Link Alignment Batch 1 (Secretary roleless-adult Guardian Links + transactional role ensure; Treasurer zero-role-grant and cross-role-top-up security closure) | ✅ Complete |
+| RP-A | Registration Package / Extra Charge foundation | ✅ Complete |
 | RP-B | Registration Packages Selection, Draft Ownership & Secretary Workflows | ✅ Complete |
+| RP-C | Registered Registration → Idempotent Finance Draft Invoice Handoff | ✅ Complete |
 | FR-SPEC | Fundraising Architecture & Implementation Specification (F1–F6) | 📋 Approved Architecture (Implementation Pending) |
 
 ---
@@ -1848,6 +1850,19 @@ Runtime verification on the normal Dev environment (non-mutating auth-cookie-inj
 
 ---
 
+# Registration Package / Extra Charge Foundation (RP-A)
+
+**Status: Complete.**
+
+**Goal:** Establish the foundational Finance models for Registration Packages and Extra Charges/Add-ons, allowing the Treasurer to build a package catalogue.
+
+## Delivered
+- `RegistrationPackage` and `RegistrationExtra` models and schemas.
+- Treasurer UI for managing the package catalogue (creation, pricing, archiving).
+- Package policies (e.g., season linking, active flags).
+
+---
+
 # Registration Packages Selection, Draft Ownership & Secretary Workflows (RP-B)
 
 **Status: Complete.** Plugin `main` `c0936eddafc1b7dc54e1bedf3453110cbaae984e` — "feat: establish registration packages selection, draft ownership, and secretary workflows (RP-B)"
@@ -1992,9 +2007,66 @@ Packages support the following configuration, managed through the Treasurer fina
 
 ## Deferred / Out of Scope
 
-- **Finance invoice/debt integration (RP-C, future):** no invoice, debt or payment record is created on registration completion in RP-B. Finance integration (Registered Registration → immutable commercial snapshot → idempotent Finance obligation/draft invoice) is a separately scoped future batch requiring its own controlled architecture and Product Owner product definition. Do not infer the RP-C implementation from this section.
+- **Finance invoice/debt integration (RP-C):** no invoice, debt or payment record is created on registration completion in RP-B. Finance integration was subsequently completed in RP-C.
 - **Secretary package-after-family registration:** a Secretary cannot currently add or change a package on behalf of a registration that was originally started by a family member and is mid-journey or already submitted. The Secretary must not silently rewrite the family's submitted commercial choice. If a package needs to be added operationally after submission, the appropriate route belongs with the Finance/RP-C design decision. The correct conflict/handoff UX is deferred.
 - **Prospect/Trialist/Taster journey enhancement:** the existing Prospect enquiry workflow (enquiry types including Taster/Trial, trial session scheduling, email communication, Prospect status progression, and Prospect → Training Only conversion) is not modified by RP-B. A future Trialist/Taster participation state, repeat trial/taster session support, safeguarding scope, Coach visibility and no-account participation rules require a dedicated audit of the existing Prospect workflow before any enhancement. Do not implement or design this batch here. The applicable package policy for Prospect/Trialist registration types also requires explicit Product Owner product definition before implementation.
+
+---
+
+# Registration Finance Handoff (RP-C Batch 1)
+
+**Status: Complete.** Plugin `main` `e8283e9f76532cebe23d1603572c5709e33dc7a0` — "feat: establish registration finance handoff (RP-C)"
+
+**Goal:** Establish the boundary and implementation for converting a Registered Registration's immutable commercial snapshot into a canonical Finance Draft invoice, avoiding order/cart architectures while enforcing idempotency.
+
+## Delivered
+
+### A. Finance Handoff
+An eligible Registered Registration with a selected Registration Package automatically produces its canonical Finance Draft invoice. The Registration transitions to `Registered` and calls the `FinanceService` handoff.
+Registration without a selected package (`allow_registration_without_package`) explicitly avoids invoice creation. Zero-penny (£0.00) packages also avoid invoice creation.
+
+### B. Historical Commercial Integrity
+The Finance invoice generation strictly consumes the Registration's durable historical commercial snapshot. The Registration owns the commercial decision. Later Treasurer edits to the package catalogue do not rewrite the commercial history of an existing Registration or its generated invoice.
+
+### C. Line Items
+The commercial snapshot maps deterministically into canonical Finance invoice charges.
+- The `registration_fee` maps to the base package charge (excluding £0.00 base packages which are omitted).
+- `kit_charge` and other selected extras/add-ons are appended as distinct invoice line items with snapshot-derived quantities, descriptions, and prices.
+
+### D. Draft Invoice Boundary
+Automatically generated invoices enter Finance safely as `Draft`. The handoff explicitly avoids inventing online checkout, automatic payment collection, or automatic invoice issuing. Once generated, the existing Treasurer Finance invoice lifecycle remains canonical.
+
+### E. Idempotency & Retry Safety
+The `FinanceService::create_invoice_for_registration()` method is strictly idempotent. A unique composite index (`registration_id`, `type`) ensures only one invoice is generated per Registration. Duplicate generation attempts are safely caught as duplicate keys and gracefully swallowed, successfully returning the ID of the previously generated invoice.
+
+### F. Treasurer Operational Visibility
+- **Directory Finance Status:** The Treasurer Registrations Directory exposes the commercial Finance Status (`draft`, `issued`, `part_paid`, `paid`, `no_package`, `no_billable_amount`).
+- **Dashboard Alerts:** Registration packages needing Finance handoff/invoice attention, or newly generated Registration invoices ready for Treasurer review, now trigger operational alerts on the Treasurer dashboard based on existing persona-aware scoping.
+- **Responsive UX Acceptance:** The Edit Draft Invoice recipient dropdown uses the Club OS mobile person-picker pattern. Directory filters stack full-width on mobile viewports.
+
+## Security & Data Integrity
+- One eligible Registration cannot generate duplicate Finance invoices.
+- Finance handoff does not broaden Parent/Secretary/Treasurer permissions.
+- Parent/Secretary/Treasurer visibility boundaries are preserved.
+- Existing Finance permissions/capability boundaries remain intact.
+
+## Validation
+
+| Validator | Result |
+|---|---|
+| `validate-registration-finance-handoff.php` (new) | PASS — 36 assertions covering package snapshot to Finance line items, zero-penny logic, ambiguous contact logic, idempotency and UI representations |
+| `validate-workspace-priority-alert-scoping.php` | PASS — 114 checks covering dashboard priority alert boundaries |
+| `validate-treasurer-directory-ux.php` | PASS — 35 assertions covering horizontal and mobile directory filters |
+| `validate-treasurer-priority-alert-mobile-containment.php` | PASS — 18 assertions verified covering mobile responsive bounds |
+| PHP lint | PASS — modified PHP files |
+| `git diff --check` | PASS |
+
+**Total new assertions: 36 PASS** across the new RP-C validator, plus existing suite maintenance.
+
+## Deferred / Out of Scope
+- **Post-Registration Package Request/Change:** The scenario where a family completes Registration without a package, or later wants a different/additional package after the historical Registration commercial choice has frozen, remains deferred. No architecture is approved yet. Any future solution must preserve the original Registration history.
+- **Prospect/Trialist/Taster:** RP-C does not redesign or implement this journey.
+- **Payments/Checkout:** RP-C does NOT introduce online checkout, payment gateways, automatic payment collection, recurring billing, or cart/order architecture.
 
 ---
 
