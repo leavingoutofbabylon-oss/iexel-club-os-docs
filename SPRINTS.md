@@ -1917,7 +1917,7 @@ Packages support the following configuration, managed through the Treasurer fina
 - **Draft**: package choice can be edited freely on a draft registration according to the established registration rules.
 - **Submitted/Under Review: lifecycle lock.** A submitted registration is locked against silent package edits — the snapshot written at submission cannot be overwritten by background saves.
 - **Information Requested (correction route)**: when a Secretary requests information on a submitted registration, the registration enters `under_review` with `has_active_information_request() = true`. This is the controlled, authorised route for allowing a Parent to correct their package selection before resubmission. On Parent resubmission, the package snapshot is updated and the information request is cleared.
-- **Approved/Registered**: once approved, the historical commercial snapshot is frozen. No further package changes occur — Finance integration (when implemented in RP-C) must read from this frozen snapshot.
+- **Approved/Registered**: once approved, the historical commercial snapshot is frozen. No further package changes occur — the completed RP-C Finance integration reads from this frozen snapshot.
 - Lifecycle boundaries validated in `validate-registration-package-selection.php` Section 10: Submit → lock, Request Information → `has_active_information_request()`, Parent resubmit → snapshot updated → Under Review, Approve → Approved.
 
 ### 6. Draft Ownership & Concurrent Family-Journey Safety
@@ -1939,6 +1939,7 @@ Packages support the following configuration, managed through the Treasurer fina
 **Secretary/Staff Registration is not an alternative Person-creation workflow.**
 
 - The Staff registration wizard requires selecting an existing canonical Person who already holds an active Player role. The Secretary uses a searchable player picker; fields are readonly once a Player is selected.
+- Name/DOB remain authoritative in People: ordinary Staff saves normalize FROM Person, never silently update Person identity. Authorized correction uses `/club-os/secretary/people/{id}/edit/`. Eligible historical unlinked Secretary Drafts now use bounded Legacy Staff Registration Recovery below; readonly DOB was not relaxed.
 - If the target player does not yet exist in Club OS, the deliberate missing-player route is: **"Can't find the player? Add them to People first."** — linking to the Secretary People → New Person workflow. Person creation remains owned by the People workflow, not the Registration wizard.
 - Parent family shortcuts (family pre-fill, linked-child selection) are not shown in the Staff context.
 - `TrainingMemberRegistrationService::create_staff_draft_in_transaction()` enforces the active Player role prerequisite before a staff draft is created.
@@ -2009,8 +2010,8 @@ Packages support the following configuration, managed through the Treasurer fina
 ## Deferred / Out of Scope
 
 - **Finance invoice/debt integration (RP-C):** no invoice, debt or payment record is created on registration completion in RP-B. Finance integration was subsequently completed in RP-C.
-- **Secretary package-after-family registration:** a Secretary cannot currently add or change a package on behalf of a registration that was originally started by a family member and is mid-journey or already submitted. The Secretary must not silently rewrite the family's submitted commercial choice. If a package needs to be added operationally after submission, the appropriate route belongs with the Finance/RP-C design decision. The correct conflict/handoff UX is deferred.
-- **Prospect/Trialist/Taster journey enhancement:** the existing Prospect enquiry workflow (enquiry types including Taster/Trial, trial session scheduling, email communication, Prospect status progression, and Prospect → Training Only conversion) is not modified by RP-B. A future Trialist/Taster participation state, repeat trial/taster session support, safeguarding scope, Coach visibility and no-account participation rules require a dedicated audit of the existing Prospect workflow before any enhancement. Do not implement or design this batch here. The applicable package policy for Prospect/Trialist registration types also requires explicit Product Owner product definition before implementation.
+- **Secretary package-after-family registration:** Secretary cannot silently rewrite a family's mid-journey/submitted commercial choice. This commercial takeover remains deferred; it is distinct from the completed duplicate-journey Conflict workflow. For an already Registered journey completed without a package, the completed Treasurer Post-Registration Package Arrangement workflow is canonical. General amendments/upgrades remain deferred.
+- **Prospect/Trialist/Taster journey enhancement:** the existing Prospect enquiry workflow (enquiry types including Taster/Trial, trial session scheduling, email communication, Prospect status progression, and Prospect → Training Only conversion) is not modified by RP-B. A future Trialist/Taster participation state, repeat trial/taster session support, safeguarding scope, Coach visibility and no-account participation rules require a dedicated audit of the existing Prospect workflow before any enhancement. Do not implement or design this batch here. This deferred operational journey must not be confused with the subsequently accepted package/extra pathway applicability, which is already implemented and independently enforced.
 
 ---
 
@@ -2161,6 +2162,50 @@ The `FinanceService::create_invoice_for_registration()` method is strictly idemp
   - Arbitrary merchandise ordering or cart/checkout architectures.
   - Parent self-service package selection post-registration.
   - Automatic payment collection or automatic invoice issuing.
+
+---
+
+# Registration Journey Integrity — Parent Hardening, Conflicts and Legacy Staff Recovery
+
+**Current position (2026-09-29):** Parent draft identity/ownership hardening (`67ac823`), Guided Registration Conflict Resolution and Legacy Staff Registration Recovery are complete, Product Owner accepted and merged/pushed on `main`. Current plugin HEAD/origin: `55ee697c796dbde93e481b45b5809422d7f3be0a`. Canonical invariants live in the Master Developer Guide's Registration Journey Identity section; these batches preserve RP-B/RP-C, Information Requested, historical commercial snapshots and Training Member/participation architecture.
+
+## Guided Registration Conflict Resolution
+
+**Status: COMPLETE / ACCEPTED / MERGED ON MAIN. Commit:** `e303ca96234c8c2530aae776ea55914d3a5dc02d` — `feat: add guided registration conflict resolution`.
+
+Duplicate active Person + Season + pathway journeys fail closed. Guided resolution is bounded to exactly two existing-Person-linked Drafts sharing the canonical key; mixed states/larger groups require club review. Secretary discovery and dedicated comparison require deliberate survivor selection, bounded reason and explicit confirmation. Person/child locking, stale/conflict-changed checks and transactional withdrawal preserve the survivor unchanged and retain the duplicate as Withdrawn history, with no data/commercial merge. Mandatory audit failure rolls back. Active surfaces clear only resolved conflicts; sensitive welfare detail is kept out of comparison and contextual detail links return to the active comparison.
+
+**Product Owner acceptance:** Desktop comparison/resolution and mobile comparison/detail navigation passed. Disposable resolution retained the survivor as Draft, withdrew the duplicate without deleting it, preserved its commercial snapshot and resumed the normal journey. Acceptance fixture IDs are not production requirements. Henry James #304/#305 remain intentionally unresolved protected reference data, not a product defect.
+
+| Accepted validator | Result |
+|---|---|
+| Registration conflicts | 108 PASS / 0 FAIL |
+| Secretary Registration detail | 80 PASS / 0 FAIL |
+
+## Legacy Staff Registration Recovery
+
+**Status: COMPLETE / ACCEPTED / MERGED ON MAIN. Commit:** `55ee697c796dbde93e481b45b5809422d7f3be0a` — `feat: add legacy staff registration recovery`.
+
+The Zayne Watt DOB investigation identified historical unlinked Secretary Drafts that could render but could not validly save in the modern Person-first workflow. Readonly DOB was intentional. Recovery is limited to eligible unlinked Secretary-origin `new_player` Drafts at Step 1 with an active Season, no incompatible history, guardian bindings or commercial selection. It selects and compares an existing active Player, requires reason/confirmation and trusted Secretary POST/nonce, revalidates stale/collision state under locks, and atomically retains the same Draft while linking/normalizing FROM Person and changing to Returning Player. Mandatory audit is part of the transaction; no Person mutation, automatic matching/selection, new/deleted Registration, guardian/commercial migration, Finance handoff or Trialist Conversion recovery is introduced.
+
+Resulting Person + existing Season + Returning Player collisions include family Drafts and exclude Rejected/Withdrawn history: zero permits recovery, one rejects toward the existing journey, multiple reject into Conflict resolution. Recovery cannot bypass that architecture. Player name and Club OS ID are searchable; the internal Person database ID is not the picker search key.
+
+**Product Owner acceptance:** Desktop and 320px Player search/selection, legacy/canonical comparison, reason/confirmation and contained controls passed. Narrow identity heading centering and established Club OS autogrow Recovery Reason textarea (no horizontal resizing) were accepted. Real browser recovery of a disposable fixture retained the same Registration, linked the canonical Person, changed New Player to Returning Player, left Person unchanged, wrote audit once and produced no Finance/commercial side effects.
+
+**Final Staff wording:** "This Registration is linked to the existing Club OS Person. Player identity details are managed in People."
+
+| Accepted substantive validation | Result |
+|---|---|
+| Legacy Staff recovery | 132 PASS / 0 FAIL |
+| Registration draft ownership | 180 PASS / 0 FAIL |
+| Registration conflicts | 108 PASS / 0 FAIL |
+| `validate-training-member-registration.php` | Previously accepted unrelated baseline: 99 PASS / 1 FAIL — "Return path accepts an arbitrary URL" |
+
+The Training Member baseline failure was not caused by recovery. The final literal wording correction followed substantive validation; those validators were not rerun for copy alone. No plugin validators are run by this documentation checkpoint.
+
+**Protected investigation context:** Registration #558 demonstrated the unlinked legacy condition. At investigation, no plausible existing canonical Player candidate was found; no recovery is claimed. If genuinely absent, create/verify the genuine Player through authorized People, then deliberately link an eligible Draft through recovery. Do not automatically mutate #558, infer a match from surname or unlock DOB.
+
+**Next position:** Reassess remaining documented MVP/open items with the Product Owner/lead developer; no next implementation batch is selected. See `development/DEVELOPMENT_HANDOVER_2026-09-29.md`.
 
 ---
 
