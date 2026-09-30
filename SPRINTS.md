@@ -36,6 +36,7 @@ This document tracks the major development milestones of IEXEL Club OS. Complete
 | RP-B | Registration Packages Selection, Draft Ownership & Secretary Workflows | ✅ Complete |
 | RP-C | Registered Registration → Idempotent Finance Draft Invoice Handoff | ✅ Complete |
 | Post-RP | Post-Registration Package Arrangement Workflow (Registered w/o package → Initial package arrangement & Draft invoice) | ✅ Complete |
+| Trialist | Prospect Trial Period / Come and Try public enquiry, repeated sessions and Training Only conversion (`e5426be`) | ✅ Complete |
 | FR-SPEC | Fundraising Architecture & Implementation Specification (F1–F6) | 📋 Approved Architecture (Implementation Pending) |
 
 ---
@@ -2011,7 +2012,7 @@ Packages support the following configuration, managed through the Treasurer fina
 
 - **Finance invoice/debt integration (RP-C):** no invoice, debt or payment record is created on registration completion in RP-B. Finance integration was subsequently completed in RP-C.
 - **Secretary package-after-family registration:** Secretary cannot silently rewrite a family's mid-journey/submitted commercial choice. This commercial takeover remains deferred; it is distinct from the completed duplicate-journey Conflict workflow. For an already Registered journey completed without a package, the completed Treasurer Post-Registration Package Arrangement workflow is canonical. General amendments/upgrades remain deferred.
-- **Prospect/Trialist/Taster journey enhancement:** the existing Prospect enquiry workflow (enquiry types including Taster/Trial, trial session scheduling, email communication, Prospect status progression, and Prospect → Training Only conversion) is not modified by RP-B. A future Trialist/Taster participation state, repeat trial/taster session support, safeguarding scope, Coach visibility and no-account participation rules require a dedicated audit of the existing Prospect workflow before any enhancement. Do not implement or design this batch here. This deferred operational journey must not be confused with the subsequently accepted package/extra pathway applicability, which is already implemented and independently enforced.
+- **Prospect/Trialist/Taster journey enhancement (historical RP-B scope):** RP-B did not modify Prospect intake, trial sessions, safeguarding, Coach visibility or conversion. Those trial-period capabilities were subsequently delivered in the separate Prospect Trial Period milestone recorded below. This RP-B exclusion must not be confused with the independently completed package/extra pathway applicability.
 
 ---
 
@@ -2206,6 +2207,22 @@ The Training Member baseline failure was not caused by recovery. The final liter
 **Protected investigation context:** Registration #558 demonstrated the unlinked legacy condition. At investigation, no plausible existing canonical Player candidate was found; no recovery is claimed. If genuinely absent, create/verify the genuine Player through authorized People, then deliberately link an eligible Draft through recovery. Do not automatically mutate #558, infer a match from surname or unlock DOB.
 
 **Next position:** Reassess remaining documented MVP/open items with the Product Owner/lead developer; no next implementation batch is selected. See `development/DEVELOPMENT_HANDOVER_2026-09-29.md`.
+
+---
+
+# Prospect Trial Period / Come and Try
+
+**Status: COMPLETE / PRODUCT OWNER ACCEPTED / COMMITTED AND PUSHED ON MAIN.** Plugin commit `e5426be1741e207cdc3ac56f86cf1fbaa55a49c3` — `feat: add prospect trial period workflow`; schema version `2026.09.4`.
+
+The branded public Come and Try enquiry collects explicit Prospect-level participation consent and, for youth, responsible-adult trial authority. The server enforces the introductory `trial` type regardless of client input. Secretary can confirm previously obtained permission and current safety information for historical enquiries, schedule independent dated sessions and set a review date. Assigned-Team Coaches/Managers see only ready active Trialists for their Team, bounded participation-safety details and attendance controls; operational notes are short, 500-character fields using the shared auto-grow control. Sessions and outcomes remain Prospect-owned history, separate from canonical Event attendance. Upgrade adds nullable evidence and the session table without fabricating historical consent or visits.
+
+Temporary trial participation creates no canonical Person, guardian relationship, Team Assignment, competitive Registration, Finance record or fixture eligibility. Deliberate Prospect → Training Only conversion uses the established canonical TrainingMembership service. The Secretary form recommends the DOB/Season natural football age group and offers one-year-up only when the service permits it; manipulated ineligible choices remain server-rejected. Conversion retains the Prospect and its trial sessions and does not turn Prospect-level permission into unrestricted ongoing consent or create competitive eligibility. Direct Prospect-to-Match Registration invitation and integration of trial visits with existing Team training sessions remain deferred; multi-club public-page branding is future work.
+
+**Product Owner acceptance:** Public youth enquiry and safeguarding checks passed. Two dated trial sessions retained distinct attended and did-not-attend outcomes. Secretary and assigned-Team Coach desktop/mobile workflows and operational-note auto-grow were accepted. The Training Membership age-group recommendation was corrected and accepted. A deliberate Training Only conversion succeeded; a separate read-only integrity audit verified canonical identity/guardian links, one active U7 membership for 2026/27, preserved Prospect session history and absence of competitive/Finance/Event side effects. Disposable identities are intentionally omitted from this permanent record.
+
+**Final regression:** Nine database-free validators passed **760 assertions**: Trial Period 44; public intake security 127; Prospect-to-Training conversion 208; Training Membership domain 141; Team staff access 55; Team Workspace route/display 39; Prospect intake domain 61; training participation exclusivity 36; Team roster scope 49. PHP lint passed for all 21 changed PHP files, JavaScript syntax passed, and `git diff --check` passed. Source integration, local installed schema and release inventories passed inspection; an independent fresh-install and upgrade execution was **not performed** in the final read-only audit.
+
+**Known validator limitations, not Trialist regressions:** `validate-training-membership-management.php` still fails an outdated source-literal expectation that Event audience options contain no Training Membership candidates; the previously committed Event Builder deliberately admits eligible Training Only Players to appropriate non-fixture Event audiences. Neither that validator nor its source target changed in this batch. The unchanged OS-wide auto-grow validator has a UTF-8 BOM parsing failure and requires explicit WordPress/database bootstrap, so it was not executed; the Trialist note controls reused the existing utility and passed manual browser acceptance. Neither limitation was repaired in this milestone.
 
 ---
 

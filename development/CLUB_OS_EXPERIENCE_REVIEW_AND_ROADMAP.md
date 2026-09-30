@@ -399,6 +399,12 @@ The three Training Only entry paths—Prospect conversion, Secretary direct crea
 
 Post-MVP planning retains Taster/Trial invitations, Secretary communications to the Prospect contact, configurable Secretary/reply-to addressing and eventual role-authorized club mailbox integration. These communication capabilities are not Operational MVP blockers and must continue to reuse the channel-neutral Communications architecture.
 
+### Prospect Trial Period / Come and Try — completed
+
+The public Come and Try enquiry and pre-membership Trialist journey are complete, Product Owner accepted and committed on plugin `main` at `e5426be1741e207cdc3ac56f86cf1fbaa55a49c3`. Public youth participation and responsible-adult authority are recorded at Prospect level. Secretary can schedule and review repeated dated sessions; assigned-Team Coaches/Managers see ready Trialists, relevant bounded safety information and can record attendance with a brief operational note. Session history remains with the Prospect through deliberate conversion to canonical Training Only membership. The conversion form recommends the natural football age group and offers only the existing service-permitted one-year-up alternative. See `SPRINTS.md` for acceptance and validation evidence.
+
+Temporary Trialists are not canonical Players, Team Assignments or Event attendees. Conversion to Training Only does not itself grant competitive Registration, Finance or fixture eligibility, and Prospect-level trial permission is not unrestricted ongoing consent. The **integration of Prospect trial sessions with existing Team training sessions remains deferred**; no Event-attendance bridge was delivered. **Multi-club public-page branding remains future work**; the accepted public page uses the current club brand. The direct Prospect-to-competitive Match Registration invitation is also still a separate open seam.
+
 ## Newly confirmed product follow-ups
 
 ### Venue & Address Finder / Recent Grounds
@@ -580,9 +586,9 @@ The only items the roadmap still shows open within MVP scope are **FIN-031** and
 
 **Registration Packages Selection, Draft Ownership & Secretary Workflows (RP-B)**, **Registration Finance Handoff (RP-C)**, and **Post-Registration Package Arrangement Workflow (Post-RP)** are now complete (plugin `main` `4285091daecf24214575a1c06c8ea86f33bdb0e1`). RP-B delivered Step 5 Package Selection, immutable package snapshots, dual-context architecture, and attempt-token draft ownership. RP-C delivered the idempotent Finance Draft Invoice handoff, translating the commercial snapshot into a Treasurer Finance obligation, along with operational alerts and Treasurer directory finance statuses. Post-RP delivered the dedicated Treasurer post-registration commercial workflow (`/club-os/treasurer/registrations/{id}/arrange-package/`), establishing a distinct canonical domain (`registration_package_arrangements`), preserving the original registration's immutable "no package selected" audit history (`package_id = null`, `package_snapshot = null`), applying player pathway eligibility to packages and extra charges, and generating idempotent Draft Invoices (`INV-001583` on registration #303) with read-only Secretary visibility. Manual invoicing is explicitly not the solution for registrations completed without a package. See `SPRINTS.md` for full delivery detail.
 
-**Current baseline: `55ee697c796dbde93e481b45b5809422d7f3be0a`.** Parent identity/ownership hardening (`67ac823`), Guided Conflict Resolution (`e303ca96234c8c2530aae776ea55914d3a5dc02d`) and Legacy Staff Recovery (`55ee697c796dbde93e481b45b5809422d7f3be0a`) are complete, accepted and merged on main; neither integrity workflow remains pending.
+**Current baseline: `e5426be1741e207cdc3ac56f86cf1fbaa55a49c3`.** The Prospect Trial Period / Come and Try milestone is complete, accepted and committed on `main`. Parent identity/ownership hardening (`67ac823`), Guided Conflict Resolution (`e303ca96234c8c2530aae776ea55914d3a5dc02d`) and Legacy Staff Recovery (`55ee697c796dbde93e481b45b5809422d7f3be0a`) remain complete; neither integrity workflow is pending.
 
-**No single next implementation batch is currently dominant in the authoritative backlog.** With the RC cycle, RP-B, RP-C, Post-RP and Registration integrity all complete, reassess remaining documented MVP/open items before selecting a batch. Candidates include:
+**No single next implementation batch is currently dominant in the authoritative backlog.** With the RC cycle, RP-B, RP-C, Post-RP, Registration integrity and Prospect Trial Period complete, reassess remaining documented MVP/open items before selecting a batch. Candidates include:
 - **Prospect / Trialist Operational Seam Discovery (`ProspectLifecycle::INVITED_MATCH_REGISTRATION`):** The enum/state exists in code, but there is not yet a completed operational UI/handler workflow for inviting a Prospect directly into competitive match registration. This remains an open future discovery candidate (completely separate from package/extra pathway applicability, which is already resolved as intentional Treasurer-controlled behaviour where packages and attached extras each independently enforce pathway eligibility);
 - **Deferred General Package Amendments / Upgrades:** Workflows to alter, upgrade, or re-arrange registrations that already possess an initial package selection (deliberately out of scope for Post-RP);
 - **OS-011:** Welfare Concern Detail hierarchy polish;
@@ -592,7 +598,7 @@ The only items the roadmap still shows open within MVP scope are **FIN-031** and
 - **`iexel-fee-rule-back`:** Legacy CSS/template naming debt;
 - **Premium Surface Colour Consistency Audit:** Follow-up visual harmonization across remaining administrative surfaces.
 
-**Product Owner/lead developer selection is needed** to choose the next development milestone. Do not invent or begin a new implementation batch from this roadmap description alone. Reassess the next MVP batch from authoritative docs using `development/DEVELOPMENT_HANDOVER_2026-09-29.md` as the current starting point. Package/extra pathway eligibility and completed RP-C are not pending discovery work.
+**Product Owner/lead developer selection is needed** to choose the next development milestone. Do not invent or begin a new implementation batch from this roadmap description alone. Reassess the next MVP batch from authoritative docs using `development/DEVELOPMENT_HANDOVER_2026-09-30.md` as the current starting point. Package/extra pathway eligibility, completed RP-C and the delivered Prospect Trial Period are not pending discovery work.
 
 ## Approved Future Domain: Fundraising (F1–F6)
 
