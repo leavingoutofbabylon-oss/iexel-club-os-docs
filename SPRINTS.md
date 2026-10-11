@@ -2226,17 +2226,65 @@ Temporary trial participation creates no canonical Person, guardian relationship
 
 ---
 
-# Fundraising Domain Architecture & Specification (F1–F6)
+# Delivery Baseline Reconciliation — 29 Commits Between 30 September and 9 October 2026
 
-**Status: Approved Product Architecture (Implementation Pending).**
+**Status: COMPLETE / COMMITTED ON PLUGIN MAIN (Commits `745f8d4` through `1342540`; Schema Versions `2026.10.01` to `2026.10.20`).**
 
-The Product Owner has approved Fundraising as a first-class Club OS operating capability. A comprehensive technical architecture and implementation plan has been established in `development/FUNDRAISING_ARCHITECTURE_AND_IMPLEMENTATION_PLAN.md`.
+This delivery arc advances plugin `main` from `e5426be` (30 September 2026) to `1342540` (9 October 2026), delivering Fundraising (F1-F5), Hosted Online Payments (SumUp), Club Shop (Batches 1-4A), Disposable Validator Safety Architecture, and AdminUI Route Parity.
 
-## 1. Domain Summary
-- **Fundraising Families:** Fundraising Appeal (donations/targets, F1), Sponsored Challenge (activity-based, F5), Spot the Ball (flagship skill/judgement competition with independent adult panel adjudication and immutable target sealing, F2–F4), and Club Draw (future compliance-gated campaign type, deferred to F6).
-- **Core Engineering Invariants:**
-  - Fundraising transactions are **NOT ordinary club invoices**; orders interface with `FinanceService` payments via an explicit bridge without mutating existing invoice `PaymentAllocation` semantics or polluting player billing accounts.
-  - Spot the Ball target is derived by independent adult adjudication and sealed before public participation; the Secretary clicking the historical ball location is prohibited.
-  - In Spot the Ball ties, prize shares are divided equally per **unique winning participant/person**, not per entry, with deterministic zero-penny-loss remainder allocation.
-  - Strict safeguarding: zero public child profiles or child seller URLs; all financial transactions require verified adult payer authorization; minor prize settlements follow verified guardian workflows without inappropriate financial exposure to Welfare.
-- **Phasing:** Implementation is scheduled in controlled phases F1 through F6. No runtime functionality has been implemented in this documentation batch.
+## 1. Fundraising Domain (F1-F5; Commits `745f8d4` to `6d6c457`)
+
+### A. Architectural & Financial Invariants
+- **Financial Ledger Separation:** Fundraising transactions interface with `FinanceService` via `FundraisingFinanceBridgeService`, creating canonical payment records in `iexel_os_finance_payments` without invoice allocations, isolating campaign contributions and ticket purchases from member registration fees and debtor ledgers.
+- **Child Safeguarding Protections:** Public sharing links for youth players require issuance by an authenticated canonical adult guardian (`FundraisingShareAttributionPolicy`). No public child seller accounts or youth profile URLs are created. Online payments require adult authorization.
+- **Independent Sealing:** Spot the Ball target coordinates are established exclusively by independent adult panel adjudication and sealed with cryptographic hashes prior to ticket sales; manual coordinate selection by club secretaries is strictly prohibited.
+- **Equitable Tie-Breaking:** Spot the Ball prize pools in tie scenarios divide equally per **unique winning participant**, not per ticket, with deterministic penny-remainder rounding algorithms preventing fractional currency loss.
+
+### B. Delivered Phases
+- **F1: Team Appeals & Public Supporter Journey (`745f8d4` to `a8b555f`):** Public appeal landing pages (`/club-os/fundraising/appeals/{slug}/`), target progress meters, Gift Aid declaration collection, team/squad attribution, and direct donation checkout.
+- **F2-F4: Spot the Ball Competition Lifecycle (`f77d507` to `c6e86bc`):** Competition creation, adult panel coordinate sealing, interactive canvas coordinate selector with normalized coordinates (0.000000 to 1.000000), multi-entry cart, panel unsealing, Euclidean distance calculation, unique-person tie-breaking, and winner prize allocation bridge.
+- **F5: Back My Game Supporter Subscriptions (`3d47049` to `6d6c457`):** Recurring micro-sponsorship and pledge agreements for teams and players, monthly collection schedule engine, payment retry orchestration, and Treasurer oversight dashboard.
+
+### C. Acceptance & Verification Evidence
+- **Appeals (F1) Supporter Journey:** Implemented and merged; Automated validation passed (`tools/validate-fundraising-appeal.php`); Product Owner-reported walkthrough. Specific subflows without dedicated logs: Acceptance evidence not located.
+- **Spot the Ball (F2-F4) Competitions:** Implemented and merged; Automated validation passed (`tools/validate-spot-the-ball-domain.php`, `tools/validate-spot-the-ball-adjudication.php`); Product Owner-reported walkthrough of coordinate selection and adjudication sealing. Minor prize settlement execution: Acceptance evidence not located.
+- **Back My Game (F5) Subscriptions:** Implemented and merged; Automated validation passed (`tools/validate-treasurer-back-my-game-domain.php`); Product Owner-reported walkthrough of supporter agreements and Treasurer dashboard. Automated monthly close cron execution: Acceptance evidence not located.
+
+---
+
+## 2. Hosted Online Payments & SumUp Checkout Foundation (Commits `be36f2e`, `f89087a`, `caab932`)
+
+### A. Architecture & Security Invariants
+- **Zero Cardholder Data Storage:** Credit/debit card processing is delegated entirely to SumUp's hosted payment pages; no PAN or cardholder authentication data touches Club OS servers.
+- **Server-to-Server Verification Boundary:** Asynchronous webhook notifications (`/webhooks/sumup`) trigger direct server-to-server verification via `SumUpHostedCheckoutService::verify_checkout()`, validating merchant code, checkout ID, local unique reference (`COSPAY-...`), GBP currency, and exact minor amount.
+- **Idempotency & Replay Protection:** Enforced at the domain repository level; terminal states (`STATUS_SETTLED`, `STATUS_EXCEPTION`) ignore duplicate webhook callbacks or replay attempts.
+- **Transactional Settlement:** Atomically updates `OnlinePaymentAttempt` and invokes domain settlement services (Shop, Appeals, Spot the Ball, Invoices, Back My Game).
+
+### B. Acceptance & Verification Evidence
+- **Hosted Checkout & Webhook Foundation:** Implemented and merged; Automated validation passed (`tools/validate-sumup-hosted-checkout-foundation.php`, `tools/validate-online-payment-attempt-foundation.php`); Product Owner-reported walkthrough.
+
+---
+
+## 3. Club Shop (Batches 1-4A; Commits `6163554` to `a8c66c5`)
+
+### A. Scope & Lifecycle Architecture
+- **Batches 1 & 2: Catalogue & Cart Foundation (`6163554`, `62a7490`):** Product entities, SKU variants (sizes, colours), stock levels, member storefront (`/club-os/shop/`), and multi-item shopping cart.
+- **Batch 3: Checkout & Dual Payment Rails (`98c8572`):** Multi-item order creation (`ORD-%06d`), customer checkout journey, SumUp card handoff, and offline Bank Transfer payment instructions.
+- **Batches 3A & 3B: Runtime Reconciliation & Hardening (`9bc3090`, `0262c5a`):** Post-upgrade baseline stabilization, admin session security closure, and bank transfer settlement reconciliation.
+- **Batch 4A: Secretary Order Fulfilment (`a8c66c5`):** Secretary fulfillment console (`/club-os/secretary/shop/orders/`), packing slip generation, and order collection lifecycle (`ordered` -> `preparing` -> `ready_for_collection` -> `collected`).
+
+### B. Acceptance & Verification Evidence
+- **Batches 1-3B (Catalog, Checkout, Bank Transfer Settlement):** Implemented and merged; Documented manual acceptance recorded in untracked Batch 3B reports (Order `ORD-000070` paid via Bank Transfer, receipt `PAY-012619`, stock decrementing, and Treasurer balance reconciliation verified).
+- **Batch 4A (Secretary Fulfilment):** Implemented and merged; Automated validation passed (`tools/validate-club-shop-batch-4a.php --database-free`, 130 assertions PASS); formal manual browser acceptance artifact not located.
+
+---
+
+## 4. AdminUI Route Parity & Disposable Validator Safety Architecture (Commit `1342540`)
+
+### A. Architectural Safeguards
+- **Route Inventory Parity:** Alignment of all 56 registered WordPress admin menu and submenu slugs against canonical controller handlers in `ReleaseRouteInventory::administrator()`, eliminating orphaned or unreachable route definitions.
+- **Disposable Validator Safety Framework:** `ValidatorEnvironment::verify_disposable_target()` enforces strict host, port, database identity, and structure guards, preventing diagnostic tools from running against production or non-disposable environments.
+
+### B. Acceptance & Verification Evidence
+- **Route Inventory Parity:** Implemented and merged; Automated validation passed (`tools/validate-admin-inventory-parity.php`, 56/56 routes PASS).
+- **Validator Safety Framework:** Implemented and merged; Automated validation passed (`tools/validate-validator-disposable-safety.php`, 368 assertions PASS).

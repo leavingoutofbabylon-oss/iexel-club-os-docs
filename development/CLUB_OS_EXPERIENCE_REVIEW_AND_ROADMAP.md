@@ -600,19 +600,36 @@ The only items the roadmap still shows open within MVP scope are **FIN-031** and
 
 **Product Owner/lead developer selection is needed** to choose the next development milestone. Do not invent or begin a new implementation batch from this roadmap description alone. Reassess the next MVP batch from authoritative docs using `development/DEVELOPMENT_HANDOVER_2026-09-30.md` as the current starting point. Package/extra pathway eligibility, completed RP-C and the delivered Prospect Trial Period are not pending discovery work.
 
-## Approved Future Domain: Fundraising (F1–F6)
+## Delivered Operational MVP Domain: Fundraising (F1-F5)
 
-**Status:** Approved Product Architecture (Implementation Pending). See `development/FUNDRAISING_ARCHITECTURE_AND_IMPLEMENTATION_PLAN.md` for the authoritative technical specification.
+**Status:** Delivered into Operational MVP on plugin `main` (Commits `745f8d4` to `6d6c457`, schema versions `2026.10.01` to `2026.10.10`). See `development/FUNDRAISING_ARCHITECTURE_AND_IMPLEMENTATION_PLAN.md` and `SPRINTS.md` for full technical details.
 
-The Product Owner has approved Fundraising as a first-class Club OS operating domain to support grassroots football equipment, facility and travel campaigns. The architecture encompasses:
-- **Member Fundraising Hub** (`/club-os/fundraising/`) for backing appeals and entering competitions;
-- **Secretary / Admin Management Console** (`/club-os/secretary/fundraising/`);
+The Product Owner approved and walked through Fundraising as a first-class Club OS operating domain. The delivered runtime encompasses:
+- **Member Fundraising Hub** (`/club-os/fundraising/`) for backing appeals, entering Spot the Ball competitions, and managing Back My Game pledges;
+- **Secretary / Admin Management Console** (`/club-os/secretary/fundraising/`) for campaign administration, ticket sales oversight, and panel coordinate unsealing;
 - **Treasurer Financial Oversight** (`/club-os/treasurer/` & `/club-os/finance/fundraising/`) providing gross, fee, prize, and net accounting via an explicit bridge without altering existing invoice payment allocations;
 - **Spot the Ball Flagship Experience** with independent adult panel adjudication, auditable immutable target sealing, device-independent normalized coordinates, Euclidean distance calculation, and unique-person tie-breaking with deterministic penny remainder distribution;
-- **Fundraising Appeal** direct donation campaigns (F1 MVP target);
+- **Fundraising Appeal** direct donation campaigns (F1 delivered);
+- **Back My Game** recurring supporter subscriptions and monthly collection generation (F5 delivered);
 - **Safeguarding Guarantees:** zero public child seller profiles, adult payment authorization, and linked guardian prize routing for minor winners.
 
-**Implementation Phasing:** Controlled delivery across F1 through F6. No runtime functionality is implemented in this documentation batch.
+*Future Phasing:* Phase F6 (Club Draw compliance-gated lottery engine) remains deferred future work.
+
+## Delivered Operational MVP Domain: Club Shop (Batches 1-4A)
+
+**Status:** Delivered into Operational MVP on plugin `main` (Commits `6163554` to `a8c66c5`, schema versions `2026.10.14` to `2026.10.19`). See `SPRINTS.md` for full delivery and acceptance evidence.
+
+- **Member Retail Storefront** (`/club-os/shop/`): Product catalog with SKU variants (size/colour), real-time stock availability, and multi-item shopping cart.
+- **Dual Payment Rails:** Hosted online card checkout via SumUp Hosted Checkout API alongside offline Bank Transfer payment instructions.
+- **Secretary Order Fulfillment** (`/club-os/secretary/shop/orders/`): Fulfillment dashboard, packing slip generation, and order collection lifecycle (`ordered` -> `preparing` -> `ready_for_collection` -> `collected`).
+- **Formal Acceptance:** Order `ORD-000070` paid via Bank Transfer, receipt `PAY-012619`, and stock decrementing accepted in real-browser testing.
+
+## Pending Product Owner Review: Mobile Experience Review
+
+**Status: Screenshots Forthcoming.**
+- The Product Owner is conducting an extensive mobile layout and responsiveness audit across all Club OS surfaces.
+- **Directive:** Preserved strictly as a pending review item awaiting incoming screenshots. No speculative fixes, assumptions, or proactive mobile styling edits are permitted prior to receipt of Product Owner feedback.
+
 
 ## Future club profiles
 

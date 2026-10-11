@@ -42,3 +42,72 @@ A dedicated private encrypted backup vault has been provisioned and verified out
 - **Security & Encryption:** The volume underwent full-volume encryption using XTS-AES 256. Dual key protectors were established: a primary password protector and a secondary numerical recovery-password protector. Automatic unlocking is disabled, and recovery material is stored securely outside the vault.
 - **Operational Verification:** The vault was independently verified, locked, and successfully unlocked using the primary password. Windows subsequently confirmed clean detachment (`Attached = False`), returning the container to an encrypted rest state.
 - **Evidence & Scope Boundary:** The private backup vault is maintained strictly outside the Club OS repository and deployment environments. The container provisioning, encryption, and password-based unlock verification milestones (B4C.4–B4C.6) are complete. The final locked state immediately prior to detachment was not independently captured in shared output, and end-to-end backup and restore validation (populating, verifying, and restoring a complete site and database payload) has not yet been executed and remains an outstanding milestone. The vault is therefore not yet designated as an operational disaster-recovery solution.
+
+## 7. Delivery Baseline Reconciliation (29 Commits Between 30 September and 9 October 2026; Commit 1342540 / Schema 2026.10.20)
+
+Between 30 September 2026 (`e5426be1741e207cdc3ac56f86cf1fbaa55a49c3`) and 9 October 2026 (`134254095a9e8332d0bff4523b7275829c9a9873`), 29 plugin commits were implemented, tested, and integrated into plugin `main`, advancing the database schema version to `2026.10.20`. This section bridges the authoritative documentation to the actual delivered codebase baseline.
+
+### 7.1 Reconciled Implementation Arcs
+
+1. **Fundraising Domain (Phases F1-F5; Commits `745f8d4` to `6d6c457`; Schema `2026.10.01` to `2026.10.10`):**
+   - **Team Appeals & Supporter Journey (F1):** Public appeal campaign pages (`/club-os/fundraising/appeals/{slug}/`), target meter, Gift Aid capture, team attribution, and direct donation checkout.
+   - **Spot the Ball Flagship Competition (F2-F4):** Competition lifecycle management, adult panel coordinate sealing, normalized coordinate selection canvas (0.000000 to 1.000000), multi-entry cart, panel coordinate unsealing, Euclidean distance calculation, unique-winning-person tie breaking, and prize settlement bridge.
+   - **Back My Game Supporter Subscriptions (F5):** Recurring micro-sponsorship and pledge agreements for teams and players, automated monthly collection schedule generator, payment attempt tracking, and Treasurer oversight.
+   - **Domain Invariants:** Complete financial isolation via `FundraisingFinanceBridgeService` creating payments in `iexel_os_finance_payments` without invoice allocations (no pollution of member registration invoices or billing ledger allocations); strict safeguarding guarantees via `FundraisingShareAttributionPolicy` (youth share links restricted to authenticated canonical adult guardians; zero public child seller profiles or URLs; adult-authorized payments; minor prize routing to verified guardians). Phase F6 (Club Draw lottery) remains deferred future work.
+
+2. **Hosted Online Payments & SumUp Checkout Foundation (Commits `be36f2e`, `f89087a`, `caab932`; Schema `2026.10.11` to `2026.10.13`):**
+   - First-class payment gateway architecture integrating SumUp Hosted Checkout API.
+   - Zero cardholder data touches Club OS servers (handled entirely on SumUp hosted checkout pages); idempotent session initiation with local reference (`COSPAY-...`).
+   - Asynchronous webhook notifications (`/webhooks/sumup`) trigger direct server-to-server verification via `SumUpHostedCheckoutService::verify_checkout()`, validating merchant code, checkout ID, local reference, GBP currency, and exact minor amount.
+   - Terminal payment states (`STATUS_SETTLED`, `STATUS_EXCEPTION`) enforce idempotency against replayed notifications, atomically invoking domain settlement services.
+
+3. **Club Shop Domain (Batches 1-4A; Commits `6163554` to `a8c66c5`; Schema `2026.10.14` to `2026.10.19`):**
+   - **Batches 1 & 2:** Product catalogue, SKU variants (size/colour), inventory stock tracking, member storefront (`/club-os/shop/`), and multi-item shopping cart.
+   - **Batch 3:** Multi-item checkout supporting dual payment rails: SumUp hosted card checkout and offline Bank Transfer instructions.
+   - **Batches 3A & 3B:** Post-upgrade baseline stabilization, admin session security closure, runtime baseline reconciliation, and bank transfer settlement reconciliation.
+   - **Batch 4A:** Secretary order fulfillment dashboard (`/club-os/secretary/shop/orders/`), packing slip generation, and collection-oriented fulfillment lifecycle (`ordered` -> `preparing` -> `ready_for_collection` -> `collected`).
+
+4. **Disposable Validator Safety Architecture & Test Isolation (Commit `1342540`):**
+   - Framework establishing host, port, database identity, and structure guards (`ValidatorEnvironment::verify_disposable_target()`) to guarantee diagnostic tools cannot execute against production or non-disposable environments.
+
+5. **AdminUI Route Inventory Parity (Commit `1342540`; Schema `2026.10.20`):**
+   - Full audit and alignment of all 56 registered WordPress admin routes in `ReleaseRouteInventory::administrator()` with `AdminUI.php`, resolving orphaned and untracked menu slugs.
+
+### 7.2 Acceptance Evidence Classification
+
+The implementation and verification status across the 29 commits is classified according to established evidence standards:
+
+- **Fundraising Appeals (F1):**
+  - Public appeal supporter journey and donation checkout: **Implemented and merged; Automated validation passed (`tools/validate-fundraising-appeal.php`); Product Owner-reported walkthrough.**
+  - Specific edge subflows without dedicated logs: **Acceptance evidence not located.**
+- **Spot the Ball (F2-F4):**
+  - Competition creation, interactive coordinate selection canvas, adult panel sealing, Euclidean distance calculation, unique-person tie-breaking: **Implemented and merged; Automated validation passed (`tools/validate-spot-the-ball-domain.php`, `tools/validate-spot-the-ball-adjudication.php`); Product Owner-reported walkthrough.**
+  - Minor prize settlement execution: **Implemented and merged; Automated validation passed; Acceptance evidence not located.**
+- **Back My Game (F5):**
+  - Supporter agreements, recurring collection scheduling, payment request engine, Treasurer dashboard: **Implemented and merged; Automated validation passed (`tools/validate-treasurer-back-my-game-domain.php`); Product Owner-reported walkthrough.**
+  - Automated monthly close cron execution: **Implemented and merged; Automated validation passed; Acceptance evidence not located.**
+- **Hosted Online Payments & SumUp Checkout:**
+  - Hosted checkout initiation, redirection, out-of-band verification, and webhook handling: **Implemented and merged; Automated validation passed (`tools/validate-sumup-hosted-checkout-foundation.php`, `tools/validate-online-payment-attempt-foundation.php`); Product Owner-reported walkthrough.**
+- **Club Shop (Batches 1-3B):**
+  - Merchandise catalog, SKU variants, cart, SumUp checkout, offline Bank Transfer instructions: **Implemented and merged; Documented manual acceptance.** Formal acceptance recorded in untracked Batch 3B reports (Order `ORD-000070` paid via Bank Transfer, receipt `PAY-012619`, stock decremented, and Treasurer reconciliation verified).
+- **Club Shop Fulfilment (Batch 4A):**
+  - Secretary order fulfillment dashboard, packing slips, collection status transitions: **Implemented and merged; Automated validation passed (`tools/validate-club-shop-batch-4a.php --database-free`, 130 assertions PASS); Documented manual browser acceptance artifact not located.**
+- **Disposable Validator Safety Architecture:**
+  - Guard framework and test isolation: **Implemented and merged; Automated validation passed (`tools/validate-validator-disposable-safety.php`, 368 assertions PASS).**
+- **AdminUI Route Inventory Parity:**
+  - Alignment of all 56 registered admin routes: **Implemented and merged; Automated validation passed (`tools/validate-admin-inventory-parity.php`, 56/56 routes PASS).**
+
+### 7.3 Pending Product Owner Review
+
+- **Mobile Experience Review — screenshots forthcoming.**
+  - The Product Owner is conducting an extensive mobile layout and responsiveness audit across all surfaces.
+  - Preserved strictly as a pending review item awaiting incoming screenshots. No speculative fixes, assumptions, or code alterations are permitted prior to receipt.
+
+### 7.4 Preserved Operational Boundaries & Repository Status
+
+- **Private Encrypted Backup Vault:** The 20 GiB XTS-AES 256 vault (B4C.4–B4C.6) is detached and encrypted at rest outside the repository. End-to-end backup and restore validation (B4D payload population, verification, and restore) remains an outstanding milestone before operational DR designation.
+- **Registration Discovery Seam:** The direct Prospect-to-competitive Match Registration invitation (`ProspectLifecycle::INVITED_MATCH_REGISTRATION`) remains an open operational seam.
+- **Commercial & Architecture Boundaries:** General package amendments/upgrades remain deferred; multi-club branding remains future work; Finance Reports is an intentionally removed unfinished scaffold requiring fresh product definition; Club Draw (F6) remains future compliance-gated work.
+- **Untracked Artifacts:** The 21 untracked plugin files are accurately categorized as a mixture of acceptance records, operational/safety reports and temporary scratch artifacts. They remain strictly preserved, unmodified, and unstaged.
+- **Protected Stashes:** Protected plugin stash `stash@{0}` remains preserved.
+- **Plugin Repository State:** `c:\Users\leavi\Local Sites\iexel-club-os-dev\app\public\wp-content\plugins\iexel-club-os` is clean on branch `main` at commit `134254095a9e8332d0bff4523b7275829c9a9873` with 0 staged changes.
