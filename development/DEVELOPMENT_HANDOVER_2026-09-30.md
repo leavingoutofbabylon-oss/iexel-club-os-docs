@@ -108,26 +108,34 @@ The Product Owner mobile and WordPress Admin walkthroughs have concluded across 
 - **Commercial & Architecture Boundaries:** General package amendments/upgrades remain deferred; multi-club branding remains future work; Finance Reports is an intentionally removed unfinished scaffold requiring fresh product definition; Club Draw (F6) remains future compliance-gated work.
 - **Untracked Artifacts:** The 21 untracked historical plugin files remain strictly preserved, unmodified, and unstaged.
 - **Protected Stashes:** Protected plugin stash `stash@{0}` remains preserved.
-- **Plugin Repository State:** `c:\Users\leavi\Local Sites\iexel-club-os-dev\app\public\wp-content\plugins\iexel-club-os` is on branch `main` at commit `75c14aa9cb9d9b7d31c85aefd2a9778e02dd99e4` (MOB-008A and PRN-002 committed and pushed; working tree clean for tracked files; 21 historical untracked files and `stash@{0}` intact).
+- **Plugin Repository State:** `c:\Users\leavi\Local Sites\iexel-club-os-dev\app\public\wp-content\plugins\iexel-club-os` is on branch `main` at commit `cdd9054efe7394297b4047f1cd59ba1335266d52` (YTH-001 committed and pushed; working tree clean for tracked files; 21 historical untracked files and `stash@{0}` intact).
 
 ---
 
 ## 8. MVP Mobile & WordPress Admin UX Walkthrough Reconciliation, Findings Register & Completion Plan
 
 - **Date:** 2026-10-12
-- **Plugin Baseline:** `75c14aa9cb9d9b7d31c85aefd2a9778e02dd99e4` on `main`, schema `2026.10.20` (MOB-008A and PRN-002 committed and pushed to `origin/main`)
-- **Docs Baseline:** `f9cb153b8265a0be9ffa84bb6ede250970208219` on `main`
+- **Plugin Baseline:** `cdd9054efe7394297b4047f1cd59ba1335266d52` on `main`, schema `2026.10.20` (YTH-001 committed and pushed to `origin/main`)
+- **Docs Baseline:** `718b91374f778ee69edc9fac9abf595509e850e1` on `main`
 - **Status:** UX Walkthroughs Complete / Provisionally Accepted across all 8 Workspaces; Authoritative MVP Completion Plan Established
 
 ### 8.1 Delivered Mobile UX Arc & Working Tree State
 
-Between 9 October and 12 October 2026, six Mobile UX implementation batches were developed, validated, and integrated into plugin `main`:
+Between 9 October and 12 October 2026, seven Mobile and Safeguarding UX implementation batches were developed, validated, and integrated into plugin `main`:
 1. **Batch 1 (`28264dc`):** MOB-005 — Coach lineup builder draft persistence and coach player access.
 2. **Batch 2 (`bc5ab91`):** MOB-006 / MOB-007 — Coach lineup builder bulk attendance reliability and match status synchronization.
 3. **Batch 3 (`4e259f9`):** MOB-009 / MOB-010 / MOB-011 — Football fixture card presentation unification across Parent and Coach hubs using `FixtureCardMatchup`, with responsive team-boundary heading wrapping.
 4. **Batch 4 (`fa72493`):** MOB-008 — Parent Team Hub inline per-child RSVP controls and scroll position preservation via URL fragment targeting.
 5. **Batch 5 (`bf6df68`):** MOB-001 — Parent invoice currency encoding repair (£ symbol correction).
 6. **Batch 6 / MOB-008A & PRN-002 (`75c14aa`):** Parent Event Detail RSVP return navigation and Parent Priority Alerts 7-day rolling window & chronological ordering.
+7. **Batch 7 / YTH-001 (`cdd9054`):** Club Shop Youth Purchasing Safeguarding — adult purchaser verification (`KNOWN_ADULT`), fail-closed policy, online checkout and bank transfer prevention, safe browse-only UI with safeguarding notice card.
+
+**Committed and Pushed to Main (YTH-001, Commit `cdd9054`):**
+- *YTH-001 (Club Shop Youth Purchasing Safeguarding):* Enforces strict adult purchasing controls in Club Shop. Prevents minor players (<18) and unverified-age users from placing orders, initiating SumUp online checkout, or selecting bank transfer across `ShopRequestHandler`, `ShopAccessPolicy`, `ShopService`, `ShopOnlinePaymentService`, and `ShopBankTransferService`. Preserves safe product browsing and size/price selection with an accessible safeguarding note card. Suppresses unpaid order reminders for youth members. Preserves adult player self-purchases and adult parent purchases for authorised children.
+  - *Files:* 8 modified domain/UI files (`ShopAccessPolicy.php`, `ShopService.php`, `ShopOnlinePaymentService.php`, `ShopBankTransferService.php`, `PortalShopPage.php`, `PortalShopProductPage.php`, `ShopOrderPaymentPanel.php`, `ShopRequestHandler.php`), 1 updated test file (`tools/validate-club-shop-batch-4a-unit.php`), and 1 new validator (`tools/validate-club-shop-youth-safeguarding.php`, 61 assertions PASS).
+  - *Validation & Git Status:* All automated test suites passed (61/61 on youth safeguarding, 130/130 on Batch 4A database-free, 41/41 on fundraising share links; PHP lint clean; `git diff --check` clean). Staged exactly 10 files and committed as `cdd9054efe7394297b4047f1cd59ba1335266d52`, pushed to `origin/main`. Working tree clean for tracked files; 21 untracked historical files and `stash@{0}` preserved.
+  - *Audit Confirmations:* YTH-002 (Spot the Ball guardian authorization and prize routing) and YTH-003 (Youth fundraising appeal attribution via `FundraisingShareAttributionPolicy`) verified as existing safeguards by code audit, not newly implemented features.
+  - *Manual Test Limitation:* Available youth Player persona in the local environment had no historical orders, so historical youth-order visibility in "My Orders" was not manually exercised in the browser (covered by automated test assertions).
 
 **Committed and Pushed to Main (MOB-008A & PRN-002, Commit `75c14aa`):**
 - *MOB-008A (Parent Event Detail RSVP Return Navigation):* Resolves incorrect redirection to Team Hub → Events when an RSVP is submitted from the standalone Event Detail view (`/club-os/parent/events/{id}/`), returning the user to the same event card.
@@ -151,9 +159,9 @@ The Product Owner completed walkthroughs across all eight operational surfaces. 
 ### 8.3 Reconciled Findings Register by Delivery Classification
 
 #### Tier A — Release-Critical (Security, Safeguarding, Essential Workflows, Release Controls)
-- **YTH-001 (Club Shop Youth Checkout):** Minor players (<18) must not execute direct hosted credit/debit card checkout without adult guardian authentication.
-- **YTH-002 (Spot the Ball Minor Safeguarding):** Youth entry requires adult guardian authorization; minor prize settlements route strictly to verified adult guardians.
-- **YTH-003 (Youth Fundraising Attribution):** Public appeal sharing links attributing youth players require adult guardian issuance (`FundraisingShareAttributionPolicy`); zero public child seller profiles or URLs.
+- **YTH-001 (Club Shop Youth Checkout):** Minor players (<18) and unverified-age users must not execute direct hosted credit/debit card checkout, bank transfer, or order creation without adult guardian authentication. (Resolved, verified 61/61 assertions PASS, committed and pushed as `cdd9054`). (Note: Local youth Player persona had no past orders, so historical youth-order visibility in My Orders was verified via automated test suite rather than manual browser walkthrough).
+- **YTH-002 (Spot the Ball Minor Safeguarding):** Youth entry requires adult guardian authorization; minor prize settlements route strictly to verified adult guardians. (Existing safeguard verified by code audit).
+- **YTH-003 (Youth Fundraising Attribution):** Public appeal sharing links attributing youth players require adult guardian issuance (`FundraisingShareAttributionPolicy`); zero public child seller profiles or URLs. (Existing safeguard verified by code audit).
 - **COM-002 (Committee Data Minimisation):** General Committee views must strictly exclude confidential Welfare safeguarding notes, individual debtor ledgers / itemised family invoices, and registration medical records.
 - **B4D (Private Encrypted Backup Vault):** Complete end-to-end payload population, verification, and restore of `IEXEL_RC_VAULT` to validate DR readiness before operational release.
 - **MOB-008A (Parent Event Detail RSVP Return):** Ensure Event Detail RSVP submissions return to Event Detail rather than redirecting to Team Hub. (Resolved, verified 52/52 assertions PASS, committed and pushed as `75c14aa`).
@@ -189,6 +197,7 @@ The Product Owner completed walkthroughs across all eight operational surfaces. 
 - Standalone mobile app shells.
 - Public demonstration environment with synthetic data and automated reset.
 - Multi-club League OS platform architecture (~5-year horizon).
+- FND-001: Campaign-specific family/player and team fundraising appeal attribution tokens with downloadable/scannable QR-code sharing, safeguarding, payment confirmation, refund handling, and avoidance of double-counting.
 
 ### 8.4 Operational Onboarding Workstream
 
@@ -202,9 +211,9 @@ Planned workstream for role-specific Club OS how-to guides covering 7 core roles
 Implementation will proceed in small, controlled, risk-ordered batches:
 1. **Batch 1 — MOB-008A & PRN-002 Acceptance Closure, Commit & Push (COMPLETED):**
    - Product Owner accepted both fixes. Staged 8 files across MOB-008A and PRN-002. Automated test suites passed (52/52 on Event Detail RSVP return, 33/33 on Priority Alerts window, 138/138 on Priority Alert scoping, 68/68 on inline RSVP; PHP lint clean; `git diff --check` clean). Committed as `75c14aa9cb9d9b7d31c85aefd2a9778e02dd99e4` and pushed to `origin/main`.
-2. **Batch 2 — Youth Safeguarding Purchasing & Entry Boundaries (RECOMMENDED NEXT BATCH):**
-   - Enforce Club Shop youth checkout restrictions (block minor direct card payments, require adult guardian — YTH-001); Spot the Ball guardian prize bridge enforcement (YTH-002); Fundraising appeal attribution policy verification (YTH-003).
-3. **Batch 3 — Committee Data Minimisation & Communications Approval Gate:**
+2. **Batch 2 — Youth Safeguarding Purchasing Enforcement (COMPLETED — `cdd9054`):**
+   - Enforce Club Shop youth checkout restrictions (block minor direct card payments, require adult guardian — YTH-001; resolved, verified 61/61 assertions PASS, committed and pushed as `cdd9054efe7394297b4047f1cd59ba1335266d52`). Spot the Ball guardian prize bridge (YTH-002) and Fundraising appeal attribution policy (YTH-003) verified as existing safeguards by code audit.
+3. **Batch 3 — Committee Data Minimisation & Communications Approval Gate (RECOMMENDED NEXT BATCH):**
    - Filter out confidential welfare notes, individual invoice ledgers, and registration medical records from general Committee views (COM-002); implement approval requirement for club-wide broadcasts (COM-001).
 4. **Batch 4 — SET-001 Operational Settings Separation & Admin Cleanup:**
    - Create dedicated operational settings surface for season dates, age groups, and contacts; investigate and clean up `/wp-admin/` blank Fundraising route (ADM-005).
@@ -217,8 +226,8 @@ Implementation will proceed in small, controlled, risk-ordered batches:
 
 ### 8.6 Repository States & Safety Invariants
 
-- **Plugin Repository (`iexel-club-os`):** HEAD `75c14aa9cb9d9b7d31c85aefd2a9778e02dd99e4` on `main`, up to date with `origin/main`. Working tree is completely clean for tracked files. The 21 untracked historical audit/patch files and protected `stash@{0}` remain strictly preserved and intact.
-- **Docs Repository (`iexel-club-os-docs`):** Active target for documentation updates only. Branch `main` at commit `f9cb153b8265a0be9ffa84bb6ede250970208219`. No commits or pushes authorized; documentation changes remain unstaged for Product Owner review.
+- **Plugin Repository (`iexel-club-os`):** HEAD `cdd9054efe7394297b4047f1cd59ba1335266d52` on `main`, up to date with `origin/main`. Working tree is completely clean for tracked files. The 21 untracked historical audit/patch files and protected `stash@{0}` remain strictly preserved and intact.
+- **Docs Repository (`iexel-club-os-docs`):** Active target for documentation updates only. Branch `main` at commit `718b91374f778ee69edc9fac9abf595509e850e1`. No commits or pushes authorized; documentation changes remain unstaged for Product Owner review.
 
 ### 8.7 Three-Tier Deployment Pipeline Architecture
 

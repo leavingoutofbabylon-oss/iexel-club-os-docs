@@ -19,7 +19,7 @@ Walkthroughs have been completed by the Product Owner across all eight primary s
 | Treasurer Workspace | 9/10 | UX walkthrough complete / provisionally accepted | True finance workspace with invoices, payments, billing schedules, and Back My Game oversight. Core workflows validated. |
 | Admin Experience | 8.5/10 | UX walkthrough complete / provisionally accepted | Navigation consolidated (ADM-001–003). Operational settings separation (SET-001) and blank Fundraising screen cleanup open; recovery access invariant preserved. |
 | Parent Workspace | 8.5/10 | UX walkthrough complete / provisionally accepted | Solid family hub. Currency encoding (MOB-001), inline RSVP (MOB-008), Event Detail return (MOB-008A), and Priority Alerts 7-day RSVP window (PRN-002) resolved and accepted (`75c14aa`); RSVP wording distinction (PRN-001) open. |
-| Player Workspace | 7/10 | UX walkthrough complete / provisionally accepted | Functionally stable. Youth safeguarding boundaries catalogued; My Stats breakdown and My Progress match report deep links open for polish. |
+| Player Workspace | 7.5/10 | UX walkthrough complete / provisionally accepted | Functionally stable. Youth Shop purchasing safeguards (YTH-001) resolved and accepted (`cdd9054`); YTH-002 and YTH-003 verified as existing safeguards by code audit; My Stats breakdown and My Progress match report deep links open for polish. |
 
 ## Role identity
 
@@ -239,9 +239,10 @@ Both Environment 1 (Clean Installation) and Environment 2 (Controlled Upgrade Ma
 | BMG-001 | Parent | Back My Game linked child and team supporter visibility and pledge status in Parent Hub | Operational UX | Medium | MVP (Tier B) |
 | PL-026 | Player | Expandable match-by-match statistics breakdown underneath aggregate season totals | Visual / UX | Low | Polish (Tier C) |
 | PL-027 | Player | Direct contextual deep links from Player My Progress appearance/milestone records into completed Match Reports | Visual / UX | Low | Polish (Tier C) |
-| YTH-001 | Player / Shop | Youth players (<18) must not execute direct online hosted card checkout without adult guardian authentication | Safeguarding / Payments | High | MVP (Tier A) |
-| YTH-002 | Player / F2 | Youth Spot the Ball entry safeguarding — adult guardian authorization and minor prize routing to verified adult guardians | Safeguarding / Legal | High | MVP (Tier A) |
-| YTH-003 | Player / F1 | Youth fundraising appeal link attribution restricted to authenticated adult guardians; zero public child seller profiles | Safeguarding | High | MVP (Tier A) |
+| YTH-001 | Player / Shop | Youth players (<18) must not execute direct online hosted card checkout, select bank transfer, or create Club Shop financial orders without adult guardian authentication — resolved and accepted (`cdd9054`) | Resolved safeguarding | Complete | MVP (Tier A) |
+| YTH-002 | Player / F2 | Youth Spot the Ball entry safeguarding — adult guardian authorization and minor prize routing to verified adult guardians | Code audit verification | Complete (Existing) | MVP (Tier A) |
+| YTH-003 | Player / F1 | Youth fundraising appeal link attribution restricted to authenticated adult guardians; zero public child seller profiles | Code audit verification | Complete (Existing) | MVP (Tier A) |
+| FND-001 | Parent / Fundraising | Campaign-specific family/player and team appeal attribution with QR-code sharing, safeguarding, payment confirmation, refund handling, and avoidance of double-counting | Enhancement | Medium | Post-MVP (Tier D) |
 | B4D | Release | Private encrypted backup vault end-to-end payload population, verification, and restore validation | Disaster Recovery | High | MVP Gate (Tier A) |
 
 ## Detailed workspace direction
@@ -633,9 +634,9 @@ The only items the roadmap still shows open within MVP scope are **FIN-031** and
 
 **Registration Packages Selection, Draft Ownership & Secretary Workflows (RP-B)**, **Registration Finance Handoff (RP-C)**, and **Post-Registration Package Arrangement Workflow (Post-RP)** are now complete (plugin `main` `4285091daecf24214575a1c06c8ea86f33bdb0e1`). RP-B delivered Step 5 Package Selection, immutable package snapshots, dual-context architecture, and attempt-token draft ownership. RP-C delivered the idempotent Finance Draft Invoice handoff, translating the commercial snapshot into a Treasurer Finance obligation, along with operational alerts and Treasurer directory finance statuses. Post-RP delivered the dedicated Treasurer post-registration commercial workflow (`/club-os/treasurer/registrations/{id}/arrange-package/`), establishing a distinct canonical domain (`registration_package_arrangements`), preserving the original registration's immutable "no package selected" audit history (`package_id = null`, `package_snapshot = null`), applying player pathway eligibility to packages and extra charges, and generating idempotent Draft Invoices (`INV-001583` on registration #303) with read-only Secretary visibility. Manual invoicing is explicitly not the solution for registrations completed without a package. See `SPRINTS.md` for full delivery detail.
 
-**Current baseline: `75c14aa9cb9d9b7d31c85aefd2a9778e02dd99e4` on `main`, schema `2026.10.20`.**
+**Current baseline: `cdd9054efe7394297b4047f1cd59ba1335266d52` on `main`, schema `2026.10.20`.**
 
-The Prospect Trial Period milestone, Fundraising F1–F5, Hosted Payments, Club Shop Batches 1–4A, Admin Route Parity, Mobile UX Batches 1–5, and accepted Parent fixes MOB-008A and PRN-002 are complete and integrated on plugin `main`.
+The Prospect Trial Period milestone, Fundraising F1–F5, Hosted Payments, Club Shop Batches 1–4A, Admin Route Parity, Mobile UX Batches 1–5, accepted Parent fixes MOB-008A and PRN-002, and Club Shop Youth Purchasing Safeguarding (YTH-001) are complete and integrated on plugin `main`.
 
 ## Mobile Experience & WordPress Admin UX Walkthrough Closure
 
@@ -647,7 +648,7 @@ The Product Owner has conducted comprehensive mobile workspace and WordPress Adm
 3. **Treasurer:** Billing, invoicing, payment recording, fee rules, and Back My Game oversight validated. Open item: static caret browser artifact (FIN-031) awaiting PO confirmation to close.
 4. **Committee:** Club overview, projects, and communications validated. Open items: data minimisation boundaries (excluding confidential welfare, individual invoices, and medical records) and club-wide communications approval gate.
 5. **Coach / Manager:** Matchday Hub, lineup builder, match mode, completed match corrections, and training attendance validated. Lineup builder draft/bulk attendance fixes (MOB-005–007) and fixture cards unification (MOB-009–011) resolved and accepted. Open items: bulk upcoming event responses and squad availability polish.
-6. **Player:** Player Hub, Matchday journey, My Stats, and My Progress validated. Open items: youth commercial safeguarding invariants (no unauthenticated youth card checkout, Spot the Ball prize routing, appeal attribution); My Stats breakdown and My Progress deep links open for polish.
+6. **Player:** Player Hub, Matchday journey, My Stats, and My Progress validated. Youth Shop purchasing safeguards (YTH-001) resolved and accepted (`cdd9054`); YTH-002 and YTH-003 verified as existing safeguards by code audit (note: local youth persona lacked past orders, so historical youth-order visibility in My Orders was verified by automated tests rather than manual walkthrough); My Stats breakdown and My Progress deep links open for polish.
 7. **Welfare:** Safeguarding dashboard, concern lifecycle, welfare updates, and staff compliance validated. Open item: OS-011 Concern Detail card visual hierarchy polish.
 8. **WordPress Admin:** Route parity and consolidation validated. Open items: SET-001 operational settings separation, `/wp-admin/` blank Fundraising route cleanup, and permanent technical support/recovery access retention invariant.
 
@@ -658,9 +659,9 @@ The Product Owner has conducted comprehensive mobile workspace and WordPress Adm
 Every open finding is classified into a structured delivery tier to guide final live-deployment preparation:
 
 ### Tier A — Release-Critical (Security, Safeguarding, Essential Workflows, Release Controls)
-- **Youth Safeguarding in Club Shop (YTH-001):** Minor players (<18) must not execute direct hosted credit/debit card checkout without adult guardian authentication.
-- **Youth Safeguarding in Spot the Ball (YTH-002):** Minor entry requires adult guardian authorization; minor winnings route strictly to linked adult guardians.
-- **Youth Fundraising Appeal Attribution (YTH-003):** Public appeal sharing links attributing youth players require adult guardian issuance; no public child seller accounts or URLs.
+- **Youth Safeguarding in Club Shop (YTH-001):** Resolved and accepted (`cdd9054`). Minor players (<18) and unverified-age users cannot place orders, select bank transfer, or initiate hosted card checkout; adult purchasing preserved; browsing with safeguarding guidance intact. Note: local youth persona lacked past orders, so historical youth-order visibility in My Orders was verified by automated tests rather than manual walkthrough.
+- **Youth Safeguarding in Spot the Ball (YTH-002):** Existing safeguard verified by code audit. Minor entry requires adult guardian authorization; minor winnings route strictly to linked adult guardians.
+- **Youth Fundraising Appeal Attribution (YTH-003):** Existing safeguard verified by code audit. Public appeal sharing links attributing youth players require adult guardian issuance (`FundraisingShareAttributionPolicy`); zero public child seller accounts or URLs.
 - **Committee Data Minimisation (COM-002):** General Committee views must strictly exclude confidential Welfare notes, individual debtor ledgers, and registration medical records.
 - **Private Encrypted Backup Vault End-to-End Validation (B4D):** Complete payload population, verification, and restore of `IEXEL_RC_VAULT` to validate DR readiness.
 - **Parent Event Detail RSVP Return Navigation (MOB-008A):** Resolved and accepted (`75c14aa`). Event Detail RSVP submissions return to Event Detail with per-child anchor continuity rather than redirecting to Team Hub.
@@ -697,6 +698,7 @@ Every open finding is classified into a structured delivery tier to guide final 
 - General package amendments / upgrades post-registration.
 - Club Draw (F6) statutory lottery engine.
 - Notification attachment / image lightbox viewer (OS-031).
+- Campaign-specific family/player and team fundraising appeal attribution tokens with downloadable and scannable QR-code sharing, safeguarding, payment confirmation, refund handling, and avoidance of double-counting (FND-001).
 
 ## Deployment Pipeline & Commercial Architecture
 

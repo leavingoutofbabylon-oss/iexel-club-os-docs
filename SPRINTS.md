@@ -2358,9 +2358,9 @@ Every known review finding and operational defect is classified into a four-tier
 ### Tier A — Release-Critical (Security, Safeguarding, Essential Workflows, Release Controls)
 *Items that must be resolved prior to the first live deployment at IEXEL FC.*
 
-1. **Youth Safeguarding Purchasing Permissions in Club Shop:** Minor players (<18) must not execute direct online hosted credit/debit card checkout without an authenticated adult guardian. Cart checkout must require adult guardian authentication or default to offline payment instructions under guardian oversight.
-2. **Youth Spot the Ball Entry Safeguarding & Prize Routing:** Youth entry into Spot the Ball competitions requires explicit adult guardian authorization. Minor winnings and prize settlements must route strictly to verified adult guardians via the established prize bridge; minors may not receive direct cash or voucher disbursements without adult guardian confirmation.
-3. **Youth Fundraising Appeal Restrictions:** Public appeal sharing links that attribute fundraising to a youth player require issuance by an authenticated canonical adult guardian (`FundraisingShareAttributionPolicy`). Zero public child seller profiles, individual minor donation pages, or public youth profile URLs are permitted.
+1. **Youth Safeguarding Purchasing Permissions in Club Shop (YTH-001):** Minor players (<18) and unverified-age users must not execute direct online hosted credit/debit card checkout, select bank transfer, or create Club Shop financial orders without authenticated adult guardian oversight. Resolved and accepted (`cdd9054`). (Note: Local youth Player persona had no past orders, so historical youth-order visibility in My Orders was verified via automated test suite rather than manual browser walkthrough).
+2. **Youth Spot the Ball Entry Safeguarding & Prize Routing (YTH-002):** Youth entry into Spot the Ball competitions requires explicit adult guardian authorization. Minor winnings and prize settlements must route strictly to verified adult guardians via the established prize bridge; minors may not receive direct cash or voucher disbursements without adult guardian confirmation. (Existing safeguard verified by code audit, not a newly implemented feature).
+3. **Youth Fundraising Appeal Restrictions (YTH-003):** Public appeal sharing links that attribute fundraising to a youth player require issuance by an authenticated canonical adult guardian (`FundraisingShareAttributionPolicy`). Zero public child seller profiles, individual minor donation pages, or public youth profile URLs are permitted. (Existing safeguard verified by code audit, not a newly implemented feature).
 4. **Committee Permission Boundaries & Data Minimisation:** General Committee views must strictly exclude confidential Welfare safeguarding notes and concern narratives, individual member debtor ledgers and itemised family invoices, and registration medical records.
 5. **Private Encrypted Backup Vault End-to-End Validation (B4D):** Complete end-to-end payload population, verification, and restore of the `IEXEL_RC_VAULT` container to validate disaster recovery readiness before operational release.
 6. **Parent Event Detail RSVP Return Navigation (MOB-008A):** Ensure RSVP submissions on the standalone Event Detail page return smoothly to the same event card with per-child anchor continuity. Resolved and accepted (`75c14aa`).
@@ -2404,6 +2404,7 @@ Every known review finding and operational defect is classified into a four-tier
 12. **General Package Amendments / Upgrades Post-Registration:** Workflows to alter or upgrade packages after initial selection.
 13. **Club Draw (F6) Lottery Engine:** Statutory lottery and raffle compliance engine.
 14. **Notification Attachment / Image Lightbox Viewer (OS-031):** In-app image viewer.
+15. **Family and Team Fundraising Attribution & QR-Code Sharing (FND-001):** Campaign-specific family/player and team fundraising appeal attribution tokens with downloadable and scannable QR-code generation enabling supporters to scan and contribute directly during matchdays, presentation events, and community campaigns; incorporates child safeguarding boundaries (`FundraisingShareAttributionPolicy` — no public child seller profiles), real-time payment confirmation, clear refund handling, and strict avoidance of double-counting across team and club campaign totals.
 
 ---
 
@@ -2438,7 +2439,7 @@ flowchart TD
     end
 
     subgraph TierA ["Tier A: Release-Critical Safeguards"]
-        B2["Batch 2: Youth Safeguarding & Purchasing<br/>Club Shop card checkout guards<br/>Spot the Ball guardian authorization<br/>Fundraising appeal attribution"]
+        B2["Batch 2: Youth Purchasing Safeguarding (COMPLETE)<br/>Club Shop adult purchaser enforcement (YTH-001)<br/>(Committed & pushed: cdd9054)"]
         B3["Batch 3: Committee Boundary Hardening<br/>Data minimisation (welfare/finance/medical)<br/>Club-wide comms approval gate"]
     end
 
@@ -2467,9 +2468,12 @@ flowchart TD
 
 1. **Batch 1 — Accepted Parent Fixes Closure (COMPLETE — `75c14aa`):**
    - *Delivered:* Product Owner-accepted Parent Event Detail RSVP return navigation (MOB-008A) and Parent Priority Alerts rolling seven-day window with chronological ascending sort (PRN-002). 8 approved files committed and pushed to plugin `main`. 52/52 assertions passed in `validate-parent-event-detail-rsvp-return.php`, 33/33 passed in `validate-parent-priority-alerts-rsvp-window.php`, 138/138 passed in `validate-workspace-priority-alert-scoping.php`, and 68/68 passed in `validate-parent-team-hub-inline-rsvp.php`.
-2. **Batch 2 — Youth Safeguarding Purchasing & Entry Boundaries:**
-   - *Scope:* Club Shop youth checkout restrictions (block minor direct card payments, require adult guardian); Spot the Ball guardian prize bridge enforcement; Fundraising appeal attribution policy verification.
-   - *Verification:* Capability and age tests; automated validators; zero regression across Shop/Fundraising.
+2. **Batch 2 — Youth Purchasing Safeguarding Enforcement (COMPLETE — `cdd9054`):**
+   - *Delivered:* Product Owner-accepted Club Shop Youth Purchasing Safeguarding (YTH-001). Strict enforcement requiring `KNOWN_ADULT` classification across domain services (`ShopService::place_member_order`, `ShopOnlinePaymentService::initiate`, `ShopBankTransferService::select`), access policy (`ShopAccessPolicy::purchaser`, `is_adult_purchaser`), and HTTP request boundary (`ShopRequestHandler::handle_post` 403 Forbidden). Safe product browsing and size/price inspection preserved for youth players with an accessible safeguarding note; order forms and payment submission actions suppressed. Unpaid order reminders hidden from youth players. Adult player self-purchasing and adult parent purchasing for linked children preserved.
+   - *Validation:* 61/61 assertions passed in `tools/validate-club-shop-youth-safeguarding.php`; 130/130 assertions passed in `tools/validate-club-shop-batch-4a.php --database-free`; 41/41 assertions passed in `tools/validate-fundraising-share-links.php`; PHP lint clean; `git diff --check` clean. Staged 10 files and committed as `cdd9054efe7394297b4047f1cd59ba1335266d52`, pushed to `origin/main`.
+   - *Audit Confirmations:* YTH-002 (Spot the Ball guardian authorization and prize routing) and YTH-003 (Youth fundraising appeal attribution via `FundraisingShareAttributionPolicy`) verified as existing safeguards by code audit, not newly implemented features.
+   - *Manual Acceptance Limitation:* Available youth Player persona in the local test environment had no historical orders; consequently, historical youth-order visibility in "My Orders" was not manually exercised during the walkthrough (covered by automated validator assertions).
+   - *Proposed Enhancement:* FND-001 (Campaign-specific family/player and team fundraising appeal attribution, QR-code sharing, safeguarding, payment confirmation, refund handling, and avoidance of double-counting) registered as a proposed Post-MVP roadmap enhancement.
 3. **Batch 3 — Committee Data Minimisation & Communications Approval Gate:**
    - *Scope:* Filter out confidential welfare notes, individual invoice ledgers, and registration medical records from general Committee views; implement approval requirement for club-wide broadcasts.
    - *Verification:* Role capability matrix tests; persona inspection in LocalWP.
