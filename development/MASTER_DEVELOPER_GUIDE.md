@@ -14,7 +14,7 @@ This document remains the authoritative source for Club OS architecture.
 # Master Developer Guide
 
 **Version:** 1.0  
-**Last Verified:** 2026-10-11 (Reconciliation checkpoint: HEAD `1342540`, schema `2026.10.20`, Fundraising F1–F5 and Club Shop delivered; historical validation dates retained below)
+**Last Verified:** 2026-10-12 (Reconciliation checkpoint: HEAD `bf6df68`, schema `2026.10.20`, Mobile UX Batches 1–5 delivered on `main`, MOB-008A in plugin working tree; 8 workspace walkthroughs provisionally accepted)
 **Applies To:** Operational MVP
 
 ---
@@ -37,11 +37,36 @@ Every contributor should read this guide before making architectural or implemen
 
 ### Current Priority
 
-**Current plugin baseline: `134254095a9e8332d0bff4523b7275829c9a9873`, `main`, clean tracked index and synchronized with `origin/main`; database schema version `2026.10.20`.** The Prospect Trial Period milestone, Fundraising (F1 Team Appeals, F2–F4 Spot the Ball, F5 Back My Game), SumUp Hosted Online Payments, Club Shop (Batches 1–4A), Disposable Validator Safety Architecture, and AdminUI Route Parity are COMPLETE / DELIVERED ON PLUGIN MAIN. Guided Registration Conflict Resolution (`e303ca96234c8c2530aae776ea55914d3a5dc02d`) and Legacy Staff Registration Recovery (`55ee697c796dbde93e481b45b5809422d7f3be0a`) remain complete. The Registration Packages arc and Parent draft identity/ownership hardening (`67ac823`) remain complete. Use [the 2026-09-30 handover (updated with Section 7)](DEVELOPMENT_HANDOVER_2026-09-30.md) as the current resume point. Select the next approved MVP task after documentation reconciliation; this checkpoint authorizes no next implementation.
+**Current plugin baseline: `bf6df68a5774395b7a131b49a070daebf878f446`, `main`, clean tracked index synchronized with `origin/main` (with MOB-008A uncommitted changes in plugin working tree awaiting acceptance); database schema version `2026.10.20`.**
 
-**The MVP Release Candidate was technically validated and Product Owner signed off (RC-01 through RC-03-CLOSE).** Post-RC delivery includes Guardian Link Alignment, Treasurer Premium Workspace Alignment, Finance Reports scaffold removal, RP-B, RP-C, post-registration Package arrangements, Parent journey hardening, the accepted Conflict/Recovery batches, Prospect Trial Period, Fundraising F1–F5, SumUp Payments, and Club Shop Batches 1–4A. This is technical validation/product acceptance, not production deployment; the separate Release/Post-Release gate remains in RELEASE_CHECKLIST.md. Historical evidence remains in SPRINTS.md.
+The Product Owner has completed mobile workspace and WordPress Admin UX walkthroughs across all eight primary surfaces:
+1. **Parent / Guardian**
+2. **Secretary**
+3. **Treasurer**
+4. **Committee**
+5. **Coach / Manager**
+6. **Player**
+7. **Welfare**
+8. **WordPress Admin**
 
-Internal Club Testing (SEC-001 through SEC-008), the Completed Match Correction architecture (Batches 2A, 2B-1, 2B-2 and their end-to-end acceptance gate), Admin Sidebar Navigation Consolidation (ADM-001/002/003), dark-surface text contrast (OS-029/FIN-028/PL-024), the Internal Club Testing remediation programme, and Staff Compliance (Batches A–D) were all already complete and integrated into plugin `main` before this RC cycle began — see "Recently Completed" below. This does not mean the product is finished in the sense of having no further backlog; it means the currently-known implementation is validated and accepted at the MVP Release Candidate gate. Before selecting the next roadmap-labelled implementation batch, see `development/DEVELOPMENT_HANDOVER_2026-09-30.md`'s "Remaining Work and Recommended Next Action" and Section 7 — no single candidate is currently dominant, and the earlier recommendation naming Finance Reports as the next item has been withdrawn (it assumed an existing feature awaiting a routing fix, which a subsequent audit disproved; Finance Reports has no implementation and cannot be scheduled until Product Owner product definition happens first). Product Owner/lead developer selection is needed among the genuinely open remaining candidates.
+Each workspace is formally recorded as **UX walkthrough complete / provisionally accepted**, with outstanding findings remaining open until implemented, validated, and accepted. Unresolved issues are strictly not marked as fixed or claimed as final release acceptance.
+
+Five Mobile UX implementation batches are delivered and merged to plugin `main`:
+- **Mobile UX Batch 1 (`28264dc`):** MOB-005 — Coach lineup builder draft persistence and player profile access.
+- **Mobile UX Batch 2 (`bc5ab91`):** MOB-006 / MOB-007 — Coach lineup builder bulk attendance and match status reliability.
+- **Mobile UX Batch 3 (`4e259f9`):** MOB-009 / MOB-010 / MOB-011 — Football fixture-card presentation unification across Parent and Coach hubs with responsive opponent name wrapping.
+- **Mobile UX Batch 4 (`fa72493`):** MOB-008 — Parent Team Hub inline per-child RSVP controls and scroll position preservation.
+- **Mobile UX Batch 5 (`bf6df68`):** MOB-001 — Parent invoice currency encoding repair (£ symbol correction).
+
+Additionally, **MOB-008A** (Parent Event Detail RSVP Return Navigation) is implementation-complete in the plugin working tree (4 modified files, 1 untracked validator) and awaiting Product Owner manual acceptance.
+
+The Prospect Trial Period milestone, Fundraising (F1 Team Appeals, F2–F4 Spot the Ball, F5 Back My Game), SumUp Hosted Online Payments, Club Shop (Batches 1–4A), Disposable Validator Safety Architecture, and AdminUI Route Parity remain delivered and integrated on plugin `main`. Use [the 2026-09-30 handover (updated with Sections 7 and 8)](DEVELOPMENT_HANDOVER_2026-09-30.md) as the authoritative resume point.
+
+Outstanding review findings are structured into a 4-tier delivery classification:
+- **Tier A — Release-Critical:** Security, safeguarding, permission leaks, broken essential workflows, data integrity, payment correctness, and required release controls (Youth purchasing/entry safeguarding in Shop, Spot the Ball & Appeals; Committee permission boundaries & data minimisation; MOB-008A RSVP return navigation; Private encrypted backup vault B4D validation).
+- **Tier B — MVP Usability & Operational Improvements:** Essential live operation workflows, including SET-001 operational settings separation, Secretary Create Event mobile selector overflow fix, WordPress Admin Fundraising menu cleanup, Parent RSVP wording distinction, Committee communications approval gate, Coach bulk event responses, and Back My Game supporter visibility.
+- **Tier C — North Star Visual Polish:** Non-blocking styling and consistency refinements (OS-011 Welfare Concern Detail hierarchy, Coach Premium Squad Availability polish, Player match deep links and drilldown).
+- **Tier D — Post-MVP:** Modular settings evolution (SET-003/SET-004), full operational migration away from WordPress Admin, video training library/wizard, direct Prospect-to-match registration seam, and F6 Club Draw.
 
 ### Recently Completed
 
@@ -58,67 +83,62 @@ Internal Club Testing (SEC-001 through SEC-008), the Completed Match Correction 
 - ✅ Parent Family Finance & Invoice Detail Experience (OS-030)
 - ✅ Treasurer Finance & Invoice Lifecycle MVP (FIN-027)
 - ✅ Committee Workspace & Native Operations (Club Projects CRUD, Communications, Audience Builder v2)
-- ✅ Prospect → Training Only Batch 2B (manual acceptance passed; established canonical pathway, now used by the committed Prospect Trial Period milestone)
-
-- ✅ Training Membership Visibility & Secretary Management Batch 2C (implementation and LocalWP manual acceptance complete)
-- ✅ Atomic Match Player → Training Only Transition Batch 2D-A + Match Event Ownership Repair (manual acceptance passed; integrated on `main`)
-- ✅ Registered-only Training Only → Match Player Batch 2D-B1 + Training Player-role normalisation (accepted and merged)
-- ✅ Secretary-native Registration setup for Training Only Players Batch 2D-B2 (final acceptance passed; merged on `main`)
-
-- ✅ Team Staff Operational Access Reconciliation (implementation and LocalWP manual acceptance complete; pending intentional commit)
-- ✅ Front-end Player Profile A — Security, Core Workspace and Current Operational Medical/Safety (implementation and LocalWP manual acceptance complete; pending intentional commit)
-- ✅ MVP Priority Alert persona scoping (implementation, source validation and LocalWP manual acceptance complete; implementation merged to plugin `main`, acceptance documentation merged to docs `main`, and OS-032 formally closed for MVP)
-- ✅ MVP Release Readiness Integrity Batches 1, 2, 2.5 and 3 (implementation, source validation and LocalWP manual acceptance complete; plugin implementation merged to plugin `main`, documentation reconciliation merged to docs `main`, and the workstream formally complete)
-- ✅ RC Clean-Install Blocker Repair Gate 2C (post-commit verification and pre-merge audit complete; merged on plugin `main` at `e3f115dce90a04f3812036334317f691ba367b42`)
-- ✅ RC Controlled Upgrade Matrix Gate 2 (Environment 2 verified across Rows 1–4 and Interruption/Resume; full-registry reconciliation architecture confirmed and accepted)
-- ✅ MVP Internal Club Testing: SEC-001 (Canonical Team Season Provisioning), SEC-002 (Grassroots Play-Up Eligibility), SEC-004/005 (Meet Time Unification), SEC-006 (Committee Event Routing), SEC-007A/B/C (Event Audience Policy, Flexible Builder & Privacy-Safe RSVP), and SEC-008 (Coach Football Event Scope Hardening, Training Meet Time Policy & Matchday Hub Location Repair `2370551`)
-- ✅ Completed Match Correction architecture — canonical score reconciliation + Remove Incorrect Goal (Batch 2A), canonical Match incident `timeline_order` (Batch 2B-1: `sequence` is immutable creation/audit order, `timeline_order` owns effective chronological replay/display order), Add Missed Goal with historical eligibility and deterministic equal-minute placement (Batch 2B-2), and a combined end-to-end acceptance gate; implemented, validated and merged to plugin `main` at `b2b51eb`
-- ✅ Internal Club Testing remediation programme — secretary member-maintenance safeguards, canonical Current Emergency Contact management (Person-level current state, current-row-authoritative-even-when-empty, exact-current-Season Registration fallback), secretary-assisted password-reset completion alerts (seven-day eligibility lifecycle, canonical Activity attribution), and a final pre-merge validator/repository hygiene batch; merged to plugin `main` at `b2b51eb` via an audited, GREEN-gated, pure fast-forward integration (0 main-side divergence, 57 commits, PASS post-integration validation)
-- ✅ Validator hygiene reconciliation (live-goal, substitution/Attendance and Player Progress validators no longer depend on obsolete Event 57 live-state assumptions or the removed WordPress/Gravatar avatar fallback) and the Player Progress canonical MVP decision (embedded Team Workspace → My Progress journey; see `CLUB_OS_EXPERIENCE_REVIEW_AND_ROADMAP.md`)
-- ✅ Admin Sidebar Navigation Consolidation & Route Cleanup (ADM-001/002/003, `c88eab9`) — wp-admin navigation is consolidated into logical groups; route-only admin screens remain registered but hidden from the sidebar, reachable through in-page contextual actions. Daily operations should prefer the relevant role/workspace experience where one exists; wp-admin remains the deeper administration/configuration/oversight surface
-- ✅ Dark-surface text contrast (OS-029/FIN-028/PL-024, `34cd5d4`) — Team Workspace/Team Hub, Finance/billing/invoice and Player Statistics dark surfaces use on-dark foreground tokens; protected by `tools/validate-dark-surface-contrast.php`
-- ✅ Verified Historical Scorer Attribution v1 (CMC-002, `2f3dcee`) — an exceptional, Coach-attested pathway for the rare case where a completed Match's active Club goal has no reliable Tier-1 historical participation evidence (saved Selection + legitimate live-bench admission via `effective_selection()`). Reuses the established void+append correction architecture; requires explicit verification source, evidence note and confirmation; leaves an auditable `match_goal_verified_historical_attribution` record; and is deliberately player-specific and provenance-specific rather than a broadening of normal historical eligibility. See "Verified Historical Scorer Attribution — Historical Eligibility Direction" below and `CLUB_OS_EXPERIENCE_REVIEW_AND_ROADMAP.md` / `SPRINTS.md` for full detail. Browser accepted; merged to plugin `main` at `2f3dcee`.
-- ✅ Match Hero Goal-Scorer Presentation (CMC-003, `b37de1c`) with live-eligibility correction and responsive polish, and Primary Immersive Module Accent-Top Consolidation (`54edcb2`/`5616f8b`, the reusable `.iexel-accent-top-module` primitive — see "Primary Immersive Module Accent Treatment" below) — both browser-accepted and merged to plugin `main`.
-- ✅ Team Events/Attendance and Shared Messages month-disclosure navigation (`082e418`, `fc9dc8a`), Coach Workspace Batch B — Statistics chooser, inline availability editing, return-to-context redirects (`e796f19`, `a9c5dc7`), Live Match transient success notice auto-dismiss (`22a18fd`), and Event Builder Productivity & Training Only Event Audience Eligibility (`1c97ebb`) — optional End Time, safe non-Match/cross-Team Duplicate Event, weekly independent recurring Events, and deliberate Training Only inclusion in appropriate Event audiences (Current Team + Same Age Group Players and Selected Players) with League/Fixture competitive eligibility unchanged. Training Only participation remains governed entirely by Training Membership — never a Team Assignment. See `CLUB_OS_EXPERIENCE_REVIEW_AND_ROADMAP.md`'s Coach Workspace section and `SPRINTS.md` for full delivery detail. All browser-accepted and merged to plugin `main` at `1c97ebb`.
-- ✅ Welfare Workspace Workflows (`5348403`) — Welfare Concern Directory mobile/filter repair (reuses the existing form-field component, no new design system) and a new short operational **Welfare Update** capability (dedicated append-only persistence, server-derived author/timestamp, 1,000-character plain-text limit, no edit/delete/attachments, generic Activity History never receives the operational text). This remains a data-minimisation boundary, not detailed safeguarding case notes — see `CLUB_OS_EXPERIENCE_REVIEW_AND_ROADMAP.md`'s Welfare Workspace direction section and `SPRINTS.md` for full delivery detail. At the time of this commit, restricted Welfare Person access and Staff Compliance remained approved future direction, not implemented — **Staff Compliance's canonical foundation, Secretary management, the restricted Welfare People/Person/Compliance projection, and proactive compliance expiry alerting have since all been implemented** (`b5f006a6`, `3352d300`, `cd871f3`, `2bdd62e`; see `CLUB_OS_EXPERIENCE_REVIEW_AND_ROADMAP.md`'s Welfare Workspace direction section, `SPRINTS.md`'s "Staff Compliance — Batch A, Batch B, Batch C & Batch D" section, and `development/DEVELOPMENT_HANDOVER_2026-09-08C.md` for the current resume point). No further Staff Compliance batch is currently approved future direction.
-- ✅ Registration Packages Selection, Draft Ownership & Secretary Workflows (RP-B, `c0936ed`) — Step 5 Package Selection UI (`PackageSelectionSection`), immutable package snapshots, settings-driven `allow_registration_without_package` policy, dual-context Parent/Staff architecture (`ParentRegistrationPortalService`, `ParentRegistrationAttemptRepository`), attempt token ownership (256-bit, SHA-256 hashed, 2-hour TTL, row-locked), family-journey deduplication, Secretary player-search picker, staff-context nonce isolation, schema upgrade steps (`registration_package_selection_schema`, `registration_creation_origin_schema`), `UpgradeVersions::SCHEMA_VERSION` `2026.09.1`, Treasurer and Secretary registration detail commercial sections, and responsive mobile styles. 739/739 new assertions PASS; PHP lint 33/33 PASS; real-browser acceptance PASS. See `SPRINTS.md`'s "Registration Packages Selection, Draft Ownership & Secretary Workflows (RP-B)" section for full delivery detail.
-- ✅ Registration Finance Handoff (RP-C, `e8283e9`) — Registration to Finance Draft Invoice idempotent handoff, robust handling of zero-penny/no-package logic, historic commercial snapshot line-item translation, and Treasurer Directory/Dashboard priority alert visibility. 36/36 new assertions PASS; real-browser acceptance PASS. See `SPRINTS.md`'s "Registration Finance Handoff (RP-C Batch 1)" section for full delivery detail.
-- ✅ Post-Registration Package Arrangement Workflow (`4285091`, layout refinement `1503291`) — Canonical business event allowing Treasurers to arrange an initial registration package post-registration when a member completed registration without one. Strictly preserves immutable historical registration data (`player_registrations.package_id` and `package_snapshot` remain strictly `NULL` representing "No package selected during registration"). Introduces first-class `RegistrationPackageArrangement` domain entity, `registration_package_arrangements` table (`UNIQUE KEY uk_registration_id`), `RegistrationPackageArrangementRepository` and `RegistrationPackageArrangementService`. Adds Treasurer route `/club-os/treasurer/registrations/{id}/arrange-package/` (`PortalTreasurerRegistrationArrangePackagePage`) guarded by `iexel_manage_billing`, Secretary read-only contextual projection, pathway/extra eligibility enforcement, immutable arrangement snapshots, transactional boundary, and idempotent Finance Draft invoice handoff (`source_type = 'registration_post_package'`). `UpgradeVersions::SCHEMA_VERSION` `2026.09.3`. See `SPRINTS.md` for full delivery detail.
-- ✅ Prospect Trial Period / Come and Try (`e5426be`) — branded public enquiry, explicit Prospect-level youth participation and responsible-adult authority evidence, repeatable trial sessions, Secretary review/scheduling, assigned-Team Coach attendance and bounded safety visibility, and Training Only conversion with natural-age recommendation and permitted one-year-up choice. Product Owner acceptance and final regression audit passed; see `SPRINTS.md` for evidence and limitations.
-- ✅ Fundraising Team Appeals & Public Supporter Journey (F1, `745f8d4` to `a8b555f`) — Public appeal landing pages, progress targets, Gift Aid declarations, and isolated payment bridge to Finance.
-- ✅ Spot the Ball Competition Lifecycle & Adjudication (F2-F4, `f77d507` to `c6e86bc`) — Competition management, adult panel coordinate sealing, normalized coordinate selection canvas, Euclidean distance calculation, unique-person tie-breaking with zero-penny remainder loss, and prize settlement.
-- ✅ Back My Game Supporter Subscriptions (F5, `3d47049` to `6d6c457`) — Recurring supporter agreements for teams and players, automated monthly collection schedule engine, payment retries, and Treasurer oversight.
-- ✅ Hosted Online Payments & SumUp Checkout Foundation (`be36f2e`, `f89087a`, `caab932`) — Hosted PCI-safe card processing, server-to-server API verification, payment attempt lifecycle, and order/invoice status reconciliation.
-- ✅ Club Shop Foundation, Member Retail & Secretary Fulfillment (Batches 1-4A, `6163554` to `a8c66c5`) — Product catalog, SKU variants, inventory tracking, storefront, multi-item cart, dual payment rails (SumUp card checkout and offline Bank Transfer), order management (`ORD-%06d`), and Secretary order collection fulfillment (`ordered` -> `preparing` -> `ready_for_collection` -> `collected`).
-- ✅ Disposable Validator Safety Architecture & Test Isolation (`tools/validate-validator-disposable-safety.php`, 368 assertions PASS) — Target safety guards (host, port, database identity, structure checks) protecting against execution on non-disposable environments.
-- ✅ AdminUI Route Inventory Parity (`tools/validate-admin-inventory-parity.php`, 56/56 routes PASS) — Complete alignment of all registered WordPress admin routes and elimination of orphaned route definitions.
+- ✅ Prospect → Training Only Batch 2B (manual acceptance passed; established canonical pathway)
+- ✅ Training Membership Visibility & Secretary Management Batch 2C
+- ✅ Atomic Match Player → Training Only Transition Batch 2D-A + Match Event Ownership Repair
+- ✅ Registered-only Training Only → Match Player Batch 2D-B1 + Training Player-role normalisation
+- ✅ Secretary-native Registration setup for Training Only Players Batch 2D-B2
+- ✅ Team Staff Operational Access Reconciliation
+- ✅ Front-end Player Profile A — Security, Core Workspace and Current Operational Medical/Safety
+- ✅ MVP Priority Alert persona scoping (OS-032 formally closed for MVP)
+- ✅ MVP Release Readiness Integrity Batches 1, 2, 2.5 and 3
+- ✅ RC Clean-Install Blocker Repair Gate 2C (`e3f115dce90a04f3812036334317f691ba367b42`)
+- ✅ RC Controlled Upgrade Matrix Gate 2 (Clean install & upgrade matrix validated)
+- ✅ Completed Match Correction architecture (Batches 2A, 2B-1, 2B-2, CMC-001)
+- ✅ Internal Club Testing remediation programme (`b2b51eb`)
+- ✅ Admin Sidebar Navigation Consolidation & Route Cleanup (ADM-001/002/003, `c88eab9`)
+- ✅ Dark-surface text contrast (OS-029/FIN-028/PL-024, `34cd5d4`)
+- ✅ Verified Historical Scorer Attribution v1 (CMC-002, `2f3dcee`)
+- ✅ Match Hero Goal-Scorer Presentation (CMC-003, `b37de1c`) and Primary Immersive Accent-Top (`54edcb2`/`5616f8b`)
+- ✅ Welfare Workspace Workflows (`5348403`) and Staff Compliance Batches A–D (`b5f006a6`, `3352d300`, `cd871f3`, `2bdd62e`)
+- ✅ Registration Packages Arc (RP-B `c0936ed`, RP-C `e8283e9`, Post-RP `4285091`)
+- ✅ Prospect Trial Period / Come and Try (`e5426be`)
+- ✅ Fundraising Team Appeals & Public Supporter Journey (F1, `745f8d4` to `a8b555f`)
+- ✅ Spot the Ball Competition Lifecycle & Adjudication (F2-F4, `f77d507` to `c6e86bc`)
+- ✅ Back My Game Supporter Subscriptions (F5, `3d47049` to `6d6c457`)
+- ✅ Hosted Online Payments & SumUp Checkout Foundation (`be36f2e`, `f89087a`, `caab932`)
+- ✅ Club Shop Foundation, Member Retail & Secretary Fulfillment (Batches 1-4A, `6163554` to `a8c66c5`)
+- ✅ Disposable Validator Safety Architecture & Test Isolation (368 assertions PASS)
+- ✅ AdminUI Route Inventory Parity (56/56 routes PASS, `1342540`)
+- ✅ Mobile UX Batch 1 — Coach Lineup Draft Preservation & Player Access (MOB-005, `28264dc`)
+- ✅ Mobile UX Batch 2 — Coach Lineup Builder Bulk Attendance Reliability (MOB-006/MOB-007, `bc5ab91`)
+- ✅ Mobile UX Batch 3 — Unified Football Fixture Cards & Heading Wrapping (MOB-009/MOB-010/MOB-011, `4e259f9`)
+- ✅ Mobile UX Batch 4 — Parent Team Hub Inline RSVP & Scroll Position Preservation (MOB-008, `fa72493`)
+- ✅ Mobile UX Batch 5 — Parent Invoice Payment Currency Encoding Repair (MOB-001, `bf6df68`)
 
 ### Current Focus
 
-Both Release Candidate test environments are verified and accepted:
-1. **Environment 1 (Clean Installation):** Verified on WordPress 7.0.4 / PHP 8.2.29 / MySQL 8.4; establishes the clean baseline (48 Club OS-owned tables, schema/data version `2026.08.6`, complete upgrade state across 25/25 steps/results, 15 formations and 129 slots), with AI activity dbDelta reconciliation, unlinked administrator fail-closed identity boundary (*Administrative authority does not create member identity*), pre-output public prospect feedback routing, and canonical empty-site billing scheduler behavior.
-2. **Environment 2 (Controlled Upgrade Matrix):** Full-registry idempotent reconciliation pipeline validated across all 4 canonical baselines (`2026.07.1`, `2026.08.2`, `2026.08.5`, `2026.08.6`) plus controlled failure interruption/resume. All 25 registered `UpgradeStep` contracts evaluated in sequence, with safe no-op evaluation on fulfilled invariants (`ran = false`) and transactional application on unfulfilled invariants (`ran = true`). Team references normalized to `TM-%06d`, role capabilities reconciled, business data preserved 100%, and unlinked admins fail closed across all baselines.
-
-Internal Club Testing, the Completed Match Correction architecture, and the subsequent Internal Club Testing remediation programme are complete and merged to plugin `main` at `b2b51eb` (2026-08-29). **These two Release Candidate environments and the historical baselines above were subsequently re-exercised, and extended with a third representative-persona validation, in the RC-01 → RC-03-CLOSE cycle against the current committed build** (plugin `main` `3ee4c92963e8721b5562aa3a64e3706f81a346dc`) — see `SPRINTS.md`'s "MVP Release Candidate Validation Cycle" section for the current evidence (current schema/data version `2026.08.9`, 51 tables, current rewrite-rule set, supported-upgrade continuity from the historical `2026.08.6` baseline, and representative persona/security validation). **Post-RC, plugin `main` has advanced through 29 commits between 30 September and 9 October 2026 covering Registration Packages (RP-B, RP-C, Post-RP), Parent journey hardening, Guided Conflict Resolution, Legacy Staff Recovery, Prospect Trial Period, Fundraising F1-F5, SumUp Hosted Payments, Club Shop Batches 1-4A, Disposable Validator Safety, and AdminUI Route Parity (commit `1342540`, schema `2026.10.20`)** — see `SPRINTS.md`'s respective sections and `development/DEVELOPMENT_HANDOVER_2026-09-30.md` Section 7 for the resume point.
-
-**Pending Product Owner Review:**
-- **Mobile Experience Review — screenshots forthcoming.** (Preserved as a pending review item awaiting Product Owner screenshots; no speculative fixes or mobile changes authorized prior to receipt).
+The Product Owner walkthroughs across all eight workspaces have completed, transitioning Club OS from active discovery to focused MVP completion:
+1. **Walkthrough Closure:** All eight workspaces are provisionally accepted with known findings catalogued into Tier A/B/C/D.
+2. **Implementation Sequence:** Controlled, risk-ordered batches starting with MOB-008A closure and Tier A release-critical safeguards, progressing to Tier B operational improvements, then Tier C polish.
+3. **Disaster Recovery / Vault (B4D):** End-to-end payload population, verification, and restore of the private encrypted backup vault (`IEXEL_RC_VAULT`).
 
 **Preserved Operational Boundaries & Deferred Scope:**
-- **Disaster Recovery / Vault:** The private encrypted backup vault (B4C.4–B4C.6) is provisioned and verified in a rest state outside the repository; end-to-end backup and restore validation (B4D) remains an outstanding milestone before operational DR designation.
+- **Admin Recovery Invariant:** `/wp-admin/` remains permanently accessible for technical support, database upgrades, and recovery diagnostics; operational management shifts to the portal.
 - **Registration Discovery Seams:** The direct Prospect-to-competitive Match Registration invitation (`ProspectLifecycle::INVITED_MATCH_REGISTRATION`) remains an open operational seam.
-- **Commercial & Architecture Boundaries:** General package amendments/upgrades remain deferred; multi-club branding remains future work; Finance Reports is an intentionally removed unfinished scaffold requiring fresh product definition; Club Draw (F6) remains future compliance-gated work.
+- **Commercial & Architecture Boundaries:** General package amendments/upgrades post-registration remain deferred; multi-club branding remains future work; Finance Reports is an intentionally removed unfinished scaffold requiring fresh product definition; Club Draw (F6) remains future compliance-gated work.
 
 ### Next Milestones
 
-1. ✅ Operational MVP Complete (Core Operations, Registrations, Finance, Welfare, Compliance, Trialists, Fundraising F1–F5, and Club Shop Batches 1–4A integrated on `main`)
+1. ✅ Operational MVP Core & Commercial Extensions (Core Operations, Registrations, Finance, Welfare, Compliance, Trialists, Fundraising F1–F5, Club Shop Batches 1–4A, Mobile UX Batches 1–5 integrated on `main`)
 2. ✅ Internal Club Testing (remediation programme integrated into plugin `main` at `b2b51eb`)
 3. ✅ MVP Release Candidate validated + Product Owner sign-off PASSED (RC-01 → RC-03-CLOSE, plugin `main` `3ee4c92`)
-4. ⏳ Mobile Experience Review — screenshots forthcoming (Awaiting Product Owner visual review)
-5. ⏳ Private Encrypted Backup & Disaster Recovery Validation (B4D payload population, verification, and restore)
-6. ⏳ Release/deployment gate (tagging, production deployment, post-release monitoring) — see `RELEASE_CHECKLIST.md`; not yet started
-7. Club OS v1.0
-8. 📋 Fundraising Domain (F6 Club Draw compliance-gated lifecycle)
+4. ✅ Mobile & WordPress Admin UX Walkthroughs (Provisionally accepted across all 8 workspaces; 4-tier completion plan established)
+5. ⏳ Implementation of Tier A Release-Critical & Tier B MVP Usability Batches
+6. ⏳ Private Encrypted Backup Vault End-to-End Validation (B4D payload population, verification, and restore)
+7. ⏳ Release/deployment gate (tagging, production deployment, post-release monitoring) — see `RELEASE_CHECKLIST.md`
+8. Club OS v1.0
+9. 📋 Post-MVP Evolution (Tier D, F6 Club Draw, Advanced Onboarding Wizard & Video Library)
 
 ### Before Starting Any New Feature
 
@@ -395,6 +415,107 @@ Recovery creates/mutates no Person, performs no automatic name/DOB matching or P
 `ProspectTrialService` owns pre-membership participation rules and audited Secretary/assigned-Team Coach operations; `ProspectTrialSessionRepository` owns repeatable, dated sessions in `prospect_trial_sessions`. The branded public Come and Try route records Prospect-level participation consent and, for youth, responsible-adult authority. Historical enquiries receive no fabricated consent or sessions during upgrade. Youth participation requires explicit evidence and confirmed safety/emergency readiness; Coach/Manager visibility is restricted to their assigned Team and an active, ready Prospect. Brief operational notes use the shared auto-grow control, are bounded to 500 characters and are omitted from activity metadata.
 
 Trial sessions remain attached to the Prospect, separate from canonical Event attendance. A trial does not create a Person, canonical guardian relationship, Team Assignment, Registration, Finance record or fixture eligibility. Deliberate Prospect conversion reuses the canonical TrainingMembership domain and age-group eligibility policy, recommends the natural football age group from DOB and Season, and offers the one-year-up choice only when eligible. Conversion preserves Prospect session history; Prospect-level permission is not unrestricted ongoing Registration or guardian consent. Training Only creates no competitive assignment or fixture eligibility. Schema version `2026.09.4` and release inventories include the new table and route scope. The direct Prospect-to-competitive Match Registration invitation remains a separate deferred seam.
+
+### Youth Safeguarding Purchasing and Entry Boundaries
+
+Established by the commercial and fundraising MVP arcs to ensure strict compliance with statutory child safeguarding and payment card guidelines:
+
+- **Club Shop Purchasing Permissions:** Minor youth players (<18) must not execute direct online hosted credit/debit card checkout without an authenticated adult guardian. Youth cart checkout must either require linked adult guardian authentication or default to offline payment instructions under guardian oversight.
+- **Spot the Ball Entry Safeguarding:** Youth entry into Spot the Ball competitions requires explicit adult guardian authorization. Minor winnings and prize settlements must route strictly to verified adult guardians via the established prize bridge; minors may not receive direct cash or voucher disbursements without adult guardian confirmation.
+- **Fundraising Appeal Attribution:** Public appeal sharing links that attribute fundraising to a youth player require issuance by an authenticated canonical adult guardian (`FundraisingShareAttributionPolicy`). Club OS must never create public child seller profiles, individual minor donation landing pages, or public youth profile URLs.
+
+### Committee Permission Boundaries and Data Minimisation
+
+Established as a durable security and data-protection invariant for the Committee workspace:
+
+- **Executive Governance vs Confidentiality:** Committee workspace is designed for club leadership, governance, and project management. Committee membership alone does not grant access to confidential safeguarding records, individual member financial ledgers, or private medical data.
+- **Excluded Sensitive Domains:** General Committee views must strictly exclude:
+  - Confidential Welfare safeguarding notes, concern narratives, and updates;
+  - Individual member debtor ledgers, itemised family invoices, and personal payment allocations (Treasurer and Club Admin retain billing management);
+  - Registration medical notes, doctor details, and specific medication requirements (Welfare and assigned Team staff retain operational access).
+- **Club-Wide Communications Approval Gate:** Routine committee operational messaging is permitted, but general committee members sending club-wide broadcasts to all members or parents require an administrative approval gate (Secretary or Club Admin sign-off) to prevent unauthorised mass distributions.
+- **Team Oversight Data Minimisation:** Committee team oversight surfaces provide squad counts, coaching coverage, and operational indicators without exposing unnecessary player personal data or contact information.
+
+### WordPress Admin Architecture and Recovery Access Retention
+
+Established to preserve system reliability and platform continuity during the progressive migration of operational features to the portal:
+
+- **Operational vs Administrative Boundary:** Operational club workflows (People, Teams, Events, Registrations, Finance, Shop, Fundraising) are natively engineered in the portal. Operational settings (Season dates, Age Groups, Club contacts) are separated from Brand Studio under SET-001 for MVP.
+- **Permanent Support & Recovery Invariant:** The WordPress administrative dashboard (`/wp-admin/`) remains permanently available and supported for system administrators. Technical support, database upgrades (`UpgradeRunner`), recovery diagnostics, plugin lifecycle management, and disaster recovery functions must never be removed or disabled from `/wp-admin/`.
+- **Post-MVP Modular Evolution:** Broader modular multi-club profile architectures (SET-003 / SET-004) and full sunsetting of operational WordPress Admin menus remain Post-MVP.
+
+### Operational Onboarding Workstream Standards
+
+Established as the quality and safety framework for the planned role-specific Club OS how-to guides:
+
+- **Role Coverage:** Dedicated, practical guides are planned for seven distinct roles: Secretary, Treasurer, Coach / Manager, Welfare Officer, Committee Member, Parent / Guardian, and Player.
+- **Real Verified Workflows:** Guides must document actual, verified system workflows, tested step-by-step against the active implementation baseline.
+- **Strict Privacy Invariant:** Guides and visual illustrations must exclusively use synthetic, sample test data. Zero real member names, contact details, payment information, or safeguarding references may ever appear in training material.
+- **Scope Boundary:** A full interactive setup wizard and video training library are classified as Post-MVP.
+
+### Parent Priority Alerts RSVP Window and Sorting Invariants (PRN-002)
+
+Established to ensure actionable clarity and prevent distant fixtures from crowding out imminent events in the Parent / Guardian workspace:
+
+- **Rolling Seven-Day Window:** Unanswered event RSVP requests in the Parent Priority Alerts feed are bounded by a rolling seven-day window calculated in the club's configured timezone (`wp_timezone()`), covering the remainder of today plus the next seven calendar days (`setTime(23, 59, 59)->modify('+7 days')`). Past events and events beyond the seven-day boundary are strictly excluded.
+- **Ascending Chronological Sort:** Eligible routine RSVP alerts are sorted in ascending chronological order by event start date and time (`$event_date . ' ' . $start_time`), rather than descending creation timestamp (`created_at`). Nearest upcoming events always appear first.
+- **Display Limit Precedence:** The chronological ascending sort is applied *before* the feed display limit (e.g. 3 alerts) is evaluated, guaranteeing that nearer events are never sliced off by far-future fixtures.
+- **Feed Isolation & Urgency Precedence:** The seven-day date window applies strictly to routine Parent event RSVP requests; higher-priority notifications (e.g. event cancellations, urgent updates, action-required announcements) and non-Parent personas remain unaffected. Urgent communications continue to sort above routine RSVPs by priority score.
+
+### Three-Tier Deployment Pipeline Architecture
+
+Established to guarantee safe, zero-disruption live releases for Club OS:
+
+1. **Tier 1 — Local Development & Validation:** Engineering, unit testing, and focused validator runs executed on local development instances (`localhost` / LocalWP).
+2. **Tier 2 — Pre-Production Staging & Update Rehearsal:** A dedicated operational staging website used exclusively for pre-production testing, update rehearsal, and Product Owner acceptance.
+   - *Environment Isolation:* Must use isolated test database instances, test payment rails (e.g. SumUp Sandbox), safe outbound email routing (e.g. Mailpit interception), and strict access controls.
+   - *Production Equivalence:* PHP runtime version, webserver configuration, and database engine must replicate production specifications.
+   - *Rehearsal Gate:* All schema upgrades (`UpgradeRunner`), data migrations, rollback steps, and browser acceptance walkthroughs must be executed and verified in pre-production prior to production release.
+3. **Tier 3 — Production Live Operations (IEXEL FC):** The live production deployment for IEXEL FC.
+   - *Organizational Decoupling:* **IEXEL FC is an independent football club and the first live deployment customer of Club OS.** It is completely distinct from the Club OS commercial entity.
+   - *Release Controls:* Every production deployment must use an immutable, versioned Git release tag (`vX.Y.Z`).
+   - *Backup Gate:* A full, verified database backup must be captured immediately prior to triggering any upgrade.
+   - *Migration Safety & Rollback:* Migrations must execute transactionally and idempotently via `UpgradeRunner`. Every release must define a documented rollback procedure.
+   - *Post-Deployment Smoke Verification:* Execution of automated non-mutating smoke validators immediately following deployment.
+
+### Commercial Product Architecture & Package Boundaries
+
+Established to clarify the modular product offerings and licensing tiers:
+
+- **Core Operating System (Plugin):** The WordPress Club OS plugin (`iexel-club-os`) is the standalone, full-featured operating system providing all operational, financial, safeguarding, and team management capabilities.
+- **Plugin-Only Deployment:** Member clubs with an existing compatible WordPress website install and run the plugin within their existing website environment.
+- **Optional Premium Club OS Website Theme:** Clubs lacking a modern web presence can purchase the optional premium Club OS website theme alongside the plugin. The theme provides a cohesive public club presence and integrated member portal framing.
+- **Universal Mobile App Inclusion:** The future Club OS mobile application is **included with every active Club OS licence**, regardless of whether the club deploys the standalone plugin or purchases the optional website theme. Mobile app access is a universal licence entitlement, not a theme-dependent upsell.
+- **Scope Boundary:** Both the premium website theme and the native mobile app are classified as Post-MVP initiatives. The initial IEXEL FC deployment operates entirely on the core plugin within the approved mobile-responsive web portal.
+
+### Post-MVP Commercial Licensing Architecture & Club OS Control Centre
+
+Established to govern commercial customer lifecycle management, subscription compliance, and technical support:
+
+- **Central Licensing Engine:** Commercial licensing operates via a central licensing API managing cryptographically signed license keys, activation handshakes, subscription tier verification, and authenticated package updates.
+- **Lifecycle & Grace Periods:** Licenses follow annual or monthly subscription lifecycles. Prior to expiration, automated administrative warnings alert club managers. A defined grace period ensures accidental subscription lapses do not immediately disrupt club matches or youth training.
+- **Restricted Data Access Mode:** If a license reaches full expiry or is suspended:
+  - Routine matchday, lineup, training, and general member portal operations are suspended.
+  - Authorized club administrators retain persistent access to export data (GDPR subject access compliance, statutory accounting archives, and player history exports).
+  - License renewal and support communication tools remain accessible.
+- **Administrative Governance:** License suspension, revocation, and reinstatement protocols are controlled via cryptographically signed commands and recorded in the audit log.
+- **Club OS Control Centre:** A private commercial administration platform used exclusively by Club OS business operators to manage:
+  - Customer club records, key contacts, contract terms, and subscription billing.
+  - License provisioning, renewals, and tier upgrades.
+  - Technical support ticketing and high-level anonymous telemetry (e.g. Club OS plugin version, active extensions, PHP/MySQL version, schema version).
+- **Strict Data Minimisation Invariant:** The Club OS Control Centre must **never** ingest, sync, or centrally store player personal data, child safeguarding case notes, medical questionnaires, or member billing transaction histories. Member data remains sovereign within the customer club's own database.
+- **Authorized Support Access Invariant:** Technical support access to customer installations must be explicitly requested or authorized by a club administrator, tokenized, time-limited, and fully audited. Club OS must never include hidden permanent administrative backdoors or unmonitored remote access.
+- **Realistic PHP Enforcement Model:** Commercial licensing on self-hosted customer PHP infrastructure is designed around commercial contract terms, update distribution, and authenticated services—not security-through-obscurity or claims of unbreakable bytecode obfuscation.
+
+### Public Demonstration Environment & Long-Term League OS Horizon
+
+- **Public Demonstration Environment (Post-MVP):** A dedicated, public-facing demonstration instance designed for prospective customer walkthroughs.
+  - *Data Isolation:* Populated exclusively with synthetic, realistic football club data (fictional players, coaches, teams, matches, and finances).
+  - *Automated Reset Engine:* Scheduled automated database wipe-and-reseed cycles (e.g. nightly or hourly) restoring the demo to a pristine baseline.
+  - *Permission Sandboxing:* Dangerous administrative capabilities (code editing, arbitrary plugin upload, core WordPress settings) are strictly locked down.
+- **League OS Vision (~5-Year Horizon):** A long-term strategic vision for a centralized platform serving football leagues and associations.
+  - Potential scope includes league-wide fixture generation, divisional tables, referee assignment, disciplinary reporting, and secure league-to-club fixture syndication.
+  - **Scope Isolation:** League OS is strictly outside the immediate MVP, initial club deployment, and near-term commercial delivery roadmaps.
 
 ### Database
 

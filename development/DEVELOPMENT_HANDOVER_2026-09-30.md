@@ -97,17 +97,159 @@ The implementation and verification status across the 29 commits is classified a
 - **AdminUI Route Inventory Parity:**
   - Alignment of all 56 registered admin routes: **Implemented and merged; Automated validation passed (`tools/validate-admin-inventory-parity.php`, 56/56 routes PASS).**
 
-### 7.3 Pending Product Owner Review
+### 7.3 Mobile Experience & WordPress Admin UX Walkthrough Closure
 
-- **Mobile Experience Review — screenshots forthcoming.**
-  - The Product Owner is conducting an extensive mobile layout and responsiveness audit across all surfaces.
-  - Preserved strictly as a pending review item awaiting incoming screenshots. No speculative fixes, assumptions, or code alterations are permitted prior to receipt.
+The Product Owner mobile and WordPress Admin walkthroughs have concluded across all eight workspaces. The review status is no longer "screenshots forthcoming" but is formally recorded as **UX walkthrough complete / provisionally accepted** across all eight surfaces, with five Mobile UX batches delivered on `main` (`28264dc` through `bf6df68`), MOB-008A implementation complete in the plugin working tree, and outstanding findings classified into Tier A/B/C/D for final MVP completion. See Section 8 for the full reconciliation.
 
 ### 7.4 Preserved Operational Boundaries & Repository Status
 
-- **Private Encrypted Backup Vault:** The 20 GiB XTS-AES 256 vault (B4C.4–B4C.6) is detached and encrypted at rest outside the repository. End-to-end backup and restore validation (B4D payload population, verification, and restore) remains an outstanding milestone before operational DR designation.
+- **Private Encrypted Backup Vault:** The 20 GiB XTS-AES 256 vault (`IEXEL_RC_VAULT`, B4C.4–B4C.6) is detached and encrypted at rest outside the repository. End-to-end backup and restore validation (B4D payload population, verification, and restore) remains an outstanding milestone before operational DR designation.
 - **Registration Discovery Seam:** The direct Prospect-to-competitive Match Registration invitation (`ProspectLifecycle::INVITED_MATCH_REGISTRATION`) remains an open operational seam.
 - **Commercial & Architecture Boundaries:** General package amendments/upgrades remain deferred; multi-club branding remains future work; Finance Reports is an intentionally removed unfinished scaffold requiring fresh product definition; Club Draw (F6) remains future compliance-gated work.
-- **Untracked Artifacts:** The 21 untracked plugin files are accurately categorized as a mixture of acceptance records, operational/safety reports and temporary scratch artifacts. They remain strictly preserved, unmodified, and unstaged.
+- **Untracked Artifacts:** The 21 untracked historical plugin files remain strictly preserved, unmodified, and unstaged.
 - **Protected Stashes:** Protected plugin stash `stash@{0}` remains preserved.
-- **Plugin Repository State:** `c:\Users\leavi\Local Sites\iexel-club-os-dev\app\public\wp-content\plugins\iexel-club-os` is clean on branch `main` at commit `134254095a9e8332d0bff4523b7275829c9a9873` with 0 staged changes.
+- **Plugin Repository State:** `c:\Users\leavi\Local Sites\iexel-club-os-dev\app\public\wp-content\plugins\iexel-club-os` is on branch `main` at commit `75c14aa9cb9d9b7d31c85aefd2a9778e02dd99e4` (MOB-008A and PRN-002 committed and pushed; working tree clean for tracked files; 21 historical untracked files and `stash@{0}` intact).
+
+---
+
+## 8. MVP Mobile & WordPress Admin UX Walkthrough Reconciliation, Findings Register & Completion Plan
+
+- **Date:** 2026-10-12
+- **Plugin Baseline:** `75c14aa9cb9d9b7d31c85aefd2a9778e02dd99e4` on `main`, schema `2026.10.20` (MOB-008A and PRN-002 committed and pushed to `origin/main`)
+- **Docs Baseline:** `f9cb153b8265a0be9ffa84bb6ede250970208219` on `main`
+- **Status:** UX Walkthroughs Complete / Provisionally Accepted across all 8 Workspaces; Authoritative MVP Completion Plan Established
+
+### 8.1 Delivered Mobile UX Arc & Working Tree State
+
+Between 9 October and 12 October 2026, six Mobile UX implementation batches were developed, validated, and integrated into plugin `main`:
+1. **Batch 1 (`28264dc`):** MOB-005 — Coach lineup builder draft persistence and coach player access.
+2. **Batch 2 (`bc5ab91`):** MOB-006 / MOB-007 — Coach lineup builder bulk attendance reliability and match status synchronization.
+3. **Batch 3 (`4e259f9`):** MOB-009 / MOB-010 / MOB-011 — Football fixture card presentation unification across Parent and Coach hubs using `FixtureCardMatchup`, with responsive team-boundary heading wrapping.
+4. **Batch 4 (`fa72493`):** MOB-008 — Parent Team Hub inline per-child RSVP controls and scroll position preservation via URL fragment targeting.
+5. **Batch 5 (`bf6df68`):** MOB-001 — Parent invoice currency encoding repair (£ symbol correction).
+6. **Batch 6 / MOB-008A & PRN-002 (`75c14aa`):** Parent Event Detail RSVP return navigation and Parent Priority Alerts 7-day rolling window & chronological ordering.
+
+**Committed and Pushed to Main (MOB-008A & PRN-002, Commit `75c14aa`):**
+- *MOB-008A (Parent Event Detail RSVP Return Navigation):* Resolves incorrect redirection to Team Hub → Events when an RSVP is submitted from the standalone Event Detail view (`/club-os/parent/events/{id}/`), returning the user to the same event card.
+  - *Files:* 4 modified files (`MemberPortalService.php`, `EventResponseActionsCard.php`, `PortalEventDetailPage.php`, `assets/css/public.css`) and 1 new validator (`tools/validate-parent-event-detail-rsvp-return.php`, 52 assertions PASS).
+- *PRN-002 (Parent Priority Alerts RSVP Window):* Limits unanswered event RSVP action requests in the Parent / Guardian Priority Alerts feed to a rolling seven-day window (club timezone) and sorts them in ascending chronological order so imminent fixtures appear first.
+  - *Files:* 2 modified files (`WorkspacePriorityAlertService.php`, `MemberExperienceService.php`) and 1 new validator (`tools/validate-parent-priority-alerts-rsvp-window.php`, 33 assertions PASS).
+- *Validation & Git Status:* All automated test suites passed (52/52 on Event Detail RSVP return, 33/33 on Priority Alerts window, 138/138 on Priority Alert scoping, 68/68 on inline RSVP; PHP lint clean; `git diff --check` clean). Staged exactly 8 files and committed as `75c14aa9cb9d9b7d31c85aefd2a9778e02dd99e4`, pushed to `origin/main`. Working tree clean for tracked files; 21 untracked historical files and `stash@{0}` preserved.
+
+### 8.2 Workspace Review Walkthrough Closure
+
+The Product Owner completed walkthroughs across all eight operational surfaces. Each is recorded as **UX walkthrough complete / provisionally accepted**:
+1. **Parent / Guardian:** Family hub, registrations, and finance validated. MOB-001 (£ currency), MOB-008 (inline RSVP), MOB-008A (return navigation), and PRN-002 (priority alerts 7-day RSVP window) accepted, committed, and pushed. Open items: PRN-001 (Parent RSVP button copy distinction) remains outstanding, and Back My Game visibility.
+2. **Secretary:** Command Centre, People, Teams, Registrations, Venues, and Shop Fulfilment validated. Open items: Create Event selector modal mobile overflow (SEC-009) and operational settings separation (SET-001).
+3. **Treasurer:** Billing, invoicing, payment allocations, fee rules, and Back My Game oversight validated. Open item: static caret browser artifact (FIN-031) awaiting PO confirmation to close.
+4. **Committee:** Club overview, projects, and communications validated. Open items: data minimisation boundaries (excluding confidential welfare, individual invoices, and medical records) and club-wide communications approval gate.
+5. **Coach / Manager:** Matchday Hub, lineup builder, match mode, completed match corrections, and training attendance validated. MOB-005–007 and MOB-009–011 accepted. Open items: upcoming event bulk responses and squad availability polish.
+6. **Player:** Player Hub, Matchday journey, My Stats, and My Progress validated. Open items: youth commercial safeguarding invariants; My Stats breakdown and My Progress deep links open for polish.
+7. **Welfare:** Safeguarding dashboard, concern lifecycle, welfare updates, and staff compliance validated. Open item: OS-011 Concern Detail card visual hierarchy polish.
+8. **WordPress Admin:** Route parity and consolidation validated. Open items: SET-001 operational settings separation, `/wp-admin/` blank Fundraising route cleanup, and permanent technical support/recovery access retention invariant.
+
+### 8.3 Reconciled Findings Register by Delivery Classification
+
+#### Tier A — Release-Critical (Security, Safeguarding, Essential Workflows, Release Controls)
+- **YTH-001 (Club Shop Youth Checkout):** Minor players (<18) must not execute direct hosted credit/debit card checkout without adult guardian authentication.
+- **YTH-002 (Spot the Ball Minor Safeguarding):** Youth entry requires adult guardian authorization; minor prize settlements route strictly to verified adult guardians.
+- **YTH-003 (Youth Fundraising Attribution):** Public appeal sharing links attributing youth players require adult guardian issuance (`FundraisingShareAttributionPolicy`); zero public child seller profiles or URLs.
+- **COM-002 (Committee Data Minimisation):** General Committee views must strictly exclude confidential Welfare safeguarding notes, individual debtor ledgers / itemised family invoices, and registration medical records.
+- **B4D (Private Encrypted Backup Vault):** Complete end-to-end payload population, verification, and restore of `IEXEL_RC_VAULT` to validate DR readiness before operational release.
+- **MOB-008A (Parent Event Detail RSVP Return):** Ensure Event Detail RSVP submissions return to Event Detail rather than redirecting to Team Hub. (Resolved, verified 52/52 assertions PASS, committed and pushed as `75c14aa`).
+- **ADM-006 (WordPress Admin Recovery Access Invariant):** `/wp-admin/` must remain permanently accessible for system administrators, technical support, database upgrades (`UpgradeRunner`), and recovery diagnostics.
+
+#### Tier B — MVP Usability & Operational Improvements
+- **SET-001 (Operational Settings Separation):** Separate operational configuration (season dates, age groups, club contacts) from Brand Studio into a dedicated settings tab for MVP.
+- **ADM-005 (Fundraising Admin Menu Cleanup):** Investigate blank screen on `/wp-admin/admin.php?page=iexel-club-os-fundraising` and clean up route/menu.
+- **SEC-009 (Create Event Selector Mobile Overflow):** Resolve mobile modal horizontal overflow in Create Event "Specific People" selector.
+- **PRN-001 (Parent RSVP Wording Distinction):** Differentiate button copy between "Available for [Child]" and "I'm Available". (Remains OPEN).
+- **PRN-002 (Parent Priority Alerts RSVP Window):** Unanswered event RSVP action requests are limited to a rolling seven-day window using the club's configured timezone and sorted in ascending chronological order so imminent fixtures appear first; verified with 33 assertions in tools/validate-parent-priority-alerts-rsvp-window.php. (Resolved, verified 33/33 assertions PASS, committed and pushed as `75c14aa`).
+- **COM-001 (Committee Comms Approval Gate):** Require administrative sign-off for general committee members broadcasting club-wide messages.
+- **CCH-001 (Coach Bulk Upcoming Event Responses):** Rapid bulk availability response tools for upcoming training/events in Coach Hub.
+- **BMG-001 (Back My Game Supporter Visibility):** Clear supporter agreement and pledge status in Parent Hub.
+
+#### Tier C — North Star Visual Polish
+- **OS-011 (Welfare Concern Detail Hierarchy):** Differentiate Summary, Information, Timeline, and Activity History card weights on Concern Detail.
+- **Coach Squad Availability Presentation Polish:** Visual polish for squad availability cards and response badges.
+- **PL-026 (Player My Stats Match Breakdown):** Expandable match-by-match breakdown under season aggregates.
+- **PL-027 (Player My Progress Match Report Links):** Contextual deep links from appearance milestones into completed Match Reports.
+- **FIN-031 (Static Caret Visual Artifact):** Awaiting PO confirmation to formally close as client-side browser caret browsing.
+
+#### Tier D — Post-MVP (Deferred Scope)
+- Role-specific onboarding setup wizard and video training library.
+- SET-003 / SET-004 modular multi-tier settings architecture (Grassroots, Academy, Semi-Pro, Pro, Custom).
+- Full migration of operational CRUD away from WordPress Admin.
+- Direct Prospect-to-competitive Match Registration invitation (`ProspectLifecycle::INVITED_MATCH_REGISTRATION`).
+- General package amendments / upgrades post-registration.
+- Club Draw (F6) statutory lottery engine.
+- Notification attachment / image lightbox viewer (OS-031).
+- Commercial licensing engine and Club OS Control Centre remote update server.
+- Optional standalone club website theme.
+- Standalone mobile app shells.
+- Public demonstration environment with synthetic data and automated reset.
+- Multi-club League OS platform architecture (~5-year horizon).
+
+### 8.4 Operational Onboarding Workstream
+
+Planned workstream for role-specific Club OS how-to guides covering 7 core roles:
+- **Roles:** Secretary, Treasurer, Coach / Manager, Welfare Officer, Committee Member, Parent / Guardian, Player.
+- **Standards:** Real verified workflows tested step-by-step; synthetic sample test data only; strictly zero member PII, payment data, or safeguarding case details.
+- **Execution Boundary:** Guides are planned in this reconciliation; authoring and publication occur in a subsequent authorized batch. Setup wizard and video training library are Post-MVP.
+
+### 8.5 Phased Implementation Sequence
+
+Implementation will proceed in small, controlled, risk-ordered batches:
+1. **Batch 1 — MOB-008A & PRN-002 Acceptance Closure, Commit & Push (COMPLETED):**
+   - Product Owner accepted both fixes. Staged 8 files across MOB-008A and PRN-002. Automated test suites passed (52/52 on Event Detail RSVP return, 33/33 on Priority Alerts window, 138/138 on Priority Alert scoping, 68/68 on inline RSVP; PHP lint clean; `git diff --check` clean). Committed as `75c14aa9cb9d9b7d31c85aefd2a9778e02dd99e4` and pushed to `origin/main`.
+2. **Batch 2 — Youth Safeguarding Purchasing & Entry Boundaries (RECOMMENDED NEXT BATCH):**
+   - Enforce Club Shop youth checkout restrictions (block minor direct card payments, require adult guardian — YTH-001); Spot the Ball guardian prize bridge enforcement (YTH-002); Fundraising appeal attribution policy verification (YTH-003).
+3. **Batch 3 — Committee Data Minimisation & Communications Approval Gate:**
+   - Filter out confidential welfare notes, individual invoice ledgers, and registration medical records from general Committee views (COM-002); implement approval requirement for club-wide broadcasts (COM-001).
+4. **Batch 4 — SET-001 Operational Settings Separation & Admin Cleanup:**
+   - Create dedicated operational settings surface for season dates, age groups, and contacts; investigate and clean up `/wp-admin/` blank Fundraising route (ADM-005).
+5. **Batch 5 — Mobile Usability & Workflow Polish:**
+   - Secretary Create Event Specific People modal mobile overflow fix (SEC-009); Parent RSVP wording differentiation ("Available for [Child]" vs "I'm Available" — PRN-001); Coach upcoming event bulk responses (CCH-001).
+6. **Batch 6 — North Star Visual Polish:**
+   - OS-011 Welfare Concern Detail visual card hierarchy; Coach squad availability styling; Player My Progress match report deep links (PL-027); Player My Stats breakdown (PL-026).
+7. **Release Gate — Private Encrypted Backup Vault (B4D) & Release Checklist:**
+   - End-to-end payload population, verification, and restore of `IEXEL_RC_VAULT`; execution of `RELEASE_CHECKLIST.md` release criteria.
+
+### 8.6 Repository States & Safety Invariants
+
+- **Plugin Repository (`iexel-club-os`):** HEAD `75c14aa9cb9d9b7d31c85aefd2a9778e02dd99e4` on `main`, up to date with `origin/main`. Working tree is completely clean for tracked files. The 21 untracked historical audit/patch files and protected `stash@{0}` remain strictly preserved and intact.
+- **Docs Repository (`iexel-club-os-docs`):** Active target for documentation updates only. Branch `main` at commit `f9cb153b8265a0be9ffa84bb6ede250970208219`. No commits or pushes authorized; documentation changes remain unstaged for Product Owner review.
+
+### 8.7 Three-Tier Deployment Pipeline Architecture
+
+To transition safely from local development to production operations, Club OS defines a formal three-tier deployment pipeline:
+1. **Tier 1 — Local Development (`iexel-club-os-dev`):**
+   - Single-site LocalWP instance running PHP 8.2 and MySQL 8.0.
+   - Used for initial implementation, unit/integration testing, automated validator suites, and preliminary browser walkthroughs.
+2. **Tier 2 — Pre-Production / Update Rehearsal (`iexel-club-os-rc`):**
+   - Clean, isolated environment mirroring production server specifications and runtime constraints.
+   - Used to execute end-to-end rehearsal deployments, verify database schema upgrades via `UpgradeRunner`, test real payment gateway credentials, and validate encrypted backup vault creation and restoration procedures (B4D).
+3. **Tier 3 — Live Club Operations (IEXEL FC Live):**
+   - Production hosting environment running the live IEXEL FC installation.
+   - Deployed strictly via release-gated procedures after Tier 2 sign-off, zero direct hot-patching.
+
+### 8.8 Commercial Product Architecture & Package Boundaries
+
+- **Customer vs Product Boundary:** IEXEL FC is independent customer club #1. The commercial entity produces and distributes Club OS as an independent software platform.
+- **Core Product:** The self-hosted WordPress plugin (`iexel-club-os`) is the standalone, full-featured Club Operating System. It functions fully with any compliant WordPress theme.
+- **Optional Premium Website Theme (Post-MVP):** An optional companion theme providing a public-facing club website and branding integration for grassroots clubs that do not have an existing web presence.
+- **Universal Mobile App Access (Post-MVP):** Mobile app access (iOS / Android container shells) is universally included with every Club OS licence at no additional charge.
+
+### 8.9 Post-MVP Commercial Licensing Architecture & Club OS Control Centre
+
+- **Club OS Control Centre:** Centralised administrative platform for licence issuance, tenant telemetry, update distribution, and compliance monitoring.
+- **Cryptographic Licence Verification:** Asymmetric key-pair licensing (RSA/ECDSA signed JWTs) validated locally in PHP without requiring continuous per-request phone-home connectivity.
+- **Strict Data Minimisation:** The Control Centre never ingests, stores, or processes member personal data, player identities, medical notes, safeguarding cases, or transaction ledgers. Only anonymised licence metadata, active plugin version, and domain verification tokens are exchanged.
+- **Restricted Data Access Mode:** If a club licence expires, administrative access to member records and GDPR data exports remains permanently functional in read-only / export mode. Member data is never held hostage.
+- **Audited Time-Limited Support Access:** Any remote administrative assistance requires explicit, time-bounded, cryptographic authorization from the club's Data Protection Officer / Club Secretary.
+- **Self-Hosted Security Model:** Recognises the practical boundaries of on-premise / self-hosted PHP execution, prioritising defense-in-depth and operational transparency.
+
+### 8.10 Public Demonstration Environment & Long-Term League OS Horizon
+
+- **Public Demonstration Environment (Post-MVP):** An isolated, ephemeral demonstration sandbox running with realistic synthetic demo data, automated hourly/daily resets, and restricted outbound messaging, enabling prospective clubs to experience all eight workspaces interactively.
+- **Long-Term League OS Horizon (~5-Year Vision):** Multi-tenant platform architecture designed to coordinate league fixtures, cross-club transfers, referee assignments, disciplinary tracking, and competition tables across all participating member clubs.
