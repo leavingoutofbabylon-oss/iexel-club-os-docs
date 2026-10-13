@@ -2373,7 +2373,7 @@ Every known review finding and operational defect is classified into a four-tier
 2. **WordPress Admin Fundraising Menu Cleanup:** Investigate the blank Fundraising admin screen (`admin.php?page=iexel-club-os-fundraising`); resolve any broken routing or retire redundant admin menu entries while preserving portal routes.
 3. **Secretary Create Event Mobile Selector Overflow Repair:** Fix CSS flex/grid overflow in Create Event's "Specific People" selector modal on narrow mobile screens (320px–390px).
 4. **Parent Event RSVP Wording Distinction (PRN-001):** Differentiate RSVP button copy when a parent responds on behalf of a child ("Available for [Child Name]") versus responding for themselves ("I'm Available" / "Available"). (Remains open; outstanding for implementation).
-5. **Committee Club-Wide Communications Approval Gate:** Require an administrative sign-off (Secretary or Club Admin) when a general committee member authors a broadcast message targeting all club members or all parents.
+5. **Committee Club-Wide Communications Approval Gate (COM-001):** Require an administrative sign-off (Secretary or Club Admin) when a general committee member authors a broadcast message targeting all club members, parents, or multiple teams. Resolved and accepted (`6d7a3f4`). Image attachments, draft saving, audience preview, mobile filename containment, and approval gate submission validated on physical Android device over LAN.
 6. **Coach Bulk Event Response Management:** Introduce quick bulk availability update controls for upcoming training sessions and events in the Coach Team Hub, distinct from the completed lineup builder bulk attendance tool.
 7. **Parent Back My Game Supporter Visibility:** Ensure linked children and teams appear with clear supporter status and pledge links in the Parent Hub.
 8. **Parent Priority Alerts RSVP Window (PRN-002):** Unanswered event RSVP action requests are limited to a rolling seven-day window in the club timezone and sorted in ascending chronological order so imminent fixtures appear first; verified with 33 assertions in tools/validate-parent-priority-alerts-rsvp-window.php. Resolved and accepted (`75c14aa`).
@@ -2440,7 +2440,7 @@ flowchart TD
 
     subgraph TierA ["Tier A: Release-Critical Safeguards"]
         B2["Batch 2: Youth Purchasing Safeguarding (COMPLETE)<br/>Club Shop adult purchaser enforcement (YTH-001)<br/>(Committed & pushed: cdd9054)"]
-        B3["Batch 3: Committee Boundary Hardening<br/>Data minimisation (welfare/finance/medical)<br/>Club-wide comms approval gate"]
+        B3["Batch 3: Committee Boundary Hardening (IN PROGRESS)<br/>COM-001 Comms Approval & Attachments (COMPLETE: 6d7a3f4)<br/>COM-002 Data minimisation (welfare/finance/medical)"]
     end
 
     subgraph TierB ["Tier B: MVP Usability & Operational"]
@@ -2474,9 +2474,10 @@ flowchart TD
    - *Audit Confirmations:* YTH-002 (Spot the Ball guardian authorization and prize routing) and YTH-003 (Youth fundraising appeal attribution via `FundraisingShareAttributionPolicy`) verified as existing safeguards by code audit, not newly implemented features.
    - *Manual Acceptance Limitation:* Available youth Player persona in the local test environment had no historical orders; consequently, historical youth-order visibility in "My Orders" was not manually exercised during the walkthrough (covered by automated validator assertions).
    - *Proposed Enhancement:* FND-001 (Campaign-specific family/player and team fundraising appeal attribution, QR-code sharing, safeguarding, payment confirmation, refund handling, and avoidance of double-counting) registered as a proposed Post-MVP roadmap enhancement.
-3. **Batch 3 — Committee Data Minimisation & Communications Approval Gate:**
-   - *Scope:* Filter out confidential welfare notes, individual invoice ledgers, and registration medical records from general Committee views; implement approval requirement for club-wide broadcasts.
-   - *Verification:* Role capability matrix tests; persona inspection in LocalWP.
+3. **Batch 3 — Committee Boundary Hardening & Communications Approval Gate (IN PROGRESS):**
+   - *Delivered (COM-001 — `6d7a3f4`):* Product Owner-accepted Committee Communications Approval Gate & Attachment Workflow. General committee members composing broadcasts targeting all club members, parents, or multiple teams must submit drafts for Secretary or Club Admin sign-off (`CommunicationLifecycle::SUBMITTED_FOR_APPROVAL` / `PENDING_APPROVAL`), strictly preventing direct mass dispatch. Robust mobile attachment workflow supporting JPG/PNG uploads with defensive fallback retention in `CommunicationAudienceRequestMapper` to prevent audience state loss during multipart uploads; mobile filename truncation prevents UI overflow. Database recipient-role schema reconciled to `VARCHAR(191)` via idempotent `UpgradeRunner` step `2026_10_communication_recipients_role_schema`. Physical Android acceptance passed over local LAN (`http://192.168.1.132`), bypassing LocalWP Live Link tunnel binary corruption bug (`@getflywheel/localtunnel` string decoding). Fresh audience preview before approval submission preserved as an explicit safeguarding requirement.
+   - *Validation:* 564 automated assertions passed across 4 validator suites: 431/431 in `tools/validate-committee-communications.php`, 40/40 in `tools/validate-youth-communication-safeguarding.php`, 38/38 in `tools/validate-guardian-communication-oversight.php`, and 55/55 in `tools/validate-communications-destination-integrity.php`. PHP lint clean; `git diff --check` clean. Staged exactly 20 files and committed as `6d7a3f4d5ca328d8debf67d6f0b6b7b19e9f676d`, pushed to `origin/main`.
+   - *Remaining Scope (COM-002):* Filter out confidential welfare notes, individual invoice ledgers, and registration medical records from general Committee views.
 4. **Batch 4 — SET-001 Operational Settings Separation & Admin Cleanup:**
    - *Scope:* Create dedicated operational settings surface for season dates, age groups, and contacts; investigate and clean up `/wp-admin/` blank Fundraising route.
    - *Verification:* Admin route parity validator; settings CRUD tests.

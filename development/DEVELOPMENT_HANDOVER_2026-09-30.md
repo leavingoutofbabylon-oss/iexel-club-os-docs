@@ -129,6 +129,12 @@ Between 9 October and 12 October 2026, seven Mobile and Safeguarding UX implemen
 5. **Batch 5 (`bf6df68`):** MOB-001 — Parent invoice currency encoding repair (£ symbol correction).
 6. **Batch 6 / MOB-008A & PRN-002 (`75c14aa`):** Parent Event Detail RSVP return navigation and Parent Priority Alerts 7-day rolling window & chronological ordering.
 7. **Batch 7 / YTH-001 (`cdd9054`):** Club Shop Youth Purchasing Safeguarding — adult purchaser verification (`KNOWN_ADULT`), fail-closed policy, online checkout and bank transfer prevention, safe browse-only UI with safeguarding notice card.
+8. **Batch 8 / COM-001 (`6d7a3f4`):** Committee Communications Approval Gate & Mobile Attachment Workflow — administrative approval gate (`SUBMITTED_FOR_APPROVAL` / `PENDING_APPROVAL`), multipart upload audience state preservation in `CommunicationAudienceRequestMapper`, recipient-role schema expansion to `VARCHAR(191)` via `UpgradeRunner`, mobile filename containment, and physical Android verification over LAN.
+
+**Committed and Pushed to Main (COM-001, Commit `6d7a3f4`):**
+- *COM-001 (Committee Communications Approval Gate & Attachment Workflow):* Enforces administrative sign-off requirement for general committee members broadcasting club-wide communications targeting all club members, parents, or multiple teams. Committee drafts transition cleanly to `SUBMITTED_FOR_APPROVAL` / `PENDING_APPROVAL`, strictly preventing direct dispatch without Secretary or Club Admin sign-off. Hardens multipart upload workflow against audience loss by adding defensive fallback retention and priority mapping in `CommunicationAudienceRequestMapper`. Expands `communication_recipients.recipient_role` column to `VARCHAR(191)` via idempotent `UpgradeRunner` step `2026_10_communication_recipients_role_schema` to safely persist multi-role recipient combinations. Constrains attachment filename display with text ellipsis on narrow mobile viewports. Validated on physical Android device over local LAN (`http://192.168.1.132`), bypassing LocalWP Live Link tunnel binary corruption bug (`@getflywheel/localtunnel`). Fresh audience preview before approval submission preserved as a key safeguarding requirement.
+  - *Files:* 20 modified plugin files (16 core PHP files including `CommunicationAudienceRequestMapper.php`, `CommitteeCommunicationPortalRequestHandler.php`, `CommunicationLifecycle.php`, `DatabaseManager.php`, `UpgradeRunner.php`, `PortalCommitteeCommunicationFormPage.php`; 2 CSS files; 1 JS file; and 1 updated test file `tools/validate-committee-communications.php`).
+  - *Validation & Git Status:* 564 automated assertions passed across 4 validator suites (431/431 in `validate-committee-communications.php`, 40/40 in `validate-youth-communication-safeguarding.php`, 38/38 in `validate-guardian-communication-oversight.php`, and 55/55 in `validate-communications-destination-integrity.php`; PHP lint clean; `git diff --check` clean). Staged exactly 20 files individually and committed as `6d7a3f4d5ca328d8debf67d6f0b6b7b19e9f676d`, pushed to `origin/main`. Working tree clean for tracked files; 21 untracked historical files and `stash@{0}` preserved.
 
 **Committed and Pushed to Main (YTH-001, Commit `cdd9054`):**
 - *YTH-001 (Club Shop Youth Purchasing Safeguarding):* Enforces strict adult purchasing controls in Club Shop. Prevents minor players (<18) and unverified-age users from placing orders, initiating SumUp online checkout, or selecting bank transfer across `ShopRequestHandler`, `ShopAccessPolicy`, `ShopService`, `ShopOnlinePaymentService`, and `ShopBankTransferService`. Preserves safe product browsing and size/price selection with an accessible safeguarding note card. Suppresses unpaid order reminders for youth members. Preserves adult player self-purchases and adult parent purchases for authorised children.
@@ -150,7 +156,7 @@ The Product Owner completed walkthroughs across all eight operational surfaces. 
 1. **Parent / Guardian:** Family hub, registrations, and finance validated. MOB-001 (£ currency), MOB-008 (inline RSVP), MOB-008A (return navigation), and PRN-002 (priority alerts 7-day RSVP window) accepted, committed, and pushed. Open items: PRN-001 (Parent RSVP button copy distinction) remains outstanding, and Back My Game visibility.
 2. **Secretary:** Command Centre, People, Teams, Registrations, Venues, and Shop Fulfilment validated. Open items: Create Event selector modal mobile overflow (SEC-009) and operational settings separation (SET-001).
 3. **Treasurer:** Billing, invoicing, payment allocations, fee rules, and Back My Game oversight validated. Open item: static caret browser artifact (FIN-031) awaiting PO confirmation to close.
-4. **Committee:** Club overview, projects, and communications validated. Open items: data minimisation boundaries (excluding confidential welfare, individual invoices, and medical records) and club-wide communications approval gate.
+4. **Committee:** Club overview, projects, and communications validated. COM-001 (communications approval gate and mobile attachment workflow) accepted, committed, and pushed (`6d7a3f4`). Open item: COM-002 data minimisation boundaries (excluding confidential welfare, individual invoices, and medical records).
 5. **Coach / Manager:** Matchday Hub, lineup builder, match mode, completed match corrections, and training attendance validated. MOB-005–007 and MOB-009–011 accepted. Open items: upcoming event bulk responses and squad availability polish.
 6. **Player:** Player Hub, Matchday journey, My Stats, and My Progress validated. Open items: youth commercial safeguarding invariants; My Stats breakdown and My Progress deep links open for polish.
 7. **Welfare:** Safeguarding dashboard, concern lifecycle, welfare updates, and staff compliance validated. Open item: OS-011 Concern Detail card visual hierarchy polish.
@@ -173,7 +179,7 @@ The Product Owner completed walkthroughs across all eight operational surfaces. 
 - **SEC-009 (Create Event Selector Mobile Overflow):** Resolve mobile modal horizontal overflow in Create Event "Specific People" selector.
 - **PRN-001 (Parent RSVP Wording Distinction):** Differentiate button copy between "Available for [Child]" and "I'm Available". (Remains OPEN).
 - **PRN-002 (Parent Priority Alerts RSVP Window):** Unanswered event RSVP action requests are limited to a rolling seven-day window using the club's configured timezone and sorted in ascending chronological order so imminent fixtures appear first; verified with 33 assertions in tools/validate-parent-priority-alerts-rsvp-window.php. (Resolved, verified 33/33 assertions PASS, committed and pushed as `75c14aa`).
-- **COM-001 (Committee Comms Approval Gate):** Require administrative sign-off for general committee members broadcasting club-wide messages.
+- **COM-001 (Committee Comms Approval Gate):** Require administrative sign-off for general committee members broadcasting club-wide messages. (Resolved, verified 564 automated assertions PASS, physical Android acceptance passed over LAN, committed and pushed as `6d7a3f4`).
 - **CCH-001 (Coach Bulk Upcoming Event Responses):** Rapid bulk availability response tools for upcoming training/events in Coach Hub.
 - **BMG-001 (Back My Game Supporter Visibility):** Clear supporter agreement and pledge status in Parent Hub.
 
@@ -213,8 +219,8 @@ Implementation will proceed in small, controlled, risk-ordered batches:
    - Product Owner accepted both fixes. Staged 8 files across MOB-008A and PRN-002. Automated test suites passed (52/52 on Event Detail RSVP return, 33/33 on Priority Alerts window, 138/138 on Priority Alert scoping, 68/68 on inline RSVP; PHP lint clean; `git diff --check` clean). Committed as `75c14aa9cb9d9b7d31c85aefd2a9778e02dd99e4` and pushed to `origin/main`.
 2. **Batch 2 — Youth Safeguarding Purchasing Enforcement (COMPLETED — `cdd9054`):**
    - Enforce Club Shop youth checkout restrictions (block minor direct card payments, require adult guardian — YTH-001; resolved, verified 61/61 assertions PASS, committed and pushed as `cdd9054efe7394297b4047f1cd59ba1335266d52`). Spot the Ball guardian prize bridge (YTH-002) and Fundraising appeal attribution policy (YTH-003) verified as existing safeguards by code audit.
-3. **Batch 3 — Committee Data Minimisation & Communications Approval Gate (RECOMMENDED NEXT BATCH):**
-   - Filter out confidential welfare notes, individual invoice ledgers, and registration medical records from general Committee views (COM-002); implement approval requirement for club-wide broadcasts (COM-001).
+3. **Batch 3 — Committee Boundary Hardening & Communications Approval Gate (IN PROGRESS):**
+   - COM-001 (Committee communications approval gate and mobile attachment workflow) resolved, verified 564 assertions PASS, accepted on physical Android, committed and pushed as `6d7a3f4d5ca328d8debf67d6f0b6b7b19e9f676d`. Next item in batch: COM-002 (filter out confidential welfare notes, individual invoice ledgers, and registration medical records from general Committee views).
 4. **Batch 4 — SET-001 Operational Settings Separation & Admin Cleanup:**
    - Create dedicated operational settings surface for season dates, age groups, and contacts; investigate and clean up `/wp-admin/` blank Fundraising route (ADM-005).
 5. **Batch 5 — Mobile Usability & Workflow Polish:**
@@ -226,8 +232,8 @@ Implementation will proceed in small, controlled, risk-ordered batches:
 
 ### 8.6 Repository States & Safety Invariants
 
-- **Plugin Repository (`iexel-club-os`):** HEAD `cdd9054efe7394297b4047f1cd59ba1335266d52` on `main`, up to date with `origin/main`. Working tree is completely clean for tracked files. The 21 untracked historical audit/patch files and protected `stash@{0}` remain strictly preserved and intact.
-- **Docs Repository (`iexel-club-os-docs`):** Active target for documentation updates only. Branch `main` at commit `718b91374f778ee69edc9fac9abf595509e850e1`. No commits or pushes authorized; documentation changes remain unstaged for Product Owner review.
+- **Plugin Repository (`iexel-club-os`):** HEAD `6d7a3f4d5ca328d8debf67d6f0b6b7b19e9f676d` on `main`, up to date with `origin/main`. Working tree is completely clean for tracked files. The 21 untracked historical audit/patch files and protected `stash@{0}` remain strictly preserved and intact.
+- **Docs Repository (`iexel-club-os-docs`):** Active target for documentation updates. Branch `main`, tracking `origin/main`. Working tree clean for tracked files.
 
 ### 8.7 Three-Tier Deployment Pipeline Architecture
 
