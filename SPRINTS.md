@@ -1,5 +1,36 @@
 # IEXEL Club OS Sprint Releases
 
+<!-- PLAN02-B03-DOC current checkpoint -->
+## Current delivery programme — 21 October 2026
+
+The Product Owner approved the parallel Product Development / Release Engineering strategy after PLAN02-B03. See [Club OS MVP to Production Release Strategy](development/CLUB_OS_MVP_TO_PRODUCTION_RELEASE_STRATEGY.md) for the current roadmap, first hosted-install gate, batch proposals and milestone owner/evidence checklist. The historical sprint records below remain unchanged; “complete/merged to main” statements there retain their original build scope and do not describe new integration-branch commits as already merged.
+
+**Plugin baseline:** `integration/mvp-rc-01`, `5c911e89a67ae75afecce5e6d62a226bde7731e2`, committed/pushed; ten linear commits beyond `main`, without production deployment.
+
+|Programme item|Current status|Evidence / boundary|
+|---|---|---|
+|PLAN02-B01, including FIX01/FIX02|Complete, accepted, committed and pushed|`a7502acd0b5d2a2b41b2444b7e049154ff5c8803`: Configuration/Brand Studio separation, Season/age guidance, contacts/audit, transaction compatibility, Fundraising timing and trusted recovery procedure; runtime fixture exceptions retained|
+|PLAN02-B02|Complete, accepted, committed and pushed|`5c911e89a67ae75afecce5e6d62a226bde7731e2`: family response clarity and Coach availability; remaining receipt, tamper-response, browser-cleanup and visual evidence remains separately tracked|
+|PLAN02-B03|Assessment complete; parallel strategy approved|214 requirements, 51 outstanding MVP actions (35 Required /16 Polish), 38 certification areas; no full release certificate|
+|B03-PORT-01|Open, case-sensitive installation blocker|Namespace loader requests `app/Core/...`; Git stores `app/core/...`. Correction and disposable Linux/exact-package validation still require a separately approved batch|
+|First isolated hosted installation|Pending safety/install readiness and approval|Case compatibility, clean activation/first officer, isolated fictional target, recovery and job/transport/deletion controls; do not wait for every independent visual improvement|
+|Fresh production launch|Pending final acceptance and release approval|Approved MVP scope, any ratified P2P, North Star/security/safeguarding/certification, real-club setup and staged operations|
+
+### Next controlled batches — proposed, not started
+
+1. **B03-N1:** fresh onboarding, portability and hosting contract; exact first linked officer, host/custodian and safety/correction scope.
+2. **B03-N2:** reproducible candidate, current clean installation and first isolated hosted smoke/recovery under separate approval.
+3. **B03-N3:** selected release-critical validator reliability; may run alongside N1/N2, with minimum essential assurance before installation.
+4. **B03-N4:** private family/Player workflow closure (`BMG-001`, `PL-026`, `PL-027`, `CP-DONE-TARGETS`) and separately budgeted certification evidence.
+5. **B03-N5:** finite shared North Star and administrative experience finish, followed by scoped football/family/Welfare/Committee acceptance.
+
+Freeze each batch's exact components, permissions, target/writes, tests and acceptance before work. Commit/push approval is separate; no blanket implementation authority follows from this sequence. Conditional P2P-D1 policy design may be prioritised after N1 if v1.0 inclusion is expressly approved.
+
+The hosted test and production installations start with fresh Club OS data; no LocalWP or hosted-test database migrates to production. Preserve fictional hosted-test data across subsequent controlled package upgrades. Production receives new real club records only after release approval, preserving existing public website content. Develop/test locally, commit/push accepted code, then deploy versioned reproducible packages; no routine live source edits.
+
+Pay-to-Play policy/governance/default effect remains unapproved pending explicit decisions. The premium North Star programme remains pre-production within its approved scope; original post-MVP features retain their classification. The strategy's milestone checklist is authoritative for this programme; no historical release checkbox completes a current gate automatically. Original LocalWP remains stopped; synthetic/RC safeguards and preservation boundaries remain in force.
+<!-- /PLAN02-B03-DOC current checkpoint -->
+
 This document tracks the major development milestones of IEXEL Club OS. Completed entries describe stable feature sets merged into the plugin's main branch.
 
 ---

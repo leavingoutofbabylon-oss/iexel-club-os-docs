@@ -1,5 +1,36 @@
 # IEXEL Club OS Experience Review and Roadmap
 
+<!-- PLAN02-B03-DOC current checkpoint -->
+## Current roadmap decision — 21 October 2026
+
+**The Product Owner approved coordinated Product Development and Release Engineering tracks.** The current programme is recorded in [Club OS MVP to Production Release Strategy](CLUB_OS_MVP_TO_PRODUCTION_RELEASE_STRATEGY.md). This checkpoint supersedes older “current” status and sequencing below while preserving issue IDs, original acceptance evidence, workspace scores and scope history. Historical scores are not current-release certification.
+
+Current accepted/pushed plugin baseline: `integration/mvp-rc-01` at `5c911e89a67ae75afecce5e6d62a226bde7731e2`. B01 Configuration/Brand Studio/Season/age/contact integrity, transaction compatibility, Fundraising lifecycle and trusted recovery documentation are accepted; B02 child/self wording and bounded Coach availability are accepted. Do not keep `SET-001`, `ADM-005`, `PRN-001` or `CCH-001` open as missing implementation. `CP-GOV-BOOT` procedure acceptance retains its separate fresh-bootstrap/disaster-recovery evidence gate.
+
+B03 reconciled **214 requirements**, with **51 outstanding MVP actions: 35 Required and 16 Polish**, across **38 certification areas**. The 51 include decisions, implementation acceptance, visual/UX and release/validator assurance, not 51 confirmed defects. The separate `B03-PORT-01` source finding is a case-sensitive Linux autoload blocker (`app/Core/...` requested, `app/core/...` stored); it is not fixed or runtime-certified. Keep supplemental findings and P2P proposals distinct from the original 214 denominator.
+
+### Product Development track
+
+- Retain the accepted security, People, navigation, Registration, Training Membership, HME, Welfare and B01/B02 behaviour.
+- Resolve `BMG-001` launch/privacy scope, `PL-026` finite current statistics acceptance, `PL-027` authorised completed-report links and `CP-DONE-TARGETS` acceptance. No family/supporter disclosure or financial execution follows automatically.
+- Reproduce `SEC-009`, `OS-011`, `CP-DEBT-SHOP-CARD`, `CP-VAL-HERO-VERIFY` and `CP-VAL-EVENT-VERIFY` on the current build before repair. `FIN-031` requires Product Owner confirmation of the documented browser-caret explanation. Preserve `CP-COACH-UX` as finite acceptance work.
+- Complete premium North Star work with existing midnight-blue/club-accent tokens, reusable components, role-specific football identity, accessible controls/contrast, truthful dates/status/unknown facts and desktop/320px acceptance. Keep intentional administrative and immersive surface distinctions; no uncontrolled shell replacement.
+- Group the work as NS-A shared/admin/finance, NS-B football/family and NS-C Welfare/Committee. Carry B01's Brand Studio 9px overflow/visual separation, notices, dense guidance and BMG grouping plus B02's narrow Coach/Parent presentation findings into a finite punch list. Accepted feature screenshots do not certify all eight roles.
+- Pay-to-Play remains conditional on authoritative policy and explicit v1.0 scope/governance approval. Annual acceptance, seven-day due rule, notice/14-day minimum, grievance pause, independent approval, configurable effect, eligibility-only Coach view and reinstatement are design/policy requirements to ratify, not an implemented/approved sanction system.
+
+### Release Engineering track and shared gates
+
+Establish an isolated fictional hosted test site as early as package portability, clean activation/first linked official, essential safety, recoverable checkpoint and durable job/transport/deletion holds allow. This can precede completion of independent North Star/P2P work. Existing public content and host configuration must be inspected under separate approval; actual host compatibility is unverified.
+
+Develop/validate locally and commit/push approved changes, then deploy reproducible versioned packages to hosted test. Retain its fictional data across controlled upgrades and record exact package/evidence. Both hosted test and production receive fresh Club OS installations; production uses new real club records only after approval, with no database migration from LocalWP or hosted test. Never use normal hosted source editing or recurring resets as the development process.
+
+Production remains gated by approved MVP scope, security, safeguarding, premium North Star acceptance, current-release role/workflow/install/retained-upgrade/recovery certification, operating custody and explicit Product Owner sign-off. Parent/Player Event Detail receipts, historical transport attribution, B02 tamper-response/browser-cleanup limits and B01 runtime fixture exceptions remain explicit; no silent blanket technical-write or outbound allowance.
+
+The strategy owns B03-N1 through B03-N5 and milestones M01–M18. Near-term decisions include host/custodian/portability scope, BMG disclosure, P2P policy/inclusion, finite visual scope, critical coverage/residual risk and recovery/operational ownership. Source, fixtures, authenticated tests, installation and Git operations require their own bounded authority.
+
+Post-MVP governance/Assistant Secretary approvals (`ADM-004`), richer Team Health, rewards/advanced analytics, wizard/videos, multi-club/platform/theme/app work retain their original scope unless explicitly promoted. Original LocalWP remains stopped and protected; synthetic and RC environments remain preserved. The historical roadmap and recovery records below must not be mistaken for approval to restart the original site or delay the new tracks until that site's SQL guard is repaired.
+<!-- /PLAN02-B03-DOC current checkpoint -->
+
 Role-based product review, MVP priorities, post-MVP roadmap and future club profiles
 
 ## Executive summary

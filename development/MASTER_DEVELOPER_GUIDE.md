@@ -13,6 +13,34 @@ This document remains the authoritative source for Club OS architecture.
 
 # Master Developer Guide
 
+<!-- PLAN02-B03-DOC current checkpoint -->
+## Current programme checkpoint — 21 October 2026
+
+**Approved direction: Product Development and Release Engineering proceed as coordinated parallel tracks.** The current roadmap and release gates are in [Club OS MVP to Production Release Strategy](CLUB_OS_MVP_TO_PRODUCTION_RELEASE_STRATEGY.md). This dated checkpoint supersedes older current-status, priority and deployment-sequence snapshots below; all Engineering Rules and historical acceptance evidence remain intact.
+
+- Confirmed plugin baseline: `integration/mvp-rc-01` at `5c911e89a67ae75afecce5e6d62a226bde7731e2`, committed and pushed. Integration is ten commits ahead of `main`; no main merge or deployment is implied.
+- PLAN02-B01 (`a7502acd0b5d2a2b41b2444b7e049154ff5c8803`) is accepted: Club Configuration/Brand Studio separation, draft-only Season presentation, canonical age guidance, atomic contact save/audit, FIX01 MySQL compatibility, FIX02 Fundraising redirect timing and trusted Secretary recovery documentation.
+- PLAN02-B02 (current baseline) is accepted: child/self RSVP clarity and bounded Coach bulk availability with individual corrections, stale-state/audit and football-data protections. Do not reimplement these completed batches.
+- B03 reconciled **214 requirements, 51 outstanding MVP actions (35 Required /16 Polish) and 38 certification areas**. Open actions include decisions, scoped acceptance, visual work and release/validator evidence; they are not all software defects. Five rows closed: `ADM-005`, `SET-001`, `CP-GOV-BOOT`, `PRN-001`, `CCH-001`. Accepted recovery documentation does not certify runtime disaster recovery or fresh first-officer bootstrap.
+- Source version is `1.0.0-dev`; expected schema/data are `2026.10.21` / `2026.10.4`. These are current source expectations, not a new original-site database inspection or final release tag.
+
+### Two-track delivery and installation boundary
+
+Develop and validate locally, obtain bounded review/acceptance and commit/push approval, then deploy reproducible versioned packages to an isolated fictional hosted test environment. Preserve its fictional data across controlled plugin upgrades. Normal development must not edit hosted plugin source directly or routinely reset test data to conceal upgrade defects.
+
+Hosted test and production [iexelfc.co.uk](https://iexelfc.co.uk/) receive fresh Club OS installations. Production receives newly entered real records after release approval; **no database is migrated from LocalWP or hosted test**. Fresh Club OS data does not authorise replacing existing public website content, users or integrations. The designated [academy rehearsal website](https://ixlfootballacademy.co.uk/) requires independently approved hosting/content/isolation preflight.
+
+**Hosted installation is not yet ready.** `B03-PORT-01` confirms that the loader requests `app/Core/Application.php` / `app/Core/Activator.php`, while Git stores `app/core/...`. This blocks case-sensitive Linux loading; no Linux runtime or target host has yet been tested. A separately approved bounded correction and exact-package proof are required. Also verify empty-club activation/first linked Administrator/no-current-Season, essential security tests, isolated HTTPS target, recoverable checkpoint and durable job/transport/deletion holds before installation approval. Full visual/P2P completion need not precede that restricted fictional installation.
+
+Product Development continues remaining approved MVP and premium North Star work in parallel. Pay-to-Play still requires explicit policy and v1.0 inclusion approval; proposed governance, default effect and enforcement are not approved by this strategy. Post-MVP work must not silently become a launch blocker.
+
+Production requires the approved MVP scope, security/safeguarding, North Star acceptance, current-artifact clean install and retained-data upgrade/recovery certification, hosted journeys, operating ownership and Product Owner release/deployment sign-off. See the strategy for B03-N1 through B03-N5, the 18 open milestones, accepted B01/B02 exceptions and outstanding decisions. No installation, source change, integration enablement, main promotion or release operation is authorised by this documentation checkpoint.
+
+Original LocalWP `Q06FAQ8HY` remains stopped and protected; synthetic `g_vIVpiAuS` and the RC environments remain distinct preserved targets. Do not infer that the original SQL guard has passed acceptance or must be repaired before the new development/release tracks can proceed. Retain the 21 protected artifacts, stash, backups, uploads and pending drafts. Current technical write/Seen-receipt and runtime limits remain explicit in certification evidence.
+
+The following Version/Last Verified metadata, priorities and recovery checkpoints describe earlier snapshots. Use the dated current programme checkpoint and linked strategy for present sequencing; preserve the historical text for provenance.
+<!-- /PLAN02-B03-DOC current checkpoint -->
+
 **Version:** 1.0  
 **Last Verified:** 2026-10-12 (Reconciliation checkpoint: HEAD `bf6df68`, schema `2026.10.20`, Mobile UX Batches 1–5 delivered on `main`, MOB-008A in plugin working tree; 8 workspace walkthroughs provisionally accepted)
 **Applies To:** Operational MVP
