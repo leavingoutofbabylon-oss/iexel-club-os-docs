@@ -13,6 +13,25 @@ This document remains the authoritative source for Club OS architecture.
 
 # Master Developer Guide
 
+<!-- COACH-CHECKPOINT-20261030 -->
+<a id="coach-engineering-2026-10-30"></a>
+## Coach closeout checkpoint — 30 October 2026
+
+**Current Coach visuals are Product Owner accepted; the cumulative implementation remains local, uncommitted and unshipped.** This checkpoint supersedes older current-baseline, pending-Coach and pending-Academy-installation statements below within the scope described here. Historical acceptance, architecture decisions, Engineering Rules and original-site recovery holds remain intact.
+
+The authoritative candidate is the independent `worktrees/coach-closeout-01` repository, branch `fix/coach-closeout-01`, base HEAD `ed771e9018ed7a2939074f1cf31399c4f8cac392`. Its 1,545-file source matches the accepted CLUB-OS-BRAND-01B manifest. The empty index and 119-file cumulative delta comprise 104 runtime files/assets and 15 validators. This base SHA alone does **not** identify the uncommitted candidate. Its origin points to the local Release16 combined repository, not GitHub; do not change it or treat it as deployment authority.
+
+Source expectations are plugin `1.0.0-dev`, schema **2026.10.27**, data **2026.10.4**. Cup additions are .24 structured match category, .25 extra-time rules/phases and normal-time snapshots, .26 incident-period capacity 30, and .27 Cup decisions/separate shootout storage. Use the established final UpgradeRunner and preserve its step order; do not replay intermediate packages, reset version options or apply ad hoc DDL. Existing competition names and historical unspecified fixtures are retained without inference.
+
+Delivered local scope includes the Coach stadium/glass/token system, shared fixture banners and authorised player cards; lineup persistence, custom dragging and alignment guides; player-statistics access and authorised match-history navigation; League/Cup/Unspecified classification, configurable extra time and AET, penalties with corrections and separate ordinary-goal statistics; Team/Player category filters, result anchors and unobtrusive filter confirmation; lineup spacing and selected-count badge; shared transparent Club OS footer. The footer keeps “Powered by Club OS”, the approved asset and disabled website link. The separately validated new-guardian transaction correction remains intentionally included; unfinished original Finance/Registration work remains excluded.
+
+Academy is the owner-confirmed non-production acceptance website. RELEASE18 installed the earlier 1,174-file **Release16** combined artifact, not this later candidate. Last observed hosted schema/data were .23/.4 with completed upgrade and clear lock. These are dated observations, not a new hosted inspection or complete installed-file hash certificate. Production has not received this candidate.
+
+**Remaining gates:** hosted confirmation of the CLOSEOUT-04 namespaced availability fix and its exact Academy query-variable source; unresolved same-document Cancel behaviour; direct retained .23-to-current upgrade and current fresh-install native evidence, or a precise owner-approved non-production residual-risk decision; disclosed validator/device/concurrency limitations; exact-file commit authority, exact-commit package validation, fresh matched Academy backup/write boundary and explicit installation approval. Accepted visuals do not turn these gates into PASS.
+
+Continue with the [delivery reconciliation](../SPRINTS.md#coach-delivery-2026-10-30), [current handover](DEVELOPMENT_HANDOVER_2026-09-30.md#coach-closeout-2026-10-30) and [Secretary/release proposal](CLUB_OS_EXPERIENCE_REVIEW_AND_ROADMAP.md#coach-transition-2026-10-30). No new framework, permission grant, production approval or Secretary implementation follows from this documentation update.
+<!-- /COACH-CHECKPOINT-20261030 -->
+
 <!-- PLAN02-B03-DOC current checkpoint -->
 ## Current programme checkpoint — 21 October 2026
 

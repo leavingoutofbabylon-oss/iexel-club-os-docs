@@ -1,5 +1,40 @@
 # IEXEL Club OS Sprint Releases
 
+<!-- COACH-CHECKPOINT-20261030 -->
+<a id="coach-delivery-2026-10-30"></a>
+## Coach delivery checkpoint — 30 October 2026
+
+**Owner acceptance:** the current Coach North Star presentation, statistics, match management, penalty presentation, lineup spacing and CLUB-OS-BRAND-01B footer are accepted. **Git/deployment:** the cumulative candidate is not committed, pushed, merged or installed on Academy. Its base is `ed771e9018ed7a2939074f1cf31399c4f8cac392`, independent branch `fix/coach-closeout-01`; 119 changed files, 104 runtime/assets and 15 validators, index empty. Do not confuse earlier committed Coach foundation with later working-tree delivery.
+
+| Batch | Delivered and validated scope | Current disposition |
+|---|---|---|
+| Coach Batch1/2A/2B and INT-01A | Command Centre, Team overview, Squad foundation and integration already in base; Batch2B `9a5104a`, parent `3ef1f7d` | Accepted committed foundation; not new checkpoint changes |
+| NORTHSTAR-01–04 | Coach shell, Brand Studio tokens, banners/fallbacks, approved optimised stadium/glass and control contrast | Included in accepted visual candidate; historical probe/raster qualifications retained |
+| NORTHSTAR-05/05R | Three-player lineup save/reopen/edit; no production delta | Historical partial evidence; later card/full-squad work closes specific gaps, not a retrospective blanket PASS |
+| NORTHSTAR-06–11 | Premium/shared player cards and tooltips, Hub/Match Mode/Event Details, centred names/badges, responsive logistics, canonical kits and premium availability controls | Included/accepted presentation; held submissions are not relabelled as passed |
+| NORTHSTAR-12/13 | Readiness reconciliation; availability, attendance, goal/assist, undo, substitution and report persistence passed; full roster then blocked | No runtime delta; passed journeys retained |
+| NORTHSTAR-13B | 16 eligible fictional players via normal workflows; 11 starters/five substitutes saved/reopened; responsive density, badges/fallbacks and boundaries | Full-squad evidence passed; separate guardian finding continued in REG-GUARDIAN-01 |
+| REG-GUARDIAN-01 / RELEASE16 | Bounded new-guardian active-status transaction repair and combined candidate validation | Intentional included repair; real local approval passed; not unfinished original Registration work |
+| NORTHSTAR-14/14A/14B/15 | Shared fixture banner, fresh screenshot closure, past-event glass/button polish and Edit Lineup contrast | Included in accepted current presentation; old minor notes/evidence exceptions retained |
+| CLOSEOUT-01/01B | Assigned/dual-role Coach Player Statistics authority, exact Season scope/styled403, immediate custom dragging and alignment guides | Focused checks pass; included; physical-phone touch remains outside evidence |
+| CLOSEOUT-02/03/05 | Authorised post-match links, Next Event matchup/kits, Player profile/filter glass and consolidated completed header | Implemented/validated; included in accepted current experience |
+| CLOSEOUT-04 | Namespaced bulk payload prevents reproduced WordPress public-query array/string fatal; real service review/save/reopen and protections pass | Local repair included; hosted attribution/post-fix acceptance and separate Cancel caveat remain open |
+| CUP-01/01A | League/Cup/Unspecified distinct from free-text competition; Friendly preserved; native upgrade/persistence/browser checks | Schema .24, data .4; included in current match capability |
+| CUP-02A / FIX01 | Configurable ET halves/phases, goals/assists/undo/statistics/AET; confirmed period20 storage defect widened to30, responsive badge correction | Schema .25 then .26; native scoring/correction/persistence passed; accepted CUP-02 scope |
+| CUP-02B | In-match Cup decisions, early winner/sudden death, corrections/idempotency, separate private/public shootout projections and ordinary statistics | Schema .27; native .26-to-.27/repeat/privacy/authority acceptance passed; owner-accepted CUP-02 |
+| CUP-02C | Glass penalty panel, larger symbols and responsive ordered history | Presentation-only; owner accepted |
+| STATS-01/01B | Team/Player All/League/Cup/Friendly intersections, honest empty states, preserved navigation; results anchors and one-use timed confirmation | Functionality/presentation accepted; desktop/320px and back/forward checks passed |
+| UX-01 and UX-02 | Phantom grid-gap/overflow correction, readable one-line selected-count badge | Owner accepted; existing controls/form associations retained |
+| BRAND-01/01B | Shared approved transparent footer asset/credit, no external link; transparent stadium integration and +25% desktop logo | Owner accepted; desktop/tablet/320px checks passed |
+| RELEASE18 | Earlier Release16 ZIP installed on Academy via WordPress replacement, bounded health/Coach/Secretary/Finance checks | Earlier hosted release only; .23/.4 complete/clear last observed, not .27 deployment |
+
+Version remains `1.0.0-dev`, source schema/data **2026.10.27 / 2026.10.4**. Extra-time goals/assists count normally; shootout conversions are separate and do not inflate ordinary goals. Private named shootout history remains staff-restricted. No historical competition recategorisation or invented winner/statistic.
+
+Retained validation includes native staged Cup upgrades and scoring/correction/readback, 7,710 shootout assertions, 207 custom-drag/21 alignment checks, statistics access/category checks and actual resized-browser evidence. These counts belong to their recorded batches, not a newly rerun full suite. Historical existing-player-link, optional-fields and obsolete Secretary URL validator failures remain exceptions; substitute-statistics standalone bootstrap/SQLite limitations remain BLOCKED. No native concurrency, physical-device or full fresh-install certificate is inferred.
+
+The exact per-batch file inventory, current hashes, scoped tests, known issues and acceptance evidence are indexed in COACH_CHECKPOINT_01_REPORT.md, retained at the [handover evidence location](development/DEVELOPMENT_HANDOVER_2026-09-30.md#coach-closeout-evidence-2026-10-30). Approval here covers documentation only. Local commit, package, migration, Academy update and Secretary development remain separately gated.
+<!-- /COACH-CHECKPOINT-20261030 -->
+
 <!-- PLAN02-B03-DOC current checkpoint -->
 ## Current delivery programme — 21 October 2026
 

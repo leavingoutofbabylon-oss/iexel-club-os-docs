@@ -1,5 +1,37 @@
 # IEXEL Club OS Experience Review and Roadmap
 
+<!-- COACH-CHECKPOINT-20261030 -->
+<a id="coach-transition-2026-10-30"></a>
+## Coach closeout and proposed Secretary transition — 30 October 2026
+
+**Current Coach North Star visuals are owner accepted.** Local delivery includes the stadium/glass/Brand Studio system, shared fixture and player presentation, lineup dragging/alignment, match-history navigation and scoped Player Statistics; League/Cup classification, extra-time phases/AET and penalties; category/competition filtering with result positioning/confirmation; compact lineup spacing and the shared Club OS footer. CLUB-OS-BRAND-01B keeps the existing approved transparent gold asset over the stadium with a larger desktop logo/readable light tagline and no website link. See the [batch record](../SPRINTS.md#coach-delivery-2026-10-30).
+
+This is an uncommitted local candidate on `fix/coach-closeout-01`, base `ed771e9018ed7a2939074f1cf31399c4f8cac392`, expected source schema/data .27/.4. Academy has the earlier Release16 combined update (last verified .23/.4), not this candidate. Existing rows below describing older current baselines/Coach findings remain historical; they do not reopen completed work or certify unresolved issues.
+
+### Remaining Coach and release work
+
+- Confirm CLOSEOUT-04 on Academy after a separately approved update: local query-collision reproduction/namespacing fix passed, but the actual hosted registrant is unconfirmed. The same-document availability Cancel caveat remains a focused open check, not an accepted fix.
+- Complete direct retained .23-to-current upgrade/current fresh-install evidence, or obtain a precise non-production residual-risk decision. Retain known validator failures, standalone fixture/bootstrap limits, physical touch/screen-reader/concurrency and historical reflog/raster/metadata qualifications.
+- Establish approved source/docs Git checkpoints without absorbing original Finance/Registration or dirty docs work. Build a later exact-commit validation ZIP; current calculated runtime count is 1,184, not a built artifact. Fresh matched Academy backup/write boundary, exact artifact approval and short hosted smoke checks remain required. Production release is separate.
+
+### Proposed first Secretary North Star batch
+
+**SECRETARY-NORTHSTAR-01 — existing Command Centre and navigation presentation**, proposed only. Start with a short current component/route map and owner reference agreement; then a bounded overview, priority-summary, quick-action and navigation treatment using shared components/tokens/footer and Secretary's operational hierarchy. Desktop/tablet/320px acceptance with an authorised fictional Secretary account. Preserve Club Admin configuration/Brand Studio ownership, /wp-admin recovery, canonical Person/Registration flows and Secretary/Treasurer permissions.
+
+No new dashboard engine, role changes, registration/billing logic, schema, broad redesign or implementation is authorised. Recheck SEC-009 Specific People event-modal mobile overflow in its narrow surface before calling it absent/fixed; it is not automatically part of dashboard styling. Existing first-Secretary account/link/permission acceptance remains separate; guided onboarding remains a proposal, not a new delivered wizard. Original Finance/Registration work and protected reference records remain untouched.
+
+### Separate follow-ups and post-MVP direction
+
+- **Notification safety:** NOTIFY-001A audit completed; proposed NOTIFY-001B sub-batches start with empty-audience fail-closed, canonical Person/shared-email sibling identity and safeguarding, then separately validated lifecycle/material-change/idempotency alignment. Confirm safe development checkpoint and approve scope before code. Keep new outbound event email/push disabled.
+- **Branded event email:** NOTIFY-002 reuses canonical Communications/recipient/delivery and existing branding; absolute links require normal authentication and event authority and never submit RSVP themselves. Provider/dependency changes need approval.
+- **PWA/mobile push:** NOTIFY-003 installable plugin-owned shell without caching private authenticated content; NOTIFY-004 opt-in/revocation/preferences, minimal payloads and delayed authority rechecks; future native integration later. Planned, not implemented in this Coach candidate.
+- **Club Live:** future scoped product proposal; no new delivery or release commitment made here.
+- **Competition-specific statistics:** category and existing free-text competition filters are delivered. Rich competition entities, standings and additional competition-specific analytics/rules remain future scoped work; do not recreate completed filters or imply a new competition engine.
+- **Club OS website:** official destination and enablement require separate approval; footer link stays disabled. Accepted branding is shared product identity, not hardcoded IEXEL FC identity.
+
+Do not promote post-MVP items into launch blockers or rewrite their existing architectural decisions. [Current handover](DEVELOPMENT_HANDOVER_2026-09-30.md#coach-closeout-2026-10-30) owns exact source/deployment boundaries and next approvals.
+<!-- /COACH-CHECKPOINT-20261030 -->
+
 <!-- PLAN02-B03-DOC current checkpoint -->
 ## Current roadmap decision — 21 October 2026
 

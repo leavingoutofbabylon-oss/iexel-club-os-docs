@@ -1,5 +1,64 @@
 # IEXEL Club OS — Development Handover
 
+<!-- COACH-CHECKPOINT-20261030 -->
+<a id="coach-closeout-2026-10-30"></a>
+## Current resume point — Coach closeout, 30 October 2026
+
+**Coach North Star visuals are Product Owner accepted; current cumulative source is local, uncommitted and unshipped. Documentation-only update is now authorised; no commit, push, package, migration, deployment or Secretary implementation.** This checkpoint supersedes older current-state/pending-Academy/next-task text below. The established filename, dated history, binding Engineering Rules and original recovery holds remain unchanged.
+
+### Exact source and protected boundary
+
+- Candidate: `C:/Users/leavi/Local Sites/iexel-club-os-dev/worktrees/coach-closeout-01`, independent repository, branch `fix/coach-closeout-01`, base HEAD `ed771e9018ed7a2939074f1cf31399c4f8cac392`, index empty. All 1,545 files match accepted BRAND-01B; 119 changed files (92 modified/27 intentional untracked), comprising 104 runtime/assets and 15 validators. The base SHA alone is not the candidate identity.
+- Expected source version/schema/data: `1.0.0-dev` / `2026.10.27` / `2026.10.4`. .24 category, .25 extra time, .26 period30 and .27 shootout/resolution additions are retained through the normal final UpgradeRunner. No ad hoc DDL/version-option reset or intermediate-package replay.
+- Source origin points to local `worktrees/northstar-release-16-combined`; preserve it. Original protected plugin is separately on `fix/registration-package-step-validation` at `b1d1ae2bcb175c1c0904222e640cf3ec669c8442`, with Finance/schema edits and unrelated untracked files. Its object store does not currently contain the Coach base: future import needs separately approved transfer/ancestry verification, no protected checkout switch/reset.
+- Documentation boundary: independent `worktrees/coach-checkpoint-01-docs`, branch `docs/coach-checkpoint-01`, docs parent `9507c446dea66a18e05727c4b70fbb6e202373ea`. Only four new additive checkpoint sections are proposed. The original docs checkout's six pending modifications/two untracked Academy documents are preserved and **not imported**. This branch is not a wholesale replacement for that pending work; review only its new hunks when integrating later.
+- Existing fictional preview: `http://127.0.0.1:8113/club-os/coach/`; DB `northstar_cup02b`, loopback MySQL33913, UUID `a75d5fb9-af61-475a-9035-84e55edf216a`. Last accepted checks show .27/.4 complete/no lock, scheduler OFF and exact source guard. No restart, DB connection, guard update or operational write in this documentation task. Preserve previews8110–8113, guards/credentials/fixtures, all other repositories/stashes and frozen artifacts.
+
+### Delivery and evidence limits
+
+[SPRINTS](../SPRINTS.md#coach-delivery-2026-10-30) reconciles North Star01–15, operational13/13B, guardian repair, Closeout01–05, CUP01/02A/FIX01/02B/02C, STATS01/01B, UX01/02 and BRAND01/01B. Current visuals/statistics/match management/penalty/lineup/footer presentation are owner accepted. Full fictional16-player/11+5 persistence passed; new-guardian repair passed and is intentionally included through Release16. Local implementation, acceptance, Git status and hosted delivery remain separate facts.
+
+Outstanding gates:
+
+1. Academy's exact query-variable registrant behind the availability fatal and hosted post-fix review/save acceptance remain unconfirmed. Actual WP reproduction proves `players[...]` collision can put an array into string-only query `name` before the handler; current namespaced forms/handler avoid it. Same-document Cancel retained POST review in prior evidence; explicit GET cleared without writes. Require focused check/disposition, not a speculative patch.
+2. Native staged Cup upgrades/retained rows/repeat execution and scoring/undo/correction/statistics/privacy checks passed; current full fresh install and a single retained .23-to-.27 rehearsal are not certified. Obtain separate disposable acceptance authority or explicit bounded non-production residual-risk decision.
+3. Preserve older baseline validator failures (existing-player-link7/75, optional-fields6/128, obsolete Secretary assignment URL), standalone substitute-statistics MatchState/SQLite-shootout fixture block and older source-literal/Overview/banner limits. No PHPCS, native concurrency, physical iOS/Android gesture or screen-reader certificate is claimed. Minor320px collapsed Cup rule text and browser-native filter form restoration remain qualified.
+4. Historical original origin/HEAD/FETCH_HEAD provenance, Coach-home raster discrepancy, COACH-INT metadata overwrite and8109 audit/options/PID bookkeeping exceptions retain their original scope; no historical evidence repair or exact folder restoration is claimed.
+
+### Academy and frozen artifact position
+
+Academy `https://ixlfootballacademy.co.uk/` is owner-confirmed non-production test/acceptance, with test data/no real payments. RELEASE18 installed exactly:
+
+`iexel-club-os-1.0.0-dev-northstar-release16-e6065af5c2c5-COMBINED-RC-NOT-FOR-ACADEMY.zip`
+
+SHA-256 `e90d576af945a883c60ff9354e9154a2fee189c103413eea80196d5c9abe09ee`, 1,174 runtime files; manifest fingerprint `e6065af5c2c53f81c5a350998c753310e9494780560bbe14901796e9ab8249f9`. WordPress replacement reported success and active1.0.0-dev; bounded boot/Coach/Secretary/Finance smoke checks passed. Last observed hosted .23/.4 was complete/no failed step/clear lock. No complete hosted file hash comparison was performed. Old sampled counts/no-fixture state must not be described as current after later owner testing.
+
+The latest Closeout/Cup/Stats/UX/branding source has **not** been installed. Original Coach15 ZIP remains frozen at SHA-256 `fdf404d9837eafd4f7124398dac109d9631b2410b4638f975bbfffe6c9076e20`. Neither archive is rebuilt or relabelled. Release Readiness evidence risks `high.scheduled-hook-deactivation`, `high.destructive-delete-integrity`, `medium.schema-upgrade-on-boot` remain separate from healthy upgrade state; no production readiness inferred.
+
+### Proposed next sequence — separate approvals
+
+1. Review these four documentation additions and exact119-file source allowlist/residual risks. A local atomic source checkpoint is proposed because batches overlap shared files; separate focused docs commit follows review. No Git commit/push/import authorised yet. Preserve LF/CRLF representation evidence when checking future committed blobs (`core.autocrlf=true`), with no unexplained content changes.
+2. Complete bounded missing native install/retained-upgrade evidence, or record the owner's explicit non-production risk decision. Build only from an approved exact commit under the established runtime policy. Current calculated proposal: **1,184 runtime files**, 75 changed existing members/10 additions/no removals versus Release16; **no new ZIP or checksum exists**. Keep required CLI bootstrap classes; exclude tools/docs/guards/private/test data/uploads/logs/generated artifacts. Verify deterministic manifest/member hashes, safe paths/case, archive integrity and exclusions.
+3. Reuse confirmed hosting/restore discovery; owner confirms a fresh matched Academy DB+files/plugin/uploads/config/keys backup at the future window and a brief no-write boundary. Exact artifact/hash and WordPress update need separate approval. No uninstall/reset/local DB import. On failure preserve evidence; old plugin files alone are not an assumed safe rollback after .27 use. Escalate full-backup restore if newer writes exist.
+4. Bounded hosted checks: active/healthy boot and .27/.4 complete/clear; sampled existing records; Coach banners/fixture/lineup/stats/report/footer; authorised/denied scopes; availability review/confirm/reload/Cancel and attendance separation; Secretary/guardian/Finance entry points; no new fatal. Use existing fictional records and no live payments. Production deployment is separately gated.
+5. Consider proposed SECRETARY-NORTHSTAR-01 Command Centre/navigation presentation after release decision. No new batch starts here; notifications/PWA/push/Club Live/competition-specific expansion and website linking remain as [roadmap proposals](CLUB_OS_EXPERIENCE_REVIEW_AND_ROADMAP.md#coach-transition-2026-10-30).
+
+<a id="coach-closeout-evidence-2026-10-30"></a>
+### Retained evidence location
+
+Evidence is outside both repositories under `C:/Users/leavi/.codex/visualizations/2026/10/28/01a1814d-278b-7ab3-9674-425f61292fd1/`. Key records:
+
+- `coach-checkpoint-01/COACH_CHECKPOINT_01_REPORT.md`: exact119-file allowlist, per-batch inventories, docs/commit/release proposal.
+- `club-os-brand-01b/source-final.json`, `CLUB_OS_BRAND_01B_REPORT.md`, `preservation.json`: accepted1,545-file identity, responsive/footer and protection evidence.
+- `northstar-coach-13b/NORTHSTAR_COACH_13B_FINAL_CLOSURE_REPORT.md`, `reg-guardian-01/REG_GUARDIAN_01_CORRECTION_REPORT.md`: full squad and guardian repair.
+- `coach-closeout-04/COACH_CLOSEOUT_04_REPORT.md`: exact fatal reproduction/correction/hosted uncertainty and Cancel caveat.
+- `coach-cup-01/COACH_CUP_01_REPORT.md`, `coach-cup-02a/COACH_CUP_02A_REPORT.md`, `coach-cup-02b/COACH_CUP_02B_REPORT.md`: staged native migration/scoring/persistence/privacy and limits.
+- `coach-stats-01/COACH_STATS_01_REPORT.md`, `coach-stats-01b/COACH_STATS_01B_REPORT.md`, `coach-ux-01/COACH_UX_01_REPORT.md`: accepted filtering/navigation/spacing and focused limitations.
+- `northstar-release-16/package-manifest.json`, `northstar-release-18/NORTHSTAR_RELEASE_18_ACADEMY_INSTALLATION_REPORT.md`: earlier exact artifact and bounded hosted evidence.
+
+Do not edit retained reports to erase a prior failure or replace scoped acceptance with a blanket PASS. This documentation checkpoint records the present position; it does not authorise operations.
+<!-- /COACH-CHECKPOINT-20261030 -->
+
 **Date:** 2026-09-30
 **Status:** Prospect Trial Period COMPLETE / ACCEPTED / COMMITTED ON PLUGIN MAIN; documentation reconciliation awaiting review
 
