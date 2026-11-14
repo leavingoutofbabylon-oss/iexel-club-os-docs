@@ -87,3 +87,17 @@ Items marked **P1** should be addressed before Release 1.0. Items marked **P2** 
 | Item | Priority | Description |
 |---|---|---|
 | *(None known at time of writing)* | — | Any discrepancy found between this documentation and source code should be added here. |
+
+<!-- AS03-20261114 -->
+## AS-03 release assurance and accepted/deferred scope — 14 November 2026
+
+The agreed Assistant Secretary MVP is accepted following AS-02B.8. [Current closure](https://github.com/leavingoutofbabylon-oss/iexel-club-os/blob/e6d0795cfb925b52d51ae05457da6aee0a566a6d/development/ASSISTANT_SECRETARY_MVP_CLOSURE.md) and [outstanding register](https://github.com/leavingoutofbabylon-oss/iexel-club-os/blob/e6d0795cfb925b52d51ae05457da6aee0a566a6d/development/ASSISTANT_SECRETARY_OUTSTANDING.md) separate implementation, engineering evidence, Academy observations, production certification and main integration.
+
+**Release/engineering gates, not automatically post-MVP:** native MySQL transaction/rollback/concurrency/ambiguous COMMIT; remaining authenticated HTTP and complete Registration independent approval/eligible competitive progression; documented legacy validator/harness failures and downstream gaps; the retained duplicate PermissionManager declaration; private Communications host/storage readiness and fail-closed uploads; historical public-file remediation and wider exact-artifact install/upgrade/recovery safeguards. Older Priority labels elsewhere in this register remain historical and do not downgrade these current assurance requirements.
+
+**Known validator findings retained:** Committee Projects cross-Season summary assertion; Committee Communications missing-resolver harness; Training management old Secretary/Admin-only assertion; Training mobile overflow assertion; Secretary quick-actions count; Returning Player policy assertion. Also retain Registration pathways mismatch, navigation harness abort/unexecuted downstream checks and prior age-fixture warnings. No expectation is weakened and no failed suite is relabelled green.
+
+**Manual checks still open:** ordinary linked member email update; complete live submission/independent approval; eligible Training-to-competitive completion; invitation delivery/password recovery; other unexecuted release/role checks. Tom's officer-role Training restriction, Test Parent/Jess's protected-authority login-email restriction and Jess's administrator linking are resolved by Product Owner evidence. Do not weaken officer protection or claim notification delivery from visible controls.
+
+**Visual/usability follow-ups:** global blue-on-blue contrast, Venue detail/success presentation, minor Portal Account wording and bounded Assistant Secretary refinements. They do not replace security/storage/transactional certification. No outstanding repair is implemented or newly authorised by this register entry.
+<!-- /AS03-20261114 -->

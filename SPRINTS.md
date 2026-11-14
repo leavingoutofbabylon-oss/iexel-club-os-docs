@@ -1,5 +1,23 @@
 # IEXEL Club OS Sprint Releases
 
+<!-- AS03-20261114 -->
+<a id="assistant-secretary-mvp-2026-11-14"></a>
+## Assistant Secretary MVP closure — 14 November 2026
+
+**AS-01 and AS-02 are implementation-complete, engineering-reviewed and Product Owner accepted for the agreed MVP scope following Academy testing of AS-02B.8.** This is a development-branch checkpoint, not production certification or a merge into main. Plugin branch: `fix/zip03-2-duplicate-member-batch03-followup01`; base `16080051cd1008dd6bae45a5949efa642d870556`; AS-03 plugin checkpoint: `e6d0795cfb925b52d51ae05457da6aee0a566a6d`.
+
+The Product Owner confirms delegated workspace/People/Training and navigation acceptance; staff Choose a Player and dual-role staff intent; Culverstone Venue save persistence and absence of Assistant Secretary deletion controls. Tom Ewing.T holds Committee Member, Parent/Guardian, Coach and Player roles, so his protected Training Registration/competitive restriction is expected. Test Parent holds Assistant Secretary authority; Jess Hall.T holds Treasurer authority; their Secretary-managed login-email restrictions are expected. Jess was successfully linked by an authorised administrator through **WordPress Admin → IEXEL Club OS → Member Linking**. Protected-officer account policy remains intact. Ordinary Parent creation/invitation controls were observed using Adi Sak; invitation delivery and password recovery were not tested. Ordinary linked email updating was not manually retested.
+
+Independent Person-bound Secretary approval and canonical transaction architecture remain intact, but complete live Registration submission/approval and eligible Training Only-to-competitive progression are **not certified**. Retain native MySQL rollback/concurrency/ambiguous-COMMIT certification, remaining authenticated HTTP and end-to-end acceptance, known legacy validator failures, the PermissionManager declaration collision, and private Communications storage host readiness as mandatory release/assurance work. Confidential uploads remain fail-closed until approved private storage is available; historical public files are not automatically made private. Do not reclassify unresolved security/transactional requirements as post-MVP enhancements.
+
+Accepted runtime artifact: AS-02B.8, 1,203 files, 14,574,356 bytes, SHA-256 `ef228dc98a595f50be6f0eea3f855efd71cfd2c76ebf00874d5b4622fea8b160`. Product Owner observations are manual evidence, not a new hosted inspection. No new application implementation, ZIP, installation, production change or main merge is part of AS-03. The accepted plugin checkpoint is committed and pushed separately; source version/schema/data expectations remain `1.0.0-dev` /`2026.10.29` /`2026.10.4`, not a new hosted database certification.
+
+Detailed acceptance/state boundaries and outstanding manual/engineering items are versioned with the plugin in [Assistant Secretary MVP closure](https://github.com/leavingoutofbabylon-oss/iexel-club-os/blob/e6d0795cfb925b52d51ae05457da6aee0a566a6d/development/ASSISTANT_SECRETARY_MVP_CLOSURE.md) and [outstanding requirements](https://github.com/leavingoutofbabylon-oss/iexel-club-os/blob/e6d0795cfb925b52d51ae05457da6aee0a566a6d/development/ASSISTANT_SECRETARY_OUTSTANDING.md). Global blue-on-blue contrast, Venue detail/success readability and minor Portal Account terminology/usability remain finite follow-ups. Return to the wider gated MVP programme: a separately approved global contrast/readability punch list is the next development candidate, with release-critical certification continuing in parallel. Do not begin that next batch under closure authority.
+
+This dated AS checkpoint supersedes older pending-Assistant-Secretary/current-status statements only within its confirmed scope. Preserve the 30 October Coach checkpoint, earlier product direction, historical evidence, original-site holds and all other release gates. No separately titled MVP Finish Line Master Plan was found in the inspected documentation; the gated MVP-to-production strategy and newer scoped checkpoints remain the available programme references.
+<!-- /AS03-20261114 -->
+
+
 <!-- COACH-CHECKPOINT-20261030 -->
 <a id="coach-delivery-2026-10-30"></a>
 ## Coach delivery checkpoint — 30 October 2026
