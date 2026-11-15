@@ -1,5 +1,20 @@
 # IEXEL Club OS Experience Review and Roadmap
 
+<!-- VIS01D-20261115 -->
+<a id="vis01-acceptance-2026-11-15"></a>
+## VIS-01 visual workstream closed - 15 November 2026
+
+The previously proposed finite global-contrast/readability checkpoint is complete and accepted, including its three approved Finance/header refinements. Do not reopen accepted Assistant Secretary permissions, Venue deletion policy or Brand Studio architecture. Recommend a separately authorised focused Finance reliability checkpoint for the two recorded findings, then return to the agreed football-administration programme while retaining release assurance gates.
+
+**Product Owner Academy acceptance: 18/18 checks passed**, confirmed on 15 November 2026 for `iexel-club-os-VIS-01C-academy-acceptance.zip` (1,203 runtime files, 14,587,284 bytes; SHA-256 `7fcfdea1c4a770fe7bbdc488d0c8b211feb0a765cff6020d7014732019fe1554`). This is owner-reported installed-Academy evidence, not a new agent inspection or production certificate.
+
+Published plugin checkpoint: [`d2ccbfd5235e3291f98cc323c4f437be5ca530ea`](https://github.com/leavingoutofbabylon-oss/iexel-club-os/commit/d2ccbfd5235e3291f98cc323c4f437be5ca530ea) on `fix/zip03-2-duplicate-member-batch03-followup01`; parent AS-03 checkpoint `e6d0795cfb925b52d51ae05457da6aee0a566a6d`. Documentation is separately committed on `docs/vis01-acceptance-closure`, based on AS-03 `3417b6fbad7fbce465fe1b32aa33220701ba4654`, which includes the newer Coach baseline.
+
+**Still open:** both deferred Finance findings; the three documented VIS validator stops and six AS-03 legacy failures; the PermissionManager declaration collision; native MySQL transaction/rollback/concurrency/ambiguous-COMMIT certification; remaining live approval/progression and account-email/invitation/recovery checks; exact-artifact upgrade/recovery/operational safeguards; private-storage host readiness and historical public-file remediation. Visual acceptance does not close these gates. Preserve all AS-03/Coach history and other worktrees.
+
+See the [formal VIS-01 acceptance record](VIS01_ACCEPTANCE_CLOSURE.md) for scope, evidence and the next proposed checkpoint. No unrelated feature work, main merge or production deployment is authorised by this closure.
+<!-- /VIS01D-20261115 -->
+
 <!-- AS03-20261114 -->
 <a id="assistant-secretary-mvp-2026-11-14"></a>
 ## Assistant Secretary MVP closure — 14 November 2026
