@@ -798,3 +798,19 @@ It should sit alongside `MASTER_DEVELOPER_GUIDE.md` and `SPRINTS.md`:
 ## Product statement
 
 > Committee runs the club. Welfare protects the club. Coaches develop the players. Treasurers sustain the club. Parents support the players. Players experience the journey. Administrators maintain the platform.
+
+---
+
+## Player Notifications & Mobile PWA Experience (NOTIFY-008B / NOTIFY-008C — 2026-11-23)
+
+- **Confirmed Academy real-device experience:**
+  - Apple iPhone Home Screen PWA notification registration now succeeds cleanly without requiring PWA reinstallation or pre-existing Safari service-worker state (`NOTIFY-008C`).
+  - Automatic Event push notifications deliver reliably to eligible Secretary (Samsung Android), Parent (Samsung Android), and Youth Player (Apple iPhone Home Screen PWA) devices.
+  - Tapping a notification opens the authorised Event directly, including inside the Youth Player workspace, both when Club OS is closed and when backgrounded.
+  - Reuses the existing shared Account → Notifications controls and midnight-blue-and-gold design system with updated copy (*"Generic lock-screen updates. Stays enabled on this device until you disable it."*).
+- **Known minor UX limitation (non-blocking, fails safe):**
+  - Youth Player taps on `communication` announcement push notifications currently fall back safely to `/club-os/messages/` rather than opening `?communication_id=<id>` because `PushPilot::authorize_destination('communication')` delegates to adult-only `visible_notice()`. Event deep links open `/club-os/events/<id>/` directly.
+- **Separate future roadmap items (not part of NOTIFY-008B/008C):**
+  - Self-hosted unattended scheduling engine for zero-traffic/overnight scheduled tasks (automated RSVP reminders, scheduled announcements).
+  - Delivery scale-out beyond bounded immediate/opportunistic batches for large club-wide audiences.
+  - Youth announcement direct deep-link polish and completion of remaining manual negative acceptance checks on Academy.

@@ -305,6 +305,17 @@ Youth communication safeguarding distinguishes between guardian visibility/overs
 - Routine team announcements must not automatically generate unnecessary Welfare notifications.
 - **Direct Youth Communication Safeguard**: Club OS must not create an unsupervised private communication pathway between an adult club official and a youth player. Direct/specific youth-player communication requires explicit safeguarding controls (guardian visibility/oversight, sender capability checks, audit logging, direct object access controls, and information isolation).
 
+### Unified Self-Hosted Push Notification Architecture (NOTIFY-007C / NOTIFY-008B / NOTIFY-008C)
+
+Club OS operates **one unified self-hosted Web Push notification infrastructure** for eligible adult and Player accounts, without introducing a separate push-specific Guardian approval workflow or parallel safeguarding framework:
+
+- Existing Club OS safeguarding, membership, active Guardian relationship linkage, Event audience authorisation, and `CommunicationSafeguardingPolicy` + `GuardianOversightMaterializer` remain the authoritative gates for what generates notifications and who can receive them.
+- **Known Youth Players (`KNOWN_YOUTH`):** Require verified DOB (<18), an active canonical Parent/Guardian relationship (`PersonRelationshipRepository::guardians_for()`), and the club-level `youth_push_enabled` feature flag (default OFF in repository). Delivery and taps are restricted to authorised Event and safeguarded announcement categories (`event`, `communication`, `portal_home`).
+- **Age Unknown (`AGE_UNKNOWN`):** Retains restrictive fail-closed exclusion from push eligibility until date of birth is verified.
+- **No coach-to-player private messaging:** Coaches cannot initiate private youth messaging through any push notification path.
+- **Explicit browser permission & opt-in:** Every member (adult or Player) must explicitly opt in and grant browser notification permission; explicit opt-out, account-switch revocation (`wp_logout` / `wp_login`), global pause, and live dispatch-time eligibility re-checks (`PushDeliveryQueue::dispatch_one()`) remain enforced on every job (including aborting already-queued jobs if a Guardian link is removed or `youth_push_enabled` is turned OFF).
+- **Privacy-safe payloads:** Lock-screen payloads remain strictly generic (`Club OS` / `You have an update.`) with re-authorised `/club-os/push-open/` deep links.
+
 ### Target-Person Eligibility vs Current-User Authorization
 
 These are two separate questions and both must be asked wherever a feature acts on one Person's data on behalf of another (established by Staff Compliance — see `SPRINTS.md`'s "Staff Compliance — Batch A, Batch B, Batch C & Batch D" and `CLUB_OS_EXPERIENCE_REVIEW_AND_ROADMAP.md`'s Welfare Workspace direction section for the worked example, including Batch D's own alert-generation-vs-alert-delivery application of this same rule):

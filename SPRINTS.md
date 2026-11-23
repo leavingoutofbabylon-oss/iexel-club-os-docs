@@ -2521,3 +2521,18 @@ flowchart TD
 7. **Release Gate — Private Encrypted Backup Vault (B4D) & Release Checklist:**
    - *Scope:* End-to-end payload population, verification, and restore of `IEXEL_RC_VAULT`; execution of `RELEASE_CHECKLIST.md` release criteria.
    - *Verification:* Hash verification, database consistency check, full clean-restore audit.
+
+---
+
+## Web Push Notifications — NOTIFY-008A / NOTIFY-008B / NOTIFY-008C (2026-11-23)
+
+- **NOTIFY-008A (Completed Investigation):** Read-only audit of the existing youth push notification foundation, Guardian relationship verification, category containment, and safeguarding gaps.
+- **NOTIFY-008B (Implemented & Academy Accepted for Tested Functionality):** Unified Player push eligibility on top of accepted `NOTIFY-007C` (`431d8d0`). Uses verified `KNOWN_YOUTH` DOB + active canonical Guardian relationship (`PushPilot::has_active_guardian_link()`) without introducing a separate push-specific Guardian approval workflow; `AGE_UNKNOWN` remains strictly refused; `youth_push_enabled` defaults OFF in the repository. Passed Final Safeguarding Gate against `MASTER_DEVELOPER_GUIDE.md`, `SPRINTS.md`, and `CLUB_OS_EXPERIENCE_REVIEW_AND_ROADMAP.md`.
+- **NOTIFY-008C (Implemented & Academy Accepted for Tested Functionality):** Repaired iOS Home Screen PWA notification registration by auto-registering `/club-os/service-worker.js` inside `assets/js/push-pilot.js` (`owned()`) when absent in the isolated iOS standalone partition and activating without requiring `navigator.serviceWorker.controller`. Corrected shared footer copy in `PushPreferencesCard.php` to `"Generic lock-screen updates. Stays enabled on this device until you disable it."`
+- **Academy real-device acceptance confirmed:** Automatic Event push notifications delivered and deep-linked to the correct Event on Secretary Test (Samsung Android), Test Parent (Samsung Android), and Youth Player test account (Apple iPhone Home Screen PWA); adult regression passed; youth controls unavailable with flag OFF and available with flag ON. Committed in plugin repo at `68066b020b316f8fb11d066a5498b4767fa84dfd`.
+- **Outstanding manual negative tests (covered by automated tests in `validate-notify008b-unified-player-push.php` and `validate-notify008c-iphone-registration.cjs`, not yet manually executed on Academy):**
+  - Youth Player explicit opt-out after registration.
+  - Guardian relationship removal after registration (blocking already-queued and subsequent jobs).
+  - Disabling `youth_push_enabled` after registration.
+  - `AGE_UNKNOWN` negative test on Academy.
+  - Account-switch isolation on the same mobile device.
