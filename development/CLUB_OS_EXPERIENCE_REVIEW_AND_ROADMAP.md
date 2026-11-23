@@ -821,3 +821,14 @@ It should sit alongside `MASTER_DEVELOPER_GUIDE.md` and `SPRINTS.md`:
 
 - **MVP Unattended Execution (`SCHED-001B` — Academy Accepted, `17cb2f7`):** Reliable traffic-independent execution of Club OS scheduled tasks via `wp iexel-club-os run-scheduled` and a single 5-minute cPanel/OS Cron Job per WordPress installation (see [CLUB_OS_SELF_HOSTED_SCHEDULER_DEPLOYMENT_RUNBOOK.md](CLUB_OS_SELF_HOSTED_SCHEDULER_DEPLOYMENT_RUNBOOK.md)).
 - **Post-MVP Goal (`SCHED-FUTURE`):** Further reduce setup friction for clubs (e.g., guided diagnostics / health status surfaces) without claiming a PHP plugin can eliminate all OS-level wake-up requirements for zero-traffic execution.
+
+---
+
+## SCHED-001C Acceptance & Priority Alerts Roadmap (2026-11-23)
+
+- **SCHED-001C Accepted (`0dbfdd8`):** Unattended scheduled announcement publication verified on Academy via the 5-minute cPanel scheduler (`CLUB_OS_SELF_HOSTED_SCHEDULER_DEPLOYMENT_RUNBOOK.md`). Confirmed product distinction: ordinary Club Announcements belong in Club Announcements (not Priority Alerts), and zero push is expected when Communications automatic push is OFF. Fixed Audience Snapshot status display for `viewed`/`read`/`acknowledged` and `safeguarding_oversight_only` rows.
+- **Upcoming Notification & UX Batches (Proposed, Pending Approval):**
+  - `NOTIFY-009A` — Latest Event Update in Priority Alerts (one latest event-update alert per recipient/event; history preserved).
+  - `NOTIFY-009B` — Priority Alerts Workspace Parity for Secretary & Assistant Secretary (alongside existing Priority Actions).
+  - `NOTIFY-009C` — Mobile Push Notification Grouping investigation (Android & iOS).
+  - **Scoped corrective candidates:** Treasurer non-finance priority announcement filtering consistency, and `← All announcements` visited-link purple colour fix (`PortalAnnouncementsPage.php:256` → reusable `BackLink` component).

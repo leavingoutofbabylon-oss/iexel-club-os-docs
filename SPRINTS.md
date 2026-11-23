@@ -2546,3 +2546,16 @@ flowchart TD
 - **Academy acceptance confirmed:** Installed on Academy and verified via 5-minute cPanel Cron Job using explicit PHP CLI (`/usr/local/bin/php /usr/bin/wp --path=/home/l69vc3oondjj/public_html/ixlfootballacademy.co.uk iexel-club-os run-scheduled >> /home/l69vc3oondjj/clubos-scheduler.log 2>&1`), resolving shared-host `cgi-fcgi` SAPI errors. Run 1: 5 tasks executed (346ms); Run 2: 1 task executed, 3 future untouched (55ms).
 - **Production Runbook:** [CLUB_OS_SELF_HOSTED_SCHEDULER_DEPLOYMENT_RUNBOOK.md](development/CLUB_OS_SELF_HOSTED_SCHEDULER_DEPLOYMENT_RUNBOOK.md).
 - **SCHED-FUTURE (Post-MVP Goal):** Explore lower-friction scheduling setup while keeping self-hosted WordPress ownership and recognising that OS-level wake-up triggers remain a hosting requirement for zero-traffic execution.
+
+---
+
+## SCHED-001C Acceptance & Priority Alerts UX Investigation (2026-11-23)
+
+- **SCHED-001C (Accepted & Finalised):** End-to-end Academy scheduled announcement (`Academy Scheduling Test — Training Update`, scheduled 10:08) executed unattended via the 5-minute cPanel scheduler at ~10:10; email delivered and visible in Parent Club Announcements; Communications automatic push was OFF so no push alert was expected. Display-only Audience Snapshot status fix (`PortalCommitteeCommunicationDetailPage.php`, `validate-sched001c-snapshot-display.php`) committed and pushed to plugin repo at `0dbfdd86f236ddddd327b0d006e62db1e7570bf9`.
+- **Proposed Notification UX & Parity Sequence (investigated read-only; not yet implemented):**
+  - **NOTIFY-009A — Latest Event Update in Priority Alerts:** Deduplicate/collapse multiple Event update alerts to the latest relevant update per recipient and event while preserving history, audit records, distinct actionable alerts, and safeguarding.
+  - **NOTIFY-009B — Priority Alerts Workspace Parity:** Add relevant Priority Alerts alongside (not replacing) Priority Actions in Secretary and Assistant Secretary workspaces (`WorkspacePriorityAlertService` + `PortalSecretaryDashboardPage`).
+  - **NOTIFY-009C — Mobile Push Notification Grouping:** Investigate Android and iOS notification grouping capabilities while preserving individual access, navigation, reliable delivery, and safeguarding.
+- **Scoped UX Corrective Candidates (investigated read-only; not yet implemented):**
+  - **Treasurer Priority Alert classification review:** `WorkspacePriorityAlertService` promotes communications marked `priority: true` (or `[PRIORITY]`) across every role a multi-role user holds while `recipient_status === 'eligible'`; ordinary announcements without the priority flag are already excluded, but non-finance priority announcements can still surface in Treasurer.
+  - **Purple `← All announcements` visited link regression:** `PortalAnnouncementsPage.php:256` renders a bare unclassed `<a>` without `:visited` styling outside Secretary/Coach shells; replace with reusable `BackLink` component or scoped design-token `:any-link`/`:visited` rule.
