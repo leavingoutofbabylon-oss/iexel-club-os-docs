@@ -814,3 +814,10 @@ It should sit alongside `MASTER_DEVELOPER_GUIDE.md` and `SPRINTS.md`:
   - Self-hosted unattended scheduling engine for zero-traffic/overnight scheduled tasks (automated RSVP reminders, scheduled announcements).
   - Delivery scale-out beyond bounded immediate/opportunistic batches for large club-wide audiences.
   - Youth announcement direct deep-link polish and completion of remaining manual negative acceptance checks on Academy.
+
+---
+
+## Self-Hosted Unattended Scheduling (SCHED-001B Accepted — 2026-11-23)
+
+- **MVP Unattended Execution (`SCHED-001B` — Academy Accepted, `17cb2f7`):** Reliable traffic-independent execution of Club OS scheduled tasks via `wp iexel-club-os run-scheduled` and a single 5-minute cPanel/OS Cron Job per WordPress installation (see [CLUB_OS_SELF_HOSTED_SCHEDULER_DEPLOYMENT_RUNBOOK.md](CLUB_OS_SELF_HOSTED_SCHEDULER_DEPLOYMENT_RUNBOOK.md)).
+- **Post-MVP Goal (`SCHED-FUTURE`):** Further reduce setup friction for clubs (e.g., guided diagnostics / health status surfaces) without claiming a PHP plugin can eliminate all OS-level wake-up requirements for zero-traffic execution.

@@ -54,3 +54,11 @@ If a critical bug is found after release:
 4. Update `CHANGELOG.md`
 5. Merge to `main` and the release branch
 6. Tag and release as a patch version
+
+---
+
+## Self-Hosted Scheduler Production Verification (`SCHED-001B`)
+
+- [ ] Verify Production host PHP CLI (`cli` SAPI, PHP 8.2+) and WP-CLI paths independently from Academy.
+- [ ] Configure exactly one 5-minute cPanel/OS Cron Job per WordPress installation using explicit PHP CLI + WP-CLI (`iexel-club-os run-scheduled`) logging to a private file outside `public_html`.
+- [ ] Verify repeated unattended execution and private log output (zero PII) per [CLUB_OS_SELF_HOSTED_SCHEDULER_DEPLOYMENT_RUNBOOK.md](CLUB_OS_SELF_HOSTED_SCHEDULER_DEPLOYMENT_RUNBOOK.md).

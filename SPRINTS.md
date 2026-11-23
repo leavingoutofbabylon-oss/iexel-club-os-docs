@@ -2536,3 +2536,13 @@ flowchart TD
   - Disabling `youth_push_enabled` after registration.
   - `AGE_UNKNOWN` negative test on Academy.
   - Account-switch isolation on the same mobile device.
+
+---
+
+## Self-Hosted Scheduling Foundation — SCHED-001A / SCHED-001B (2026-11-23)
+
+- **SCHED-001A (Completed Audit):** Read-only audit of all 7 Club OS WordPress Cron hooks, zero-traffic reliability gaps, and locking semantics.
+- **SCHED-001B (Implemented & Academy Accepted):** Added `wp iexel-club-os run-scheduled [--dry-run]` (`ScheduledTaskRunner`, `ScheduledTaskCliCommand`, `iexel-club-os.php`) with atomic CAS lock takeover/renewal/release, native `doing_cron` coordination, and recurring reschedule-failure protection. Committed in plugin repo at `17cb2f73a83cf8e9b17ac4995f2cc76351eca839` (20/20 automated suites passing, including 18/18 `SCHED-001B` concurrency checks).
+- **Academy acceptance confirmed:** Installed on Academy and verified via 5-minute cPanel Cron Job using explicit PHP CLI (`/usr/local/bin/php /usr/bin/wp --path=/home/l69vc3oondjj/public_html/ixlfootballacademy.co.uk iexel-club-os run-scheduled >> /home/l69vc3oondjj/clubos-scheduler.log 2>&1`), resolving shared-host `cgi-fcgi` SAPI errors. Run 1: 5 tasks executed (346ms); Run 2: 1 task executed, 3 future untouched (55ms).
+- **Production Runbook:** [CLUB_OS_SELF_HOSTED_SCHEDULER_DEPLOYMENT_RUNBOOK.md](development/CLUB_OS_SELF_HOSTED_SCHEDULER_DEPLOYMENT_RUNBOOK.md).
+- **SCHED-FUTURE (Post-MVP Goal):** Explore lower-friction scheduling setup while keeping self-hosted WordPress ownership and recognising that OS-level wake-up triggers remain a hosting requirement for zero-traffic execution.

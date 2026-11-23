@@ -316,6 +316,15 @@ Club OS operates **one unified self-hosted Web Push notification infrastructure*
 - **Explicit browser permission & opt-in:** Every member (adult or Player) must explicitly opt in and grant browser notification permission; explicit opt-out, account-switch revocation (`wp_logout` / `wp_login`), global pause, and live dispatch-time eligibility re-checks (`PushDeliveryQueue::dispatch_one()`) remain enforced on every job (including aborting already-queued jobs if a Guardian link is removed or `youth_push_enabled` is turned OFF).
 - **Privacy-safe payloads:** Lock-screen payloads remain strictly generic (`Club OS` / `You have an update.`) with re-authorised `/club-os/push-open/` deep links.
 
+### Self-Hosted Unattended Scheduling Architecture (SCHED-001B)
+
+Club OS executes unattended scheduled WordPress Cron hooks via the self-hosted WP-CLI command `wp iexel-club-os run-scheduled` (`app/core/Scheduling/ScheduledTaskRunner.php`, `ScheduledTaskCliCommand.php`) without requiring browser traffic, HTTP loopback calls to `wp-cron.php`, or third-party scheduling services:
+
+- Runs strictly allowlisted, currently due Club OS hooks using WordPress core reschedule/unschedule semantics (`wp_reschedule_event()` before `wp_unschedule_event()` so recurring schedules cannot be lost) and leaves future and non-Club-OS events untouched.
+- Protected by an atomic MySQL Compare-And-Swap (CAS) lock (`iexel_club_os_scheduled_runner_lock`, 300s TTL with per-event renewal and owner-verified atomic `DELETE`), coordinated with WordPress native `doing_cron` and existing domain-level row claiming.
+- Requires one OS/cPanel Cron Job per WordPress installation invoking explicit PHP CLI + WP-CLI (e.g. `*/5 * * * * /usr/local/bin/php /usr/bin/wp --path=<wp-root> iexel-club-os run-scheduled`), as documented in [CLUB_OS_SELF_HOSTED_SCHEDULER_DEPLOYMENT_RUNBOOK.md](CLUB_OS_SELF_HOSTED_SCHEDULER_DEPLOYMENT_RUNBOOK.md).
+- `SCHED-FUTURE` remains a post-MVP goal for lower-friction setup, while recognising that zero-traffic unattended execution on standard PHP hosting still requires an OS-level wake-up trigger.
+
 ### Target-Person Eligibility vs Current-User Authorization
 
 These are two separate questions and both must be asked wherever a feature acts on one Person's data on behalf of another (established by Staff Compliance — see `SPRINTS.md`'s "Staff Compliance — Batch A, Batch B, Batch C & Batch D" and `CLUB_OS_EXPERIENCE_REVIEW_AND_ROADMAP.md`'s Welfare Workspace direction section for the worked example, including Batch D's own alert-generation-vs-alert-delivery application of this same rule):
