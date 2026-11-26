@@ -2,9 +2,9 @@
 
 > **Document Role:** Single authoritative living development register reconciling all repository documentation, handovers, Git history, codebase evidence, Product Owner requirements, deferred post-MVP commitments, technical debt, and release gates.
 > **Created:** 2026-11-25 (`DEVELOPMENT-BACKLOG-001`)
-> **Last Updated:** 2026-11-25 (`DEVELOPMENT-BACKLOG-001A` — Preview Player Experience regressions, actual Player workspace reconciliation & proposed critical-risk prioritisation)
+> **Last Updated:** 2026-11-26 (`ACCELERATED-BATCH-001` — Final Acceptance, Commit `3cbe92d`, Push & Documentation Closeout)
 > **Scope:** Academy MVP Completion → Public Commercial Release → Post-MVP Roadmap
-> **Product Philosophy:** *Minimal Administration. Maximum Engagement.*
+> **Product Philosophy:** *Minimal Administration. Maximum Engagement.* (Binding product and engineering principle — `PRODUCT-PRINCIPLE-001`)
 > **Standing Release Acceptance Rule:** Verify Web Push notification subscription persistence (Notifications remain **On**) after **every** Academy WordPress plugin ZIP replacement (`Replace current with uploaded`).
 
 ---
@@ -29,24 +29,25 @@
 ### 1.1 Plugin Application Repository
 - **Worktree Path:** `c:\Users\leavi\Local Sites\iexel-club-os-dev\worktrees\notify001b2-ordinary-events`
 - **Branch:** `feature/notify004a-adult-web-push`
-- **Confirmed HEAD:** `26df8cf3884d0d286a6075d81a4c677e61e1abfe` (`feat: add Secretary staff compliance workspace`, 2026-11-25)
+- **Confirmed HEAD:** `3cbe92de0662c59a7ce10d307006f93ab2b911a5` (`feat: complete compliance reminders and MVP identity safeguards`, 2026-11-26)
 - **Upstream Synchronisation:** `0` ahead / `0` behind `origin/feature/notify004a-adult-web-push`
 - **Staged Files:** `0`
-- **Working-Tree Inventory:** Exactly `14` uncommitted files (`11` pending `NOTIFY-COMPLIANCE-001` files + `3` protected `NOTIFY-004B` diagnostic files — see Section 5)
-- **Automatic Staff Compliance Notifications:** **DISABLED (default OFF)** (`auto_compliance_enabled => false`)
-- **Latest Accepted Batch:** `SECRETARY-COMPLIANCE-001` — all 5 Academy acceptance checks passed (notification persistence, Secretary Staff Compliance navigation & directory, profile heading & credential management, workspace boundaries), `17/17` pre-commit regression suites passed, committed & pushed at `26df8cf3884d0d286a6075d81a4c677e61e1abfe`.
+- **Working-Tree Inventory:** Exactly `3` uncommitted files (the `3` protected `NOTIFY-004B` diagnostic files — all `11` previously pending `NOTIFY-COMPLIANCE-001` files are now resolved and committed in `3cbe92d`; see Section 5)
+- **Automatic Staff Compliance Notifications:** **Default OFF in code** (`auto_compliance_enabled => false`, `auto_personal_compliance_enabled => false`). *Note: On Academy, restoration of both automatic compliance settings to OFF after live testing was requested but not explicitly confirmed by the Product Owner (recorded as Acceptance Exception #6).*
+- **Latest Accepted Batch:** `ACCELERATED-BATCH-001` — accepted by the Product Owner for Academy MVP testing on `iexel-club-os-ACCELERATED-BATCH-001-r4-academy.zip` (`7,327,306` bytes, SHA-256 `1FA7D6A2F4285CBC693229A345204E133155A2964C90352316BEFDE54003CE67`, `2,115` runtime files, `1,995` PHP files, `9/9` packaging integrity checks, `137/137` focused Batch 1 assertions, `14` regression suites, `5/5` responsive Chrome viewports), with 7 explicitly recorded acceptance exceptions (Section 4.1). Committed & pushed at `3cbe92de0662c59a7ce10d307006f93ab2b911a5` (`27` files).
 - **Canonical Schema / Data Versions (`app/core/Upgrade/UpgradeVersions.php`):** `SCHEMA_VERSION = '2026.11.23'`, `DATA_VERSION = '2026.10.4'`; `DatabaseManager::CANONICAL_TABLES` defines `73` canonical tables.
 
 ### 1.2 Documentation Repository
 - **Repository Path:** `c:\Users\leavi\Local Sites\iexel-club-os-dev\app\public\wp-content\plugins\iexel-club-os-docs`
 - **Branch:** `docs/registration-package-step-validation`
-- **HEAD:** `cc16d2ce251f3c10b974f53cda6f6f5ea6441998` (synchronised with upstream)
-- **Existing Uncommitted Changes Preserved:** `6` modified files (`SPRINTS.md`, `development/CLUB_OS_EXPERIENCE_REVIEW_AND_ROADMAP.md`, `development/CLUB_OS_MVP_TO_PRODUCTION_RELEASE_STRATEGY.md`, `development/DEVELOPMENT_HANDOVER_2026-09-30.md`, `development/MASTER_DEVELOPER_GUIDE.md`, `development/RELEASE_CHECKLIST.md`) and `2` untracked files (`development/ACADEMY_PASSWORD_RESET_EMAIL_TESTING.md`, `development/ACADEMY_REGISTRATION_PACKAGE_PROGRESSION_REPAIR_2026-10-22.md`), plus this newly authored register (`development/CLUB_OS_DEVELOPMENT_BACKLOG.md`).
+- **Prior HEAD (Pre-Closeout):** `72ddaf4c191c33dc90d998064b1b1a0fc7c709aa` (synchronised with upstream prior to Batch 1 closeout commit)
+- **Existing Uncommitted Changes Preserved:** `6` modified files (`SPRINTS.md`, `development/CLUB_OS_EXPERIENCE_REVIEW_AND_ROADMAP.md`, `development/CLUB_OS_MVP_TO_PRODUCTION_RELEASE_STRATEGY.md`, `development/DEVELOPMENT_HANDOVER_2026-09-30.md`, `development/MASTER_DEVELOPER_GUIDE.md`, `development/RELEASE_CHECKLIST.md`) and `2` untracked files (`development/ACADEMY_PASSWORD_RESET_EMAIL_TESTING.md`, `development/ACADEMY_REGISTRATION_PACKAGE_PROGRESSION_REPAIR_2026-10-22.md`), all preserved byte-for-byte and unstaged. Closeout commits ONLY `development/CLUB_OS_DEVELOPMENT_BACKLOG.md` and `development/DEVELOPMENT_HANDOVER_2026-11-26_BATCH_001.md`.
 
 ### 1.3 Recent Confirmed Commit Timeline (Plugin Worktree)
 
 | Commit | Date | Batch / Summary |
 | :--- | :--- | :--- |
+| `3cbe92d` | 2026-11-26 | `ACCELERATED-BATCH-001` — Officer & personal Staff Compliance expiry reminders, permanent read-only browser preview, P0 Parent Home scoping (`PARENT-EXPERIENCE-001A`) & P0 server-side duplicate merge containment (`PEOPLE-MERGE-SAFETY-001`) |
 | `26df8cf` | 2026-11-25 | `SECRETARY-COMPLIANCE-001` — Dedicated Secretary Staff Compliance workspace |
 | `0bfdafc` | 2026-11-25 | `UX-ALERTS-001` + `POLISH` — Unified North Star Priority Alerts + `#ef4444` urgent border + Secretary collapsible Quick Actions |
 | `f72ffa7` | 2026-11-25 | `WELFARE-UX-001C` + `POLISH` + `POLISH-FIX` — Personal Qualifications & Compliance + Account dropdown polish + notification update persistence |
@@ -105,6 +106,7 @@ The following capabilities are verified **COMPLETE** (implemented, validated, an
 
 | Ref | Capability / Batch | Verified Commit(s) | Acceptance / Evidence |
 | :--- | :--- | :--- | :--- |
+| **ACCELERATED-BATCH-001** | Officer & personal Staff Compliance expiry reminders (`NOTIFY-COMPLIANCE-001-FIX`, `WELFARE-NOTIFY-002`, `WELFARE-TEST-001`), permanent read-only browser Compliance Preview in Notification Controls, P0 Parent Home scoping (`PARENT-EXPERIENCE-001A`) & P0 server-side duplicate merge containment (`PEOPLE-MERGE-SAFETY-001`) | `3cbe92d` | PO accepted for Academy MVP (`r4` ZIP SHA-256 `1FA7D6A2F4285CBC693229A345204E133155A2964C90352316BEFDE54003CE67`; `137/137` focused + `14` regression suites + `9/9` packaging + `5/5` viewports); 7 explicit acceptance exceptions recorded in §4.1 |
 | **SECRETARY-COMPLIANCE-001** | Dedicated Secretary Staff Compliance workspace (`/club-os/secretary/staff-compliance/`), nav after People, `PER_PAGE=5` pagination, Secretary Profile `Qualifications & Compliance` heading | `26df8cf` | 5/5 Academy checks passed; 17/17 regression suites (54/54 focused) |
 | **UX-ALERTS-001 / POLISH** | Universal North Star glass Priority Alerts across Player, Parent, Coach; `#ef4444` urgent left border; Secretary collapsible Quick Actions circle fix | `0bfdafc` | 5/5 Academy checks passed (incl. notification persistence); 63/63 focused checks |
 | **WELFARE-UX-001C / POLISH / FIX** | Personal Qualifications & Compliance (`/club-os/account/qualifications-compliance/`), premium midnight-blue/gold Account dropdown, notification persistence across WP ZIP replacement | `f72ffa7` | Academy acceptance passed incl. ZIP replacement & real Club Shop push delivery; 30/30 focused + 12/12 persistence checks |
@@ -137,76 +139,58 @@ The following capabilities are verified **COMPLETE** (implemented, validated, an
 
 Every active pre-MVP requirement is catalogued below with verified codebase evidence, honest status, priority, release target, dependencies, proposed grouped batch, remaining work, and required Product Owner decisions/screenshots.
 
-### 4.1 Staff Compliance Notifications, Personal Reminders & Proposed P0 Containment (Batch 1)
+### 4.1 Staff Compliance Notifications, Personal Reminders & P0 Containment (Batch 1 — ACCEPTED FOR ACADEMY MVP)
 
-> **Proposed Critical-Risk Prioritisation (Subject to Product Owner Approval):** Alongside Staff Compliance officer/personal notifications and `WELFARE-TEST-001`, the development lead proposes moving `PARENT-EXPERIENCE-001A` (P0 cross-family registration data exposure) and adding `PEOPLE-MERGE-SAFETY-001` (P0 server-side containment preventing unsafe duplicate merges until full Batch 4 repair) into **Batch 1**. No application implementation will begin until the Product Owner approves this prioritisation.
+> **Batch 1 Closeout Summary (`3cbe92de0662c59a7ce10d307006f93ab2b911a5`, 2026-11-26):** Decision **D13** (part a) was approved by the Product Owner. All five Batch 1 requirements plus the permanent read-only browser **Preview compliance reminders** facility in WordPress Notification Controls were implemented, verified (`137/137` focused assertions, `14` regression suites, `9/9` packaging integrity checks, `5/5` responsive viewports), deployed via `iexel-club-os-ACCELERATED-BATCH-001-r4-academy.zip` (`7,327,306` bytes, SHA-256 `1FA7D6A2F4285CBC693229A345204E133155A2964C90352316BEFDE54003CE67`), **accepted by the Product Owner for Academy MVP testing**, and committed/pushed at `3cbe92de0662c59a7ce10d307006f93ab2b911a5` (`27` files).
+>
+> **Explicit Batch 1 Acceptance Exceptions & Deferred Verifications (Must Not Be Claimed Completed):**
+> 1. **Personal notification tap-through remains inconclusive** (Product Owner internet interruption during Academy test) — verify during subsequent Academy testing.
+> 2. **Officer repeat-run manual deduplication was not explicitly confirmed** during Academy testing (automated deduplication & durable expiry-lifecycle pruning coverage passed).
+> 3. **Temporary merge restriction notice was not observed** during manual Academy acceptance (server-side containment in `PersonMergeExecutor` & `PortalRouter` remains mandatory and enforced).
+> 4. **Actual MySQL database concurrency validation remains outstanding** (local LocalWP MySQL service offline; automated lock/heartbeat/stale-takeover & overlap tests passed in-memory).
+> 5. **Full duplicate merge execution repair (`PEOPLE-MERGE-001`) is explicitly deferred until after Academy MVP** (required before unrestricted commercial rollout; see `PEOPLE-DUPLICATE-PREVENTION-001` in Section 4.4).
+> 6. **Restoration of both automatic compliance settings to OFF on Academy was requested but not explicitly confirmed** — do not claim completed.
+> 7. **Temporary Welfare role configuration on Test Parent was used for Academy acceptance** — do not silently alter Academy test account roles.
 
 #### `NOTIFY-COMPLIANCE-001-FIX` — Complete Proactive Officer Staff Compliance Expiry Reminders
-- **Status:** `PARTIALLY IMPLEMENTED` (11 uncommitted working-tree files with 3 confirmed defects + 1 scheduler allowlist gap; currently default OFF)
+- **Status:** `COMPLETE` *(Accepted for Academy MVP at `3cbe92d`; see Batch 1 Exception #2 & #4)*
 - **Original Source:** `NOTIFY-COMPLIANCE-001` pending working tree + Prompt §4.1
-- **Expected Behaviour:** Consolidated daily email and privacy-safe Web Push reminders at 30, 14, and 7 days before expiry, and on expiry, delivered to all authorised active Secretaries and Welfare Officers using canonical eligibility, per-recipient deduplication, atomic locking, and lock-screen privacy (zero staff names, credential details, or confidential data).
-- **Current Implementation Evidence:** Uncommitted `app/core/StaffCompliance/StaffComplianceNotificationService.php` (621 lines), `tools/validate-notify-compliance-001.php` (476 lines), and 9 modified files (`Application.php`, `Kernel.php`, `PushAutomaticNotificationDispatcher.php`, `PushDeliveryQueue.php`, `PushPilot.php`, `PushPilotConfig.php`, `PushPilotController.php`, `PushControlsPage.php`, `assets/pwa/service-worker.js`). Confirmed defects:
-  1. **Role key defect (2 files + masked test):** `StaffComplianceNotificationService.php:385,426,447` queries `r.role_key IN ('welfare', 'secretary')` instead of canonical `'welfare_officer'`; `PushPilot.php:237` also checks `in_array('welfare', $roles, true)` on tap authorisation; `validate-notify-compliance-001.php` masks it by stubbing `'welfare'`.
-  2. **Cross-recipient deduplication suppression:** `StaffComplianceNotificationService.php:209-235, 278-283, 305-320` stores milestone keys globally per channel in `iexel_staff_compliance_reminder_ledger` rather than per-recipient, suppressing delivery/retry to other authorised officers once any single officer succeeds.
-  3. **Non-atomic lock:** `StaffComplianceNotificationService.php:188-194` uses TOCTOU `get_transient`/`set_transient` instead of atomic `add_option`/CAS lock.
-  4. **Newly identified CLI runner gap:** `app/core/Scheduling/ScheduledTaskRunner.php:28-39` (`allowed_hooks()`) omits `iexel_staff_compliance_expiry_check`, preventing unattended execution via `SCHED-001B`.
-- **Acceptance Evidence:** None yet (never enabled on Academy).
-- **Priority / Target:** **P1 — Academy MVP**
-- **Dependencies:** `SCHED-001B` (`17cb2f7`), `WELFARE-UX-001B` (`07d9943`), `SECRETARY-COMPLIANCE-001` (`26df8cf`).
-- **Proposed Batch:** **Batch 1 — Staff Compliance Notifications & Personal Reminders**
-- **Remaining Work:** Fix `welfare_officer` in service, tap router, and validator (also route Secretary taps to `/club-os/secretary/staff-compliance/` and Welfare taps to `/club-os/welfare/staff-compliance/`); convert ledger/daily dedupe to per-recipient `(recipient_person_id, credential_id, expires_on, milestone, channel)`; replace transient lock with atomic CAS lock; register hook in `ScheduledTaskRunner::allowed_hooks()`.
-- **PO Decisions / Screenshots Required:** Confirm whether officer reminders should default OFF until enabled post-verification in Academy Notification Controls (required: default OFF).
+- **Implemented Behaviour:** Consolidated daily email and privacy-safe Web Push reminders at 30, 14, and 7 days before expiry, and on expiry (catch-up within current milestone band, no recurring overdue reminders), delivered to all authorised active Secretaries and Welfare Officers (`welfare_officer` canonical role key), with per-recipient durable expiry-lifecycle deduplication, atomic lease/heartbeat lock, WP-CLI `ScheduledTaskRunner` registration (`iexel_staff_compliance_expiry_check`), and permanent read-only browser **Preview compliance reminders** in WordPress Notification Controls.
+- **Validation & Acceptance Evidence:** `tools/validate-notify-compliance-001.php` (`63/63`), `tools/validate-compliance-preview-ui.php` (`8/8`), `tools/validate-sched001b-cli-runner.php` (`18/18`), `r4` Academy ZIP accepted by PO; committed & pushed at `3cbe92de0662c59a7ce10d307006f93ab2b911a5`.
+- **Priority / Target:** **P1 — Academy MVP (Accepted)**
 
 #### `WELFARE-NOTIFY-002` — Personal Staff Credential Expiry Reminders
-- **Status:** `OUTSTANDING`
+- **Status:** `COMPLETE` *(Accepted for Academy MVP at `3cbe92d`; see Batch 1 Exception #1)*
 - **Original Source:** `WELFARE-UX-001C` / Prompt §4.1
-- **Expected Behaviour:** Consolidated personal expiry reminders (email + adult Web Push) for eligible active staff about their own canonical Person credentials (DBS, First Aid, Safeguarding, and qualifications **with** an expiry date) at 30, 14, 7 days and on expiry, routing to `/club-os/account/qualifications-compliance/`. Qualifications without expiry dates must never trigger reminders. Separate explicit admin toggle (default OFF), independent of officer reminders. Privacy-safe lock-screen copy.
-- **Current Implementation Evidence:** Read-only viewing exists at `PortalPersonalQualificationsCompliancePage.php` (`f72ffa7`), but **zero** reminder/notification code exists for personal staff expiry reminders.
-- **Acceptance Evidence:** None.
-- **Priority / Target:** **P1 — Academy MVP**
-- **Dependencies:** `WELFARE-UX-001C` (`f72ffa7`), `NOTIFY-COMPLIANCE-001-FIX` (shared scheduler, atomic lock, per-recipient ledger).
-- **Proposed Batch:** **Batch 1 — Staff Compliance Notifications & Personal Reminders**
-- **Remaining Work:** Implement personal reminder projection (reusing `StaffCompliancePersonEligibility` & `PersonalStaffComplianceAccess`), separate `auto_personal_compliance_enabled` control (default OFF) in `PushPilotConfig` & `PushControlsPage`, distinct privacy-safe push destination routing to `AccountUrl::qualifications_compliance()`, per-recipient dedupe, and unit/runtime validator.
-- **PO Decisions / Screenshots Required:** Confirm personal reminder schedule matches 30 / 14 / 7 / 0 days (same as officer reminders).
+- **Implemented Behaviour:** Consolidated personal expiry reminders (email + adult Web Push) for eligible active staff about their own canonical Person credentials with expiry dates at 30, 14, 7 days and expiry day, routing to `/club-os/account/qualifications-compliance/`, gated by separate default-OFF `auto_personal_compliance_enabled` toggle, privacy-safe lock-screen copy, and permanent browser preview coverage.
+- **Validation & Acceptance Evidence:** `tools/validate-welfare-notify-002.php` (`33/33`), `tools/validate-compliance-preview-ui.php` (`8/8`), `r4` Academy ZIP accepted by PO (personal tap-through inconclusive due to PO internet interruption — Exception #1); committed & pushed at `3cbe92de0662c59a7ce10d307006f93ab2b911a5`.
+- **Priority / Target:** **P1 — Academy MVP (Accepted)**
 
 #### `WELFARE-TEST-001` — Combined Staff Compliance Notification End-to-End Acceptance
-- **Status:** `OUTSTANDING`
+- **Status:** `COMPLETE` *(Accepted for Academy MVP at `3cbe92d`; exceptions #1, #2, #4, #6, #7 recorded above)*
 - **Original Source:** Prompt §4.1
-- **Expected Behaviour:** Combined end-to-end automated and Academy acceptance covering officer reminders, personal reminders, email + Web Push delivery, per-recipient deduplication, permissions, CLI scheduler integration, lock-screen privacy, default-OFF/toggle controls, and notification persistence across plugin update.
-- **Current Implementation Evidence:** Partial validator (`validate-notify-compliance-001.php`, currently masking `welfare` defect); no personal reminder coverage.
-- **Acceptance Evidence:** None yet.
-- **Priority / Target:** **P1 — Academy MVP**
-- **Dependencies:** `NOTIFY-COMPLIANCE-001-FIX`, `WELFARE-NOTIFY-002`.
-- **Proposed Batch:** **Batch 1 — Staff Compliance Notifications, Personal Reminders & Proposed P0 Containment** (audit confirms `NOTIFY-COMPLIANCE-001-FIX`, `WELFARE-NOTIFY-002`, and `WELFARE-TEST-001` cleanly deliver as one coherent programme & single Academy acceptance pass).
-- **Remaining Work:** Comprehensive combined validator + controlled Academy acceptance protocol.
+- **Validation & Acceptance Evidence:** `137/137` focused Batch 1 assertions (`validate-notify-compliance-001.php`, `validate-welfare-notify-002.php`, `validate-compliance-preview-ui.php`, `validate-parent-experience-001a.php`, `validate-people-merge-safety-001.php`), `validate-notify-update-persistence.php` (`12/12`), `14` regression suites, `5/5` responsive viewports, and Academy `r4` acceptance gates passed with explicit exceptions recorded.
+- **Priority / Target:** **P1 — Academy MVP (Accepted)**
 
 #### `PARENT-EXPERIENCE-001A` — Parent Home Registration Active-Persona Scoping (Multi-Role Secretary Data Exposure)
-- **Status:** `REGRESSION` (Active P0 cross-family data-exposure defect)
-- **Original Source:** Prompt §5.3 (`DEVELOPMENT-BACKLOG-001`) / Proposed Batch 1 elevation (`DEVELOPMENT-BACKLOG-001A`)
-- **Expected Behaviour:** Viewing Parent Home as a multi-role Secretary or Club Admin must display **only** the authenticated Parent's own family registrations and family registration alerts — never club-wide Secretary registration records or other families' `under_review` notes.
-- **Current Implementation Evidence:** Confirmed defect at `app/core/Experience/MemberExperienceService.php:953` (`parent_children_cards()`) and `992` (`parent()`), which call `$this->kernel->parent_registration_portal()->registrations()` **without** `->in_context('parent')`. Because `ParentRegistrationPortalService::$wizard_context` defaults to `null`, `can_manage_club_wide()` (`lines 164-167`) returns `true` for Secretaries/Admins and returns `player_registrations()->all()` across the entire club, leaking into both the Parent Home Registration widget (`line 998`) and `registration-info-req-{id}` Priority Alerts (`line 995`).
-- **Acceptance Evidence:** None (reported by PO on Academy).
-- **Priority / Target:** **P0 (Security / Data Minimisation) — Academy MVP**
-- **Dependencies:** Subject to Product Owner approval of Batch 1 critical-risk prioritisation (**Decision D13**).
-- **Proposed Batch:** **Batch 1 — Proposed Critical-Risk Elevation** *(moved from Batch 2 because of P0 cross-family data-exposure risk; subject to PO approval)*.
-- **Remaining Work:** Enforce strict parent/family scoping (`in_context('parent')` + explicit `$c->person_id` / `$child_ids` filtering) in `MemberExperienceService::parent()` and `parent_children_cards()`, ensure `ParentRegistrationPortalService` does not leak shared state across calls, and add permanent multi-role Secretary+Parent regression validator.
+- **Status:** `COMPLETE` *(Accepted for Academy MVP at `3cbe92d`)*
+- **Original Source:** Prompt §5.3 (`DEVELOPMENT-BACKLOG-001`) / Elevated to Batch 1 under approved Decision D13
+- **Implemented Behaviour:** Enforced strict parent/family scoping (`in_context('parent')` + explicit linked-child filtering) in `MemberExperienceService::parent()` and `parent_children_cards()`, eliminating cross-family registration and `under_review` Priority Alert exposure for multi-role Secretaries/Admins on Parent Home.
+- **Validation & Acceptance Evidence:** `tools/validate-parent-experience-001a.php` (`21/21`), Academy Gate A (`6/6`) passed; committed & pushed at `3cbe92de0662c59a7ce10d307006f93ab2b911a5`.
+- **Priority / Target:** **P0 (Security / Data Minimisation) — Academy MVP (Accepted)**
 
 #### `PEOPLE-MERGE-SAFETY-001` — Server-Side Duplicate Merge Safety Containment (Interim P0 Guard)
-- **Status:** `OUTSTANDING` *(Proposed Batch 1 containment task; subject to PO approval)*
-- **Original Source:** `DEVELOPMENT-BACKLOG-001A` §4 (derived from P0 safety bypass discovered in `PEOPLE-MERGE-001`)
-- **Expected Behaviour:** Prevent unsafe duplicate merge execution **server-side** until the full `PEOPLE-MERGE-001` repair is implemented and accepted in Batch 4. Must investigate and enforce canonical server-side fail-closed protection at the request/executor boundary (`PersonMergeExecutor` / `PortalRouter` / POST handler) — **never relying solely on hiding or disabling a UI button**.
-- **Current Implementation Evidence:** `PersonMergeExecutor.php:734,747` checks non-existent Finance & Welfare table names (`invoices`, `payments`, `billing_schedules`, `shop_orders`, `safeguarding_concerns`, `medical_notes`, `player_welfare_cases`) and skips `person_credentials`, silently returning zero blockers (currently masked in the UI only by the `comparison_version` hash mismatch bug, which must not be relied upon as a security boundary).
-- **Acceptance Evidence:** None.
-- **Priority / Target:** **P0 (Data Integrity & Safeguarding Containment) — Academy MVP**
-- **Dependencies:** Subject to Product Owner approval of Batch 1 critical-risk prioritisation (**Decision D13**). Full repair remains retained in **Batch 4 (`PEOPLE-MERGE-001`)**.
-- **Proposed Batch:** **Batch 1 — Proposed P0 Containment** *(subject to PO approval)*.
-- **Remaining Work:** Investigate minimal server-side containment (either fail-closed guard on `execute_clean_merge` until Batch 4 or immediate canonical Finance/Welfare/Compliance table blocker fix + server-side guard), add automated runtime test proving direct POST attempts cannot bypass safety checks, and verify zero regression to read-only duplicate detection.
+- **Status:** `COMPLETE` *(Accepted for Academy MVP at `3cbe92d`; see Batch 1 Exception #3 & #5)*
+- **Original Source:** `DEVELOPMENT-BACKLOG-001A` §4 (derived from P0 safety bypass in `PEOPLE-MERGE-001`) / Approved Decision D13
+- **Implemented Behaviour:** Enforced fail-closed server-side containment at both `PersonMergeExecutor` and `PortalRouter` POST boundaries so unsafe duplicate merges cannot execute (including direct POST attempts) while preserving read-only duplicate detection and safe review.
+- **Validation & Acceptance Evidence:** `tools/validate-people-merge-safety-001.php` (`12/12`), Academy Gate C accepted with minor visual exception (temporary merge restriction notice not observed — Exception #3); committed & pushed at `3cbe92de0662c59a7ce10d307006f93ab2b911a5`. Full merge execution repair (`PEOPLE-MERGE-001`) is deferred until after Academy MVP and remains required before unrestricted commercial rollout.
+- **Priority / Target:** **P0 (Data Integrity & Safeguarding Containment) — Academy MVP (Accepted)**
 
 ---
 
-### 4.2 Parent Experience, Preview Player Experience & Welfare Polish (Batch 2)
+### 4.2 Parent Experience, Preview Player Experience & Welfare Polish (Batch 2 — NEXT ACTIVE IMPLEMENTATION BATCH)
 
-> **Cross-Reference:** `PARENT-EXPERIENCE-001A` (P0 Parent Home registration active-persona scoping) is proposed for elevation into **Batch 1** (Section 4.1) subject to Product Owner approval (**Decision D13**). If not approved for Batch 1, it remains P0 at the head of Batch 2.
+> **Next Active Batch:** With Batch 1 (`3cbe92d`) accepted and closed (including `PARENT-EXPERIENCE-001A`), **Batch 2 — Parent & Welfare** is the next active implementation batch. Genuine unresolved Product Owner decisions before starting Batch 2 implementation: **D1** (Back My Game multi-guardian link model & `AGE_UNKNOWN` notice) and **D2** (`BMG-001` Academy MVP inclusion vs Post-MVP deferral). Do **not** begin implementation until authorised. Preserve the accepted actual Player workspace (`PL-021..025`).
 
 #### `PLAYER-PREVIEW-UX-001` — Preview Player Experience Visual Parity & Return Navigation
 - **Status:** `REGRESSION` — Product Owner confirmed *(both regressions recorded under one requirement with distinct acceptance criteria)*
@@ -390,7 +374,7 @@ Every active pre-MVP requirement is catalogued below with verified codebase evid
 
 ---
 
-### 4.4 People Identity, Youth Player & Guardian Registration, and Safe Duplicate Merge (Batch 4)
+### 4.4 People Identity, Youth Player & Guardian Registration, and Duplicate Prevention (Batch 4)
 
 #### `PEOPLE-001` — Youth Player & Guardian Registration Workflow (During Add Person)
 - **Status:** `OUTSTANDING`
@@ -399,27 +383,31 @@ Every active pre-MVP requirement is catalogued below with verified codebase evid
 - **Current Implementation Evidence:** `PortalSecretaryPersonAddPage.php` (468 lines) currently has **no** dynamic youth-player detection for standard `player` role, **no** inline Guardian fields, and **no** existing Guardian matcher (line 314 tells the Secretary to navigate away to Guardian Links afterwards). `AGE-001` and `AGE-001A` are confirmed `COMPLETE` (`39a4b43`).
 - **Acceptance Evidence:** None.
 - **Priority / Target:** **P1 — Academy MVP**
-- **Dependencies:** `AGE-001` (`39a4b43`).
-- **Proposed Batch:** **Batch 4 — People Identity, Youth Guardian Registration & Duplicate Merge Repair**
+- **Dependencies:** `AGE-001` (`39a4b43`), `PEOPLE-DUPLICATE-PREVENTION-001`.
+- **Proposed Batch:** **Batch 4 — People Identity, Youth Guardian Registration & Duplicate Prevention**
 - **Remaining Work:** Add progressive DOB-triggered Youth Guardian section to `PortalSecretaryPersonAddPage`, safe existing-Guardian candidate search (name/email/phone, explicit Secretary confirmation required, zero auto-merge), atomic creation + relationship link service, and `classify_person()` alignment on `PortalSecretaryGuardianLinksPage`.
 
-#### `PEOPLE-MERGE-001` — Duplicate Detection & Merge Execution Repair and Safety Hardening
-- **Status:** `REGRESSION` (Implemented in commits `92f97b1`..`00b86d9`, but broken in live UI and carrying a critical Finance/Safeguarding silent safety bypass)
-- **Original Source:** Prompt §5.8 + commits `92f97b1`..`00b86d9`
+#### `PEOPLE-DUPLICATE-PREVENTION-001` — Canonical Person Duplicate Prevention Audit & Hardening
+- **Status:** `OUTSTANDING`
+- **Original Source:** Product Owner Decision (`ACCELERATED-BATCH-001` Closeout, 2026-11-26)
+- **Expected Behaviour:** Audit and complete duplicate prevention across **all** canonical Person creation paths — youth registration, Guardian matching/reuse, sibling registration, staff creation, Secretary Add Person, account linking, and imports — ensuring existing canonical Persons are surfaced for explicit human reuse rather than duplicated. **Never auto-merge or silently conflate people on shared contact details** (email, phone, or address).
+- **Current Implementation Evidence:** Server-side duplicate merge containment (`PEOPLE-MERGE-SAFETY-001`) is active (`3cbe92d`), and read-only duplicate detection/safe review remains available. Prevention across all creation pathways has not yet been audited/completed.
+- **Acceptance Evidence:** None.
+- **Priority / Target:** **P1 — Academy MVP**
+- **Dependencies:** `PEOPLE-001`, `PEOPLE-MERGE-SAFETY-001` (`3cbe92d`).
+- **Proposed Batch:** **Batch 4 — People Identity, Youth Guardian Registration & Duplicate Prevention**
+- **Remaining Work:** Audit every canonical Person creation pathway for duplicate risk, implement safe candidate suggestion/reuse with explicit confirmation (zero auto-merge on shared contact details), and add regression coverage.
+
+#### `PEOPLE-MERGE-001` — Full Duplicate Merge Execution Repair and Safety Hardening
+- **Status:** `DEFERRED` *(Deferred until after Academy MVP per PO Decision `PEOPLE-DUPLICATE-PREVENTION-001`; server-side containment `PEOPLE-MERGE-SAFETY-001` remains active at `3cbe92d`; **mandatory before unrestricted commercial rollout**)*
+- **Original Source:** Prompt §5.8 + commits `92f97b1`..`00b86d9` + PO Decision `PEOPLE-DUPLICATE-PREVENTION-001` (2026-11-26)
 - **Expected Behaviour:** Authorised full Secretaries can detect duplicates, switch proposed survivor cleanly, reconcile contact details safely, keep separate records, or execute a transactional clean-case merge that accurately blocks on **all** canonical Finance, Welfare/Medical, Staff Compliance, Account, Privileged Role, and Event/Match dependencies, preserving relationships, registrations, and mandatory audit history.
-- **Current Implementation Evidence:** Codebase audit confirmed **7 concrete defects** in live HEAD:
-  1. **[CRITICAL — ALWAYS FAILS]** `PortalSecretaryPersonMergePreviewPage.php:920,1049` submits `$model['version']` (preview hash), whereas `PersonMergeExecutor.php:162` and `PersonDuplicateReviewService.php:78` check `$case['version']` (case hash) — so both *Resolve Duplicate* and *Confirm Separate Members* always fail (`stale_comparison` / `comparison_changed`).
-  2. **[CRITICAL — BROKEN SURVIVOR SWITCH]** `PortalSecretaryPersonMergePreviewPage.php:409,427,451` omits `comparison_version` on survivor switch URLs/forms, causing `PersonMergePreviewService.php:64-65` to throw; survivor radio buttons (`line 404`) sit outside any `<form>` with no JS listener.
-  3. **[CRITICAL — NON-FUNCTIONAL CONTACT RECONCILIATION]** Contact radios (`lines 497,501`) are hardcoded `disabled`; `WordPressPersonMergeTransaction.php:265` omits `email, phone, address` from `lock_pair_for_update()`, so `PersonMergeExecutor.php:294,324` never updates contact fields.
-  4. **[CRITICAL — SILENT SAFETY BYPASS]** `PersonMergeExecutor.php:734,747` checks non-existent table names (`invoices`, `payments`, `billing_schedules`, `shop_orders`, `safeguarding_concerns`, `medical_notes`, `player_welfare_cases`) instead of canonical `finance_invoices`, `finance_payments`, `finance_billing_schedules`, `club_shop_orders`, `finance_accounts`, `fundraising_*`, `welfare_concerns`, `player_operational_medical_safety`, and skips `person_credentials` completely — silently returning 0 blockers!
-  5. Undefined `$identity_confirmed` variable (`PortalSecretaryPersonMergePreviewPage.php:821,840,860,871`).
-  6. 404 broken link to `/club-os/secretary/people/guardians/` (`line 576`; canonical is `/club-os/secretary/guardian-links/`).
-  7. Preflight key mismatch (`clean_case_resolution` vs `clean_case`, `line 163`) and duplicate DOM `id="section-e-title"` (`lines 904,931,966`).
-- **Acceptance Evidence:** Failed PO usability expectations on Academy (matches root causes above).
-- **Priority / Target:** **P0 (Data Integrity & Safeguarding Safety) — Academy MVP**
-- **Dependencies:** Follows interim server-side containment `PEOPLE-MERGE-SAFETY-001` (proposed for **Batch 1** subject to PO approval — Decision **D13**).
-- **Proposed Batch:** **Batch 4 — People Identity, Youth Guardian Registration & Duplicate Merge Repair** *(full merge repair remains in Batch 4; interim server-side safety containment is proposed for Batch 1 under `PEOPLE-MERGE-SAFETY-001`)*.
-- **Remaining Work:** Fix all 7 defects (especially canonical table blocker checks including `person_credentials`, `version` contract alignment, survivor switching, contact reconciliation, 404 link, and UI tokenisation), add end-to-end runtime regression tests covering Finance/Welfare/Compliance blocker enforcement and clean merge execution, and verify manually on Academy.
+- **Current Implementation Evidence:** Codebase audit confirmed **7 concrete defects** in live HEAD (1. `comparison_version` hash mismatch, 2. broken survivor switch, 3. disabled contact radios & missing `lock_pair_for_update` columns, 4. non-existent Finance/Welfare table names + skipped `person_credentials`, 5. undefined `$identity_confirmed`, 6. 404 guardian links URL, 7. preflight key mismatch & duplicate DOM ID). Unsafe execution is currently blocked server-side by `PEOPLE-MERGE-SAFETY-001` (`3cbe92d`); read-only duplicate detection & safe review remain preserved.
+- **Acceptance Evidence:** Server-side containment accepted in Batch 1 (`3cbe92d`, Exception #3 & #5).
+- **Priority / Target:** **P0 (Data Integrity & Safeguarding Safety) — Deferred Post-Academy MVP / Required Before Unrestricted Commercial Rollout**
+- **Dependencies:** `PEOPLE-MERGE-SAFETY-001` (`3cbe92d` — active containment).
+- **Proposed Batch:** **Post-Academy MVP / Pre-Commercial Release (Batch 8 Gate)** *(replaces prior Batch 4 placement per PO decision `PEOPLE-DUPLICATE-PREVENTION-001`)*.
+- **Remaining Work:** Fix all 7 defects (especially canonical table blocker checks including `person_credentials`, `version` contract alignment, survivor switching, contact reconciliation, 404 link, and UI tokenisation), add end-to-end DB-backed integrity & runtime regression tests covering Finance/Welfare/Compliance blocker enforcement and clean merge execution, and verify manually before removing containment.
 
 ---
 
@@ -497,6 +485,13 @@ Every active pre-MVP requirement is catalogued below with verified codebase evid
 - **Expected Behaviour:** Notify Parents/families via email + eligible Web Push when a Registration transitions to `under_review` (information requested), `approved`, or `rejected`.
 - **Priority / Target:** **P2 — Academy MVP (or confirm deferral if time-constrained)**
 - **Proposed Batch:** **Batch 6** (confirm MVP inclusion with PO).
+
+#### `NOTIFY-SETTINGS-001` (Admin Rationalisation) — Notification Controls Page Rationalisation
+- **Status:** `OUTSTANDING`
+- **Original Source:** Product Owner Decision (`ACCELERATED-BATCH-001` Closeout, 2026-11-26)
+- **Expected Behaviour:** Audit and rationalise the WordPress **Notification Controls** administration page (`PushControlsPage.php` / `PushPilotController.php` / `PushPilotConfig.php`), inspecting historical pilot controls, diagnostic utilities, obsolete experimental interfaces, and their underlying dependencies **before** removing anything. Retain all working automatic notification settings, emergency pause, delivery diagnostics, safe testing, permanent read-only compliance preview, and safeguarding controls. *(Note: Member-facing grouped notification category preferences remain explicitly deferred to Post-MVP in Section 7.)*
+- **Priority / Target:** **P2 — Academy MVP**
+- **Proposed Batch:** **Batch 6 — Remaining Notifications, Personal Account & Member Experiences**
 
 #### `NOTIFY-VERIFY-001` — Remaining Open Notification Manual Acceptance Checks
 - **Status:** `IMPLEMENTED — NEEDS VERIFICATION`
@@ -583,23 +578,11 @@ See **Section 8 (Public Commercial Release Requirements)** and **Section 9 (Tech
 
 ## 5. Pending & Protected Working-Tree Implementation Inventory
 
-Exactly **14 files** remain uncommitted in `c:\Users\leavi\Local Sites\iexel-club-os-dev\worktrees\notify001b2-ordinary-events`. **All 14 must remain byte-identical** until explicitly targeted by their respective authorised batches.
+Following the `ACCELERATED-BATCH-001` commit (`3cbe92de0662c59a7ce10d307006f93ab2b911a5`), **all 11 previously pending `NOTIFY-COMPLIANCE-001` files are resolved and committed**. Exactly **3 protected files** remain uncommitted in `c:\Users\leavi\Local Sites\iexel-club-os-dev\worktrees\notify001b2-ordinary-events`. **All 3 must remain byte-identical and unstaged** until explicitly targeted during pre-commercial release closeout.
 
-### 5.1 Pending `NOTIFY-COMPLIANCE-001` Implementation (11 Files — Target: Batch 1 `NOTIFY-COMPLIANCE-001-FIX`)
+### 5.1 Pending `NOTIFY-COMPLIANCE-001` Implementation (11 Files — RESOLVED & COMMITTED in `3cbe92d`)
 
-| File | Git State | Verified SHA-256 | Notes |
-| :--- | :--- | :--- | :--- |
-| `app/core/Application.php` | Modified | `8944B077A0183E442C51613BD7DA7C14A45499817B022B6B4431D6228CA3B7B6` | Registers daily hook `iexel_staff_compliance_expiry_check` |
-| `app/core/Communications/PushAutomaticNotificationDispatcher.php` | Modified | `2F012477B125EA695A303E4CADBD8D40B69D0493B18C3619FA0AA01192684E73` | Adds `enqueue_staff_compliance()` gated on `auto_compliance_enabled` |
-| `app/core/Communications/PushDeliveryQueue.php` | Modified | `FE402FFE028D56A86E76A17DD09305601604CD322E5927D1C22BFF3EEBC71397` | Adds adult-only `staff_compliance` destination type |
-| `app/core/Communications/PushPilot.php` | Modified | `38F429E465A84FA8B5C733453B2DE4128BEE5FE15B71E5665B31781B36803D2A` | Tap destination auth (**contains `welfare` role bug at L237**) |
-| `app/core/Communications/PushPilotConfig.php` | Modified | `8DF41C5A9F22B7CE93D200D4218B00E4D36823CE99078AA683118BA5F07E91A0` | Defaults `auto_compliance_enabled => false` (OFF) |
-| `app/core/Communications/PushPilotController.php` | Modified | `3CBA060167E607CB365B696C8739952AE181C2B3CA18C2A2BF4C408C2EA0BD85` | Admin toggle & manual dry/live run handler |
-| `app/core/Kernel.php` | Modified | `B16E78F075D149B879015CC4D37D11793EFA8E8942392FD4B7C6076566174929` | Wires `staff_compliance_notification_service()` |
-| `app/core/UI/Pages/PushControlsPage.php` | Modified | `32517CB6EA00B569DFBACD4B0EBFF8A8F55E66C9AB55F1BFF2502DC3C012796C` | Admin UI toggle & manual run button (disabled when OFF) |
-| `assets/pwa/service-worker.js` | Modified | `01934991D6590C7F8836B321532B3FCDBE66C9B4C0C054960EA17C7CF4C17481` | Privacy-safe static lock-screen copy for `staff_compliance` |
-| `app/core/StaffCompliance/StaffComplianceNotificationService.php` | Untracked | `81BDD2839B0361E1A735B58FACE5D1EDC8EE3A2DB36E750A5BB6EDE1A45F9917` | Contains all 3 known defects (`welfare` role key, cross-recipient dedupe, non-atomic transient lock) |
-| `tools/validate-notify-compliance-001.php` | Untracked | `F81D89AD1E16FC8AB28E14BB0C8C0F85FE3963D22AA2A4DBB1B9A5795E6FECE8` | Masks `welfare` defect via stubbed role key |
+All 11 files (`Application.php`, `PushAutomaticNotificationDispatcher.php`, `PushDeliveryQueue.php`, `PushPilot.php`, `PushPilotConfig.php`, `PushPilotController.php`, `Kernel.php`, `PushControlsPage.php`, `assets/pwa/service-worker.js`, `StaffComplianceNotificationService.php`, `validate-notify-compliance-001.php`) were repaired, expanded with personal reminders, durable deduplication, lease/heartbeat concurrency protection, CLI scheduler registration, and permanent read-only browser preview, accepted on Academy (`r4`), and committed & pushed at `3cbe92de0662c59a7ce10d307006f93ab2b911a5`.
 
 ### 5.2 Protected `NOTIFY-004B` Diagnostic Files (3 Files — Deferred Until Post-Academy MVP / Pre-Public Commercial Release)
 
@@ -617,16 +600,42 @@ To meet the Product Owner's deadline without compromising safeguarding, financia
 
 | Batch | Name & Scope | Included Refs | Dependencies & Prerequisite PO Input | Targeted Academy Manual Acceptance |
 | :--- | :--- | :--- | :--- | :--- |
-| **Batch 1** *(Recommended Next; P0 changes subject to PO approval)* | **Staff Compliance Notifications, Personal Reminders & Proposed P0 Containment** | `NOTIFY-COMPLIANCE-001-FIX`, `WELFARE-NOTIFY-002`, `WELFARE-TEST-001`, plus proposed P0 additions: `PARENT-EXPERIENCE-001A` (**P0**), `PEOPLE-MERGE-SAFETY-001` (**P0** server-side containment) | **D13** (PO approval of proposed P0 elevation into Batch 1; Staff Compliance notifications build directly on 11 pending files + `SCHED-001B`) | Single combined check: notification persistence on ZIP replace, default-OFF verification, enable officer & personal toggles, verify Welfare + Secretary + staff email & push delivery, per-recipient dedupe, lock-screen privacy, CLI runner; verify multi-role Secretary on Parent Home sees own family only; verify unsafe duplicate merge blocked server-side |
-| **Batch 2** | **Parent Experience, Preview Player Experience & Welfare Polish** | `PARENT-EXPERIENCE-001B`, `PLAYER-PREVIEW-UX-001` (Regressions A & B — North Star visual parity + Exit Preview navigation), `WELFARE-POLISH-001` (incl. `OS-011`), optional `BMG-001` *(plus `PARENT-EXPERIENCE-001A` if not approved for Batch 1)* | **D1** (BMG shared vs per-guardian link), **D2** (`BMG-001` MVP inclusion) | Verify 2nd Guardian sees/copies/manages BMG; verify all 11 `PLAYER-PREVIEW-UX-001` acceptance criteria side-by-side with unchanged actual Player workspace; Welfare People pagination & section spacing on mobile + desktop; notification persistence |
+| **Batch 1** *(ACCEPTED FOR ACADEMY MVP — `3cbe92d`)* | **Staff Compliance Notifications, Personal Reminders & P0 Containment** | `NOTIFY-COMPLIANCE-001-FIX`, `WELFARE-NOTIFY-002`, `WELFARE-TEST-001`, permanent browser Compliance Preview, `PARENT-EXPERIENCE-001A` (**P0**), `PEOPLE-MERGE-SAFETY-001` (**P0**) | **D13** (part a) approved; `r4` ZIP accepted by PO (`1FA7D6A2F4285CBC693229A345204E133155A2964C90352316BEFDE54003CE67`); committed & pushed at `3cbe92d` | Completed with 7 explicit exceptions recorded in §4.1 (personal tap-through, officer repeat-run dedupe, merge notice visual observation, actual DB concurrency, `PEOPLE-MERGE-001` deferral, Academy auto-toggles OFF confirmation, temporary Welfare role on Test Parent) |
+| **Batch 2** *(NEXT ACTIVE)* | **Parent Experience, Preview Player Experience & Welfare Polish** | `PARENT-EXPERIENCE-001B`, `PLAYER-PREVIEW-UX-001` (Regressions A & B — North Star visual parity + Exit Preview navigation), `WELFARE-POLISH-001` (incl. `OS-011`), optional `BMG-001` *(actual Player workspace `PL-021..025` preserved unchanged)* | **D1** (BMG shared vs per-guardian link + `AGE_UNKNOWN` notice), **D2** (`BMG-001` MVP inclusion vs Post-MVP) | Verify 2nd Guardian sees/copies/manages BMG; verify all 11 `PLAYER-PREVIEW-UX-001` acceptance criteria side-by-side with unchanged actual Player workspace; Welfare People pagination & section spacing on mobile + desktop; notification persistence |
 | **Batch 3** | **Coach Matchday, Lineup Builder & Events Experience** | `COACH-MATCH-001A/B/C`, `EVENTS-EXPERIENCE-001A/B/C`, `SEC-009` | **S1/S2** (Lineup/Match Report screenshots), **D3** (Training Hub vs Session Hub) | Mobile Lineup wrapping, alignment & drag lock; Match Mode bulk attendance/bench & vacant pitch entry; Match Report avatars; Training Hub + finished-session **Reflect** persistence; recurring series future-audience addition; notification persistence |
-| **Batch 4** *(P0 Repair)* | **People Identity, Youth Player & Guardian Registration & Full Duplicate Merge Repair** | `PEOPLE-001`, `PEOPLE-MERGE-001` (**P0** full repair following Batch 1 `PEOPLE-MERGE-SAFETY-001` containment) | Follows `PEOPLE-MERGE-SAFETY-001` containment | Add youth Player -> suggest existing Guardian / create new Guardian atomically (zero auto-merge); full Duplicate Merge survivor switch, contact reconciliation, Finance/Welfare/Compliance blocker enforcement, clean-case merge & Keep Separate; notification persistence |
+| **Batch 4** | **People Identity, Youth Player & Guardian Registration & Duplicate Prevention** | `PEOPLE-001`, `PEOPLE-DUPLICATE-PREVENTION-001` *(full duplicate merge repair `PEOPLE-MERGE-001` deferred post-Academy MVP / required before unrestricted commercial rollout; `PEOPLE-MERGE-SAFETY-001` containment remains active)* | Follows `PEOPLE-MERGE-SAFETY-001` containment (`3cbe92d`) | Add youth Player -> suggest existing Guardian / create new Guardian atomically (zero auto-merge); verify duplicate prevention across all canonical Person creation paths without auto-merging on shared contact details; notification persistence |
 | **Batch 5** | **Treasurer Mobile UX, Fundraising Payment Methods & Training Only Fee Rules** | `FINANCE-UX-001`, `FINANCE-FEES-001`, `FIN-031` (close) | **D4** (Shop View All Orders), **D5–D8** (Training Only fee & transition billing policy) | Mobile View Campaign card fit, Appeal payment methods, Income Source Breakdown zero horizontal scroll, Shop filters/detail controls; Training Only fee rule creation, billing run & Match Player transition; notification persistence |
-| **Batch 6** | **Remaining Notifications, Personal Account & Member Experiences** | `NOTIFY-FINANCE-001`, `NOTIFY-009C`, `NOTIFY-PRIORITY-001`, `COM-002`, `ACCOUNT-UX-001`, `PLAYER-UX-001` (`PL-026/027` pending PO confirm; actual Player visual items reverify-only), `OS-031`, `MSG-BACKLINK-001`, `NOTIFY-VERIFY-001`, optional `NOTIFY-010B` / `SHOP-CANCEL-001` / `FIN-MYFINANCE-001` | **D9** (`NOTIFY-FINANCE-001` channel/self-suppress), **D10** (My Profile editability), **D13** (`PL-026/027` confirm) | Overdue invoice full vs partial settlement Treasurer notice; My Profile navigation (no WP-Admin redirect loop); non-executive image lightbox; Parent/Player visited announcement backlinks; confirmed actual-Player commitments without disturbing accepted `PL-021..025`; notification persistence |
+| **Batch 6** | **Remaining Notifications, Personal Account & Member Experiences** | `NOTIFY-FINANCE-001`, `NOTIFY-009C`, `NOTIFY-PRIORITY-001`, `NOTIFY-SETTINGS-001` *(Notification Controls admin rationalisation)*, `COM-002`, `ACCOUNT-UX-001`, `PLAYER-UX-001` (`PL-026/027` pending PO confirm; actual Player visual items reverify-only), `OS-031`, `MSG-BACKLINK-001`, `NOTIFY-VERIFY-001`, optional `NOTIFY-010B` / `SHOP-CANCEL-001` / `FIN-MYFINANCE-001` | **D9** (`NOTIFY-FINANCE-001` channel/self-suppress), **D10** (My Profile editability), **D13** (part b: `PL-026/027` confirm) | Overdue invoice full vs partial settlement Treasurer notice; rationalised Notification Controls retaining working controls & compliance preview; My Profile navigation (no WP-Admin redirect loop); non-executive image lightbox; Parent/Player visited announcement backlinks; confirmed actual-Player commitments without disturbing accepted `PL-021..025`; notification persistence |
 | **Batch 7** | **Global Visual/Mobile Polish & Academy MVP Feedback** | `GLOBAL-UX-001` (incl. Guardian Links notice, global `:visited`, `GLOBAL-UX-001-SCREENSHOTS`), `MVP-FEEDBACK-001` | **S3** (PO WhatsApp screenshots), **D11** (Feedback youth policy & inbox access) | Cross-workspace rendered browser sweep (`320px–1280px`), submit & triage feedback items as adult + verify youth boundary; notification persistence |
-| **Batch 8** | **Final Academy MVP & Public Commercial Release Readiness** | `B4D-04A`, `NOTIFY-004B` diagnostic closeout, Apple PWA/device acceptance, clean install & upgrade matrix, validator debt cleanup, `main` promotion & release tagging (`M01–M18`) | Local MySQL/nginx restored or staging DB host; **D12** (`P2P-01..12` v1.0 inclusion/exclusion) | Full release readiness sign-off (distinct Academy MVP sign-off vs Public Commercial Release sign-off) |
+| **Batch 8** | **Final Academy MVP & Public Commercial Release Readiness** | `PEOPLE-MERGE-001` *(full repair required before unrestricted commercial rollout)*, `DEPLOY-ENV-001` *(read-only hosting inventory & production install docs)*, `B4D-04A`, `NOTIFY-004B` diagnostic closeout, Apple PWA/device acceptance, clean install & upgrade matrix, validator debt cleanup, `main` promotion & release tagging (`M01–M18`) | Local MySQL/nginx restored or staging DB host; **D12** (`P2P-01..12` v1.0 inclusion/exclusion) | Full release readiness sign-off (distinct Academy MVP sign-off vs Public Commercial Release sign-off) |
 
-> **Governance & Efficiency Guardrail:** All proposed priority changes remain subject to explicit Product Owner approval before application implementation. **The accelerated programme must not be interpreted as authorisation for unrestricted simultaneous implementation or unrelated refactoring.** Cosmetic/visual fixes within Batches 2, 5, 6, and 7 allow bounded autonomy to resolve adjacent contrast, spacing, and wrapping defects in one pass while preserving safeguarding, identity, permission, finance, and notification validation. Each batch runs targeted automated validators + headless Chrome multi-viewport checks + one concise Academy acceptance checklist (always including notification persistence).
+### 6.1 Accelerated Development Delivery Rules (Adopted 2026-11-26)
+- Operate autonomously within agreed batch scope; do not request approval for routine implementation, validation, or housekeeping decisions.
+- Stop only for material discrepancies, unexpected repository changes, security/safeguarding concerns, genuine unresolved product decisions, or failed essential validation.
+- Group coherent work into bounded batches with one validated Academy deployment ZIP and one concise acceptance checklist per batch (always verifying notification persistence after plugin ZIP replacement).
+- Never claim unconfirmed, interrupted, or environment-blocked checks as completed; record explicit exceptions transparently.
+- Preserve protected working-tree files (`3` `NOTIFY-004B` app diagnostics + `8` unrelated uncommitted docs) byte-for-byte unless explicitly authorised.
+
+### 6.2 Binding Product & Engineering Principle (`PRODUCT-PRINCIPLE-001`)
+**Minimal Administration. Maximum Engagement.** is a binding product and engineering principle across installation, configuration, club administration, and member experiences:
+- Prefer guided setup, sensible automatic configuration, reusable canonical data, actionable browser-accessible diagnostics, and safe automation over manual technical intervention (SQL, PHP edits, WP-CLI, or File Manager workarounds).
+- Retain explicit human oversight for safeguarding, identity resolution, privileged permissions, and financial integrity.
+- Convenience must never compromise security, privacy, data integrity, or operational reliability.
+
+#### Proposed Insertion for `development/MASTER_DEVELOPER_GUIDE.md` (Engineering Rules — Pending Authorised Docs Reconciliation)
+> *Note: `development/MASTER_DEVELOPER_GUIDE.md` is currently one of the 8 protected pre-existing uncommitted files in `iexel-club-os-docs` and was NOT modified during Batch 1 closeout. Insert the exact block below under Engineering Rules during the next authorised documentation reconciliation:*
+>
+> ```markdown
+> ### Product Principle: Minimal Administration. Maximum Engagement. (`PRODUCT-PRINCIPLE-001`)
+> - Design every installation, configuration, club administration, and member workflow to minimise administrative friction while maximising meaningful engagement.
+> - Prefer guided in-app setup, safe defaults, automatic canonical data reuse, permanent browser-accessible operational diagnostics, and safe automation over manual SQL, WP-CLI, PHP edits, or hosting File Manager procedures.
+> - Always retain explicit human approval and auditability for safeguarding, identity linking/merging, privileged role assignments, and financial records.
+> - Operational convenience must never weaken security, privacy, data minimisation, integrity, or reliability boundaries.
+> ```
+
+### 6.3 Cross-Cutting Environment & Setup Workstreams (`DEPLOY-ENV-001` & `SETUP-UX-001`)
+- **`DEPLOY-ENV-001` (Forthcoming Read-Only Hosting Environment Inventory — Pre-Production Deployment):** Conduct a strictly read-only inventory of the Academy hosting environment (document root and hosting-home additions, scheduler configuration, private storage paths, keys/config dependencies, and historical diagnostic files). Classify every item as `required`, `automatable`, `historical`, `obsolete`, or `unverified` for production deployment (`iexelfc.co.uk`). Account for the Product Owner having **cPanel File Manager access but NO Terminal access**. Complete production installation documentation before production deployment. **Never delete files or expose secrets.**
+- **`SETUP-UX-001` (Guided Installation & Setup Experience — Future Audit & Development Workstream):** Audit existing clean-install, database-upgrade, System Status, and Release Readiness foundations first, then design a guided installation/setup workflow covering environment checks, club branding, initial season/team/membership configuration, essential service setup, and readiness guidance — minimising dependence on manual SQL, PHP, WP-CLI, or File Manager steps.
 
 ---
 
@@ -636,7 +645,8 @@ All deferred commitments recovered from `CLUB_OS_EXPERIENCE_REVIEW_AND_ROADMAP.m
 
 | Ref / Area | Deferred Requirement | Source |
 | :--- | :--- | :--- |
-| **NOTIFY-SETTINGS-001** | Member-facing grouped notification category controls (including Select All / Deselect All) with separate explicit youth safeguards | Prompt §4.2 |
+| **NOTIFY-SETTINGS-001 (Member Prefs)** | Member-facing grouped notification category controls (including Select All / Deselect All) with separate explicit youth safeguards *(distinct from the Batch 6 WordPress Notification Controls admin rationalisation)* | Prompt §4.2 |
+| **SETUP-UX-001** | Guided installation & setup experience (reusing clean-install, DB-upgrade, System Status & Release Readiness; environment checks, branding, initial season/team/membership config, essential services, readiness guidance; minimise manual SQL/PHP/WP-CLI/File Manager dependence) | PO Decision (2026-11-26) |
 | **PWA-INSTALL-REMINDER-001** | Non-permanent PWA install reminder cadence / backoff (currently permanent one-shot `localStorage` flag) | Prompt §4.2 |
 | **SCHED-FUTURE** | Lower-friction scheduling setup & scheduler health diagnostics UI | `MASTER_DEVELOPER_GUIDE.md`, `SPRINTS.md` |
 | **COM-SCALE-001** | Push delivery scale-out beyond bounded immediate/opportunistic batches for large club-wide audiences | Experience Roadmap L909 |
@@ -666,9 +676,11 @@ All deferred commitments recovered from `CLUB_OS_EXPERIENCE_REVIEW_AND_ROADMAP.m
 
 | Gate | Academy MVP | Public Commercial Release | Current State |
 | :--- | :---: | :---: | :--- |
-| **Active Pre-MVP Batches 1–7** | Required | Required | In progress (Batches 1–7 queued) |
+| **Active Pre-MVP Batches 1–7** | Required | Required | Batch 1 accepted (`3cbe92d`); Batches 2–7 queued (Batch 2 next active) |
 | **Notification Delivery & Update Persistence** | Required (checked after every Academy ZIP replace) | Required | Passing on Android Chrome & Edge; standing release rule retained |
-| **Safeguarding, Identity & Role/Workspace Permission Regression** | Required | Required | Ongoing automated + manual verification (P0 fixes in Batches 2 & 4) |
+| **Safeguarding, Identity & Role/Workspace Permission Regression** | Required | Required | Batch 1 P0 fixes accepted (`PARENT-EXPERIENCE-001A`, `PEOPLE-MERGE-SAFETY-001`); Batch 4 adds `PEOPLE-DUPLICATE-PREVENTION-001` |
+| **Full Duplicate Merge Execution Repair (`PEOPLE-MERGE-001`)** | Deferred *(server-side containment `PEOPLE-MERGE-SAFETY-001` active)* | **Required before unrestricted commercial rollout** | Deferred post-Academy MVP per PO decision `PEOPLE-DUPLICATE-PREVENTION-001` |
+| **Hosting Environment Inventory & Production Install Docs (`DEPLOY-ENV-001`)** | Recommended (read-only Academy inventory) | **Required before production deployment (`iexelfc.co.uk`)** | Queued (read-only inventory; PO has cPanel File Manager, no Terminal) |
 | **Financial Integrity Regression** | Required | Required | Automated passing; Batch 5 expands for Training Only fee rules |
 | **Case-Sensitive Autoload & PHP Packaging Integrity** | Required | Required | Passing (`validate-case-sensitive-autoload.php` `0` failures; `validate-hotfix-dash-001-php-packaging-integrity.php` `9/9`) |
 | **Local/Staging DB-Backed WordPress Runtime Testing** | Recommended (mitigated by Academy live tests) | **Required** | **BLOCKED locally** (Local MySQL/nginx stopped) |
@@ -725,7 +737,7 @@ All deferred commitments recovered from `CLUB_OS_EXPERIENCE_REVIEW_AND_ROADMAP.m
 | **D10** | Batch 6 | **Personal Account / My Profile (`ACCOUNT-UX-001`):** Read-only canonical identity + change-password flow for MVP, or allow adults to edit their own email/phone/address? | Read-only canonical identity, membership/role summary & secure password change for MVP (safest against identity/email drift before public release). |
 | **D11** | Batch 7 | **MVP Feedback Safeguarding (`MVP-FEEDBACK-001`):** Restrict submissions to adults (with helpful message for youth Players), and who accesses the inbox (Club Admin only vs Club Admin + Secretary)? | Adult-only submission for MVP (no youth free-text PII risk); Club Admin inbox (with optional Secretary read access). |
 | **D12** | Batch 8 | **Pay-to-Play (`P2P-01..12`) & Optional Queue (`NOTIFY-010B`, `SHOP-CANCEL-001`, `FIN-MYFINANCE-001`):** Confirm which (if any) are required for Academy MVP vs formally deferred to Post-MVP. | Defer `P2P-01..12` to Post-MVP unless explicitly ratified for 2026/27 season; decide `NOTIFY-010B` / `SHOP-CANCEL-001` / `FIN-MYFINANCE-001` before Batch 6. |
-| **D13** | Batch 1 / Batch 6 | **Proposed Critical-Risk Prioritisation & Actual-Player Commitments (`DEVELOPMENT-BACKLOG-001A`):** (a) Approve elevating `PARENT-EXPERIENCE-001A` (P0 data leak) and adding `PEOPLE-MERGE-SAFETY-001` (P0 server-side duplicate-merge containment) into **Batch 1** alongside Staff Compliance notifications (retaining full merge repair in Batch 4); (b) confirm whether `PL-026` and `PL-027` (`PLAYER-UX-001`) are still desired for Academy MVP or deferred to Post-MVP. | Approve proposed Batch 1 P0 containment (`PARENT-EXPERIENCE-001A` + `PEOPLE-MERGE-SAFETY-001`) for immediate risk reduction; confirm `PL-026`/`PL-027` before Batch 6 without disturbing the accepted actual Player workspace. |
+| **D13** | Batch 1 *(Resolved)* / Batch 6 *(Open)* | **Critical-Risk Prioritisation & Actual-Player Commitments (`DEVELOPMENT-BACKLOG-001A`):** (a) **APPROVED & DELIVERED (`3cbe92d`):** `PARENT-EXPERIENCE-001A` and `PEOPLE-MERGE-SAFETY-001` completed in Batch 1; (b) **STILL OPEN until Batch 6:** confirm whether `PL-026` and `PL-027` (`PLAYER-UX-001`) are still desired for Academy MVP or deferred to Post-MVP. | Part (a) closed; confirm `PL-026`/`PL-027` before Batch 6 without disturbing the accepted actual Player workspace. |
 
 ### 10.2 Product Owner Screenshots Needed Before Implementation
 - **S1 (Before Batch 3):** Mobile Lineup Builder screenshots (player name wrapping e.g. *Jonathan*, custom formation alignment, accidental scroll-drag).
@@ -740,9 +752,9 @@ Every requirement in `DEVELOPMENT-BACKLOG-001` (§4–§8) and every recovered r
 
 | Stable Ref | Requirement Summary | Source | Status | Release Target | Batch |
 | :--- | :--- | :--- | :--- | :--- | :---: |
-| `NOTIFY-COMPLIANCE-001-FIX` | Officer Staff Compliance expiry reminders (3 defects + CLI runner hook) | Prompt §4.1, pending tree | `PARTIALLY IMPLEMENTED` | Academy MVP | Batch 1 |
-| `WELFARE-NOTIFY-002` | Personal staff credential expiry reminders (separate default-OFF control) | Prompt §4.1 | `OUTSTANDING` | Academy MVP | Batch 1 |
-| `WELFARE-TEST-001` | Combined Staff Compliance notification E2E acceptance | Prompt §4.1 | `OUTSTANDING` | Academy MVP | Batch 1 |
+| `NOTIFY-COMPLIANCE-001-FIX` | Officer Staff Compliance expiry reminders (role fix, per-recipient durable dedupe, lease/heartbeat lock, CLI runner hook, browser preview) | Prompt §4.1, `3cbe92d` | `COMPLETE` *(Academy MVP accepted; §4.1 exceptions #2 & #4)* | Academy MVP | Batch 1 (Done) |
+| `WELFARE-NOTIFY-002` | Personal staff credential expiry reminders (separate default-OFF control + browser preview) | Prompt §4.1, `3cbe92d` | `COMPLETE` *(Academy MVP accepted; §4.1 exception #1)* | Academy MVP | Batch 1 (Done) |
+| `WELFARE-TEST-001` | Combined Staff Compliance notification E2E acceptance | Prompt §4.1, `3cbe92d` | `COMPLETE` *(Academy MVP accepted; §4.1 exceptions #1, #2, #4, #6, #7)* | Academy MVP | Batch 1 (Done) |
 | `NOTIFY-009A` | Latest Event Update only per event in Priority Alerts | Handover, `001e61f` | `COMPLETE` | Academy MVP | Done |
 | `NOTIFY-009B` / `009B1` | Secretary/AS Priority Alerts & recipient-centred announcement alerts | Prompt §4.2, `8e8bfeb` | `COMPLETE` *(1 manual test in `NOTIFY-VERIFY-001`)* | Academy MVP | Done / B6 |
 | `NOTIFY-009C` | Mobile push notification grouping (Android & iOS) | Prompt §4.2, Roadmap | `OUTSTANDING` | Academy MVP | Batch 6 |
@@ -752,7 +764,8 @@ Every requirement in `DEVELOPMENT-BACKLOG-001` (§4–§8) and every recovered r
 | `NOTIFY-010B` | Registration lifecycle notifications (`under_review`/`approved`/`rejected`) | `NOTIFY-010A` handover | `OUTSTANDING` | Academy MVP / Confirm | Batch 6 |
 | `NOTIFY-VERIFY-001` | Remaining 3 live manual notification checks (`009B1`, `010A` cron, `008D`) | Handovers | `IMPLEMENTED — NEEDS VERIFICATION` | Academy MVP | Batch 1/6 |
 | `NOTIFY-004B-CLOSEOUT` | Protected diagnostic files closeout (preserve tap fix) | Prompt §4.2, §8 | `DEFERRED` | Public Commercial Release | Batch 8 |
-| `NOTIFY-SETTINGS-001` | Grouped member category notification controls + youth safeguards | Prompt §4.2 | `DEFERRED` | Post-MVP | Post-MVP |
+| `NOTIFY-SETTINGS-001` (Admin) | Notification Controls page rationalisation (audit pilot/diagnostic controls before removal; retain working settings, pause, preview & safeguards) | PO Decision (2026-11-26) | `OUTSTANDING` | Academy MVP | Batch 6 |
+| `NOTIFY-SETTINGS-001` (Member) | Grouped member category notification controls + youth safeguards | Prompt §4.2 | `DEFERRED` | Post-MVP | Post-MVP |
 | `PWA-INSTALL-REMINDER-001` | Non-permanent PWA install reminder cadence | Prompt §4.2 | `DEFERRED` | Post-MVP | Post-MVP |
 | `NOTIFY-FINANCE-001` | Treasurer overdue invoice full-settlement notification | Prompt §4.3 | `OUTSTANDING` | Academy MVP | Batch 6 |
 | `ACCOUNT-UX-001` | Portal-native My Profile (`/club-os/account/`) replacing broken WP-Admin link | Prompt §4.4 | `OUTSTANDING` | Academy MVP | Batch 6 |
@@ -768,7 +781,7 @@ Every requirement in `DEVELOPMENT-BACKLOG-001` (§4–§8) and every recovered r
 | `EVENTS-EXPERIENCE-001B` | Training Session Plan **Reflect** persistence (`COACHING-EXPERIENCE-SLICE-03`) | Prompt §5.2, `a7efc32` | `PARTIALLY IMPLEMENTED` | Academy MVP | Batch 3 |
 | `EVENTS-EXPERIENCE-001C` | Recurring event series linkage & future-occurrence audience updates | Prompt §5.2 | `OUTSTANDING` | Academy MVP | Batch 3 |
 | `SEC-009` | Secretary Create Event Specific People modal mobile overflow | Roadmap / Release Strategy | `IMPLEMENTED — NEEDS VERIFICATION` | Academy MVP | Batch 3 |
-| `PARENT-EXPERIENCE-001A` | Multi-role Secretary Parent Home registration scoping (P0 cross-family data leak) | Prompt §5.3, `001A` §4 | `REGRESSION` | Academy MVP | Batch 1 *(Proposed P0)* |
+| `PARENT-EXPERIENCE-001A` | Multi-role Secretary Parent Home registration scoping (P0 cross-family data leak) | Prompt §5.3, `001A` §4, `3cbe92d` | `COMPLETE` *(Academy MVP accepted)* | Academy MVP | Batch 1 (Done) |
 | `PARENT-EXPERIENCE-001B` | Authorised second Parent/Guardian Back My Game link access | Prompt §5.3 | `PARTIALLY IMPLEMENTED` | Academy MVP | Batch 2 |
 | `BMG-001` | Parent Back My Game supporter/pledge status visibility | Roadmap / Release Strategy | `OUTSTANDING` | Academy MVP / Confirm | Batch 2 |
 | `WELFARE-POLISH-001` | Welfare People pagination, touching section spacing, mobile polish & `OS-011` | Prompt §5.4, Roadmap | `PARTIALLY IMPLEMENTED` | Academy MVP | Batch 2 |
@@ -779,8 +792,9 @@ Every requirement in `DEVELOPMENT-BACKLOG-001` (§4–§8) and every recovered r
 | `FIN-031` | Treasurer static text caret cursor (browser caret browsing) | Roadmap | `IMPLEMENTED — NEEDS VERIFICATION` | Close on PO confirm | Batch 5 |
 | `AGE-001` / `AGE-001A` | Manual Adult Verification Policy & People UX polish | `39a4b43`, Handover | `COMPLETE` | Academy MVP | Done |
 | `PEOPLE-001` | Youth Player & Guardian Registration during Add Person (no auto-merge) | Prompt §5.7, `AGE-001` handover | `OUTSTANDING` | Academy MVP | Batch 4 |
-| `PEOPLE-MERGE-SAFETY-001` | Server-side containment preventing unsafe duplicate merges until Batch 4 repair (not UI-button-only) | `DEVELOPMENT-BACKLOG-001A` §4 | `OUTSTANDING` *(Proposed P0)* | Academy MVP | Batch 1 *(Proposed P0)* |
-| `PEOPLE-MERGE-001` | Full duplicate detection & merge repair (7 defects incl. Finance/Welfare table bypass) | Prompt §5.8, `001A` §4 | `REGRESSION` | Academy MVP | Batch 4 |
+| `PEOPLE-DUPLICATE-PREVENTION-001` | Canonical Person duplicate prevention audit & hardening across all creation paths (never auto-merge on shared contact details) | PO Decision (2026-11-26) | `OUTSTANDING` | Academy MVP | Batch 4 |
+| `PEOPLE-MERGE-SAFETY-001` | Server-side containment preventing unsafe duplicate merges (not UI-button-only) | `DEVELOPMENT-BACKLOG-001A` §4, `3cbe92d` | `COMPLETE` *(Academy MVP accepted; §4.1 exception #3)* | Academy MVP | Batch 1 (Done) |
+| `PEOPLE-MERGE-001` | Full duplicate merge execution repair (7 defects incl. Finance/Welfare/Compliance blockers) | Prompt §5.8, PO Decision (2026-11-26) | `DEFERRED` *(Post-Academy MVP; required before unrestricted commercial rollout)* | Public Commercial Release | Batch 8 Gate |
 | `GLOBAL-UX-001` | Cross-workspace contrast, Guardian Links notice, global `:visited`, overflow & PO screenshot sweep | Prompt §5.9 | `PARTIALLY IMPLEMENTED` | Academy MVP | Batch 7 |
 | `TEXT-SELECT-001` | Selective UI text/image selection restrictions | Prompt §5.9 | `DEFERRED` | Post-MVP | Post-MVP |
 | `MVP-FEEDBACK-001` | In-app Issues, Fixes & Suggestions + admin inbox | Prompt §5.10 | `OUTSTANDING` | Academy MVP | Batch 7 |
@@ -790,6 +804,9 @@ Every requirement in `DEVELOPMENT-BACKLOG-001` (§4–§8) and every recovered r
 | `B4D-04A` | Encrypted backup vault (`IEXEL_RC_VAULT`) end-to-end verification & restore | Release Strategy, `B4D-04A` docs | `OUTSTANDING` | Public Commercial Release | Batch 8 |
 | `P2P-01..12` | Pay-to-Play U6–U16 2026/27 policy & workflow contracts | Release Strategy | `BLOCKED` *(awaiting PO inclusion decision)* | Unapproved / Conditional | Batch 8 / Post-MVP |
 | `RR-COMMERCIAL-001` | Clean install/upgrade matrix, Apple PWA acceptance, DB-backed runtime, host cron, role guides, validator cleanup, `main` promotion (`M01–M18`) | Prompt §8, `RELEASE_CHECKLIST.md`, Release Strategy | `OUTSTANDING` / `BLOCKED` *(local MySQL stopped)* | Public Commercial Release | Batch 8 |
+| `DEPLOY-ENV-001` | Read-only hosting environment inventory (Academy doc-root + hosting-home) & production install docs for `iexelfc.co.uk` (cPanel File Manager only, no Terminal; never delete/expose secrets) | PO Decision (2026-11-26) | `OUTSTANDING` | Pre-Production Deployment | Batch 8 / Pre-Prod |
+| `PRODUCT-PRINCIPLE-001` | Binding product & engineering principle: *Minimal Administration. Maximum Engagement.* (proposed `MASTER_DEVELOPER_GUIDE.md` insertion recorded in §6.2) | PO Decision (2026-11-26) | `COMPLETE` *(Recorded in backlog & handover; guide insertion queued)* | Standing Governance | Standing |
+| `SETUP-UX-001` | Guided installation & setup experience (audit clean-install/upgrade/System Status/Release Readiness first; minimise manual SQL/PHP/WP-CLI/File Manager steps) | PO Decision (2026-11-26) | `DEFERRED` *(Future audit & development workstream)* | Post-MVP / Commercial | Post-MVP |
 | Post-MVP Items (§7) | Weather, Rewards/XP, Team Health, Advanced Welfare/Compliance/Finance/Comms, `SET-002..004`, `ADM-004`, Audit, Placeholder cleanup, Licensing/Theme/Native App/Demo/League OS | Prompt §7, Roadmap, Master Guide | `DEFERRED` | Post-MVP | Post-MVP |
 
 ---
