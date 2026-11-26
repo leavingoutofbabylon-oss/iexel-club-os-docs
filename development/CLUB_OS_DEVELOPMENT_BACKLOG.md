@@ -2,7 +2,7 @@
 
 > **Document Role:** Single authoritative living development register reconciling all repository documentation, handovers, Git history, codebase evidence, Product Owner requirements, deferred post-MVP commitments, technical debt, and release gates.
 > **Created:** 2026-11-25 (`DEVELOPMENT-BACKLOG-001`)
-> **Last Updated:** 2026-11-26 (`ACCELERATED-BATCH-001` — Final Acceptance, Commit `3cbe92d`, Push & Documentation Closeout)
+> **Last Updated:** 2026-11-26 (`ACCELERATED-BATCH-002` — Final Acceptance, Commit `9b4f200`, Push & Documentation Closeout)
 > **Scope:** Academy MVP Completion → Public Commercial Release → Post-MVP Roadmap
 > **Product Philosophy:** *Minimal Administration. Maximum Engagement.* (Binding product and engineering principle — `PRODUCT-PRINCIPLE-001`)
 > **Standing Release Acceptance Rule:** Verify Web Push notification subscription persistence (Notifications remain **On**) after **every** Academy WordPress plugin ZIP replacement (`Replace current with uploaded`).
@@ -29,24 +29,25 @@
 ### 1.1 Plugin Application Repository
 - **Worktree Path:** `c:\Users\leavi\Local Sites\iexel-club-os-dev\worktrees\notify001b2-ordinary-events`
 - **Branch:** `feature/notify004a-adult-web-push`
-- **Confirmed HEAD:** `3cbe92de0662c59a7ce10d307006f93ab2b911a5` (`feat: complete compliance reminders and MVP identity safeguards`, 2026-11-26)
+- **Confirmed HEAD:** `9b4f200b68f53be121e40671c131f5b4157bf987` (`feat: complete shared guardian fundraising and parent welfare experience`, 2026-11-26)
 - **Upstream Synchronisation:** `0` ahead / `0` behind `origin/feature/notify004a-adult-web-push`
 - **Staged Files:** `0`
-- **Working-Tree Inventory:** Exactly `3` uncommitted files (the `3` protected `NOTIFY-004B` diagnostic files — all `11` previously pending `NOTIFY-COMPLIANCE-001` files are now resolved and committed in `3cbe92d`; see Section 5)
-- **Automatic Staff Compliance Notifications:** **Default OFF in code** (`auto_compliance_enabled => false`, `auto_personal_compliance_enabled => false`). *Note: On Academy, restoration of both automatic compliance settings to OFF after live testing was requested but not explicitly confirmed by the Product Owner (recorded as Acceptance Exception #6).*
-- **Latest Accepted Batch:** `ACCELERATED-BATCH-001` — accepted by the Product Owner for Academy MVP testing on `iexel-club-os-ACCELERATED-BATCH-001-r4-academy.zip` (`7,327,306` bytes, SHA-256 `1FA7D6A2F4285CBC693229A345204E133155A2964C90352316BEFDE54003CE67`, `2,115` runtime files, `1,995` PHP files, `9/9` packaging integrity checks, `137/137` focused Batch 1 assertions, `14` regression suites, `5/5` responsive Chrome viewports), with 7 explicitly recorded acceptance exceptions (Section 4.1). Committed & pushed at `3cbe92de0662c59a7ce10d307006f93ab2b911a5` (`27` files).
-- **Canonical Schema / Data Versions (`app/core/Upgrade/UpgradeVersions.php`):** `SCHEMA_VERSION = '2026.11.23'`, `DATA_VERSION = '2026.10.4'`; `DatabaseManager::CANONICAL_TABLES` defines `73` canonical tables.
+- **Working-Tree Inventory:** Exactly `3` uncommitted files (the `3` protected `NOTIFY-004B` diagnostic files — see Section 5)
+- **Automatic Staff Compliance Notifications:** **Default OFF in code** (`auto_compliance_enabled => false`, `auto_personal_compliance_enabled => false`). *Note: On Academy, restoration of both automatic compliance settings to OFF after Batch 1 live testing was requested but not explicitly confirmed (Batch 1 Acceptance Exception #6).*
+- **Latest Accepted Batch:** `ACCELERATED-BATCH-002` (including `ACCELERATED-BATCH-002-FIX-001` `r2`) — all Academy acceptance tests passed on `iexel-club-os-ACCELERATED-BATCH-002-r2-academy.zip` (`7,332,165` bytes, SHA-256 `CAA615CE53ED5D1F48979DE11EDF06697C4236A7AE8CE338FD308A73EA49DDBA`, `2,116` runtime files, `1,996` PHP files, `81/81` focused assertions, `9/9` packaging integrity checks, regression validators passed), committed & pushed at `9b4f200b68f53be121e40671c131f5b4157bf987` (`23` files).
+- **Canonical Schema / Data Versions (`app/core/Upgrade/UpgradeVersions.php`):** `SCHEMA_VERSION = '2026.11.26'` (additive `token_ciphertext` column on `fundraising_share_links`), `DATA_VERSION = '2026.10.4'`; `DatabaseManager::CANONICAL_TABLES` defines `73` canonical tables.
 
 ### 1.2 Documentation Repository
 - **Repository Path:** `c:\Users\leavi\Local Sites\iexel-club-os-dev\app\public\wp-content\plugins\iexel-club-os-docs`
 - **Branch:** `docs/registration-package-step-validation`
-- **Prior HEAD (Pre-Closeout):** `72ddaf4c191c33dc90d998064b1b1a0fc7c709aa` (synchronised with upstream prior to Batch 1 closeout commit)
-- **Existing Uncommitted Changes Preserved:** `6` modified files (`SPRINTS.md`, `development/CLUB_OS_EXPERIENCE_REVIEW_AND_ROADMAP.md`, `development/CLUB_OS_MVP_TO_PRODUCTION_RELEASE_STRATEGY.md`, `development/DEVELOPMENT_HANDOVER_2026-09-30.md`, `development/MASTER_DEVELOPER_GUIDE.md`, `development/RELEASE_CHECKLIST.md`) and `2` untracked files (`development/ACADEMY_PASSWORD_RESET_EMAIL_TESTING.md`, `development/ACADEMY_REGISTRATION_PACKAGE_PROGRESSION_REPAIR_2026-10-22.md`), all preserved byte-for-byte and unstaged. Closeout commits ONLY `development/CLUB_OS_DEVELOPMENT_BACKLOG.md` and `development/DEVELOPMENT_HANDOVER_2026-11-26_BATCH_001.md`.
+- **Prior HEAD (Pre-Closeout):** `d58effdbc243caae1c401bcd945663635c3583a7` (synchronised with upstream prior to Batch 2 closeout commit)
+- **Existing Uncommitted Changes Preserved:** `6` modified files (`SPRINTS.md`, `development/CLUB_OS_EXPERIENCE_REVIEW_AND_ROADMAP.md`, `development/CLUB_OS_MVP_TO_PRODUCTION_RELEASE_STRATEGY.md`, `development/DEVELOPMENT_HANDOVER_2026-09-30.md`, `development/MASTER_DEVELOPER_GUIDE.md`, `development/RELEASE_CHECKLIST.md`) and `2` untracked files (`development/ACADEMY_PASSWORD_RESET_EMAIL_TESTING.md`, `development/ACADEMY_REGISTRATION_PACKAGE_PROGRESSION_REPAIR_2026-10-22.md`), all preserved byte-for-byte and unstaged. Closeout commits ONLY `development/CLUB_OS_DEVELOPMENT_BACKLOG.md` and `development/DEVELOPMENT_HANDOVER_2026-11-26_BATCH_002.md`.
 
 ### 1.3 Recent Confirmed Commit Timeline (Plugin Worktree)
 
 | Commit | Date | Batch / Summary |
 | :--- | :--- | :--- |
+| `9b4f200` | 2026-11-26 | `ACCELERATED-BATCH-002` + `FIX-001` (`r2`) — Multi-Guardian shared Back My Game links (`token_ciphertext`, Show/Copy Link, legacy preservation, adult verification notice), Parent Preview Player North Star parity & Exit Preview (`protect_event_snapshot` active-role fix), Welfare People pagination, section spacing & `OS-011` Concern Detail hierarchy |
 | `3cbe92d` | 2026-11-26 | `ACCELERATED-BATCH-001` — Officer & personal Staff Compliance expiry reminders, permanent read-only browser preview, P0 Parent Home scoping (`PARENT-EXPERIENCE-001A`) & P0 server-side duplicate merge containment (`PEOPLE-MERGE-SAFETY-001`) |
 | `26df8cf` | 2026-11-25 | `SECRETARY-COMPLIANCE-001` — Dedicated Secretary Staff Compliance workspace |
 | `0bfdafc` | 2026-11-25 | `UX-ALERTS-001` + `POLISH` — Unified North Star Priority Alerts + `#ef4444` urgent border + Secretary collapsible Quick Actions |
@@ -106,6 +107,7 @@ The following capabilities are verified **COMPLETE** (implemented, validated, an
 
 | Ref | Capability / Batch | Verified Commit(s) | Acceptance / Evidence |
 | :--- | :--- | :--- | :--- |
+| **ACCELERATED-BATCH-002 + FIX-001 (`r2`)** | Multi-Guardian shared Back My Game links (`PARENT-EXPERIENCE-001B`, AEAD `token_ciphertext`, persistent Show/Copy Link, legacy preservation, adult verification notice), Parent Preview Player North Star alignment & Exit Preview (`PLAYER-PREVIEW-UX-001`), Welfare People pagination, section spacing & `OS-011` Concern Detail hierarchy (`WELFARE-POLISH-001`, `OS-011`) | `9b4f200` | All Academy acceptance tests passed on `r2` ZIP (`CAA615CE53ED5D1F48979DE11EDF06697C4236A7AE8CE338FD308A73EA49DDBA`; `81/81` focused + `9/9` packaging + regressions); `SCHEMA_VERSION 2026.11.26`; live MySQL concurrency & key-rotation tests retained in §8 |
 | **ACCELERATED-BATCH-001** | Officer & personal Staff Compliance expiry reminders (`NOTIFY-COMPLIANCE-001-FIX`, `WELFARE-NOTIFY-002`, `WELFARE-TEST-001`), permanent read-only browser Compliance Preview in Notification Controls, P0 Parent Home scoping (`PARENT-EXPERIENCE-001A`) & P0 server-side duplicate merge containment (`PEOPLE-MERGE-SAFETY-001`) | `3cbe92d` | PO accepted for Academy MVP (`r4` ZIP SHA-256 `1FA7D6A2F4285CBC693229A345204E133155A2964C90352316BEFDE54003CE67`; `137/137` focused + `14` regression suites + `9/9` packaging + `5/5` viewports); 7 explicit acceptance exceptions recorded in §4.1 |
 | **SECRETARY-COMPLIANCE-001** | Dedicated Secretary Staff Compliance workspace (`/club-os/secretary/staff-compliance/`), nav after People, `PER_PAGE=5` pagination, Secretary Profile `Qualifications & Compliance` heading | `26df8cf` | 5/5 Academy checks passed; 17/17 regression suites (54/54 focused) |
 | **UX-ALERTS-001 / POLISH** | Universal North Star glass Priority Alerts across Player, Parent, Coach; `#ef4444` urgent left border; Secretary collapsible Quick Actions circle fix | `0bfdafc` | 5/5 Academy checks passed (incl. notification persistence); 63/63 focused checks |
@@ -188,105 +190,49 @@ Every active pre-MVP requirement is catalogued below with verified codebase evid
 
 ---
 
-### 4.2 Parent Experience, Preview Player Experience & Welfare Polish (Batch 2 — NEXT ACTIVE IMPLEMENTATION BATCH)
+### 4.2 Parent Experience, Preview Player Experience & Welfare Polish (Batch 2 — ACCEPTED FOR ACADEMY MVP)
 
-> **Next Active Batch:** With Batch 1 (`3cbe92d`) accepted and closed (including `PARENT-EXPERIENCE-001A`), **Batch 2 — Parent & Welfare** is the next active implementation batch. Genuine unresolved Product Owner decisions before starting Batch 2 implementation: **D1** (Back My Game multi-guardian link model & `AGE_UNKNOWN` notice) and **D2** (`BMG-001` Academy MVP inclusion vs Post-MVP deferral). Do **not** begin implementation until authorised. Preserve the accepted actual Player workspace (`PL-021..025`).
+> **Batch 2 Closeout Summary (`9b4f200b68f53be121e40671c131f5b4157bf987`, 2026-11-26):** Decisions **D1** (one shared Back My Game link per campaign & player with explicit adult verification notice) and **D2** (`BMG-001` deferred post-MVP) were approved. All Batch 2 workstreams (`PARENT-EXPERIENCE-001B`, `PLAYER-PREVIEW-UX-001`, `WELFARE-POLISH-001`, `OS-011`, and `ACCELERATED-BATCH-002-FIX-001`) were implemented, verified (`81/81` focused assertions, `9/9` packaging integrity checks, regression validators passed), deployed via `iexel-club-os-ACCELERATED-BATCH-002-r2-academy.zip` (`7,332,165` bytes, SHA-256 `CAA615CE53ED5D1F48979DE11EDF06697C4236A7AE8CE338FD308A73EA49DDBA`, `2,116` runtime files, `1,996` PHP files), **accepted across all Academy manual tests**, and committed & pushed at `9b4f200b68f53be121e40671c131f5b4157bf987` (`23` files; `SCHEMA_VERSION = '2026.11.26'`).
+>
+> **Audit & Learning Note (`ACCELERATED-BATCH-002-FIX-001`):** On initial `r1` Academy testing, Parent Preview Player still rendered legacy styling without Exit Preview because `MemberExperienceService::protect_event_snapshot()` mutated `$current->active_role` from `'parent'` to `'player'` before `with_player_preview()`, and initial synthetic browser/unit fixtures did not traverse `protect_event_snapshot()`. Fixed in `r2` (preserving `active_role = 'parent'` in preview, gating `WorkspacePriorityAlertService::rsvp_alerts()` against sibling expansion in preview, adding defense-in-depth in `PortalShell`/`ParentPreviewExit`, and adding persistent Show Link / Copy Link UX on Back My Game).
+>
+> **Environment Limitation (Retained for Production Readiness — §8):** LocalWP MySQL remained offline throughout Batch 2; live DB concurrency for canonical link creation, encrypted token retrieval under live migration, and encryption-key rotation/recovery testing remain outstanding production-readiness checks.
 
 #### `PLAYER-PREVIEW-UX-001` — Preview Player Experience Visual Parity & Return Navigation
-- **Status:** `REGRESSION` — Product Owner confirmed *(both regressions recorded under one requirement with distinct acceptance criteria)*
-- **Original Source:** `DEVELOPMENT-BACKLOG-001A` §2 (Product Owner clarification separating satisfactory actual Player workspace from Preview Player Experience regressions)
-- **Priority / Target:** **P2 — Academy MVP**
-- **Dependencies:** None (must not disturb accepted actual Player workspace `PL-021..025`).
-- **Proposed Batch:** **Batch 2 — Parent Experience & Welfare**
-- **Cross-Reference:** Distinct from `PLAYER-UX-001` (Section 4.6, actual Player workspace). Do not duplicate scope across requirements.
-
-##### Regression A — Legacy Visual Presentation
-- **Observed Behaviour:**
-  - Preview Player Experience displays older Club OS visual styling when accessed from the Parent workspace.
-  - Light grey/white page background instead of the current North Star stadium background.
-  - Legacy white Quick Actions container rather than the premium midnight-blue glass component.
-  - Unwanted decorative circle beside the Quick Actions heading.
-  - Inconsistent visual presentation compared with the actual Player workspace.
-- **Current Investigation Lead (Read-Only Evidence):** `app/core/UI/Components/Portal/PortalShell.php:31` evaluates `$is_player = MemberExperienceRole::PLAYER === $context->active_role && ! $context->preview;`, which explicitly omits `.iexel-experience-shell--player` when `$context->preview === true`. Full rendering, shell, stylesheet, asset-loading, and component differences must be investigated prior to implementation.
-- **Expected Behaviour:**
-  - Preview Player Experience must visually match the actual Player workspace.
-  - Reuse the existing North Star visual foundation, stadium background, premium blue glass components, typography, spacing, cards, buttons, and responsive layouts.
-  - Preserve clear Parent Preview identification and viewing context.
-  - Do **not** create a separate duplicated visual architecture.
-  - Do **not** unnecessarily modify the accepted actual Player workspace.
-
-##### Regression B — Missing Exit Preview / Return to Parent Navigation
-- **Observed Behaviour:**
-  - A dedicated button previously allowed a Parent to exit the Preview Player Experience and return to their own Parent workspace; that button is now missing (exact original wording unconfirmed).
-- **Expected Behaviour:**
-  - Investigate Git history and existing preview navigation architecture to establish the original return behaviour and why it regressed.
-  - Restore a clearly visible, dedicated Exit Preview control (recommended wording: **Exit Preview — Return to Parent View**, or an appropriately concise equivalent consistent with existing Club OS terminology).
-  - Position the control prominently within the preview experience so it is immediately discoverable on mobile and desktop.
-  - Style the control using the established North Star midnight-blue-and-gold design system.
-  - Return the authenticated Parent to their own Parent workspace using the canonical workspace/context-switching mechanism and cleanly clear the active child-preview context.
-  - Do **not** rely on browser history, browser Back navigation, or the Viewing Mode dropdown as the sole means of exiting preview.
-  - Do **not** sign the user out, change their underlying identity, or introduce a new independent persona-switching architecture.
-
-##### Security & Safeguarding Requirements (Visual Parity Must Not Mean Permission Parity)
-- Preserve Guardian authorisation and active relationship checks.
-- Preserve canonical authenticated Parent identity and linked-child data scoping.
-- Preserve all existing preview restrictions — never grant Player mutation permissions through Parent Preview.
-- Never expose unrelated children, other families' information, or privileged operational controls.
-- Ensure exiting preview restores the Parent workspace cleanly rather than leaving stale Player Preview context active.
-
-##### Required Future Implementation Acceptance Criteria (All 11 Mandatory)
-1. Compare the actual Player workspace and Preview Player Experience side by side on mobile and desktop.
-2. Confirm matching stadium backgrounds, glass components, visual hierarchy, and responsive presentation.
-3. Confirm Parent Preview identification remains clear.
-4. Confirm the dedicated Exit Preview control is visible and accessible.
-5. Confirm selecting Exit Preview returns directly to the authenticated Parent's own workspace.
-6. Confirm preview context is correctly cleared.
-7. Confirm the Parent can subsequently preview an authorised linked child again.
-8. Confirm existing multi-child and multi-role boundaries remain intact.
-9. Confirm no inappropriate Player actions become available through preview.
-10. Confirm the actual Player workspace remains visually and functionally unchanged.
-11. Confirm notification subscription persistence after the Academy plugin ZIP replacement.
+- **Status:** `COMPLETE` *(Accepted on Academy `r2` at `9b4f200`)*
+- **Implemented Behaviour:** Parent Preview Player inherits the complete accepted North Star Player shell (`iexel-experience-shell--player` + `iexel-experience-shell--player-preview`), Player dashboard banner, avatar fallback, and read-only `TeamSquadCard` presentation, with `protect_event_snapshot()` preserving `active_role = 'parent'` and single-child RSVP isolation. Renders an always-visible gold **Exit Preview — Return to Parent View** banner across all supported preview routes plus **Exit Player Experience** in Viewing Mode, cleanly clearing preview context and returning to `/club-os/parent/`. Actual Player workspace (`PL-021..025`) confirmed unchanged.
+- **Validation & Acceptance Evidence:** `tools/validate-player-preview-ux-001.php` (`23/23`), Academy `r2` manual acceptance passed; committed & pushed at `9b4f200b68f53be121e40671c131f5b4157bf987`.
+- **Priority / Target:** **P2 — Academy MVP (Accepted)**
 
 #### `PARENT-EXPERIENCE-001B` — Second Authorised Parent/Guardian Back My Game Link Access
-- **Status:** `PARTIALLY IMPLEMENTED` (Blocked by per-issuer scoping, one-time hash storage & `AGE_UNKNOWN` silent skip)
-- **Original Source:** Prompt §5.3
-- **Expected Behaviour:** Every authorised active Parent/Guardian of a linked child must be able to see, activate, and share/copy the child's Back My Game link without depending on being the first/issuing Guardian, while preserving individual safeguarding restrictions and relationship authorisation.
-- **Current Implementation Evidence:** Three verified root causes:
-  1. `BackMyGameInvitationService.php:50` queries `latest_for_actor_destination_subject(..., $actor_id, $player_id)` (`created_by_person_id = %d`), and `FundraisingShareLinkService.php:92, 196` + `BackMyGameInvitationService.php:103` scope uniqueness and revocation to the individual issuing guardian rather than household `(campaign, player)`.
-  2. `FundraisingShareLinkService.php:52-53, 118` & `PortalParentBackMyGamePage.php:14, 211-216` store only a SHA-256 `token_hash` and show the raw URL once on activation/replace, so neither Guardian 1 (after reload) nor Guardian 2 can copy an existing active link without replacing/revoking it.
-  3. `BackMyGameAuthorityPolicy.php:30-36` / `FundraisingShareAttributionPolicy.php:34-38` enforce `KNOWN_ADULT` (`classify_person()`), silently skipping all children (`continue` at `BackMyGameInvitationService.php:45`) if a second guardian has no DOB and no AGE-001 manual verification.
-- **Acceptance Evidence:** None (reported by PO on Academy).
-- **Priority / Target:** **P1 — Academy MVP**
-- **Dependencies:** `AGE-001` (`39a4b43`).
-- **Proposed Batch:** **Batch 2 — Parent Scoping, Back My Game Multi-Guardian & Welfare Polish**
-- **Remaining Work:** Scope active Back My Game invitation lookup/lifecycle per `(campaign, player)` across any authorised active Guardian; decide/implement safe link re-copying (or encrypted/retrievable share token vs per-guardian link) while keeping revocation/rotation safe; surface clear non-silent state if a guardian lacks adult verification.
-- **PO Decisions / Screenshots Required:** **Decision D1:** Should both authorised Guardians share one household Back My Game link (requiring safe retrieval for re-copying, or replacing resets for both), or should each authorised Guardian hold their own independent link for the same child? Also confirm whether a second Guardian without DOB/AGE-001 verification should see an explicit "Adult verification required" explanation rather than "No eligible Player".
+- **Status:** `COMPLETE` *(Accepted on Academy `r2` at `9b4f200`; DB-backed concurrency & key-rotation tests retained in §8)*
+- **Implemented Behaviour:** Canonical household shared link per `(campaign, player)` enforced via `UNIQUE KEY active_scope_hash`, installation-bound AES-256-GCM encrypted retrieval (`FundraisingShareTokenCipher` + additive `token_ciphertext` column at `SCHEMA_VERSION 2026.11.26`), non-destructive legacy hash-only public link preservation, persistent **Show Link** / **Hide Link** / **Copy Link** / **Share Link** UX (never repeating Create Shared Link once active), recovery guidance on decryption failure, and explicit adult verification notice for linked `AGE_UNKNOWN` Guardians.
+- **Validation & Acceptance Evidence:** `tools/validate-parent-experience-001b.php` (`38/38`), `validate-fundraising-share-links.php` (`41/41`), `validate-back-my-game-invitations.php` (`81/81`), Academy `r2` manual acceptance passed for both Guardians; committed & pushed at `9b4f200b68f53be121e40671c131f5b4157bf987`.
+- **Priority / Target:** **P1 — Academy MVP (Accepted)**
 
 #### `BMG-001` — Parent Back My Game Linked Child Supporter & Pledge Status Visibility
-- **Status:** `OUTSTANDING`
+- **Status:** `DEFERRED` *(Explicitly deferred until after Academy MVP per approved PO Decision **D2**; retained in Section 7)*
 - **Original Source:** `CLUB_OS_EXPERIENCE_REVIEW_AND_ROADMAP.md` / `CLUB_OS_MVP_TO_PRODUCTION_RELEASE_STRATEGY.md` (B03-N4)
-- **Expected Behaviour:** Authorised Parents can view privacy-safe supporter/pledge status summary for their linked child's Back My Game invitations.
-- **Current Implementation Evidence:** Not implemented on `PortalParentBackMyGamePage.php`.
-- **Acceptance Evidence:** None.
-- **Priority / Target:** **P2 — Academy MVP (Conditional on PO scope approval)**
-- **Dependencies:** `PARENT-EXPERIENCE-001B`.
-- **Proposed Batch:** **Batch 2** (if approved for MVP) or defer explicitly to Post-MVP.
-- **PO Decisions / Screenshots Required:** **Decision D2:** Confirm exact privacy-safe fields visible to Parents (e.g., supporter count & pledge total vs supporter names) and whether `BMG-001` stays in Academy MVP or moves to Post-MVP.
+- **Priority / Target:** **Post-MVP (Deferred per D2)**
 
-#### `WELFARE-POLISH-001` — Welfare People Directory Pagination, Section Spacing & Mobile Readability
-- **Status:** `PARTIALLY IMPLEMENTED` (Staff Compliance pagination `PER_PAGE=5` is ALREADY COMPLETE on Welfare & Secretary; Welfare People pagination & Welfare section spacing are missing)
-- **Original Source:** Prompt §5.4 + `OS-011` (`CLUB_OS_EXPERIENCE_REVIEW_AND_ROADMAP.md`)
-- **Expected Behaviour:** Add `DirectoryPagination` to `/club-os/welfare/people/` matching the accepted Staff Compliance pagination pattern (preserving search, role filter, eligibility & privacy); fix zero-gap touching `<section class="iexel-experience-section">` cards across Welfare sub-pages (`PortalWelfarePeopleDirectoryPage`, `PortalWelfareConcernsPage`, `PortalWelfareStaffCompliancePage`, `PortalWelfarePersonProfilePage`); polish `OS-011` Concern Detail card hierarchy; fix cramped `521px–900px` rows and unstyled `select` inside `.iexel-welfare-people-search`.
-- **Current Implementation Evidence:** Confirmed `MemberExperienceService.php:608-684` & `WelfarePersonDirectorySnapshot.php:18-28` & `PortalWelfarePeopleDirectoryPage.php:92-141` have zero pagination; `assets/css/member-experience.css:56` has no sibling `.iexel-experience-section + .iexel-experience-section` spacing rule in `.iexel-experience-main`; `member-experience.css:5199` omits `select` styling.
-- **Acceptance Evidence:** None.
-- **Priority / Target:** **P1 — Academy MVP**
-- **Dependencies:** `WELFARE-UX-001B` (`07d9943`).
-- **Proposed Batch:** **Batch 2 — Parent Scoping, Back My Game Multi-Guardian & Welfare Polish**
-- **Remaining Work:** Add `paged` filtering-before-pagination to `welfare_people_directory()`, add pagination payload to `WelfarePersonDirectorySnapshot`, render `DirectoryPagination` on `PortalWelfarePeopleDirectoryPage`, add vertical spacing between consecutive `.iexel-experience-section` blocks, refine Concern Detail hierarchy (`OS-011`) and mobile/tablet card responsiveness.
+#### `WELFARE-POLISH-001` & `OS-011` — Welfare People Pagination, Section Spacing, Responsive Polish & Concern Detail Hierarchy
+- **Status:** `COMPLETE` *(Accepted on Academy `r2` at `9b4f200`)*
+- **Implemented Behaviour:** Added 5-per-page `DirectoryPagination` to `/club-os/welfare/people/` with auth & search/role/filter applied before pagination, deterministic `name + person_id` tie-breaker sort, out-of-range clamping, and filter preservation. Added Welfare-scoped (`iexel-experience-shell--executive-welfare`) `20px` consecutive section spacing, styled role `<select>`, `<=900px` Staff Compliance card switch, `<=760px` stacked Welfare People rows, and four-tier `OS-011` Concern Detail card hierarchy preserving all safeguarding/confidentiality boundaries.
+- **Validation & Acceptance Evidence:** `tools/validate-welfare-polish-001.php` (`20/20`), `validate-welfare-ux-001b.php` (`52/52`), Academy `r2` manual acceptance passed; committed & pushed at `9b4f200b68f53be121e40671c131f5b4157bf987`.
+- **Priority / Target:** **P1 — Academy MVP (Accepted)**
 
 ---
 
-### 4.3 Coach Matchday & Events Experience (Batch 3)
+### 4.3 Coach Matchday & Events Experience (Batch 3 — NEXT ACTIVE IMPLEMENTATION BATCH)
+
+> **Next Active Batch:** With Batch 2 (`9b4f200`) accepted and closed, **Batch 3 — Coach, Matchday, Lineup Builder & Events** is the next active implementation batch (now also including `UX-CONTRAST-001` Attendance Status Badge Contrast). Unresolved PO input before starting Batch 3: **D3** (Training Hub vs Session Hub canonical label) and **S1/S2** (Lineup Builder & Match Report mobile screenshots). Do **not** begin Batch 3 implementation until authorised.
+
+#### `UX-CONTRAST-001` — Attendance Status Badge Contrast
+- **Status:** `OUTSTANDING`
+- **Original Source:** Product Owner Academy Acceptance Observation (`ACCELERATED-BATCH-002`, 2026-11-26)
+- **Expected Behaviour:** Correct white text on the pale green `"You're attending"` badge in both the actual Player workspace and Parent Preview Player using appropriately contrasting dark-green text (or equivalent accessible established design token). Inspect related attending, unavailable, declined, pending, and other existing attendance status presentations and correct directly related contrast defects using shared component styling without broad global CSS overrides. Preserve existing status semantics and attendance functionality; validate both actual Player and Parent Preview presentation.
+- **Priority / Target:** **P2 (Accessibility / Presentation) — Academy MVP**
+- **Proposed Batch:** **Batch 3 — Coach Matchday, Lineup Builder & Events Experience** *(included alongside Events and attendance improvements)*
 
 #### `COACH-MATCH-001A` — Lineup Builder Mobile Wrapping, Custom Alignment Enhancement & Pitch Drag Lock
 - **Status:** `PARTIALLY IMPLEMENTED` (Alignment exists from `90164d5` with gaps; mobile wrapping is defective; pitch drag lock is unimplemented)
@@ -601,8 +547,8 @@ To meet the Product Owner's deadline without compromising safeguarding, financia
 | Batch | Name & Scope | Included Refs | Dependencies & Prerequisite PO Input | Targeted Academy Manual Acceptance |
 | :--- | :--- | :--- | :--- | :--- |
 | **Batch 1** *(ACCEPTED FOR ACADEMY MVP — `3cbe92d`)* | **Staff Compliance Notifications, Personal Reminders & P0 Containment** | `NOTIFY-COMPLIANCE-001-FIX`, `WELFARE-NOTIFY-002`, `WELFARE-TEST-001`, permanent browser Compliance Preview, `PARENT-EXPERIENCE-001A` (**P0**), `PEOPLE-MERGE-SAFETY-001` (**P0**) | **D13** (part a) approved; `r4` ZIP accepted by PO (`1FA7D6A2F4285CBC693229A345204E133155A2964C90352316BEFDE54003CE67`); committed & pushed at `3cbe92d` | Completed with 7 explicit exceptions recorded in §4.1 (personal tap-through, officer repeat-run dedupe, merge notice visual observation, actual DB concurrency, `PEOPLE-MERGE-001` deferral, Academy auto-toggles OFF confirmation, temporary Welfare role on Test Parent) |
-| **Batch 2** *(NEXT ACTIVE)* | **Parent Experience, Preview Player Experience & Welfare Polish** | `PARENT-EXPERIENCE-001B`, `PLAYER-PREVIEW-UX-001` (Regressions A & B — North Star visual parity + Exit Preview navigation), `WELFARE-POLISH-001` (incl. `OS-011`), optional `BMG-001` *(actual Player workspace `PL-021..025` preserved unchanged)* | **D1** (BMG shared vs per-guardian link + `AGE_UNKNOWN` notice), **D2** (`BMG-001` MVP inclusion vs Post-MVP) | Verify 2nd Guardian sees/copies/manages BMG; verify all 11 `PLAYER-PREVIEW-UX-001` acceptance criteria side-by-side with unchanged actual Player workspace; Welfare People pagination & section spacing on mobile + desktop; notification persistence |
-| **Batch 3** | **Coach Matchday, Lineup Builder & Events Experience** | `COACH-MATCH-001A/B/C`, `EVENTS-EXPERIENCE-001A/B/C`, `SEC-009` | **S1/S2** (Lineup/Match Report screenshots), **D3** (Training Hub vs Session Hub) | Mobile Lineup wrapping, alignment & drag lock; Match Mode bulk attendance/bench & vacant pitch entry; Match Report avatars; Training Hub + finished-session **Reflect** persistence; recurring series future-audience addition; notification persistence |
+| **Batch 2** *(ACCEPTED FOR ACADEMY MVP — `9b4f200`)* | **Parent Experience, Preview Player Experience & Welfare Polish** | `PARENT-EXPERIENCE-001B`, `PLAYER-PREVIEW-UX-001`, `WELFARE-POLISH-001`, `OS-011`, `ACCELERATED-BATCH-002-FIX-001` *(actual Player workspace `PL-021..025` preserved unchanged; `BMG-001` deferred post-MVP per D2)* | **D1 & D2** approved; `r2` ZIP accepted by PO (`CAA615CE53ED5D1F48979DE11EDF06697C4236A7AE8CE338FD308A73EA49DDBA`); committed & pushed at `9b4f200` (`SCHEMA_VERSION 2026.11.26`) | All Academy manual acceptance tests passed (plugin replace, push persistence, multi-Guardian shared BMG + Show/Copy Link, Parent Preview North Star + Exit Preview, Welfare pagination/presentation, actual Player unchanged); DB concurrency & encryption key rotation retained in §8 |
+| **Batch 3** *(NEXT ACTIVE)* | **Coach Matchday, Lineup Builder & Events Experience** | `COACH-MATCH-001A/B/C`, `EVENTS-EXPERIENCE-001A/B/C`, `SEC-009`, `UX-CONTRAST-001` *(attendance status badge contrast)* | **S1/S2** (Lineup/Match Report screenshots), **D3** (Training Hub vs Session Hub) | Mobile Lineup wrapping, alignment & drag lock; Match Mode bulk attendance/bench & vacant pitch entry; Match Report avatars; Training Hub + finished-session **Reflect** persistence; recurring series future-audience addition; attendance badge contrast on actual Player & Preview; notification persistence |
 | **Batch 4** | **People Identity, Youth Player & Guardian Registration & Duplicate Prevention** | `PEOPLE-001`, `PEOPLE-DUPLICATE-PREVENTION-001` *(full duplicate merge repair `PEOPLE-MERGE-001` deferred post-Academy MVP / required before unrestricted commercial rollout; `PEOPLE-MERGE-SAFETY-001` containment remains active)* | Follows `PEOPLE-MERGE-SAFETY-001` containment (`3cbe92d`) | Add youth Player -> suggest existing Guardian / create new Guardian atomically (zero auto-merge); verify duplicate prevention across all canonical Person creation paths without auto-merging on shared contact details; notification persistence |
 | **Batch 5** | **Treasurer Mobile UX, Fundraising Payment Methods & Training Only Fee Rules** | `FINANCE-UX-001`, `FINANCE-FEES-001`, `FIN-031` (close) | **D4** (Shop View All Orders), **D5–D8** (Training Only fee & transition billing policy) | Mobile View Campaign card fit, Appeal payment methods, Income Source Breakdown zero horizontal scroll, Shop filters/detail controls; Training Only fee rule creation, billing run & Match Player transition; notification persistence |
 | **Batch 6** | **Remaining Notifications, Personal Account & Member Experiences** | `NOTIFY-FINANCE-001`, `NOTIFY-009C`, `NOTIFY-PRIORITY-001`, `NOTIFY-SETTINGS-001` *(Notification Controls admin rationalisation)*, `COM-002`, `ACCOUNT-UX-001`, `PLAYER-UX-001` (`PL-026/027` pending PO confirm; actual Player visual items reverify-only), `OS-031`, `MSG-BACKLINK-001`, `NOTIFY-VERIFY-001`, optional `NOTIFY-010B` / `SHOP-CANCEL-001` / `FIN-MYFINANCE-001` | **D9** (`NOTIFY-FINANCE-001` channel/self-suppress), **D10** (My Profile editability), **D13** (part b: `PL-026/027` confirm) | Overdue invoice full vs partial settlement Treasurer notice; rationalised Notification Controls retaining working controls & compliance preview; My Profile navigation (no WP-Admin redirect loop); non-executive image lightbox; Parent/Player visited announcement backlinks; confirmed actual-Player commitments without disturbing accepted `PL-021..025`; notification persistence |
@@ -646,6 +592,8 @@ All deferred commitments recovered from `CLUB_OS_EXPERIENCE_REVIEW_AND_ROADMAP.m
 | Ref / Area | Deferred Requirement | Source |
 | :--- | :--- | :--- |
 | **NOTIFY-SETTINGS-001 (Member Prefs)** | Member-facing grouped notification category controls (including Select All / Deselect All) with separate explicit youth safeguards *(distinct from the Batch 6 WordPress Notification Controls admin rationalisation)* | Prompt §4.2 |
+| **BMG-001** | Parent Back My Game linked-child supporter & pledge status summary *(explicitly deferred post-MVP per approved Decision D2)* | Roadmap / PO Decision D2 (2026-11-26) |
+| **BMG-NATIVE-SHARE-001** | Enhanced Back My Game device-native sharing (WhatsApp, email, text messaging where supported), auditing and reusing existing Web Share API while preserving accepted persistent Show Link / Copy Link and avoiding unnecessary third-party dependencies | PO Request (`BATCH-002` Closeout, 2026-11-26) |
 | **SETUP-UX-001** | Guided installation & setup experience (reusing clean-install, DB-upgrade, System Status & Release Readiness; environment checks, branding, initial season/team/membership config, essential services, readiness guidance; minimise manual SQL/PHP/WP-CLI/File Manager dependence) | PO Decision (2026-11-26) |
 | **PWA-INSTALL-REMINDER-001** | Non-permanent PWA install reminder cadence / backoff (currently permanent one-shot `localStorage` flag) | Prompt §4.2 |
 | **SCHED-FUTURE** | Lower-friction scheduling setup & scheduler health diagnostics UI | `MASTER_DEVELOPER_GUIDE.md`, `SPRINTS.md` |
@@ -676,10 +624,11 @@ All deferred commitments recovered from `CLUB_OS_EXPERIENCE_REVIEW_AND_ROADMAP.m
 
 | Gate | Academy MVP | Public Commercial Release | Current State |
 | :--- | :---: | :---: | :--- |
-| **Active Pre-MVP Batches 1–7** | Required | Required | Batch 1 accepted (`3cbe92d`); Batches 2–7 queued (Batch 2 next active) |
-| **Notification Delivery & Update Persistence** | Required (checked after every Academy ZIP replace) | Required | Passing on Android Chrome & Edge; standing release rule retained |
-| **Safeguarding, Identity & Role/Workspace Permission Regression** | Required | Required | Batch 1 P0 fixes accepted (`PARENT-EXPERIENCE-001A`, `PEOPLE-MERGE-SAFETY-001`); Batch 4 adds `PEOPLE-DUPLICATE-PREVENTION-001` |
+| **Active Pre-MVP Batches 1–7** | Required | Required | Batches 1 (`3cbe92d`) & 2 (`9b4f200`) accepted; Batches 3–7 queued (Batch 3 next active) |
+| **Notification Delivery & Update Persistence** | Required (checked after every Academy ZIP replace) | Required | Passing on Android Chrome & Edge (verified again on Batch 2 `r2`); standing release rule retained |
+| **Safeguarding, Identity & Role/Workspace Permission Regression** | Required | Required | Batch 1 P0 fixes & Batch 2 Parent Preview / BMG Guardian safeguards accepted; Batch 4 adds `PEOPLE-DUPLICATE-PREVENTION-001` |
 | **Full Duplicate Merge Execution Repair (`PEOPLE-MERGE-001`)** | Deferred *(server-side containment `PEOPLE-MERGE-SAFETY-001` active)* | **Required before unrestricted commercial rollout** | Deferred post-Academy MVP per PO decision `PEOPLE-DUPLICATE-PREVENTION-001` |
+| **Fundraising DB Concurrency, Encrypted Token Migration & Key-Rotation/Recovery Testing** | Structural/unit verified *(LocalWP MySQL offline)* | **Required before production/commercial release** | Outstanding live MySQL concurrency for canonical shared BMG links, encrypted `token_ciphertext` retrieval under installation migration, and `AUTH_KEY` rotation/recovery verification |
 | **Hosting Environment Inventory & Production Install Docs (`DEPLOY-ENV-001`)** | Recommended (read-only Academy inventory) | **Required before production deployment (`iexelfc.co.uk`)** | Queued (read-only inventory; PO has cPanel File Manager, no Terminal) |
 | **Financial Integrity Regression** | Required | Required | Automated passing; Batch 5 expands for Training Only fee rules |
 | **Case-Sensitive Autoload & PHP Packaging Integrity** | Required | Required | Passing (`validate-case-sensitive-autoload.php` `0` failures; `validate-hotfix-dash-001-php-packaging-integrity.php` `9/9`) |
@@ -725,8 +674,8 @@ All deferred commitments recovered from `CLUB_OS_EXPERIENCE_REVIEW_AND_ROADMAP.m
 
 | ID | Batch | Decision Needed | Recommended Default |
 | :--- | :---: | :--- | :--- |
-| **D1** | Batch 2 | **Back My Game Multi-Guardian Link Model (`PARENT-EXPERIENCE-001B`):** Share one retrievable household link across all authorised active Guardians for a child, OR issue independent links per Guardian? Also show explicit "Adult verification required" notice when a 2nd Guardian is `AGE_UNKNOWN`? | Shared household `(campaign, player)` link viewable/copyable by any authorised active adult Guardian + explicit adult-verification notice (never silent empty state). |
-| **D2** | Batch 2 | **`BMG-001` Scope:** Include Parent Back My Game supporter/pledge summary in Academy MVP (and confirm privacy-safe fields: totals/count only vs supporter names), or defer to Post-MVP? | Defer to Post-MVP unless needed for Academy fundraising launch; if included, show aggregate count & total only. |
+| **D1** | Batch 2 *(Resolved)* | **APPROVED & DELIVERED (`9b4f200`):** One shared canonical Back My Game link per `(campaign, player)` accessible to all authorised active adult Guardians, with persistent Show/Copy Link and explicit adult verification notice for linked `AGE_UNKNOWN` Guardians. | Closed (`9b4f200`). |
+| **D2** | Batch 2 *(Resolved)* | **APPROVED (`2026-11-26`):** `BMG-001` supporter & pledge summary functionality is explicitly deferred until after Academy MVP. | Closed (deferred to Section 7). |
 | **D3** | Batch 3 | **Training Event Terminology (`EVENTS-EXPERIENCE-001A`):** Preferred canonical label — **Training Hub** or **Session Hub**? | **Training Hub** (mirrors *Matchday Hub* cleanly for grassroots coaches). |
 | **D4** | Batch 5 | **Club Shop Finance (`FINANCE-UX-001`):** Should `"View all orders →"` link to a new Treasurer All Orders directory (paid + awaiting payment + cancelled) or be relabelled `"View pending orders →"`? | Add a simple status filter (`Awaiting payment` / `Paid` / `All`) on the Treasurer Club Shop Orders directory so `"View all orders →"` is truthful. |
 | **D5** | Batch 5 | **Training Only → Match Player Transition Billing (`FINANCE-FEES-001`):** When a player transitions mid-month, apply the new fee rule from the **next monthly billing cycle** (leaving current issued invoice immutable) or compute mid-month pro-rata / top-up invoices? | **Next billing cycle** (preserves immutable issued invoice ledger & avoids complex credit-note/pro-rata accounting for MVP). |
@@ -771,7 +720,7 @@ Every requirement in `DEVELOPMENT-BACKLOG-001` (§4–§8) and every recovered r
 | `ACCOUNT-UX-001` | Portal-native My Profile (`/club-os/account/`) replacing broken WP-Admin link | Prompt §4.4 | `OUTSTANDING` | Academy MVP | Batch 6 |
 | `PL-021..025` | Actual Player My Season, My Stats, Quick Actions below hero, contrast, Progress *(PO confirmed satisfactory — do not reopen/restyle)* | Roadmap, `001A` §2–3 | `COMPLETE` | Academy MVP | Done |
 | `PLAYER-UX-001` (`PL-026/027`) | Actual Player workspace only: `PL-026`/`PL-027` retained pending explicit PO confirm; code audit visual notes reverify-only *(distinct from `PLAYER-PREVIEW-UX-001`)* | Prompt §4.5, Roadmap, `001A` §3 | `IMPLEMENTED — NEEDS VERIFICATION` / `OUTSTANDING` | Academy MVP / Confirm | Batch 6 |
-| `PLAYER-PREVIEW-UX-001` | Preview Player Experience visual parity (Regression A: North Star styling) & Exit Preview / Return to Parent navigation (Regression B) — 11 acceptance criteria | `DEVELOPMENT-BACKLOG-001A` §2 | `REGRESSION` *(PO confirmed)* | Academy MVP | Batch 2 |
+| `PLAYER-PREVIEW-UX-001` | Preview Player Experience visual parity (North Star styling, `protect_event_snapshot` active-role fix) & dedicated Exit Preview — Return to Parent View | `DEVELOPMENT-BACKLOG-001A` §2, `9b4f200` | `COMPLETE` *(Academy `r2` accepted)* | Academy MVP | Batch 2 (Done) |
 | `OS-031` | In-app image/attachment viewer (lightbox CSS missing on `/club-os/messages/`) | Prompt §4.5, Roadmap | `PARTIALLY IMPLEMENTED` / `REGRESSION` | Academy MVP | Batch 6 |
 | `MSG-BACKLINK-001` | Club Announcements visited backlink & `"Read announcement"` contrast (Parent/Player) | Prompt §4.5, `SCHED-001C` | `PARTIALLY IMPLEMENTED` | Academy MVP | Batch 6 |
 | `COACH-MATCH-001A` | Lineup Builder mobile name wrapping, alignment gaps & pitch drag lock | Prompt §5.1 | `PARTIALLY IMPLEMENTED` | Academy MVP | Batch 3 |
@@ -781,10 +730,12 @@ Every requirement in `DEVELOPMENT-BACKLOG-001` (§4–§8) and every recovered r
 | `EVENTS-EXPERIENCE-001B` | Training Session Plan **Reflect** persistence (`COACHING-EXPERIENCE-SLICE-03`) | Prompt §5.2, `a7efc32` | `PARTIALLY IMPLEMENTED` | Academy MVP | Batch 3 |
 | `EVENTS-EXPERIENCE-001C` | Recurring event series linkage & future-occurrence audience updates | Prompt §5.2 | `OUTSTANDING` | Academy MVP | Batch 3 |
 | `SEC-009` | Secretary Create Event Specific People modal mobile overflow | Roadmap / Release Strategy | `IMPLEMENTED — NEEDS VERIFICATION` | Academy MVP | Batch 3 |
+| `UX-CONTRAST-001` | Attendance Status Badge Contrast (white text on pale green "You're attending" badge & related attendance status badges on actual Player & Preview) | PO Academy Observation (`BATCH-002`, 2026-11-26) | `OUTSTANDING` | Academy MVP | Batch 3 |
 | `PARENT-EXPERIENCE-001A` | Multi-role Secretary Parent Home registration scoping (P0 cross-family data leak) | Prompt §5.3, `001A` §4, `3cbe92d` | `COMPLETE` *(Academy MVP accepted)* | Academy MVP | Batch 1 (Done) |
-| `PARENT-EXPERIENCE-001B` | Authorised second Parent/Guardian Back My Game link access | Prompt §5.3 | `PARTIALLY IMPLEMENTED` | Academy MVP | Batch 2 |
-| `BMG-001` | Parent Back My Game supporter/pledge status visibility | Roadmap / Release Strategy | `OUTSTANDING` | Academy MVP / Confirm | Batch 2 |
-| `WELFARE-POLISH-001` | Welfare People pagination, touching section spacing, mobile polish & `OS-011` | Prompt §5.4, Roadmap | `PARTIALLY IMPLEMENTED` | Academy MVP | Batch 2 |
+| `PARENT-EXPERIENCE-001B` | Multi-Guardian shared Back My Game link, AEAD `token_ciphertext`, persistent Show/Copy Link, legacy preservation & adult verification notice | Prompt §5.3, D1, `9b4f200` | `COMPLETE` *(Academy `r2` accepted; DB concurrency/key-rotation tests in §8)* | Academy MVP | Batch 2 (Done) |
+| `BMG-001` | Parent Back My Game supporter/pledge status visibility | Roadmap / PO Decision D2 | `DEFERRED` *(Post-MVP per D2)* | Post-MVP | Post-MVP |
+| `BMG-NATIVE-SHARE-001` | Enhanced Back My Game device-native sharing (WhatsApp, email, messaging; reuse Web Share API, preserve Show/Copy Link) | PO Request (`BATCH-002`, 2026-11-26) | `DEFERRED` | Post-MVP | Post-MVP |
+| `WELFARE-POLISH-001` / `OS-011` | Welfare People pagination (`5/page`), section spacing, tablet/mobile polish & four-tier Concern Detail hierarchy | Prompt §5.4, Roadmap, `9b4f200` | `COMPLETE` *(Academy `r2` accepted)* | Academy MVP | Batch 2 (Done) |
 | `WELFARE-UX-001B` / `SECRETARY-COMPLIANCE-001` | Welfare & Secretary Staff Compliance directories & `PER_PAGE=5` pagination | `07d9943`, `26df8cf` | `COMPLETE` | Academy MVP | Done |
 | `FINANCE-UX-001` | View Campaign overflow, Appeal payment methods, Income Breakdown mobile, Shop Finance filters/orders/detail *(Orders Awaiting Payment already fixed in `5b79c5c`)* | Prompt §5.5 | `PARTIALLY IMPLEMENTED` | Academy MVP | Batch 5 |
 | `FINANCE-UX-RECENT-HEADING` | Treasurer *Recent Payments* heading change | Prompt §5.5 | `WITHDRAWN` | N/A | Withdrawn |
